@@ -1,0 +1,34 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-ink: #1A1A1A;
+  --color-ink-muted: #4A4A4A;
+  --color-paper: #FAFAF8;
+  --color-rule: #2C3E2D;
+  --color-accent: #3D5A4C;
+  --color-safety: #2E7D4F;
+  --color-pause: #C47A1A;
+  --color-repair: #2F5F8A;
+  --color-failure: #A33B2B;
+  --color-surface-tool: #EEF2EF;
+  --color-surface-activity: #F3F0E8;
+  --color-surface-warn: #F7EDE6;
+  --font-sans: ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif;
+}
+
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  min-height: 100dvh;
+}
+
+a,
+button {
+  touch-action: manipulation;
+}
