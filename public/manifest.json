@@ -1,0 +1,18 @@
+{
+  "name": "THE ALLIANCE · Field App",
+  "short_name": "Alliance Field",
+  "description": "Built for precision. Designed for connection. Field companion for THE ALLIANCE.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FAFAF8",
+  "theme_color": "#3D5A4C",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
