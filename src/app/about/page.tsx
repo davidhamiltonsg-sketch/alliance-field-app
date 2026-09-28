@@ -3,6 +3,7 @@ import { AllianceMark } from "@/components/AllianceMark";
 import { Marker } from "@/components/Marker";
 import { SectionLabel } from "@/components/SectionLabel";
 import { GetFullSystem } from "@/components/GetFullSystem";
+import { Testimonials } from "@/components/Testimonials";
 import { WarnBanner } from "@/components/WarnBanner";
 import { ArrowRight, ChevronRight } from "@/components/icons";
 
@@ -99,6 +100,8 @@ export default function AboutPage() {
           actually use — not theory borrowed from somewhere else.
         </p>
       </section>
+
+      <Testimonials />
 
       <section id="product-line" className="scroll-mt-20 space-y-3">
         <SectionLabel>The product line</SectionLabel>
