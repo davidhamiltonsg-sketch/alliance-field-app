@@ -605,3 +605,83 @@ export function WeeklyResetDiagram() {
     </Frame>
   );
 }
+
+/* ------------------------------------------------------------------ */
+/* 6. Connection Cards: woven ring, five stages, 35 questions           */
+/* ------------------------------------------------------------------ */
+export function ConnectionCardsDiagram() {
+  const cx = 78,
+    cy = 124,
+    r = 60;
+  const steps = [
+    { title: "Warmth", sub: "Reconnect, low stakes" },
+    { title: "Curiosity", sub: "What's changed lately" },
+    { title: "Care", sub: "What they're carrying" },
+    { title: "Repair", sub: "No relitigating it" },
+    { title: "Alliance", sub: "On purpose, together" },
+  ];
+  const seg = 72,
+    gapDeg = 15;
+  const ply = Array.from({ length: 241 }, (_, i) => {
+    const th2 = (i / 240) * Math.PI * 2;
+    const rr = r + 2.6 * Math.sin(th2 * 9);
+    return `${(cx + rr * Math.cos(th2)).toFixed(2)} ${(cy + rr * Math.sin(th2)).toFixed(2)}`;
+  });
+  const ros = Array.from({ length: 361 }, (_, i) => {
+    const th2 = (i / 360) * Math.PI * 2;
+    const rr = 41 + 2.6 * Math.cos(th2 * 30);
+    return `${(cx + rr * Math.cos(th2)).toFixed(2)} ${(cy + rr * Math.sin(th2)).toFixed(2)}`;
+  });
+  return (
+    <Frame
+      viewBox="0 0 340 280"
+      label="Connection Cards: five stages, Warmth, Curiosity, Care, Repair, Alliance. Thirty-five questions to flip through, alone or together."
+    >
+      <g {...a("dg-fade", 150, 900)}>
+        <path d={`M${ros.join("L")}Z`} fill="none" stroke={V.brass} strokeWidth={0.5} strokeOpacity={0.65} />
+        <circle cx={cx} cy={cy} r={35.5} fill="none" stroke={V.brass} strokeWidth={0.5} strokeOpacity={0.65} />
+        <circle cx={cx} cy={cy} r={46.5} fill="none" stroke={V.brass} strokeWidth={0.5} strokeOpacity={0.65} />
+        <path d={`M${ply.join("L")}Z`} fill="none" stroke={V.brass} strokeWidth={0.8} strokeOpacity={0.8} />
+      </g>
+      {steps.map((s, i) => {
+        const am = -90 + i * seg;
+        const a0 = am + gapDeg;
+        const a1 = am + seg - gapDeg;
+        const [ex, ey] = polar(cx, cy, r, a1);
+        const ang = ((a1 + 90) * Math.PI) / 180;
+        const [mx, my] = polar(cx, cy, r, am);
+        const at = 350 + i * 520;
+        const y = 22 + i * 46;
+        return (
+          <g key={s.title}>
+            <path {...a("dg-draw", at + 120, 420)} pathLength={1} d={arcD(cx, cy, r, a0, a1 - 3.5)} fill="none" stroke={V.repair} strokeWidth={1.6} strokeLinecap="round" />
+            <path {...a("dg-pop", at + 480, 200)} d={lancetD(ex, ey, ang, 8)} fill={V.repair} />
+            <Medallion cx={mx} cy={my} n={i + 1} w={19} h={23} size={14} ground={V.repair} numColor={V.white} {...a("dg-pop", at)} />
+            <g {...a("dg-rise", at + 120)}>
+              <Medallion cx={172} cy={y + 8} n={i + 1} w={17} h={20} size={13.5} ground={V.repair} numColor={V.white} />
+              <text x={190} y={y + 9} fontFamily={SERIF} fontSize={14.5} fontWeight={600} fill={V.ink}>
+                {s.title}
+              </text>
+              <text x={190} y={y + 27} fontSize={13} fill={V.muted}>
+                {s.sub}
+              </text>
+            </g>
+          </g>
+        );
+      })}
+      <g {...a("dg-fade", 200)}>
+        <text x={cx} y={cy + 5} textAnchor="middle" fontFamily={SERIF} fontSize={32} fontWeight={600} fill={V.repair} className="tabular">
+          35
+        </text>
+        <text x={cx} y={cy + 24} textAnchor="middle" fontSize={13.5} fill={V.muted}>
+          questions
+        </text>
+      </g>
+      <AdvisoryStrip x={0} y={246} w={340} h={32} {...a("dg-rise", 3000)}>
+        <text x={42} y={266.5} fontSize={13.5} fill={V.ink}>
+          No wrong answers — flip a card, go deeper.
+        </text>
+      </AdvisoryStrip>
+    </Frame>
+  );
+}

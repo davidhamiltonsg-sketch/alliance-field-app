@@ -8,6 +8,7 @@ import { AllianceMark } from "../AllianceMark";
 import { ArrowLeft, ArrowRight, PauseIcon } from "../icons";
 import { ProtocolIcon } from "../visuals/ProtocolIcon";
 import {
+  ConnectionCardsDiagram,
   PatternLoopDiagram,
   PauseTimelineDiagram,
   SituationMapDiagram,
@@ -64,6 +65,14 @@ const panels: Panel[] = [
     title: "Thirty minutes, once a week.",
     body: "Appreciation, care audit, one friction, requests, alignment. Maintenance, not a trial.",
     diagram: <WeeklyResetDiagram />,
+  },
+  {
+    id: "connection-cards",
+    eyebrow: "Connection Cards",
+    icon: "connection-cards",
+    title: "For when things are fine, too.",
+    body: "Flip through 35 questions across five stages — Warmth, Curiosity, Care, Repair, Alliance. No protocol needed, just five minutes together.",
+    diagram: <ConnectionCardsDiagram />,
   },
 ];
 
@@ -230,13 +239,22 @@ export function IntroFlow() {
                 Start with the Situation Map
                 <ArrowRight size={18} />
               </Link>
-              <Link
-                href="/pause"
-                className="flex h-12 items-center justify-center gap-2 rounded-2xl border border-pause/35 bg-surface-activity text-[15px] font-semibold text-[#9A5E10] transition active:scale-[0.99]"
-              >
-                <PauseIcon size={18} />
-                Start Pause + Return
-              </Link>
+              <div className="grid grid-cols-2 gap-2">
+                <Link
+                  href="/pause"
+                  className="flex h-12 items-center justify-center gap-1.5 rounded-2xl border border-pause/35 bg-surface-activity text-[14px] font-semibold text-[#9A5E10] transition active:scale-[0.99]"
+                >
+                  <PauseIcon size={17} />
+                  Pause + Return
+                </Link>
+                <Link
+                  href="/connect"
+                  className="flex h-12 items-center justify-center gap-1.5 rounded-2xl border border-repair/35 bg-repair/[0.08] text-[14px] font-semibold text-repair transition active:scale-[0.99]"
+                >
+                  <ProtocolIcon slug="connection-cards" size={17} />
+                  Connection Cards
+                </Link>
+              </div>
             </div>
           )}
         </footer>

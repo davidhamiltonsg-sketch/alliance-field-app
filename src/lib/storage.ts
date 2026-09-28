@@ -4,6 +4,9 @@ export const PAUSE_KEY = "alliance.field.pause";
 export const WEEKLY_KEY = "alliance.field.weeklyReset";
 export const WEEKLY_HISTORY_KEY = "alliance.field.weeklyResetHistory";
 export const MAX_WEEKLY_HISTORY = 26;
+export const FAVORITES_KEY = "alliance.field.favorites";
+export const RECENT_KEY = "alliance.field.recentProtocols";
+export const MAX_RECENT = 6;
 
 export const CARE_DOMAINS = [
   "Emotional attunement & check-ins",
@@ -102,5 +105,35 @@ export function appendWeeklyHistory(draft: WorksheetDraft) {
   const entry = { ...draft, updatedAt: new Date().toISOString() };
   const next = [entry, ...history].slice(0, MAX_WEEKLY_HISTORY);
   writeJson(WEEKLY_HISTORY_KEY, next);
+  return next;
+}
+
+export function readFavorites(): string[] {
+  return readJson<string[]>(FAVORITES_KEY) ?? [];
+}
+
+export function isFavorite(slug: string): boolean {
+  return readFavorites().includes(slug);
+}
+
+/** Toggles a protocol slug in favorites and returns the updated list. */
+export function toggleFavorite(slug: string): string[] {
+  const current = readFavorites();
+  const next = current.includes(slug)
+    ? current.filter((s) => s !== slug)
+    : [...current, slug];
+  writeJson(FAVORITES_KEY, next);
+  return next;
+}
+
+export function readRecent(): string[] {
+  return readJson<string[]>(RECENT_KEY) ?? [];
+}
+
+/** Records a protocol as visited: moves it to the front, dedupes, caps at MAX_RECENT. */
+export function recordRecent(slug: string): string[] {
+  const current = readRecent().filter((s) => s !== slug);
+  const next = [slug, ...current].slice(0, MAX_RECENT);
+  writeJson(RECENT_KEY, next);
   return next;
 }

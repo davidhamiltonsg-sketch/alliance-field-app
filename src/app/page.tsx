@@ -2,6 +2,7 @@ import Link from "next/link";
 import { AllianceMark } from "@/components/AllianceMark";
 import { SectionLabel } from "@/components/SectionLabel";
 import { SituationCard } from "@/components/SituationCard";
+import { QuickAccess } from "@/components/QuickAccess";
 import { ArrowRight, PauseIcon, LayersIcon } from "@/components/icons";
 import { situations } from "@/data/situations";
 
@@ -86,6 +87,8 @@ export default function HomePage() {
         </span>
         <ArrowRight size={18} className="shrink-0 transition-transform group-hover:translate-x-0.5" />
       </Link>
+
+      <QuickAccess />
 
       <section className="space-y-3">
         <SectionLabel>Pick the first match</SectionLabel>

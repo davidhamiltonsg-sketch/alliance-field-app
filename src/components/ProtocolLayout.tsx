@@ -8,6 +8,7 @@ import { StepDiagram, WhenStrip } from "./visuals/StepDiagram";
 import { IconTablet } from "./visuals/IconTablet";
 import { protocolDiagrams } from "@/data/visuals/protocol-diagrams";
 import { WarnBanner } from "./WarnBanner";
+import { FavoriteButton } from "./FavoriteButton";
 import { ArrowLeft, ArrowRight, ChevronRight } from "./icons";
 
 function ExampleCard({
@@ -42,6 +43,8 @@ export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
         <div className="flex items-center gap-3">
           <IconTablet slug={protocol.slug} tone={protocol.accentHint ?? "accent"} size="lg" />
           <Marker kind="TOOL" />
+          <span className="flex-1" />
+          <FavoriteButton slug={protocol.slug} recordVisit />
         </div>
         <h1 className="display text-[28px] leading-[1.08]">
           {protocol.title}

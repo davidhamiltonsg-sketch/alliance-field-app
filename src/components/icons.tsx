@@ -125,3 +125,19 @@ export const ToolIcon = (p: IconProps) => (
     <path d="M8.5 12h7M12 8.5v7" />
   </Base>
 );
+
+export const StarIcon = ({ filled, ...p }: IconProps & { filled?: boolean }) => (
+  <Base {...p} fill={filled ? "currentColor" : "none"}>
+    <path
+      d="M12 3.5l2.47 5.14 5.53.72-4.06 3.98 1.03 5.66L12 16.2l-4.97 2.8 1.03-5.66-4.06-3.98 5.53-.72L12 3.5Z"
+      strokeLinejoin="round"
+    />
+  </Base>
+);
+
+export const ClockIcon = (p: IconProps) => (
+  <Base {...p}>
+    <circle cx="12" cy="12" r="8.5" />
+    <path d="M12 7.5V12l3 2" />
+  </Base>
+);

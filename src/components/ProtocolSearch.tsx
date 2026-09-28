@@ -1,30 +1,46 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { ChevronRight } from "./icons";
+import { ChevronRight, StarIcon } from "./icons";
 import { IconTablet } from "./visuals/IconTablet";
+import { FavoriteButton } from "./FavoriteButton";
+import { readFavorites } from "@/lib/storage";
 import type { Protocol } from "@/data/types";
 
 /** Client-side search + filter over the full protocol list. */
 export function ProtocolSearch({ protocols }: { protocols: Protocol[] }) {
   const [query, setQuery] = useState("");
+  const [favoritesOnly, setFavoritesOnly] = useState(false);
+  // Starts empty to match SSR, synced from localStorage after mount.
+  const [favorites, setFavorites] = useState<string[]>([]);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- syncing from localStorage, not mirroring props/state
+    setFavorites(readFavorites());
+  }, []);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
-    if (!q) return protocols;
-    return protocols.filter((p) => {
-      const haystack = [
-        p.title,
-        p.concept,
-        p.whenToUse,
-        ...p.phrases.map((ph) => ph.text),
-      ]
-        .join(" ")
-        .toLowerCase();
-      return haystack.includes(q);
-    });
-  }, [protocols, query]);
+    let list = protocols;
+    if (q) {
+      list = list.filter((p) => {
+        const haystack = [
+          p.title,
+          p.concept,
+          p.whenToUse,
+          ...p.phrases.map((ph) => ph.text),
+        ]
+          .join(" ")
+          .toLowerCase();
+        return haystack.includes(q);
+      });
+    }
+    if (favoritesOnly) {
+      list = list.filter((p) => favorites.includes(p.slug));
+    }
+    return list;
+  }, [protocols, query, favoritesOnly, favorites]);
 
   return (
     <div className="space-y-4">
@@ -39,10 +55,27 @@ export function ProtocolSearch({ protocols }: { protocols: Protocol[] }) {
         />
       </div>
 
+      {favorites.length > 0 && (
+        <button
+          type="button"
+          onClick={() => setFavoritesOnly((v) => !v)}
+          aria-pressed={favoritesOnly}
+          className={`inline-flex min-h-9 items-center gap-1.5 rounded-full px-3.5 text-[13px] font-medium transition-colors ${
+            favoritesOnly
+              ? "bg-pause text-white"
+              : "border border-rule/15 bg-white text-ink-muted"
+          }`}
+        >
+          <StarIcon size={14} filled={favoritesOnly} />
+          Favorites only
+        </button>
+      )}
+
       {filtered.length === 0 ? (
         <p className="py-8 text-center text-[15px] text-ink-muted">
-          No cards match &ldquo;{query}&rdquo;. Try a different word, or
-          browse the full list from the Situation Map.
+          {favoritesOnly
+            ? "No favorites yet. Tap the star on any card to save it here."
+            : <>No cards match &ldquo;{query}&rdquo;. Try a different word, or browse the full list from the Situation Map.</>}
         </p>
       ) : (
         <ul className="space-y-2.5">
@@ -52,7 +85,7 @@ export function ProtocolSearch({ protocols }: { protocols: Protocol[] }) {
               <li key={p.slug}>
                 <Link
                   href={`/protocols/${p.slug}`}
-                  className="v2-card relative flex min-h-14 items-center gap-3.5 py-3.5 pl-6 pr-3"
+                  className="v2-card relative flex min-h-14 items-center gap-3 py-3.5 pl-6 pr-3"
                 >
                   <span className={`v2-edge v2-edge--${tone}`} aria-hidden />
                   <IconTablet slug={p.slug} tone={tone} size="md" />
@@ -64,6 +97,12 @@ export function ProtocolSearch({ protocols }: { protocols: Protocol[] }) {
                       {p.concept}
                     </span>
                   </span>
+                  <FavoriteButton
+                    slug={p.slug}
+                    size={17}
+                    compact
+                    onChange={setFavorites}
+                  />
                   <ChevronRight size={20} className="shrink-0 text-ink-muted/50" />
                 </Link>
               </li>
