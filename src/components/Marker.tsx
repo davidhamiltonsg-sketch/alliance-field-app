@@ -1,14 +1,5 @@
 import type { ReactNode } from "react";
-import {
-  AlertIcon,
-  CheckIcon,
-  QuoteIcon,
-  ToolIcon,
-  XIcon,
-  ArrowRight,
-  InfoIcon,
-  TimerIcon,
-} from "./icons";
+import { ProtocolIcon } from "./visuals/ProtocolIcon";
 
 export type MarkerKind =
   | "TOOL"
@@ -45,17 +36,25 @@ const labels: Record<MarkerKind, string> = {
   FAIL: "Not Working",
 };
 
-const icons: Record<MarkerKind, ReactNode> = {
-  TOOL: <ToolIcon size={12} strokeWidth={2.25} />,
-  RULE: <InfoIcon size={12} strokeWidth={2.25} />,
-  WARN: <AlertIcon size={12} strokeWidth={2.25} />,
-  PAUSE: <TimerIcon size={12} strokeWidth={2.25} />,
-  DO: <ArrowRight size={12} strokeWidth={2.25} />,
-  NOTE: <InfoIcon size={12} strokeWidth={2.25} />,
-  PHRASE: <QuoteIcon size={12} strokeWidth={2.25} />,
-  OK: <CheckIcon size={12} strokeWidth={2.5} />,
-  FAIL: <XIcon size={12} strokeWidth={2.5} />,
+/** v2 library section icons (24-grid, arch-built). */
+const iconSlug: Record<MarkerKind, string> = {
+  TOOL: "section-tool",
+  RULE: "section-concept",
+  WARN: "section-caution",
+  PAUSE: "pause-and-return",
+  DO: "section-activity",
+  NOTE: "section-concept",
+  PHRASE: "section-say-this",
+  OK: "section-working",
+  FAIL: "section-not-working",
 };
+
+const icons = Object.fromEntries(
+  Object.entries(iconSlug).map(([k, slug]) => [
+    k,
+    <ProtocolIcon key={k} slug={slug} size={14} strokeWidth={2} className="-my-0.5 shrink-0" />,
+  ]),
+) as Record<MarkerKind, ReactNode>;
 
 /** Styled label pill replacing print-style bracket markers. */
 export function Marker({

@@ -1,5 +1,9 @@
 import type { SVGProps } from "react";
 
+// UI chrome icons. Pause/Timer and Reset use the v2 library glyphs
+// (icon-protocol-pause-and-return, icon-protocol-weekly-reset); the
+// protocol and section icons live in visuals/ProtocolIcon.tsx.
+
 type IconProps = SVGProps<SVGSVGElement> & { size?: number };
 
 function Base({ size = 22, children, ...rest }: IconProps) {
@@ -38,24 +42,30 @@ export const LayersIcon = (p: IconProps) => (
 );
 
 export const TimerIcon = (p: IconProps) => (
-  <Base {...p}>
-    <circle cx="12" cy="13.5" r="7.25" />
-    <path d="M12 9.75v3.75l2.25 1.5M9.75 3h4.5" />
+  <Base strokeWidth={1.5} {...p}>
+    <path d="M5.5 3H18.5M5.5 21H18.5" />
+    <path d="M7.5 3V6.5A4.5 4.5 0 0 0 16.5 6.5V3" />
+    <path d="M7.5 21V17.5A4.5 4.5 0 0 1 16.5 17.5V21" />
+    <path d="M12 16.32C13.2 17.44 13.6 18.4 13.6 19.12A2 2 0 0 1 10.4 19.12C10.4 18.4 10.8 17.44 12 16.32Z" fill="currentColor" stroke="none" />
   </Base>
 );
 
 export const PauseIcon = (p: IconProps) => (
-  <Base {...p}>
-    <path d="M9.5 7v10M14.5 7v10" />
+  <Base strokeWidth={1.5} {...p}>
+    <path d="M5.5 3H18.5M5.5 21H18.5" />
+    <path d="M7.5 3V6.5A4.5 4.5 0 0 0 16.5 6.5V3" />
+    <path d="M7.5 21V17.5A4.5 4.5 0 0 1 16.5 17.5V21" />
+    <path d="M12 16.32C13.2 17.44 13.6 18.4 13.6 19.12A2 2 0 0 1 10.4 19.12C10.4 18.4 10.8 17.44 12 16.32Z" fill="currentColor" stroke="none" />
   </Base>
 );
 
 export const ResetIcon = (p: IconProps) => (
-  <Base {...p}>
-    <path d="M4.5 12a7.5 7.5 0 0 1 12.8-5.3L19.5 9" />
-    <path d="M19.5 4.5V9H15" />
-    <path d="M19.5 12a7.5 7.5 0 0 1-12.8 5.3L4.5 15" />
-    <path d="M4.5 19.5V15H9" />
+  <Base strokeWidth={1.5} {...p}>
+    <path d="M4 21V9A8 8 0 0 1 20 9V21Z" />
+    <path d="M4 12.5H20" />
+    <path d="M15 16.6A3 3 0 1 1 13.9 14.3" />
+    <path d="M14.2 12.9L14.1 14.5L15.7 14.6" />
+    <path d="M12 4.6C12.9 5.4 13.2 6.1 13.2 6.7A1.2 1.2 0 0 1 10.8 6.7C10.8 6.1 11.1 5.4 12 4.6Z" fill="currentColor" stroke="none" />
   </Base>
 );
 
