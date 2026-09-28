@@ -96,6 +96,7 @@ function PauseTimerClient() {
   const [clockTime, setClockTime] = useState("");
   const [backMode, setBackMode] = useState(false);
   const [shareCopied, setShareCopied] = useState(false);
+  const [clockTimeError, setClockTimeError] = useState<string | null>(null);
   const alarmFiredForRef = useRef<string | null>(null);
 
   useEffect(() => {
@@ -150,9 +151,15 @@ function PauseTimerClient() {
       target.setDate(target.getDate() + 1);
     }
     const delta = target.getTime() - Date.now();
-    if (delta < 20 * 60 * 1000 || delta > 24 * 60 * 60 * 1000) {
-      // still allow but clamp messaging — min 20m max 24h preferred
+    if (delta < 20 * 60 * 1000) {
+      setClockTimeError("That's less than 20 minutes away — pick a later time.");
+      return;
     }
+    if (delta > 24 * 60 * 60 * 1000) {
+      setClockTimeError("That's more than 24 hours away — pick a sooner time.");
+      return;
+    }
+    setClockTimeError(null);
     const started = new Date().toISOString();
     writePause({
       returnAt: target.toISOString(),
@@ -341,7 +348,10 @@ function PauseTimerClient() {
               id="clock-time"
               type="time"
               value={clockTime}
-              onChange={(e) => setClockTime(e.target.value)}
+              onChange={(e) => {
+                setClockTime(e.target.value);
+                setClockTimeError(null);
+              }}
               className="field-input tabular"
             />
             <PrimaryButton
@@ -354,6 +364,11 @@ function PauseTimerClient() {
               Set
             </PrimaryButton>
           </div>
+          {clockTimeError ? (
+            <p className="text-[13px] text-failure">{clockTimeError}</p>
+          ) : (
+            <p className="text-[13px] text-ink-muted">Min 20 min · Max 24h away</p>
+          )}
         </div>
       </section>
     </div>
