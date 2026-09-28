@@ -1,31 +1,40 @@
 import type { CSSProperties, ReactNode } from "react";
 import { ProtocolIcon } from "../visuals/ProtocolIcon";
+import {
+  AdvisoryStrip,
+  ArchPanel,
+  Glyph,
+  Lens,
+  Medallion,
+  SERIF,
+  StatusOutline,
+  Thread,
+  Twist,
+  V,
+  archD,
+  arcD,
+  chevronD,
+  lancetD,
+  lensD,
+  polar,
+  tombD,
+  type Kind,
+} from "../visuals/v2";
 
 /**
- * Animated intro diagrams, re-laid out for a phone from the printed visuals
- * library (system-overview, situation-map-card, pause-return-timeline,
- * pattern-loop-cycle, weekly-reset-loop). Same palette, line semantics and
- * wording; sized so 13-unit text stays legible at 340 px.
+ * Animated intro diagrams in the v2 visual language of the printed library
+ * (system-overview, situation-map-full / -card, pause-return-timeline,
+ * pattern-loop-cycle, weekly-reset-loop), re-laid out for a phone: arch-topped
+ * panels, forest arch medallions with brass rims and serif italic numerals,
+ * decision lenses, threads with a bead start and a lancet end, woven
+ * two-ply spines, status rules with their glyphs. Same wording as before;
+ * text is at least 13.5 units, which renders at 13 px or more on a 390 px
+ * phone.
  *
  * Motion is CSS only (see globals.css "dg-*"): each element's resting state
  * is its final state; the parent adds `.dg-armed` and `.is-active` to play.
+ * Only transform, opacity and stroke-dashoffset animate.
  */
-
-const C = {
-  ink: "#1A1A1A",
-  muted: "#4A4A4A",
-  accent: "#3D5A4C",
-  pause: "#C47A1A",
-  repair: "#2F5F8A",
-  failure: "#A33B2B",
-  safety: "#2E7D4F",
-  rail: "#B8C2BB",
-  track: "#E4E9E5",
-  tool: "#EEF2EF",
-  activity: "#F3F0E8",
-  warn: "#F7EDE6",
-  white: "#FFFFFF",
-};
 
 type Vars = CSSProperties & Record<`--${string}`, string | number>;
 const t = (d: number, dur?: number, extra: Vars = {}): Vars => ({
@@ -33,76 +42,53 @@ const t = (d: number, dur?: number, extra: Vars = {}): Vars => ({
   ...(dur ? { "--dur": `${dur}ms` } : {}),
   ...extra,
 });
+const a = (className: string, d: number, dur?: number, extra?: Vars) => ({ className, style: t(d, dur, extra) });
 
-function Frame({
-  label,
-  viewBox,
-  children,
-}: {
-  label: string;
-  viewBox: string;
-  children: ReactNode;
-}) {
+function Frame({ label, viewBox, children }: { label: string; viewBox: string; children: ReactNode }) {
   return (
-    <svg
-      viewBox={viewBox}
-      className="block h-auto w-full font-sans"
-      role="img"
-      aria-label={label}
-    >
+    <svg viewBox={viewBox} className="block h-auto w-full font-sans" role="img" aria-label={label}>
       <title>{label}</title>
       {children}
     </svg>
   );
 }
 
-function Icon({
-  x,
-  y,
-  size = 20,
-  color,
-  children,
-}: {
-  x: number;
-  y: number;
-  size?: number;
-  color: string;
-  children: ReactNode;
-}) {
+/** v2 library icon placed inside an SVG (24 grid, stroke kept near 1.3 units). */
+function LibIcon({ slug, x, y, size = 18, color }: { slug: string; x: number; y: number; size?: number; color: string }) {
+  return (
+    <g transform={`translate(${x} ${y})`} style={{ color }}>
+      <ProtocolIcon slug={slug} size={size} strokeWidth={Math.max(1.5, Math.min(1.9, 1.3 / (size / 24)))} />
+    </g>
+  );
+}
+
+/** Icon seated in a small arch medallion with a brass rim (library icon_medallion). */
+function IconSeat({ slug, cx, cy, size = 22, color = V.accent }: { slug: string; cx: number; cy: number; size?: number; color?: string }) {
+  const w = size,
+    h = size * 1.12;
+  const y = cy - h / 2;
+  const isz = size * 0.66;
+  return (
+    <g>
+      <path d={tombD(cx, y - 2.2, w + 4.4, h + 4.4)} fill="none" stroke={V.brass} strokeWidth={0.7} />
+      <path d={tombD(cx, y, w, h)} fill={V.white} stroke={color} strokeWidth={0.85} />
+      <LibIcon slug={slug} x={cx - isz / 2} y={y + h * 0.56 - isz / 2} size={isz} color={color} />
+    </g>
+  );
+}
+
+/** Small inline 24-grid line drawing (for the three system panels). */
+function Sketch({ x, y, size = 22, color = V.accent, children }: { x: number; y: number; size?: number; color?: string; children: ReactNode }) {
   const s = size / 24;
   return (
-    <g
-      transform={`translate(${x} ${y}) scale(${s})`}
-      fill="none"
-      stroke={color}
-      strokeWidth={1.75}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
+    <g transform={`translate(${x} ${y}) scale(${s})`} fill="none" stroke={color} strokeWidth={1.5 / Math.max(s, 0.9)} strokeLinecap="round" strokeLinejoin="round">
       {children}
     </g>
   );
 }
 
-/** Library protocol icon placed inside an SVG. */
-function LibIcon({ slug, x, y, size = 18, color }: { slug: string; x: number; y: number; size?: number; color: string }) {
-  return (
-    <g transform={`translate(${x} ${y})`} style={{ color }}>
-      <ProtocolIcon slug={slug} size={size} />
-    </g>
-  );
-}
-
-const polar = (cx: number, cy: number, r: number, deg: number) => {
-  const a = (deg * Math.PI) / 180;
-  return [cx + r * Math.cos(a), cy + r * Math.sin(a)] as const;
-};
-const arc = (cx: number, cy: number, r: number, a0: number, a1: number) => {
-  const [x0, y0] = polar(cx, cy, r, a0);
-  const [x1, y1] = polar(cx, cy, r, a1);
-  const large = Math.abs(a1 - a0) > 180 ? 1 : 0;
-  return `M${x0.toFixed(2)} ${y0.toFixed(2)}A${r} ${r} 0 ${large} 1 ${x1.toFixed(2)} ${y1.toFixed(2)}`;
-};
+const leaf = (cx: number, cy: number, s = 1) =>
+  `M${cx} ${cy - 2.6 * s}C${cx + 1.5 * s} ${cy - 1.2 * s} ${cx + 2 * s} ${cy} ${cx + 2 * s} ${cy + 0.9 * s}A${2 * s} ${2 * s} 0 0 1 ${cx - 2 * s} ${cy + 0.9 * s}C${cx - 2 * s} ${cy} ${cx - 1.5 * s} ${cy - 1.2 * s} ${cx} ${cy - 2.6 * s}Z`;
 
 /* ------------------------------------------------------------------ */
 /* 1. One system: Manual + Kit + App → Situation → Protocol → Practice  */
@@ -110,189 +96,183 @@ const arc = (cx: number, cy: number, r: number, a0: number, a1: number) => {
 export function SystemDiagram() {
   const cards = [
     {
-      x: 4,
+      x: 0,
       title: "Manual",
       sub: ["26 chapters,", "three parts"],
-      fill: C.white,
-      icon: <path d="M3.5 5.5c2.8-1.2 5.6-1.2 8.5.8 2.9-2 5.7-2 8.5-.8v13c-2.8-1.2-5.6-1.2-8.5.8-2.9-2-5.7-2-8.5-.8zM12 6.3v13" />,
-    },
-    {
-      x: 120,
-      title: "Field Kit",
-      sub: ["12 cards,", "8 worksheets"],
-      fill: C.tool,
+      fill: V.white,
       icon: (
         <>
-          <rect x="4.5" y="7" width="12" height="14" rx="2" />
-          <path d="M8 4h9.5a2 2 0 0 1 2 2v12" />
+          <path d="M5 21.5V9A7 7 0 0 1 19 9V21.5Z" />
+          <path d="M8.6 21.5V10.2" />
+          <path d="M11.6 13H16M11.6 16.4H15" />
         </>
       ),
     },
     {
-      x: 236,
-      title: "Field App",
-      sub: ["Companion", "router"],
-      fill: C.white,
+      x: 116,
+      title: "Field Kit",
+      sub: ["12 cards,", "8 worksheets"],
+      fill: V.tint,
       icon: (
         <>
-          <rect x="6.5" y="2.5" width="11" height="19" rx="2.5" />
-          <path d="M10.5 18h3" />
+          <path d="M4.5 17.5V8A5 5 0 0 1 12.8 4.3" />
+          <path d="M8 21.5V11A5.5 5.5 0 0 1 19 11V21.5Z" />
+          <path d={leaf(13.5, 15.6, 1)} fill="currentColor" stroke="none" />
+        </>
+      ),
+    },
+    {
+      x: 232,
+      title: "Field App",
+      sub: ["Companion", "router"],
+      fill: V.white,
+      icon: (
+        <>
+          <path d="M7 21.5V7.5A5 5 0 0 1 17 7.5V21.5Z" />
+          <path d="M10.5 18.5H13.5" />
         </>
       ),
     },
   ];
   const flow = ["Situation", "Protocol", "Practice"];
-  const chev = (x: number, w: number, first: boolean) => {
-    const y = 186,
-      h = 58,
-      p = 12;
-    return first
-      ? `M${x} ${y}H${x + w - p}L${x + w} ${y + h / 2}L${x + w - p} ${y + h}H${x}Z`
-      : `M${x} ${y}H${x + w - p}L${x + w} ${y + h / 2}L${x + w - p} ${y + h}H${x}L${x + p} ${y + h / 2}Z`;
-  };
+  const fx = [0, 110, 222],
+    fw = [118, 120, 118];
+  const fy = 186,
+    fh = 56;
   return (
     <Frame
-      viewBox="0 0 340 300"
+      viewBox="0 0 340 306"
       label="Manual, Field Kit and Field App work as one system: find the situation, pull the protocol, practise it."
     >
       {cards.map((c, i) => (
-        <g key={c.title} className="dg-rise" style={t(80 + i * 140)}>
-          <rect x={c.x} y={6} width={100} height={100} rx={14} fill={c.fill} stroke={C.accent} strokeOpacity={0.55} strokeWidth={1.25} />
-          <Icon x={c.x + 12} y={18} size={22} color={C.accent}>
-            {c.icon}
-          </Icon>
-          <text x={c.x + 12} y={66} fontSize={14} fontWeight={600} fill={C.ink}>
+        <g key={c.title} {...a("dg-rise", 80 + i * 140)}>
+          <ArchPanel x={c.x} y={4} w={108} h={108} kind="step" fill={c.fill} rt={16} />
+          <g style={{ color: V.accent }}>
+            <Sketch x={c.x + 10} y={16} size={22}>
+              {c.icon}
+            </Sketch>
+          </g>
+          <text x={c.x + 10} y={62} fontFamily={SERIF} fontSize={15} fontWeight={600} fill={V.ink}>
             {c.title}
           </text>
+          <path d={`M${c.x + 10} ${70.5}H${c.x + 32}`} stroke={V.brass} strokeWidth={0.8} />
           {c.sub.map((s, j) => (
-            <text key={s} x={c.x + 12} y={83 + j * 15} fontSize={12.5} fill={C.muted}>
+            <text key={s} x={c.x + 10} y={87 + j * 16} fontSize={13.5} fill={V.muted}>
               {s}
             </text>
           ))}
         </g>
       ))}
-      {/* converge */}
-      <g fill="none" stroke={C.rail} strokeWidth={2} strokeLinecap="round">
-        <path className="dg-draw" style={t(620, 600)} pathLength={1} d="M54 108C54 136 120 132 170 150" />
-        <path className="dg-draw" style={t(620, 600)} pathLength={1} d="M170 108V150" />
-        <path className="dg-draw" style={t(620, 600)} pathLength={1} d="M286 108C286 136 220 132 170 150" />
-        <path className="dg-draw" style={t(1120, 300)} pathLength={1} d="M170 150V172" />
+      {/* three threads converge on a knot, then a woven twist into the flow */}
+      <g fill="none" stroke={V.thread} strokeWidth={1} strokeLinecap="round">
+        <path {...a("dg-draw", 620, 600)} pathLength={1} d="M54 115C54 140 140 134 163 146" />
+        <path {...a("dg-draw", 620, 600)} pathLength={1} d="M170 115V141" />
+        <path {...a("dg-draw", 620, 600)} pathLength={1} d="M286 115C286 140 200 134 177 146" />
       </g>
-      <path className="dg-pop" style={t(1300, 300)} d="M164 170L170 178L176 170Z" fill={C.rail} />
-      <circle className="dg-pop" style={t(1080, 360)} cx={170} cy={150} r={5} fill={C.accent} />
-      {/* flow chevrons */}
+      <g {...a("dg-pop", 600, 300)}>
+        <circle cx={54} cy={115} r={1.9} fill={V.thread} />
+        <circle cx={170} cy={115} r={1.9} fill={V.thread} />
+        <circle cx={286} cy={115} r={1.9} fill={V.thread} />
+      </g>
+      <g {...a("dg-pop", 1080, 360)}>
+        <path d={lensD(170, 147, 22, 11)} fill={V.forest} stroke={V.brass} strokeWidth={0.8} />
+      </g>
+      <Twist x={170} y0={153} y1={176} amp={3.6} {...a("dg-draw", 1150, 320)} />
+      <path {...a("dg-pop", 1400, 260)} d={lancetD(170, 184, Math.PI / 2, 8)} fill={V.thread} />
+      {/* flow: lancet chevrons */}
       {flow.map((f, i) => {
-        const x = 2 + i * 110;
-        const hi = i === 1;
+        const x = fx[i],
+          w = fw[i];
         return (
-          <g key={f} className="dg-rise" style={t(1400 + i * 220)}>
-            <path d={chev(x, 116, i === 0)} fill={hi ? C.tool : C.white} stroke={C.accent} strokeOpacity={0.7} strokeWidth={1.4} strokeLinejoin="round" />
-            <text x={x + (i === 0 ? 52 : 58)} y={220} textAnchor="middle" fontSize={14} fontWeight={600} fill={C.ink}>
+          <g key={f} {...a("dg-rise", 1400 + i * 220)}>
+            <path d={chevronD(x, fy, w, fh, i === 0, 15)} fill={i === 1 ? V.tint : V.white} />
+            <path d={chevronD(x, fy, w, fh, i === 0, 15)} fill="none" stroke={V.accent} strokeWidth={0.9} strokeLinejoin="round" />
+            <text x={x + (i === 0 ? w / 2 - 6 : w / 2 + 2)} y={fy + 34} textAnchor="middle" fontFamily={SERIF} fontSize={15} fontWeight={600} fill={V.ink}>
               {f}
             </text>
           </g>
         );
       })}
-      {/* travelling marker along the flow */}
-      <circle
-        className="dg-move"
-        style={t(2200, 2600, { "--move": "dg-sys-travel", "--iter": "infinite" })}
-        cx={300}
-        cy={254}
-        r={4}
-        fill={C.pause}
-      />
-      <path d="M20 254H318" stroke={C.track} strokeWidth={2} strokeLinecap="round" className="dg-fade" style={t(2000)} />
-      {/* flood gate band */}
-      <g className="dg-rise" style={t(2100)}>
-        <rect x={2} y={268} width={336} height={30} rx={10} fill={C.activity} stroke={C.pause} strokeWidth={1.5} strokeDasharray="6 4" />
-        <LibIcon slug="pause-and-return" x={12} y={274} size={18} color={C.pause} />
-        <text x={38} y={288} fontSize={13} fill={C.ink}>
+      {/* travelling bead along a thread under the flow */}
+      <g {...a("dg-fade", 2000)}>
+        <Thread pts={[[16, 256], [326, 256]]} color={V.hair} size={7} />
+      </g>
+      <g {...a("dg-move", 2200, 2600, { "--move": "dg-sys-travel", "--iter": "infinite" })}>
+        <circle cx={300} cy={256} r={4.4} fill={V.brassL} stroke={V.forest} strokeWidth={1.2} />
+      </g>
+      {/* flood gate: pause advisory strip */}
+      <AdvisoryStrip x={0} y={272} w={340} h={32} {...a("dg-rise", 2100)}>
+        <text x={42} y={292.5} fontSize={13.5} fill={V.ink}>
           Flooded? Pause + Return or Green Rule first.
         </text>
-      </g>
+      </AdvisoryStrip>
     </Frame>
   );
 }
 
 /* ------------------------------------------------------------------ */
-/* 2. Situation Map: first-match flowchart, one route highlighted       */
+/* 2. Situation Map: lens questions, first match routes to a card        */
 /* ------------------------------------------------------------------ */
 export function SituationMapDiagram() {
-  const rows = [
-    { q: ["Flooded, shut", "down, or unsafe", "to speak?"], a: ["Pause + Return"], icon: "pause-and-return" },
-    { q: ["Trust breach or", "uninvestment?"], a: ["Trust Recovery", "+ Proof"], icon: "trust-recovery" },
-    { q: ["Daily drift or", "weekly upkeep?"], a: ["Rhythm +", "Weekly Reset"], icon: "morning-evening-rhythm" },
-    { q: ["Conflict starting?"], a: ["Green Rule, then", "Overlay or", "Conflict"], icon: "conflict-protocol" },
+  const rows: { q: string[]; a: string[]; icon: string; kind: Kind }[] = [
+    { q: ["Flooded, shut", "down, or unsafe", "to speak?"], a: ["Pause + Return"], icon: "pause-and-return", kind: "step" },
+    { q: ["Trust breach or", "uninvestment?"], a: ["Trust Recovery", "+ Proof"], icon: "trust-recovery", kind: "repair" },
+    { q: ["Daily drift or", "weekly upkeep?"], a: ["Rhythm +", "Weekly Reset"], icon: "morning-evening-rhythm", kind: "step" },
+    { q: ["Conflict starting?"], a: ["Green Rule, then", "Overlay or", "Conflict"], icon: "conflict-protocol", kind: "step" },
   ];
-  const top = 26,
+  const top = 24,
     pitch = 76,
-    h = 60,
-    hx = 2,
-    hw = 158,
-    bx = 180,
+    h = 64,
+    lw = 160,
+    lcx = 80,
+    bx = 182,
     bw = 158;
-  const hex = (y: number) =>
-    `M${hx + 12} ${y}H${hx + hw - 12}L${hx + hw} ${y + h / 2}L${hx + hw - 12} ${y + h}H${hx + 12}L${hx} ${y + h / 2}Z`;
+  const lh = 15;
   return (
     <Frame
-      viewBox="0 0 340 330"
+      viewBox="0 0 340 336"
       label="Situation Map: answer yes or no from the top. Flooded, shut down, or unsafe to speak routes straight to Pause + Return."
     >
-      <text x={2} y={13} fontSize={13} fill={C.muted} className="dg-fade" style={t(0)}>
+      <text x={2} y={13} fontSize={13.5} fill={V.muted} {...a("dg-fade", 0)}>
         Follow the first match, top to bottom.
       </text>
       {rows.map((r, i) => {
         const y = top + i * pitch;
         const cy = y + h / 2;
-        const lh = 15;
-        const qy = cy - ((r.q.length - 1) * lh) / 2 + 4.5;
-        const ay = cy - ((r.a.length - 1) * lh) / 2 + (i === 0 ? -3 : 4.5);
+        const qy = cy - ((r.q.length - 1) * lh) / 2 + 5;
         const first = i === 0;
+        const ay = first ? cy - 3 : cy - ((r.a.length - 1) * lh) / 2 + 5;
+        const color = r.kind === "repair" ? V.repair : V.accent;
         return (
           <g key={i} className={first ? undefined : "dg-dim"} style={first ? undefined : t(1700 + i * 60, 600, { "--dim": 0.42 })}>
-            <g className="dg-rise" style={t(150 + i * 230)}>
-              <path d={hex(y)} fill={C.white} stroke={C.accent} strokeOpacity={0.55} strokeWidth={1.3} strokeLinejoin="round" />
+            <Lens cx={lcx} cy={cy} w={lw} h={h} {...a("dg-rise", 150 + i * 230)} />
+            <g {...a("dg-rise", 150 + i * 230)}>
               {r.q.map((l, j) => (
-                <text key={l} x={hx + hw / 2} y={qy + j * lh} textAnchor="middle" fontSize={13} fontWeight={600} fill={C.ink}>
+                <text key={l} x={lcx} y={qy + j * lh} textAnchor="middle" fontFamily={SERIF} fontSize={14} fontWeight={600} fill={V.ink}>
                   {l}
                 </text>
               ))}
             </g>
-            <path
-              className="dg-draw"
-              style={t(350 + i * 230, 260)}
-              pathLength={1}
-              d={`M${hx + hw + 2} ${cy}H${bx - 7}`}
-              stroke={C.rail}
-              strokeWidth={1.6}
-              fill="none"
+            <Thread
+              pts={[[lcx + lw / 2 + 1, cy], [bx - 1, cy]]}
+              size={7}
+              line={a("dg-draw", 350 + i * 230, 260)}
+              ends={a("dg-pop", 340 + i * 230, 200)}
+              tipAnim={a("dg-pop", 560 + i * 230, 240)}
             />
-            <path className="dg-pop" style={t(560 + i * 230, 240)} d={`M${bx - 8} ${cy - 4}L${bx - 1} ${cy}L${bx - 8} ${cy + 4}Z`} fill={C.rail} />
-            <g className="dg-rise" style={t(420 + i * 230)}>
-              <rect
-                x={bx}
-                y={y}
-                width={bw}
-                height={h}
-                rx={11}
-                fill={C.white}
-                stroke={i === 1 ? C.repair : C.accent}
-                strokeOpacity={0.6}
-                strokeWidth={1.3}
-              />
-              <LibIcon slug={r.icon} x={bx + 10} y={i === 0 ? cy - 16 : cy - 9} color={i === 1 ? C.repair : C.accent} />
+            <g {...a("dg-rise", 420 + i * 230)}>
+              <ArchPanel x={bx} y={y} w={bw} h={h} kind={r.kind} rt={14} />
+              <IconSeat slug={r.icon} cx={bx + 18} cy={first ? cy - 8 : cy} size={20} color={color} />
               {r.a.map((l, j) => (
-                <text key={l} x={bx + 36} y={ay + j * lh} fontSize={13} fontWeight={600} fill={C.ink}>
+                <text key={l} x={bx + 36} y={ay + j * lh} fontFamily={SERIF} fontSize={14} fontWeight={600} fill={V.ink}>
                   {l}
                 </text>
               ))}
             </g>
             {i < rows.length - 1 && (
-              <g className="dg-fade" style={t(300 + i * 230)}>
-                <path d={`M${hx + hw / 2} ${y + h + 2}V${y + pitch - 6}`} stroke={C.rail} strokeWidth={1.6} />
-                <path d={`M${hx + hw / 2 - 4} ${y + pitch - 8}L${hx + hw / 2} ${y + pitch - 2}L${hx + hw / 2 + 4} ${y + pitch - 8}Z`} fill={C.rail} />
-                <text x={hx + hw / 2 + 9} y={y + h + 13} fontSize={12} fill={C.muted}>
+              <g {...a("dg-fade", 300 + i * 230)}>
+                <Twist x={lcx} y0={y + h - 1} y1={y + pitch + 1} amp={3.4} startOver={i} />
+                <text x={lcx + 11} y={y + h + 12} fontFamily={SERIF} fontStyle="italic" fontSize={13.5} fill={V.muted}>
                   no
                 </text>
               </g>
@@ -302,24 +282,24 @@ export function SituationMapDiagram() {
       })}
       {/* highlighted route: Flooded → Pause + Return */}
       <g>
-        <path className="dg-fade" style={t(1350, 400)} d={hex(top)} fill="none" stroke={C.pause} strokeWidth={2.4} strokeLinejoin="round" />
-        <path
-          className="dg-draw"
-          style={t(1450, 380)}
-          pathLength={1}
-          d={`M${hx + hw + 2} ${top + h / 2}H${bx - 7}`}
-          stroke={C.pause}
-          strokeWidth={2.4}
-          fill="none"
+        <path {...a("dg-fade", 1350, 400)} d={lensD(lcx, top + h / 2, lw, h)} fill="none" stroke={V.pause} strokeWidth={2.2} />
+        <Thread
+          pts={[[lcx + lw / 2 + 1, top + h / 2], [bx - 1, top + h / 2]]}
+          color={V.pause}
+          sw={1.8}
+          size={8}
+          line={a("dg-draw", 1450, 380)}
+          ends={a("dg-pop", 1450, 200)}
+          tipAnim={a("dg-pop", 1700, 260)}
         />
-        <path className="dg-pop" style={t(1700, 260)} d={`M${bx - 9} ${top + h / 2 - 5}L${bx} ${top + h / 2}L${bx - 9} ${top + h / 2 + 5}Z`} fill={C.pause} />
-        <rect className="dg-pulse" style={t(2000)} x={bx} y={top} width={bw} height={h} rx={11} fill="none" stroke={C.safety} strokeWidth={2} />
-        <rect className="dg-pop" style={t(1750, 420)} x={bx} y={top} width={bw} height={h} rx={11} fill="none" stroke={C.safety} strokeWidth={2.6} />
-        <text className="dg-fade" style={t(1850)} x={bx + 36} y={top + h / 2 + 14} fontSize={12} fill={C.muted}>
+        <path {...a("dg-pulse", 2000, undefined, { "--pulse": 1.12 })} d={archD(bx, top, bw, h, 14)} fill="none" stroke={V.safety} strokeWidth={2} />
+        <StatusOutline {...a("dg-pop", 1750, 420)} kind="safety" d={() => archD(bx, top, bw, h, 14)} />
+        <Glyph kind="safety" x={bx + bw - 20} y={top + 7} s={13} {...a("dg-pop", 1800, 360)} />
+        <text {...a("dg-fade", 1850)} x={bx + 9} y={top + h / 2 + 20} fontSize={13.5} fill={V.muted}>
           or 60-Second Reset
         </text>
       </g>
-      <text x={2} y={326} fontSize={12.5} fill={C.muted} className="dg-fade" style={t(1300)}>
+      <text x={2} y={331} fontSize={13.5} fill={V.muted} {...a("dg-fade", 1300)}>
         Three more rows follow in the map.
       </text>
     </Frame>
@@ -327,10 +307,25 @@ export function SituationMapDiagram() {
 }
 
 /* ------------------------------------------------------------------ */
-/* 3. Pause + Return timeline with a travelling marker                  */
+/* 3. Pause + Return timeline on a woven spine with a travelling bead    */
 /* ------------------------------------------------------------------ */
+function Station({ cy, kind, glyph, className, style }: { cy: number; kind: Kind; glyph: "when" | "pause" | "repair" | "outcome"; className?: string; style?: CSSProperties }) {
+  const w = 22,
+    h = 25,
+    x = 22 - w / 2,
+    y = cy - h / 2 - 1;
+  const color = kind === "pause" ? V.pause : kind === "repair" ? V.repair : V.accent;
+  return (
+    <g className={className} style={style}>
+      <path d={tombD(22, y - 2.4, w + 4.8, h + 4.8)} fill={V.paper} stroke={V.brass} strokeWidth={0.7} />
+      <path d={tombD(22, y, w, h)} fill={kind === "pause" ? V.warm : V.white} />
+      <StatusOutline kind={kind} inset={2.2} d={(i) => tombD(22, y + i, w - 2 * i, h - i)} />
+      <Glyph kind={glyph} x={x + 4.5} y={y + 7} s={13} color={color} sw={1.2} />
+    </g>
+  );
+}
+
 export function PauseTimelineDiagram() {
-  const rx = 22;
   const s = 0.82; // time scale for delays
   const stops = [
     { y: 22, title: "Flooded or shut down", detail: "Racing heart, tunnel vision.", at: 250 },
@@ -339,55 +334,71 @@ export function PauseTimelineDiagram() {
     { y: 250, title: "“See you at ___.”", detail: "At the agreed time, even briefly.", at: 3850 },
     { y: 306, title: "Warmth → Safety", detail: "Not “where we left off”.", at: 4700 },
   ];
+  // woven spine between stations (window occupies 140–226)
+  const spans: [number, number, number, number][] = [
+    [22, 82, 200, 900],
+    [82, 140, 1300, 800],
+    [226, 250, 3500, 350],
+    [250, 306, 3900, 700],
+  ];
+  const detail = (d: string) =>
+    d.startsWith("“") ? (
+      <tspan fontFamily={SERIF} fontStyle="italic" fontSize={14.5} fill={V.ink}>
+        {d}
+      </tspan>
+    ) : d.includes("“") ? (
+      <>
+        {d.slice(0, d.indexOf("“"))}
+        <tspan fontFamily={SERIF} fontStyle="italic" fontSize={14.5} fill={V.ink}>
+          {d.slice(d.indexOf("“"), d.lastIndexOf("”") + 1)}
+        </tspan>
+        {d.slice(d.lastIndexOf("”") + 1)}
+      </>
+    ) : (
+      d
+    );
   return (
     <Frame
       viewBox="0 0 340 336"
       label="Pause + Return timeline: flooded, signal a pause with a return time, separate for 15 minutes to 24 hours, return at the agreed time, restart with warmth then safety."
     >
-      <path d={`M${rx} 22V306`} stroke={C.track} strokeWidth={2} strokeLinecap="round" />
-      <path className="dg-draw" style={t(200, 4700 * s)} pathLength={1} d={`M${rx} 22V306`} stroke={C.rail} strokeWidth={2} strokeLinecap="round" fill="none" />
-      {/* pause window capsule */}
-      <g className="dg-pop" style={t(2150 * s, 420)}>
-        <rect x={rx - 8} y={140} width={16} height={86} rx={8} fill={C.activity} stroke={C.pause} strokeWidth={1.6} strokeDasharray="5 3.5" />
+      {spans.map(([y0, y1, d, dur], i) => (
+        <Twist key={y0} x={22} y0={y0} y1={y1} amp={4.6} startOver={i} {...a("dg-draw", d * s, dur * s)} />
+      ))}
+      {/* pause window: arch-topped slot, dashed double amber, fills over time */}
+      <g {...a("dg-pop", 2150 * s, 420)}>
+        <ArchPanel x={13} y={140} w={18} h={86} kind="pause" rt={9} />
       </g>
-      <path className="dg-draw" style={t(2300 * s, 1300 * s)} pathLength={1} d={`M${rx} 148V218`} stroke={C.pause} strokeOpacity={0.55} strokeWidth={6} strokeLinecap="round" fill="none" />
-      {/* stop nodes */}
-      <circle className="dg-pop" style={t(stops[0].at * s)} cx={rx} cy={22} r={5.5} fill={C.muted} />
-      <circle className="dg-pop" style={t(stops[1].at * s)} cx={rx} cy={82} r={6.5} fill={C.pause} />
-      <g className="dg-pop" style={t(stops[3].at * s)}>
-        <circle cx={rx} cy={250} r={8} fill={C.white} stroke={C.repair} strokeWidth={2.4} />
-        <circle cx={rx} cy={250} r={3.2} fill={C.repair} />
+      <path {...a("dg-draw", 2300 * s, 1300 * s)} pathLength={1} d="M22 152V216" stroke={V.pause} strokeOpacity={0.55} strokeWidth={5} strokeLinecap="round" fill="none" />
+      {/* stations */}
+      <Station cy={22} kind="step" glyph="when" {...a("dg-pop", stops[0].at * s)} />
+      <Station cy={82} kind="pause" glyph="pause" {...a("dg-pop", stops[1].at * s)} />
+      <Station cy={250} kind="repair" glyph="repair" {...a("dg-pop", stops[3].at * s)} />
+      <Station cy={306} kind="repair" glyph="outcome" {...a("dg-pop", stops[4].at * s)} />
+      {/* travelling bead */}
+      <g {...a("dg-move", 250 * s, 4700 * s, { "--move": "dg-pr-travel" })}>
+        <circle cx={22} cy={306} r={9.5} fill="none" stroke={V.pause} strokeWidth={2} />
+        <circle cx={22} cy={306} r={12} fill="none" stroke={V.brass} strokeWidth={0.7} />
       </g>
-      <rect className="dg-pop" style={t(stops[4].at * s)} x={rx - 5} y={296} width={10} height={20} rx={5} fill={C.repair} />
-      {/* marker */}
-      <circle
-        className="dg-move"
-        style={t(250 * s, 4700 * s, { "--move": "dg-pr-travel" })}
-        cx={rx}
-        cy={306}
-        r={9}
-        fill="none"
-        stroke={C.pause}
-        strokeWidth={2.4}
-      />
       {stops.map((p) => (
-        <g key={p.title} className="dg-rise" style={t(p.at * s)}>
-          <text x={48} y={p.y + 5} fontSize={14.5} fontWeight={600} fill={C.ink}>
+        <g key={p.title} {...a("dg-rise", p.at * s)}>
+          <text x={48} y={p.y + 5} fontFamily={SERIF} fontSize={15} fontWeight={600} fill={V.ink}>
             {p.title}
           </text>
-          <text x={48} y={p.y + 24} fontSize={13} fill={C.muted}>
-            {p.detail}
+          <text x={48} y={p.y + 24} fontSize={13.5} fill={V.muted}>
+            {detail(p.detail)}
           </text>
         </g>
       ))}
-      {/* the window's range */}
-      <g className="dg-pop" style={t(2600 * s)}>
-        <rect x={48} y={188} width={104} height={26} rx={13} fill={C.white} stroke={C.pause} strokeOpacity={0.6} strokeWidth={1.3} />
-        <text x={100} y={205.5} textAnchor="middle" fontSize={13} fontWeight={600} fill="#9A5E10" className="tabular">
+      {/* the window's range: arch tab, dashed amber */}
+      <g {...a("dg-pop", 2600 * s)}>
+        <path d={archD(48, 188, 104, 26, 10, 1.5)} fill={V.white} />
+        <StatusOutline kind="pause" inset={2.4} d={(i) => archD(48 + i, 188 + i, 104 - 2 * i, 26 - 2 * i, 10 - i, 1.5)} />
+        <text x={100} y={205.5} textAnchor="middle" fontSize={13.5} fontWeight={600} fill={V.pauseInk} className="tabular">
           15 min – 24 h
         </text>
       </g>
-      <text className="dg-fade" style={t(2750 * s)} x={162} y={205.5} fontSize={12.5} fill={C.muted}>
+      <text {...a("dg-fade", 2750 * s)} x={160} y={205.5} fontSize={13.5} fill={V.muted}>
         No rehearsing arguments.
       </text>
     </Frame>
@@ -395,79 +406,110 @@ export function PauseTimelineDiagram() {
 }
 
 /* ------------------------------------------------------------------ */
-/* 4. Pattern loop with the interruption point                          */
+/* 4. Pattern loop on a woven ring, interrupted at Pattern               */
 /* ------------------------------------------------------------------ */
 export function PatternLoopDiagram() {
   const cx = 170,
-    cy = 144,
-    r = 94;
+    cy = 146,
+    r = 100;
   const stages = [
-    { name: "Trigger", a: -90, color: C.pause, lx: 0, ly: -24 },
-    { name: "Pattern", a: -18, color: C.pause, lx: 0, ly: 32 },
-    { name: "Escalation", a: 54, color: C.pause, lx: 0, ly: 32 },
-    { name: "Residue", a: 126, color: C.failure, lx: 0, ly: 32 },
-    { name: "Reinforcement", a: 198, color: C.failure, lx: 2, ly: 32 },
+    { name: "Trigger", a: -90, kind: "pause" as Kind, w: 96, gap: 30 },
+    { name: "Pattern", a: -18, kind: "pause" as Kind, w: 100, gap: 12 },
+    { name: "Escalation", a: 54, kind: "pause" as Kind, w: 116, gap: 17 },
+    { name: "Residue", a: 126, kind: "failure" as Kind, w: 102, gap: 17 },
+    { name: "Reinforcement", a: 198, kind: "failure" as Kind, w: 146, gap: 12 },
   ];
-  const gapDeg = 11;
+  const th = 30;
   const breakAt = 18; // between Pattern and Escalation
-  const [b0x, b0y] = polar(cx, cy, r - 13, breakAt);
-  const [b1x, b1y] = polar(cx, cy, r + 13, breakAt);
-  const [px, py] = polar(cx, cy, r, -18);
+  const [b0x, b0y] = polar(cx, cy, r - 11, breakAt);
+  const [b1x, b1y] = polar(cx, cy, r + 11, breakAt);
+  const tang = ((breakAt + 90) * Math.PI) / 180;
+  const off = (k: number) => [Math.cos(tang) * k, Math.sin(tang) * k] as const;
+  // brass ply wound round the ring (one thread, twice round)
+  const ply = Array.from({ length: 241 }, (_, i) => {
+    const th2 = (i / 240) * Math.PI * 2;
+    const rr = r + 3 * Math.sin(th2 * 10);
+    return `${(cx + rr * Math.cos(th2)).toFixed(2)} ${(cy + rr * Math.sin(th2)).toFixed(2)}`;
+  });
+  // guilloche rosette at the centre
+  const ros = Array.from({ length: 361 }, (_, i) => {
+    const th2 = (i / 360) * Math.PI * 2;
+    const rr = 40 + 3.2 * Math.cos(th2 * 24);
+    return `${(cx + rr * Math.cos(th2)).toFixed(2)} ${(cy + rr * Math.sin(th2)).toFixed(2)}`;
+  });
   return (
     <Frame
-      viewBox="0 0 340 266"
+      viewBox="0 0 340 252"
       label="Pattern loop: trigger, pattern, escalation, residue, reinforcement, then back to trigger. Interrupt at the pattern stage to stop the loop."
     >
-      {/* arcs */}
-      {stages.map((s, i) => {
-        const a0 = s.a + gapDeg;
-        const a1 = s.a + 72 - gapDeg;
+      <path {...a("dg-fade", 700, 900)} d={`M${ros.join("L")}Z`} fill="none" stroke={V.brass} strokeWidth={0.5} strokeOpacity={0.6} />
+      <path {...a("dg-fade", 900, 900)} d={`M${ply.join("L")}Z`} fill="none" stroke={V.brass} strokeWidth={0.8} strokeOpacity={0.75} />
+      {/* thread arcs with lancet ends */}
+      {stages.map((st, i) => {
+        const nx = stages[(i + 1) % stages.length];
+        const a0 = st.a + st.gap + 2;
+        const a1 = st.a + 72 - nx.gap - 2;
         const [hx, hy] = polar(cx, cy, r, a1);
-        const ang = a1 + 90;
+        const ang = ((a1 + 90) * Math.PI) / 180;
+        const [sx, sy] = polar(cx, cy, r, a0);
         const downstream = i >= 1;
         return (
-          <g key={s.name} className={downstream ? "dg-dim" : undefined} style={downstream ? t(2750, 700, { "--dim": 0.26 }) : undefined}>
-            <path className="dg-draw" style={t(1000 + i * 230, 260)} pathLength={1} d={arc(cx, cy, r, a0, a1)} fill="none" stroke={C.failure} strokeOpacity={0.75} strokeWidth={1.8} strokeLinecap="round" />
-            <g transform={`translate(${hx.toFixed(2)} ${hy.toFixed(2)}) rotate(${ang})`}>
-              <path className="dg-pop" style={t(1220 + i * 230, 200)} d="M-5 -4.5L4 0L-5 4.5Z" fill={C.failure} fillOpacity={0.85} />
-            </g>
+          <g key={st.name} className={downstream ? "dg-dim" : undefined} style={downstream ? t(2750, 700, { "--dim": 0.26 }) : undefined}>
+            <path {...a("dg-draw", 1000 + i * 230, 260)} pathLength={1} d={arcD(cx, cy, r, a0, a1 - 3)} fill="none" stroke={V.failure} strokeWidth={1.2} strokeLinecap="round" />
+            <circle {...a("dg-pop", 1000 + i * 230, 200)} cx={sx} cy={sy} r={1.9} fill={V.failure} />
+            <path {...a("dg-pop", 1220 + i * 230, 200)} d={lancetD(hx, hy, ang, 8)} fill={V.failure} />
           </g>
         );
       })}
-      {/* nodes */}
-      {stages.map((s, i) => {
-        const [x, y] = polar(cx, cy, r, s.a);
+      {/* stage tabs: arch-topped, medallion + name */}
+      {stages.map((st, i) => {
+        const [x, y] = polar(cx, cy, r, st.a);
         const dim = i >= 2;
+        const color = st.kind === "pause" ? V.pause : V.failure;
+        const x0 = x - st.w / 2,
+          y0 = y - th / 2;
         return (
-          <g key={s.name} className={dim ? "dg-dim" : undefined} style={dim ? t(2750, 700, { "--dim": 0.4 }) : undefined}>
-            <g className="dg-pop" style={t(120 + i * 170)}>
-              <circle cx={x} cy={y} r={15} fill={s.color} />
-              <text x={x} y={y + 4.8} textAnchor="middle" fontSize={13.5} fontWeight={600} fill={C.white}>
-                {i + 1}
-              </text>
+          <g key={st.name} className={dim ? "dg-dim" : undefined} style={dim ? t(2750, 700, { "--dim": 0.4 }) : undefined}>
+            <g {...a("dg-pop", 120 + i * 170)}>
+              <ArchPanel x={x0} y={y0} w={st.w} h={th} kind={st.kind} rt={11} />
+              <Medallion cx={x0 + 17} cy={y + 1} n={i + 1} w={17} h={20} size={13.5} ground={color} numColor={V.white} gap={st.kind === "pause" ? V.warm : V.warn} />
             </g>
-            <text className="dg-fade" style={t(260 + i * 170)} x={x + s.lx} y={y + s.ly} textAnchor="middle" fontSize={14} fontWeight={600} fill={C.ink}>
-              {s.name}
+            <text {...a("dg-fade", 260 + i * 170)} x={x0 + 33} y={y + 5} fontFamily={SERIF} fontSize={14} fontWeight={600} fill={V.ink}>
+              {st.name}
             </text>
           </g>
         );
       })}
       {/* centre */}
-      <g className="dg-fade" style={t(900)}>
-        <text x={cx} y={cy + 24} textAnchor="middle" fontSize={14} fontWeight={600} fill={C.ink}>
+      <g {...a("dg-fade", 900)}>
+        <text x={cx} y={cy + 1} textAnchor="middle" fontFamily={SERIF} fontSize={15} fontWeight={600} fill={V.ink}>
           Self-sustaining
         </text>
-        <text x={cx} y={cy + 42} textAnchor="middle" fontSize={13} fill={C.muted}>
+        <text x={cx} y={cy + 20} textAnchor="middle" fontFamily={SERIF} fontStyle="italic" fontSize={14} fill={V.muted}>
           until interrupted
         </text>
       </g>
       {/* interruption at Pattern */}
-      <circle className="dg-pulse" style={t(2250)} cx={px} cy={py} r={15} fill="none" stroke={C.pause} strokeWidth={2.5} />
-      <circle className="dg-pop" style={t(2200, 380)} cx={px} cy={py} r={20} fill="none" stroke={C.pause} strokeWidth={2} strokeDasharray="4 3" />
-      <path className="dg-pop" style={t(2500, 360)} d={`M${b0x.toFixed(2)} ${b0y.toFixed(2)}L${b1x.toFixed(2)} ${b1y.toFixed(2)}`} stroke={C.pause} strokeWidth={4.5} strokeLinecap="round" />
-      <g className="dg-pop" style={t(2300, 420)}>
-        <rect x={262} y={56} width={76} height={26} rx={13} fill={C.activity} stroke={C.pause} strokeWidth={1.4} strokeDasharray="5 3" />
-        <text x={300} y={73.5} textAnchor="middle" fontSize={13} fontWeight={600} fill="#9A5E10">
+      {(() => {
+        const st = stages[1];
+        const [x, y] = polar(cx, cy, r, st.a);
+        const d = archD(x - st.w / 2 - 5, y - th / 2 - 5, st.w + 10, th + 10, 15);
+        return (
+          <>
+            <path {...a("dg-pulse", 2250, undefined, { "--pulse": 1.22 })} d={d} fill="none" stroke={V.pause} strokeWidth={2.2} />
+            <path {...a("dg-pop", 2200, 380)} d={d} fill="none" stroke={V.pause} strokeWidth={1.2} strokeDasharray="4 2.4" />
+          </>
+        );
+      })()}
+      <g {...a("dg-pop", 2500, 360)} stroke={V.pause} strokeWidth={2.2} strokeLinecap="round">
+        <path d={`M${(b0x + off(-2.4)[0]).toFixed(2)} ${(b0y + off(-2.4)[1]).toFixed(2)}L${(b1x + off(-2.4)[0]).toFixed(2)} ${(b1y + off(-2.4)[1]).toFixed(2)}`} />
+        <path d={`M${(b0x + off(2.4)[0]).toFixed(2)} ${(b0y + off(2.4)[1]).toFixed(2)}L${(b1x + off(2.4)[0]).toFixed(2)} ${(b1y + off(2.4)[1]).toFixed(2)}`} />
+      </g>
+      <g {...a("dg-pop", 2300, 420)}>
+        <path d={archD(245, 46, 93, 27, 11, 1.5)} fill={V.warm} />
+        <StatusOutline kind="pause" inset={2.4} d={(i) => archD(245 + i, 46 + i, 93 - 2 * i, 27 - 2 * i, 11 - i, 1.5)} />
+        <Glyph kind="pause" x={253} y={53} s={13} />
+        <text x={271} y={64} fontSize={13.5} fontWeight={600} fill={V.pauseInk}>
           Interrupt
         </text>
       </g>
@@ -476,12 +518,12 @@ export function PatternLoopDiagram() {
 }
 
 /* ------------------------------------------------------------------ */
-/* 5. Weekly Reset: circular agenda that fills step by step             */
+/* 5. Weekly Reset: woven ring with medallions, agenda that fills        */
 /* ------------------------------------------------------------------ */
 export function WeeklyResetDiagram() {
-  const cx = 86,
+  const cx = 78,
     cy = 124,
-    r = 64;
+    r = 60;
   const steps = [
     { title: "Appreciation", sub: "5 min" },
     { title: "Care Audit", sub: "10–15 min" },
@@ -490,59 +532,76 @@ export function WeeklyResetDiagram() {
     { title: "Alignment", sub: "Next step + review" },
   ];
   const seg = 72,
-    gap = 4;
+    gapDeg = 15;
+  const ply = Array.from({ length: 241 }, (_, i) => {
+    const th2 = (i / 240) * Math.PI * 2;
+    const rr = r + 2.6 * Math.sin(th2 * 9);
+    return `${(cx + rr * Math.cos(th2)).toFixed(2)} ${(cy + rr * Math.sin(th2)).toFixed(2)}`;
+  });
+  const ros = Array.from({ length: 361 }, (_, i) => {
+    const th2 = (i / 360) * Math.PI * 2;
+    const rr = 41 + 2.6 * Math.cos(th2 * 30);
+    return `${(cx + rr * Math.cos(th2)).toFixed(2)} ${(cy + rr * Math.sin(th2)).toFixed(2)}`;
+  });
+  const [nwx, nwy] = polar(cx, cy, r + 15, -112);
   return (
     <Frame
       viewBox="0 0 340 280"
       label="Weekly Reset agenda: appreciation 5 minutes, care audit 10 to 15, friction review 10 to 15, requests, alignment. A 30-minute timer, same day and time each week."
     >
-      <circle cx={cx} cy={cy} r={r} fill="none" stroke={C.track} strokeWidth={14} />
+      {/* guilloche centre ring and the brass ply of the woven ring */}
+      <g {...a("dg-fade", 150, 900)}>
+        <path d={`M${ros.join("L")}Z`} fill="none" stroke={V.brass} strokeWidth={0.5} strokeOpacity={0.65} />
+        <circle cx={cx} cy={cy} r={35.5} fill="none" stroke={V.brass} strokeWidth={0.5} strokeOpacity={0.65} />
+        <circle cx={cx} cy={cy} r={46.5} fill="none" stroke={V.brass} strokeWidth={0.5} strokeOpacity={0.65} />
+        <path d={`M${ply.join("L")}Z`} fill="none" stroke={V.brass} strokeWidth={0.8} strokeOpacity={0.8} />
+      </g>
       {steps.map((s, i) => {
-        const a0 = -90 + i * seg + gap;
-        const a1 = -90 + (i + 1) * seg - gap;
-        const [nx, ny] = polar(cx, cy, r, (a0 + a1) / 2);
+        const am = -90 + i * seg;
+        const a0 = am + gapDeg;
+        const a1 = am + seg - gapDeg;
+        const [ex, ey] = polar(cx, cy, r, a1);
+        const ang = ((a1 + 90) * Math.PI) / 180;
+        const [mx, my] = polar(cx, cy, r, am);
         const at = 350 + i * 520;
-        const y = 22 + i * 44;
+        const y = 22 + i * 46;
         return (
           <g key={s.title}>
-            <path className="dg-draw" style={t(at, 460)} pathLength={1} d={arc(cx, cy, r, a0, a1)} fill="none" stroke={C.accent} strokeWidth={14} strokeLinecap="butt" />
-            <text className="dg-fade" style={t(at + 260)} x={nx} y={ny + 4.3} textAnchor="middle" fontSize={11.5} fontWeight={600} fill={C.white}>
-              {i + 1}
-            </text>
-            <g className="dg-rise" style={t(at + 120)}>
-              <circle cx={184} cy={y + 8} r={11} fill={C.accent} />
-              <text x={184} y={y + 12.6} textAnchor="middle" fontSize={12.5} fontWeight={600} fill={C.white}>
-                {i + 1}
-              </text>
-              <text x={203} y={y + 7} fontSize={14} fontWeight={600} fill={C.ink}>
+            <path {...a("dg-draw", at + 120, 420)} pathLength={1} d={arcD(cx, cy, r, a0, a1 - 3.5)} fill="none" stroke={V.accent} strokeWidth={1.6} strokeLinecap="round" />
+            <path {...a("dg-pop", at + 480, 200)} d={lancetD(ex, ey, ang, 8)} fill={V.accent} />
+            <Medallion cx={mx} cy={my} n={i + 1} w={19} h={23} size={14} {...a("dg-pop", at)} />
+            <g {...a("dg-rise", at + 120)}>
+              <Medallion cx={172} cy={y + 8} n={i + 1} w={17} h={20} size={13.5} />
+              <text x={190} y={y + 9} fontFamily={SERIF} fontSize={14.5} fontWeight={600} fill={V.ink}>
                 {s.title}
               </text>
-              <text x={203} y={y + 25} fontSize={12.5} fill={C.muted} className="tabular">
+              <text x={190} y={y + 27} fontSize={13.5} fill={V.muted} className="tabular">
                 {s.sub}
               </text>
             </g>
           </g>
         );
       })}
-      <g className="dg-fade" style={t(200)}>
-        <text x={cx} y={cy + 4} textAnchor="middle" fontSize={30} fontWeight={600} fill={C.accent} className="tabular">
+      <g {...a("dg-fade", 200)}>
+        <text x={cx} y={cy + 5} textAnchor="middle" fontFamily={SERIF} fontSize={32} fontWeight={600} fill={V.accent} className="tabular">
           30
         </text>
-        <text x={cx} y={cy + 24} textAnchor="middle" fontSize={12.5} fill={C.muted}>
+        <text x={cx} y={cy + 24} textAnchor="middle" fontSize={13.5} fill={V.muted}>
           minutes
         </text>
       </g>
-      <path className="dg-fade" style={t(2900)} d={arc(cx, cy, r + 15, -120, -96)} fill="none" stroke={C.accent} strokeWidth={1.6} strokeDasharray="4 3" strokeLinecap="round" />
-      <text className="dg-fade" style={t(2900)} x={8} y={36} fontSize={12} fontWeight={600} fill={C.accent}>
-        next week
-      </text>
-      <g className="dg-rise" style={t(3000)}>
-        <rect x={2} y={244} width={336} height={32} rx={10} fill={C.activity} stroke={C.pause} strokeWidth={1.5} strokeDasharray="6 4" />
-        <LibIcon slug="pause-and-return" x={12} y={251} size={18} color={C.pause} />
-        <text x={38} y={265} fontSize={13} fill={C.ink}>
-          Either partner flooded? Pause + Return first.
+      <g {...a("dg-fade", 2900)}>
+        <path d={arcD(cx, cy, r + 15, -150, -116)} fill="none" stroke={V.accent} strokeWidth={1} strokeDasharray="3 2.6" strokeLinecap="round" />
+        <path d={lancetD(nwx, nwy, ((-112 + 90) * Math.PI) / 180, 7)} fill={V.accent} />
+        <text x={2} y={44} fontFamily={SERIF} fontStyle="italic" fontSize={14} fill={V.accent}>
+          next week
         </text>
       </g>
+      <AdvisoryStrip x={0} y={246} w={340} h={32} {...a("dg-rise", 3000)}>
+        <text x={42} y={266.5} fontSize={13.5} fill={V.ink}>
+          Either partner flooded? Pause + Return first.
+        </text>
+      </AdvisoryStrip>
     </Frame>
   );
 }

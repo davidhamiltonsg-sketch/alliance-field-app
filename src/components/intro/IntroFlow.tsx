@@ -162,7 +162,7 @@ export function IntroFlow() {
               aria-hidden={i !== index ? true : undefined}
             >
               <div className="mx-auto my-auto w-full max-w-[420px] pb-2">
-                <div className="rounded-3xl border border-rule/[0.08] bg-white/90 p-3 shadow-[var(--shadow-card)]">
+                <div className="rounded-[26px_26px_6px_6px] border border-[#A8895A]/45 bg-white/90 p-2 shadow-[var(--shadow-card)]">
                   {/* equal-height stage so headlines line up across panels */}
                   <div className="flex aspect-[340/336] w-full items-center">{p.diagram}</div>
                 </div>
