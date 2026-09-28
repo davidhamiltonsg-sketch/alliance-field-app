@@ -83,7 +83,7 @@ export function ConnectionCards() {
       key={value}
       type="button"
       onClick={() => changeFilter(value)}
-      className={`min-h-9 shrink-0 rounded-full px-3.5 text-[13px] font-medium transition-colors ${
+      className={`min-h-11 shrink-0 rounded-full px-3.5 text-[13px] font-medium transition-colors ${
         filter === value
           ? "bg-accent text-paper"
           : "border border-rule/15 bg-white text-ink-muted"
