@@ -168,7 +168,7 @@ function WeeklyResetWizardClient() {
         <WizardStep
           step={2}
           total={5}
-          title="Care Audit (10–15)"
+          title="Care Check-in (10–15)"
           onBack={() => setStep(1)}
           onNext={() => setStep(3)}
         >

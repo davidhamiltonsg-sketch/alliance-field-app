@@ -526,7 +526,7 @@ export function WeeklyResetDiagram() {
     r = 60;
   const steps = [
     { title: "Appreciation", sub: "5 min" },
-    { title: "Care Audit", sub: "10–15 min" },
+    { title: "Care Check-in", sub: "10–15 min" },
     { title: "Friction Review", sub: "10–15 min · 2% Rule" },
     { title: "Requests", sub: "One ask each" },
     { title: "Alignment", sub: "Next step + review" },
