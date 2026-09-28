@@ -53,7 +53,7 @@ export const STAGE_ORDER: ConnectionStage[] = [
 export const connectionCards: ConnectionCard[] = [
   // Warmth
   { id: "w1", stage: "warmth", question: "What's one thing about today that you're glad happened?" },
-  { id: "w2", stage: "warmth", question: "What's a small thing I did this week that actually landed?" },
+  { id: "w2", stage: "warmth", question: "What's a small thing I did this week that actually came across?" },
   { id: "w3", stage: "warmth", question: "Where in your body do you feel most relaxed right now?" },
   { id: "w4", stage: "warmth", question: "What made you laugh recently — even a little?" },
   { id: "w5", stage: "warmth", question: "If we had one free hour tonight, what would you actually want to do?" },
@@ -82,7 +82,7 @@ export const connectionCards: ConnectionCard[] = [
   { id: "r1", stage: "repair", question: "What's a friction point from this week that we haven't actually named yet?" },
   { id: "r2", stage: "repair", question: "When we last disagreed, what did you need that you didn't ask for?" },
   { id: "r3", stage: "repair", question: "What's one specific thing I could do differently next time we're stuck?" },
-  { id: "r4", stage: "repair", question: "Is there something small I did recently that landed wrong, even if it wasn't a big deal?" },
+  { id: "r4", stage: "repair", question: "Is there something small I did recently that came across wrong, even if it wasn't a big deal?" },
   { id: "r5", stage: "repair", question: "What does it look like when you're actually ready to talk, versus just going quiet?" },
   { id: "r6", stage: "repair", question: "What's one agreement from a past repair that's slipped — worth restating?" },
   { id: "r7", stage: "repair", question: "What's the difference between you needing space and you pulling away? How would I tell?" },

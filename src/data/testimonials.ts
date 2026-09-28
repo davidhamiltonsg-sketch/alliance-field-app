@@ -16,7 +16,7 @@ export const coupleTestimonials: Testimonial[] = [
   },
   {
     quote:
-      "I used to carry all the mental load for our household and just build up silent resentment until I blew up. Doing the Care Audit during our Weekly Reset changed everything because it finally made that invisible work visible without turning into an argument.",
+      "I used to carry all the mental load for our household and just build up silent resentment until I blew up. Doing the Care Check-in during our Weekly Reset changed everything because it finally made that invisible work visible without turning into an argument.",
     names: "Marcus & Taylor",
   },
   {

@@ -171,7 +171,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
         "badge": "5 min"
       },
       {
-        "title": "Care Audit",
+        "title": "Care Check-in",
         "detail": "Where supported, where alone? Is the load fair?",
         "kind": "step",
         "badge": "10–15 min"
@@ -282,7 +282,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "outcome": "Residue clears before it hardens."
   },
   "proof-protocol": {
-    "when": "After any meaningful change request; when “I promise” appears without a plan; ending Hope-Based Repair.",
+    "when": "After any meaningful change request; when “I promise” appears without a plan; ending Hope Fog.",
     "steps": [
       {
         "title": "Behaviour",
@@ -352,13 +352,13 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "when": "Initiating or declining feels tense; intimacy stall; after a trust dent; preventive Structure.",
     "steps": [
       {
-        "title": "Pleasure-First",
+        "title": "Partner-First",
         "detail": "Invest in your partner’s experience before only your own.",
         "kind": "step"
       },
       {
         "title": "No penalty",
-        "detail": "Agree: a decline carries no relational penalty.",
+        "detail": "Agree: a decline carries no cost — no punishing, sulking, or guilt-tripping.",
         "kind": "safety"
       },
       {
