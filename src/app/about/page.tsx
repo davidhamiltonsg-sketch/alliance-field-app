@@ -197,6 +197,20 @@ export default function AboutPage() {
           </li>
           <li>
             <Link
+              href="/connect"
+              className="flex min-h-12 items-center justify-between px-4 text-[15px] font-medium text-ink hover:bg-surface-tool"
+            >
+              <span className="flex flex-col py-2.5">
+                Connection Cards
+                <span className="text-[13px] font-normal text-ink-muted">
+                  A flip-card game for reconnecting on purpose
+                </span>
+              </span>
+              <ChevronRight size={18} className="text-ink-muted/50" />
+            </Link>
+          </li>
+          <li>
+            <Link
               href="/"
               className="flex min-h-12 items-center justify-between px-4 text-[15px] font-medium text-ink hover:bg-surface-tool"
             >
