@@ -329,7 +329,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Evening Landing",
-        "detail": "Decompress side-by-side → no logistics → “How did today actually land?” → one specific appreciation.",
+        "detail": "Decompress side-by-side → no logistics → “How did today actually go?” → one specific appreciation.",
         "kind": "step",
         "badge": "first 10 min"
       },
