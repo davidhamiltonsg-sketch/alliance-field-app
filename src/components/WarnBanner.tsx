@@ -12,9 +12,8 @@ export function WarnBanner({
   return (
     <div
       role="alert"
-      className="relative overflow-hidden rounded-2xl border border-pause/25 bg-surface-warn px-4 py-3.5 text-[15px] leading-normal"
+      className="v2-card v2-card--pause relative bg-surface-warn px-4 py-3.5 text-[15px] leading-normal shadow-none"
     >
-      <span className="absolute inset-y-0 left-0 w-1 bg-pause" aria-hidden />
       <Marker kind="WARN" />
       <p className="mt-2 text-ink">{children}</p>
       {pauseLink && (

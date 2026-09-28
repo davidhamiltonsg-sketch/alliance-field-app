@@ -310,7 +310,7 @@ b {
   70%,
   100% {
     opacity: 0;
-    transform: scale(1.9);
+    transform: scale(var(--pulse, 1.9));
   }
 }
 @keyframes dg-flow {
@@ -449,4 +449,206 @@ html[data-splash="off"] .splash {
 }
 .intro-track::-webkit-scrollbar {
   display: none;
+}
+
+/* ------------------------------------------------------------------ */
+/* v2 visual language (visuals library, premium v2)                    */
+/* Arch-topped panels, status rule treatments, When strip, outcome     */
+/* band, arch icon tablets, arch tabs. Brass (#A8895A / #D8C69F) is    */
+/* used for hairlines, rims, numerals and ornament only.               */
+/* ------------------------------------------------------------------ */
+:root {
+  --forest: #2c3e2d;
+  --brass: #a8895a;
+  --brass-l: #d8c69f;
+  --warm: #f3f0e8;
+  --arch: 15px 15px 3px 3px;
+  --arch-in: 12px 12px 1.5px 1.5px;
+}
+
+/* Arch-topped panel: generous shoulders, near-square foot */
+.v2-panel {
+  position: relative;
+  border-radius: var(--arch);
+  background: #fff;
+  border: 1px solid rgb(61 90 76 / 0.8);
+}
+.v2-panel::after {
+  content: none;
+  position: absolute;
+  inset: 2px;
+  border-radius: var(--arch-in);
+  pointer-events: none;
+}
+/* standard step: single forest hairline */
+.v2-step {
+  border-color: rgb(61 90 76 / 0.75);
+}
+/* pause: fine dashed double hairline, warm paper */
+.v2-pause {
+  background: var(--warm);
+  border: 1px dashed #c47a1a;
+}
+.v2-pause::after {
+  content: "";
+  border: 0.75px dashed rgb(196 122 26 / 0.85);
+}
+/* repair: double rule */
+.v2-repair {
+  border: 1px solid #2f5f8a;
+}
+.v2-repair::after {
+  content: "";
+  border: 1px solid #2f5f8a;
+}
+/* safety: heavy single rule */
+.v2-safety {
+  background: #eef2ef;
+  border: 2.5px solid #2e7d4f;
+}
+/* stop / escalate: dotted */
+.v2-failure {
+  background: #f7ede6;
+  border: 2px dotted #a33b2b;
+}
+/* aside: fine dashes */
+.v2-note {
+  background: transparent;
+  border: 1px dashed rgb(74 74 74 / 0.7);
+}
+.v2-swatch {
+  --arch: 8px 8px 1.5px 1.5px;
+  --arch-in: 6px 6px 1px 1px;
+}
+.v2-swatch::after {
+  inset: 1.5px;
+}
+
+/* "When" strip: warm paper, brass double rule above, hairline below */
+.v2-when {
+  background:
+    linear-gradient(var(--brass), var(--brass)) 0 0 / 100% 1px no-repeat,
+    linear-gradient(rgb(168 137 90 / 0.8), rgb(168 137 90 / 0.8)) 0 3.5px / 100% 0.75px no-repeat,
+    linear-gradient(rgb(168 137 90 / 0.8), rgb(168 137 90 / 0.8)) 0 100% / 100% 0.75px no-repeat,
+    var(--warm);
+}
+
+/* Outcome band: deep forest, fine engraved hatching, brass double frame */
+.v2-outcome {
+  position: relative;
+  isolation: isolate;
+  background:
+    repeating-linear-gradient(-52deg, rgb(111 140 122 / 0.3) 0 0.6px, transparent 0.6px 3.4px),
+    var(--forest);
+}
+.v2-outcome::before,
+.v2-outcome::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: -1;
+}
+.v2-outcome::before {
+  inset: 4px;
+  border: 0.75px solid var(--brass);
+}
+.v2-outcome::after {
+  inset: 6.5px;
+  border: 0.5px solid rgb(168 137 90 / 0.8);
+}
+
+/* Icon tablet: icon seated in an arch with a brass rim and paper gap */
+.v2-tablet {
+  border-radius: 999px 999px 3px 3px;
+  background: #fff;
+  border: 1px solid currentColor;
+  box-shadow:
+    0 0 0 2px var(--color-paper),
+    0 0 0 2.8px var(--brass);
+}
+
+/* Arch-topped card (Situation Map rows, protocol list) */
+.v2-card {
+  position: relative;
+  background: #fff;
+  border-radius: 20px 20px 5px 5px;
+  border: 1px solid rgb(61 90 76 / 0.28);
+  box-shadow: var(--shadow-card);
+  transition: box-shadow 160ms ease, transform 160ms ease;
+}
+.v2-card::after {
+  content: none;
+  position: absolute;
+  inset: 2.5px;
+  border-radius: 17px 17px 3px 3px;
+  pointer-events: none;
+}
+.v2-card--pause {
+  border: 1px dashed #c47a1a;
+}
+.v2-card--pause::after {
+  content: "";
+  border: 0.75px dashed rgb(196 122 26 / 0.8);
+}
+.v2-card--repair {
+  border: 1px solid rgb(47 95 138 / 0.85);
+}
+.v2-card--repair::after {
+  content: "";
+  border: 1px solid rgb(47 95 138 / 0.55);
+}
+.v2-card--safety {
+  border: 2px solid rgb(46 125 79 / 0.85);
+}
+@media (hover: hover) {
+  .v2-card:hover {
+    box-shadow: var(--shadow-lift);
+  }
+}
+.v2-card:active {
+  transform: scale(0.992);
+}
+.v2-card[role="alert"]:active {
+  transform: none;
+}
+
+/* Inset status rule at the left edge of a card */
+.v2-edge {
+  position: absolute;
+  left: 7px;
+  top: 18px;
+  bottom: 12px;
+  width: 5px;
+  pointer-events: none;
+}
+.v2-edge--accent {
+  border-left: 1.5px solid #3d5a4c;
+}
+.v2-edge--safety {
+  border-left: 3px solid #2e7d4f;
+}
+.v2-edge--pause {
+  border-left: 1.25px dashed #c47a1a;
+  border-right: 1px dashed #c47a1a;
+  width: 4.5px;
+}
+.v2-edge--repair {
+  border-left: 1.25px solid #2f5f8a;
+  border-right: 1.25px solid #2f5f8a;
+  width: 4.5px;
+}
+
+/* Arch tab (tags, secondary links): no capsules */
+.v2-tab {
+  border-radius: 10px 10px 3px 3px;
+  border: 0.75px solid rgb(168 137 90 / 0.8);
+  background: #fff;
+}
+
+/* Brass lead rule under section heads */
+.v2-lead {
+  display: inline-block;
+  width: 22px;
+  height: 1px;
+  background: var(--brass);
 }

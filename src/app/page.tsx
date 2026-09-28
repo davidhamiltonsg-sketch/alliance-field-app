@@ -8,7 +8,7 @@ import { situations } from "@/data/situations";
 export default function HomePage() {
   return (
     <div className="space-y-5">
-      <section className="accent-wash relative overflow-hidden rounded-3xl border border-accent/10 px-5 pb-5 pt-5">
+      <section className="accent-wash relative overflow-hidden rounded-[28px_28px_8px_8px] border border-[#A8895A]/35 px-5 pb-5 pt-5">
         {/* Geometric motif: oversized mark and fine concentric rules */}
         <AllianceMark
           size={220}

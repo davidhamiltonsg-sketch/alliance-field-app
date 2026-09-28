@@ -4,18 +4,11 @@ import { Marker, type MarkerKind } from "./Marker";
 import { PhraseBlock } from "./PhraseBlock";
 import { SectionLabel } from "./SectionLabel";
 import { StepList } from "./StepList";
-import { StepDiagram } from "./visuals/StepDiagram";
-import { ProtocolIcon } from "./visuals/ProtocolIcon";
+import { StepDiagram, WhenStrip } from "./visuals/StepDiagram";
+import { IconTablet } from "./visuals/IconTablet";
 import { protocolDiagrams } from "@/data/visuals/protocol-diagrams";
 import { WarnBanner } from "./WarnBanner";
 import { ArrowLeft, ArrowRight, ChevronRight } from "./icons";
-
-const hintTile: Record<NonNullable<Protocol["accentHint"]>, string> = {
-  accent: "bg-surface-tool text-accent ring-accent/15",
-  safety: "bg-safety/[0.08] text-safety ring-safety/20",
-  pause: "bg-surface-activity text-pause ring-pause/25",
-  repair: "bg-repair/[0.07] text-repair ring-repair/20",
-};
 
 function ExampleCard({
   kind,
@@ -35,7 +28,6 @@ function ExampleCard({
 }
 
 export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
-  const tile = hintTile[protocol.accentHint ?? "accent"];
   const diagram = protocolDiagrams[protocol.slug];
   return (
     <article className="space-y-6">
@@ -48,11 +40,7 @@ export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
           All protocols
         </Link>
         <div className="flex items-center gap-3">
-          <span
-            className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl ring-1 ${tile}`}
-          >
-            <ProtocolIcon slug={protocol.slug} size={24} />
-          </span>
+          <IconTablet slug={protocol.slug} tone={protocol.accentHint ?? "accent"} size="lg" />
           <Marker kind="TOOL" />
         </div>
         <h1 className="display text-[28px] leading-[1.08]">
@@ -63,17 +51,17 @@ export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
 
       {protocol.warn && <WarnBanner>{protocol.warn}</WarnBanner>}
 
-      <section className="space-y-3">
-        <SectionLabel>When to use</SectionLabel>
-        <p className="text-[15px] leading-normal text-ink-muted">
-          {protocol.whenToUse}
-        </p>
-      </section>
-
       {diagram && diagram.steps.length === protocol.steps.length ? (
-        <StepDiagram diagram={diagram} cardSteps={protocol.steps} />
+        <StepDiagram
+          diagram={diagram}
+          cardSteps={protocol.steps}
+          whenToUse={protocol.whenToUse}
+        />
       ) : (
-        <StepList steps={protocol.steps} />
+        <>
+          <WhenStrip text={protocol.whenToUse} />
+          <StepList steps={protocol.steps} />
+        </>
       )}
 
       <PhraseBlock phrases={protocol.phrases} />
