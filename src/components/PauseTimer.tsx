@@ -264,7 +264,7 @@ function PauseTimerClient() {
           Cancel pause
         </PrimaryButton>
         <p className="text-center text-[13px] text-ink-muted">
-          Separate · down-regulate · don’t rehearse the argument.
+          Separate · calm down · don’t rehearse the argument.
         </p>
       </div>
     );
