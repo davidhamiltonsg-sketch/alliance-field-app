@@ -4,14 +4,17 @@ import { Marker, type MarkerKind } from "./Marker";
 import { PhraseBlock } from "./PhraseBlock";
 import { SectionLabel } from "./SectionLabel";
 import { StepList } from "./StepList";
+import { StepDiagram } from "./visuals/StepDiagram";
+import { ProtocolIcon } from "./visuals/ProtocolIcon";
+import { protocolDiagrams } from "@/data/visuals/protocol-diagrams";
 import { WarnBanner } from "./WarnBanner";
 import { ArrowLeft, ArrowRight, ChevronRight } from "./icons";
 
-const hintBar: Record<NonNullable<Protocol["accentHint"]>, string> = {
-  accent: "bg-accent",
-  safety: "bg-safety",
-  pause: "bg-pause",
-  repair: "bg-repair",
+const hintTile: Record<NonNullable<Protocol["accentHint"]>, string> = {
+  accent: "bg-surface-tool text-accent ring-accent/15",
+  safety: "bg-safety/[0.08] text-safety ring-safety/20",
+  pause: "bg-surface-activity text-pause ring-pause/25",
+  repair: "bg-repair/[0.07] text-repair ring-repair/20",
 };
 
 function ExampleCard({
@@ -32,7 +35,8 @@ function ExampleCard({
 }
 
 export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
-  const bar = hintBar[protocol.accentHint ?? "accent"];
+  const tile = hintTile[protocol.accentHint ?? "accent"];
+  const diagram = protocolDiagrams[protocol.slug];
   return (
     <article className="space-y-6">
       <header className="space-y-3">
@@ -43,8 +47,12 @@ export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
           <ArrowLeft size={16} />
           All protocols
         </Link>
-        <div className="flex items-center gap-2">
-          <span className={`h-5 w-1 rounded-full ${bar}`} aria-hidden />
+        <div className="flex items-center gap-3">
+          <span
+            className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl ring-1 ${tile}`}
+          >
+            <ProtocolIcon slug={protocol.slug} size={24} />
+          </span>
           <Marker kind="TOOL" />
         </div>
         <h1 className="display text-[28px] leading-[1.08]">
@@ -62,7 +70,11 @@ export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
         </p>
       </section>
 
-      <StepList steps={protocol.steps} />
+      {diagram && diagram.steps.length === protocol.steps.length ? (
+        <StepDiagram diagram={diagram} cardSteps={protocol.steps} />
+      ) : (
+        <StepList steps={protocol.steps} />
+      )}
 
       <PhraseBlock phrases={protocol.phrases} />
 

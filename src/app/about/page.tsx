@@ -131,6 +131,20 @@ export default function AboutPage() {
         <ul className="card divide-y divide-rule/[0.07] overflow-hidden">
           <li>
             <Link
+              href="/intro"
+              className="flex min-h-12 items-center justify-between px-4 text-[15px] font-medium text-ink hover:bg-surface-tool"
+            >
+              <span className="flex flex-col py-2.5">
+                Intro
+                <span className="text-[13px] font-normal text-ink-muted">
+                  How the app works, in five short panels
+                </span>
+              </span>
+              <ChevronRight size={18} className="text-ink-muted/50" />
+            </Link>
+          </li>
+          <li>
+            <Link
               href="/install"
               className="flex min-h-12 items-center justify-between px-4 text-[15px] font-medium text-ink hover:bg-surface-tool"
             >

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Marker } from "@/components/Marker";
 import { PageHeader } from "@/components/PageHeader";
 import { ChevronRight } from "@/components/icons";
+import { ProtocolIcon } from "@/components/visuals/ProtocolIcon";
 import { protocols } from "@/data/protocols";
 
 export const metadata = { title: "Protocols" };
@@ -20,7 +21,7 @@ export default function ProtocolsIndexPage() {
         All Field Kit tools. Browse or return via Situation Map.
       </PageHeader>
       <ul className="space-y-2.5">
-        {protocols.map((p, i) => (
+        {protocols.map((p) => (
           <li key={p.slug}>
             <Link
               href={`/protocols/${p.slug}`}
@@ -30,8 +31,8 @@ export default function ProtocolsIndexPage() {
                 className={`absolute inset-y-0 left-0 w-1 ${bar[p.accentHint ?? "accent"]}`}
                 aria-hidden
               />
-              <span className="tabular w-5 shrink-0 text-[11px] font-medium text-ink-muted/60">
-                {String(i + 1).padStart(2, "0")}
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-surface-tool text-accent">
+                <ProtocolIcon slug={p.slug} size={22} />
               </span>
               <span className="min-w-0 flex-1">
                 <span className="display block text-[17px] leading-snug">

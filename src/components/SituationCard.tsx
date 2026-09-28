@@ -3,6 +3,12 @@ import type { Situation } from "@/data/types";
 import { getProtocol } from "@/data/protocols";
 import { MarkedText } from "./MarkedText";
 import { ChevronRight } from "./icons";
+import { ProtocolIcon, protocolIconSlugs } from "./visuals/ProtocolIcon";
+
+function iconSlugFor(href: string): string | null {
+  const slug = href.replace(/^\/protocols\//, "").replace(/^\//, "");
+  return protocolIconSlugs.includes(slug) ? slug : null;
+}
 
 type Tone = "pause" | "repair" | "accent";
 
@@ -37,6 +43,7 @@ export function SituationCard({
   index?: number;
 }) {
   const tone = toneFor(situation);
+  const iconSlug = situation.warn ? null : iconSlugFor(situation.primaryHref);
   return (
     <li>
       <div className="card card-interactive relative overflow-hidden">
@@ -60,9 +67,12 @@ export function SituationCard({
               {situation.description}
             </span>
             <span
-              className={`mt-2 block text-[13px] font-medium leading-snug ${moveText[tone]}`}
+              className={`mt-2 flex items-center gap-1.5 text-[13px] font-medium leading-snug ${moveText[tone]}`}
             >
-              <MarkedText text={situation.firstMove} />
+              {iconSlug && <ProtocolIcon slug={iconSlug} size={16} className="shrink-0" />}
+              <span className="min-w-0">
+                <MarkedText text={situation.firstMove} />
+              </span>
             </span>
           </div>
           <ChevronRight size={20} className="shrink-0 text-ink-muted/50" />

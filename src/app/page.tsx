@@ -41,6 +41,13 @@ export default function HomePage() {
             Start here when you don’t know which card to pull. Follow the first
             matching row.
           </p>
+          <Link
+            href="/intro"
+            className="mt-3 inline-flex min-h-10 items-center gap-1.5 rounded-full text-[13px] font-medium text-accent hover:underline"
+          >
+            New here? See how it works
+            <ArrowRight size={15} />
+          </Link>
         </div>
       </section>
 

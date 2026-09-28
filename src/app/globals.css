@@ -193,3 +193,260 @@ b {
     animation: none !important;
   }
 }
+
+/* ------------------------------------------------------------------ */
+/* Motion: shared easing, SVG diagram reveals, splash                  */
+/* Everything below animates only transform / opacity / stroke. The    */
+/* un-animated state of every element is its final state, so reduced   */
+/* motion and no-JS both show the finished diagram.                    */
+/* ------------------------------------------------------------------ */
+:root {
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.dg-rise,
+.dg-pop,
+.dg-pulse,
+.dg-move {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.dg-dim {
+  opacity: var(--dim, 0.28);
+}
+.dg-pulse {
+  opacity: 0.35;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Armed (JS mounted), panel not yet active: initial hidden state */
+  .dg-armed .dg-draw {
+    stroke-dasharray: 1 2;
+    stroke-dashoffset: 1.02;
+  }
+  .dg-armed .dg-fade,
+  .dg-armed .dg-rise,
+  .dg-armed .dg-pop {
+    opacity: 0;
+  }
+  .dg-armed .dg-dim {
+    opacity: 1;
+  }
+  .dg-armed .dg-pulse {
+    opacity: 0;
+  }
+
+  /* Active panel: play */
+  .dg-armed .is-active .dg-draw {
+    animation: dg-draw var(--dur, 700ms) var(--ease-inout) var(--d, 0ms) forwards;
+  }
+  .dg-armed .is-active .dg-fade {
+    animation: dg-fade var(--dur, 500ms) var(--ease-out) var(--d, 0ms) forwards;
+  }
+  .dg-armed .is-active .dg-rise {
+    animation: dg-rise var(--dur, 600ms) var(--ease-out) var(--d, 0ms) forwards;
+  }
+  .dg-armed .is-active .dg-pop {
+    animation: dg-pop var(--dur, 520ms) var(--ease-out) var(--d, 0ms) forwards;
+  }
+  .dg-armed .is-active .dg-dim {
+    animation: dg-dim var(--dur, 600ms) var(--ease-out) var(--d, 0ms) forwards;
+  }
+  .dg-armed .is-active .dg-pulse {
+    animation: dg-pulse 1.8s var(--ease-out) var(--d, 0ms) infinite;
+  }
+  .dg-armed .is-active .dg-move {
+    animation: var(--move) var(--dur, 4s) var(--ease-inout) var(--d, 0ms) var(--iter, 1) both;
+  }
+  .dg-armed .is-active .dg-flow {
+    animation: dg-flow 1.2s linear infinite;
+  }
+}
+
+@keyframes dg-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes dg-fade {
+  to {
+    opacity: 1;
+  }
+}
+@keyframes dg-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes dg-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.72);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes dg-dim {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: var(--dim, 0.28);
+  }
+}
+@keyframes dg-pulse {
+  0% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  70%,
+  100% {
+    opacity: 0;
+    transform: scale(1.9);
+  }
+}
+@keyframes dg-flow {
+  to {
+    stroke-dashoffset: -12;
+  }
+}
+
+/* ---- Splash ------------------------------------------------------- */
+.splash {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-paper);
+  /* No-JS fallback: leave on its own after the full sequence */
+  animation: splash-out 420ms var(--ease-out) 2.1s forwards;
+}
+.splash[data-js] {
+  animation: none;
+}
+.splash[data-leaving] {
+  opacity: 0;
+  transition: opacity 420ms var(--ease-out);
+  pointer-events: none;
+}
+.splash-mark .sp-ribbon,
+.splash-mark .sp-over {
+  /* dash 1, gap 2, offset just past 1: no hairline caps before the draw */
+  stroke-dasharray: 1 2;
+  stroke-dashoffset: 0;
+}
+.splash-mark .sp-ribbon {
+  animation: dg-draw 1s var(--ease-inout) 80ms both;
+  stroke-dashoffset: 1.02;
+}
+.splash-mark .sp-over {
+  animation: dg-draw 460ms var(--ease-out) 760ms both;
+  stroke-dashoffset: 1.02;
+}
+.splash-word {
+  animation: dg-rise 620ms var(--ease-out) 1.05s both;
+}
+.splash-tag {
+  animation: dg-rise 620ms var(--ease-out) 1.28s both;
+}
+.splash-glow {
+  animation: dg-fade 1.4s var(--ease-out) 200ms both;
+}
+
+/* Returning visit: static lockup, gone in well under a second */
+html[data-splash="short"] .splash {
+  animation-delay: 260ms;
+  animation-duration: 300ms;
+}
+html[data-splash="short"] .splash-mark .sp-ribbon,
+html[data-splash="short"] .splash-mark .sp-over,
+html[data-splash="short"] .splash-word,
+html[data-splash="short"] .splash-tag,
+html[data-splash="short"] .splash-glow {
+  animation: none;
+  stroke-dashoffset: 0;
+}
+html[data-splash="off"] .splash {
+  display: none;
+}
+
+@keyframes splash-out {
+  to {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .splash-mark .sp-ribbon,
+  .splash-mark .sp-over {
+    stroke-dashoffset: 0;
+  }
+  .splash {
+    animation: splash-out 1ms linear 700ms forwards !important;
+  }
+  .splash[data-js] {
+    animation: none !important;
+  }
+}
+
+/* Travelling markers used by the intro diagrams */
+@keyframes dg-sys-travel {
+  0% {
+    opacity: 0;
+    transform: translateX(-280px);
+  }
+  12% {
+    opacity: 1;
+  }
+  88% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(0);
+  }
+}
+@keyframes dg-pr-travel {
+  0%,
+  8% {
+    transform: translateY(-284px);
+  }
+  22%,
+  30% {
+    transform: translateY(-224px);
+  }
+  41% {
+    transform: translateY(-160px);
+  }
+  71% {
+    transform: translateY(-88px);
+  }
+  79%,
+  86% {
+    transform: translateY(-56px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* Intro carousel */
+.intro-track {
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+}
+.intro-track::-webkit-scrollbar {
+  display: none;
+}

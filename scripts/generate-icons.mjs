@@ -1,14 +1,37 @@
 // Rasterises the vector brand icons into the PNG/ICO files browsers and
 // home screens expect. Runs before `next build` (see package.json "prebuild").
-// Sources: public/icon.svg (rounded tile) and scripts/brand/icon-square.svg
-// (full-bleed tile for Apple touch + PWA icons).
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
+// Sources: public/icon.svg (rounded tile), scripts/brand/icon-square.svg
+// (full-bleed tile for Apple touch + PWA icons), scripts/brand/icon-maskable.svg
+// (mark inside the maskable safe zone) and public/alliance-mark.svg (iOS
+// launch images: paper background + mark, matching the in-app splash).
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const pub = (f) => join(root, "public", f);
-const outputs = ["apple-touch-icon.png", "icon-192.png", "icon-512.png", "favicon.ico"];
+// iOS launch screens (portrait): [cssWidth, cssHeight, dpr]
+export const launchScreens = [
+  [440, 956, 3],
+  [402, 874, 3],
+  [430, 932, 3],
+  [393, 852, 3],
+  [428, 926, 3],
+  [390, 844, 3],
+  [375, 812, 3],
+  [414, 896, 3],
+  [414, 896, 2],
+  [375, 667, 2],
+];
+const launchName = ([w, h, r]) => `splash/launch-${w * r}x${h * r}.png`;
+const outputs = [
+  "apple-touch-icon.png",
+  "icon-192.png",
+  "icon-512.png",
+  "icon-maskable-512.png",
+  "favicon.ico",
+  ...launchScreens.map(launchName),
+];
 
 let sharp;
 try {
@@ -24,6 +47,8 @@ try {
 }
 
 const square = readFileSync(join(root, "scripts/brand/icon-square.svg"));
+const maskable = readFileSync(join(root, "scripts/brand/icon-maskable.svg"));
+const mark = readFileSync(pub("alliance-mark.svg"));
 const rounded = readFileSync(pub("icon.svg"));
 
 const png = (svg, size) =>
@@ -35,6 +60,34 @@ const png = (svg, size) =>
 writeFileSync(pub("apple-touch-icon.png"), await png(square, 180));
 writeFileSync(pub("icon-192.png"), await png(square, 192));
 writeFileSync(pub("icon-512.png"), await png(square, 512));
+writeFileSync(pub("icon-maskable-512.png"), await png(maskable, 512));
+
+// Launch screens: paper #FAFAF8 with the mark where the splash places it
+// (104 css px, sitting ~42 css px above centre to leave room for the wordmark).
+mkdirSync(pub("splash"), { recursive: true });
+for (const s of launchScreens) {
+  const [w, h, r] = s;
+  const W = w * r;
+  const H = h * r;
+  const size = 104 * r;
+  const markPng = await sharp(mark, { density: 72 * (size / 512) * 4 })
+    .resize(size, size)
+    .png()
+    .toBuffer();
+  const img = await sharp({
+    create: { width: W, height: H, channels: 3, background: "#FAFAF8" },
+  })
+    .composite([
+      {
+        input: markPng,
+        left: Math.round((W - size) / 2),
+        top: Math.round(H / 2 - size / 2 - 42 * r),
+      },
+    ])
+    .png({ compressionLevel: 9, palette: true })
+    .toBuffer();
+  writeFileSync(pub(launchName(s)), img);
+}
 
 // Minimal ICO container holding 16px and 32px PNGs.
 const images = [
