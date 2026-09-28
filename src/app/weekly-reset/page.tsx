@@ -1,25 +1,24 @@
 import Link from "next/link";
 import { Marker } from "@/components/Marker";
+import { PageHeader } from "@/components/PageHeader";
 import { WeeklyResetWizard } from "@/components/WeeklyResetWizard";
+import { ArrowRight } from "@/components/icons";
 
 export const metadata = { title: "Weekly Reset" };
 
 export default function WeeklyResetPage() {
   return (
-    <div className="space-y-6">
-      <div>
-        <Marker kind="DO" />
-        <h1 className="mt-1 text-2xl font-semibold">Weekly Reset</h1>
-        <p className="mt-1 text-sm text-ink-muted leading-relaxed">
-          20–45 minute maintenance meeting. Draft saves on this device.
-        </p>
-      </div>
+    <div className="space-y-5">
+      <PageHeader eyebrow={<Marker kind="DO" label="Weekly" />} title="Weekly Reset">
+        20–45 minute maintenance meeting. Your answers save on this device.
+      </PageHeader>
       <WeeklyResetWizard />
       <Link
         href="/protocols/weekly-reset"
-        className="block text-sm font-semibold text-accent"
+        className="flex min-h-12 items-center justify-between rounded-xl border border-rule/[0.1] bg-white px-4 text-[15px] font-medium text-accent"
       >
-        Weekly Reset protocol card →
+        Weekly Reset protocol card
+        <ArrowRight size={16} />
       </Link>
     </div>
   );

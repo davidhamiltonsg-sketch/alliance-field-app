@@ -1,29 +1,63 @@
 import Link from "next/link";
 import type { Protocol } from "@/data/types";
-import { Marker } from "./Marker";
+import { Marker, type MarkerKind } from "./Marker";
 import { PhraseBlock } from "./PhraseBlock";
 import { SectionLabel } from "./SectionLabel";
 import { StepList } from "./StepList";
 import { WarnBanner } from "./WarnBanner";
+import { ArrowLeft, ArrowRight, ChevronRight } from "./icons";
+
+const hintBar: Record<NonNullable<Protocol["accentHint"]>, string> = {
+  accent: "bg-accent",
+  safety: "bg-safety",
+  pause: "bg-pause",
+  repair: "bg-repair",
+};
+
+function ExampleCard({
+  kind,
+  children,
+  tone,
+}: {
+  kind: MarkerKind;
+  children: React.ReactNode;
+  tone: string;
+}) {
+  return (
+    <section className={`rounded-2xl border px-4 py-3.5 ${tone}`}>
+      <Marker kind={kind} />
+      <p className="mt-2 text-[15px] leading-normal text-ink">{children}</p>
+    </section>
+  );
+}
 
 export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
+  const bar = hintBar[protocol.accentHint ?? "accent"];
   return (
-    <article className="space-y-8">
-      <header className="space-y-2">
-        <Marker kind="TOOL" />
-        <h1 className="text-2xl font-semibold text-ink">{protocol.title}</h1>
+    <article className="space-y-6">
+      <header className="space-y-3">
+        <Link
+          href="/protocols"
+          className="-ml-1 inline-flex min-h-10 items-center gap-1.5 rounded-full px-1 text-[13px] font-medium text-ink-muted hover:text-accent"
+        >
+          <ArrowLeft size={16} />
+          All protocols
+        </Link>
+        <div className="flex items-center gap-2">
+          <span className={`h-5 w-1 rounded-full ${bar}`} aria-hidden />
+          <Marker kind="TOOL" />
+        </div>
+        <h1 className="display text-[28px] leading-[1.08]">
+          {protocol.title}
+        </h1>
+        <p className="text-[17px] leading-normal text-ink">{protocol.concept}</p>
       </header>
 
       {protocol.warn && <WarnBanner>{protocol.warn}</WarnBanner>}
 
-      <section>
-        <SectionLabel>Concept</SectionLabel>
-        <p className="mt-2 leading-relaxed">{protocol.concept}</p>
-      </section>
-
-      <section>
+      <section className="space-y-3">
         <SectionLabel>When to use</SectionLabel>
-        <p className="mt-2 leading-relaxed text-ink-muted">
+        <p className="text-[15px] leading-normal text-ink-muted">
           {protocol.whenToUse}
         </p>
       </section>
@@ -32,42 +66,39 @@ export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
 
       <PhraseBlock phrases={protocol.phrases} />
 
-      <section className="rounded-lg border border-safety/30 bg-paper px-4 py-3">
-        <Marker kind="OK" />{" "}
-        <span className="text-xs font-bold tracking-widest text-safety">
-          WORKING EXAMPLE
-        </span>
-        <p className="mt-2 leading-relaxed text-sm">{protocol.working}</p>
-      </section>
-
-      <section className="rounded-lg border border-failure/30 bg-paper px-4 py-3">
-        <Marker kind="FAIL" />{" "}
-        <span className="text-xs font-bold tracking-widest text-failure">
-          NOT WORKING
-        </span>
-        <p className="mt-2 leading-relaxed text-sm">{protocol.notWorking}</p>
-      </section>
-
-      <section className="rounded-lg border border-rule/15 bg-surface-activity px-4 py-3">
-        <Marker kind="DO" />{" "}
-        <span className="text-xs font-bold tracking-widest text-accent">
-          ACTIVITY
-        </span>
-        <p className="mt-2 leading-relaxed text-sm">{protocol.activity}</p>
+      <section className="space-y-3">
+        <SectionLabel>In practice</SectionLabel>
+        <div className="space-y-2.5">
+          <ExampleCard kind="OK" tone="border-safety/20 bg-safety/[0.05]">
+            {protocol.working}
+          </ExampleCard>
+          <ExampleCard kind="FAIL" tone="border-failure/15 bg-failure/[0.04]">
+            {protocol.notWorking}
+          </ExampleCard>
+          <ExampleCard kind="DO" tone="border-rule/10 bg-surface-activity">
+            {protocol.activity}
+          </ExampleCard>
+        </div>
       </section>
 
       {protocol.crossLinks.length > 0 && (
-        <section>
-          <SectionLabel>Cross-links</SectionLabel>
-          <ul className="mt-2 space-y-1 text-sm">
+        <section className="space-y-3">
+          <SectionLabel>Related</SectionLabel>
+          <ul className="card divide-y divide-rule/[0.07] overflow-hidden">
             {protocol.crossLinks.map((c) => (
               <li key={c.label}>
                 {c.href ? (
-                  <Link href={c.href} className="font-medium text-repair">
+                  <Link
+                    href={c.href}
+                    className="flex min-h-12 items-center justify-between gap-3 px-4 text-[15px] font-medium text-ink transition-colors hover:bg-surface-tool"
+                  >
                     {c.label}
+                    <ChevronRight size={18} className="text-ink-muted/50" />
                   </Link>
                 ) : (
-                  <span className="text-ink-muted">{c.label}</span>
+                  <span className="flex min-h-12 items-center px-4 text-[15px] text-ink-muted">
+                    {c.label}
+                  </span>
                 )}
               </li>
             ))}
@@ -75,24 +106,33 @@ export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
         </section>
       )}
 
-      <div className="flex flex-wrap gap-4 border-t border-rule/15 pt-4 text-sm font-semibold">
-        <Link href="/" className="text-accent">
-          ← Situation Map
-        </Link>
-        <Link href="/protocols" className="text-accent">
-          All protocols
+      <nav className="flex flex-wrap items-center gap-2 border-t border-rule/[0.08] pt-4">
+        <Link
+          href="/"
+          className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-rule/15 bg-white px-4 text-[13px] font-medium text-accent"
+        >
+          <ArrowLeft size={16} />
+          Situation Map
         </Link>
         {protocol.slug === "pause-and-return" && (
-          <Link href="/pause" className="text-pause">
-            Start timer →
+          <Link
+            href="/pause"
+            className="inline-flex min-h-11 items-center gap-1.5 rounded-full bg-pause px-4 text-[13px] font-medium text-white"
+          >
+            Start timer
+            <ArrowRight size={16} />
           </Link>
         )}
         {protocol.slug === "weekly-reset" && (
-          <Link href="/weekly-reset" className="text-accent">
-            Open wizard →
+          <Link
+            href="/weekly-reset"
+            className="inline-flex min-h-11 items-center gap-1.5 rounded-full bg-accent px-4 text-[13px] font-medium text-paper"
+          >
+            Open Weekly Reset
+            <ArrowRight size={16} />
           </Link>
         )}
-      </div>
+      </nav>
     </article>
   );
 }

@@ -2,17 +2,27 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import type { ReactNode } from "react";
 import { navItems } from "@/data/nav";
+import { InfoIcon, LayersIcon, MapIcon, ResetIcon, TimerIcon } from "./icons";
+
+const iconFor: Record<string, ReactNode> = {
+  "/": <MapIcon size={20} />,
+  "/protocols": <LayersIcon size={20} />,
+  "/pause": <TimerIcon size={20} />,
+  "/weekly-reset": <ResetIcon size={20} />,
+  "/about": <InfoIcon size={20} />,
+};
 
 export function AppNav() {
   const pathname = usePathname();
 
   return (
     <nav
-      className="fixed bottom-0 inset-x-0 z-40 border-t border-rule/20 bg-paper/95 backdrop-blur pb-[env(safe-area-inset-bottom)]"
+      className="fixed inset-x-0 bottom-0 z-40 mx-auto w-full max-w-lg border-t border-rule/[0.08] bg-paper/85 pb-[env(safe-area-inset-bottom)] backdrop-blur-md"
       aria-label="Primary"
     >
-      <ul className="mx-auto flex max-w-lg items-stretch justify-between px-1">
+      <ul className="flex items-stretch justify-between px-1.5">
         {navItems.map((item) => {
           const active =
             item.href === "/"
@@ -22,11 +32,25 @@ export function AppNav() {
             <li key={item.href} className="flex-1">
               <Link
                 href={item.href}
-                className={`flex min-h-14 items-center justify-center px-1 text-xs font-semibold tracking-wide ${
-                  active ? "text-accent" : "text-ink-muted"
-                }`}
+                aria-current={active ? "page" : undefined}
+                className="group flex min-h-16 flex-col items-center justify-center gap-1 px-1"
               >
-                {item.label}
+                <span
+                  className={`flex h-8 w-14 items-center justify-center rounded-full transition-colors ${
+                    active
+                      ? "bg-accent text-paper shadow-[0_4px_12px_-4px_rgb(61_90_76/0.6)]"
+                      : "text-ink-muted group-hover:bg-accent/[0.07] group-hover:text-accent"
+                  }`}
+                >
+                  {iconFor[item.href]}
+                </span>
+                <span
+                  className={`text-[11px] leading-none ${
+                    active ? "font-semibold text-accent" : "font-medium text-ink-muted"
+                  }`}
+                >
+                  {item.label}
+                </span>
               </Link>
             </li>
           );

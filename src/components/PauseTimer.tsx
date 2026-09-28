@@ -1,10 +1,18 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  useSyncExternalStore,
+} from "react";
 import Link from "next/link";
 import { PrimaryButton } from "./PrimaryButton";
 import { TimerDisplay } from "./TimerDisplay";
 import { WarnBanner } from "./WarnBanner";
+import { Marker } from "./Marker";
+import { ArrowRight } from "./icons";
 import { clearKey, PAUSE_KEY, readPause, writePause } from "@/lib/storage";
 
 const DURATIONS = [
@@ -21,19 +29,32 @@ function formatClock(d: Date) {
   return d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 }
 
+const noopSubscribe = () => () => {};
+
+/** Renders the timer only on the client, where the saved pause is readable. */
 export function PauseTimer() {
-  const [returnAt, setReturnAt] = useState<string | null>(null);
+  const mounted = useSyncExternalStore(
+    noopSubscribe,
+    () => true,
+    () => false
+  );
+  if (!mounted) {
+    return (
+      <div className="card flex justify-center px-4 pb-4 pt-5">
+        <TimerDisplay remainingMs={0} expired={false} idleLabel="--:--" caption="Loading" />
+      </div>
+    );
+  }
+  return <PauseTimerClient />;
+}
+
+function PauseTimerClient() {
+  const [returnAt, setReturnAt] = useState<string | null>(() => readPause().returnAt);
+  const [startedAt, setStartedAt] = useState<string | null>(() => readPause().startedAt);
   const [now, setNow] = useState(() => Date.now());
   const [customMinutes, setCustomMinutes] = useState("45");
   const [clockTime, setClockTime] = useState("");
   const [backMode, setBackMode] = useState(false);
-  const [hydrated, setHydrated] = useState(false);
-
-  useEffect(() => {
-    const s = readPause();
-    setReturnAt(s.returnAt);
-    setHydrated(true);
-  }, []);
 
   useEffect(() => {
     if (!returnAt || backMode) return;
@@ -53,6 +74,7 @@ export function PauseTimer() {
     const at = new Date(Date.now() + ms).toISOString();
     writePause({ returnAt: at, startedAt });
     setReturnAt(at);
+    setStartedAt(startedAt);
     setBackMode(false);
     setNow(Date.now());
   }, []);
@@ -65,11 +87,17 @@ export function PauseTimer() {
     if (target.getTime() <= Date.now()) {
       target.setDate(target.getDate() + 1);
     }
+    const delta = target.getTime() - Date.now();
+    if (delta < 15 * 60 * 1000 || delta > 24 * 60 * 60 * 1000) {
+      // still allow but clamp messaging — min 15m max 24h preferred
+    }
+    const started = new Date().toISOString();
     writePause({
       returnAt: target.toISOString(),
-      startedAt: new Date().toISOString(),
+      startedAt: started,
     });
     setReturnAt(target.toISOString());
+    setStartedAt(started);
     setBackMode(false);
     setNow(Date.now());
   }, [clockTime]);
@@ -77,6 +105,7 @@ export function PauseTimer() {
   const cancel = () => {
     clearKey(PAUSE_KEY);
     setReturnAt(null);
+    setStartedAt(null);
     setBackMode(false);
   };
 
@@ -84,49 +113,71 @@ export function PauseTimer() {
     setBackMode(true);
   };
 
-  if (!hydrated) {
-    return (
-      <div className="rounded-lg border border-pause/40 bg-surface-warn px-4 py-8 text-center text-ink-muted">
-        Loading timer…
-      </div>
-    );
-  }
+  const chip =
+    "min-h-12 rounded-xl border border-rule/[0.12] bg-white text-[15px] font-medium text-ink shadow-[0_1px_2px_rgb(26_26_26/0.04)] transition hover:border-pause/40 hover:bg-surface-warn active:scale-[0.98]";
 
   if (backMode) {
     return (
-      <div className="space-y-6">
+      <div className="space-y-4">
         <WarnBanner pauseLink={false}>
           You’re back. Do not restart “where you left off.”
         </WarnBanner>
-        <div className="rounded-lg border border-safety/30 bg-surface-tool px-4 py-4 space-y-3">
-          <p className="text-xs font-bold tracking-widest text-safety">RESTART CUE</p>
-          <ol className="list-decimal space-y-2 pl-5 leading-relaxed">
-            <li><strong>Warmth</strong> — one warm true sentence.</li>
-            <li><strong>Safety</strong> — Alliance not threatened this moment.</li>
-            <li>Only then: Expression → Request → Alignment.</li>
+        <section className="card space-y-3 px-4 py-4">
+          <Marker kind="OK" label="Restart cue" />
+          <ol className="space-y-2 text-[15px] leading-normal">
+            <li className="flex gap-3">
+              <span className="tabular flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent text-[13px] font-medium text-paper">1</span>
+              <span><strong>Warmth</strong> — one warm true sentence.</span>
+            </li>
+            <li className="flex gap-3">
+              <span className="tabular flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent text-[13px] font-medium text-paper">2</span>
+              <span><strong>Safety</strong> — Alliance not threatened this moment.</span>
+            </li>
+            <li className="flex gap-3">
+              <span className="tabular flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent text-[13px] font-medium text-paper">3</span>
+              <span>Only then: Expression → Request → Alignment.</span>
+            </li>
           </ol>
-          <p className="border-l-4 border-accent pl-3 text-lg font-semibold">“I’m back. I’m on your team.”</p>
-          <p className="border-l-4 border-accent pl-3 text-lg font-semibold">“This isn’t a breakup conversation.”</p>
-        </div>
-        <Link href="/protocols/system-overlay" className="block text-center text-sm font-semibold text-repair">
-          Open System Overlay →
+          <ul className="space-y-2 pt-1">
+            <li className="phrase-block phrase text-[17px] leading-snug">I’m back. I’m on your team.</li>
+            <li className="phrase-block phrase text-[17px] leading-snug">This isn’t a breakup conversation.</li>
+          </ul>
+        </section>
+        <Link
+          href="/protocols/system-overlay"
+          className="flex min-h-12 items-center justify-center gap-1.5 text-[15px] font-medium text-repair"
+        >
+          Open System Overlay
+          <ArrowRight size={16} />
         </Link>
-        <PrimaryButton variant="secondary" onClick={cancel}>Clear pause</PrimaryButton>
+        <PrimaryButton variant="secondary" onClick={cancel}>
+          Clear pause
+        </PrimaryButton>
       </div>
     );
   }
 
   if (returnAt) {
     const at = new Date(returnAt);
+    const totalMs = startedAt
+      ? at.getTime() - new Date(startedAt).getTime()
+      : undefined;
     return (
       <div className="space-y-4">
-        <TimerDisplay remainingMs={remainingMs} expired={expired} />
-        <p className="text-center text-sm text-ink-muted">
-          Ready at <strong className="text-ink">{formatClock(at)}</strong>
-        </p>
-        <PrimaryButton variant="warn" onClick={imBack}>I’m back</PrimaryButton>
-        <PrimaryButton variant="ghost" onClick={cancel}>Cancel pause</PrimaryButton>
-        <p className="text-xs text-ink-muted text-center">
+        <div className="card flex flex-col items-center px-4 pb-5 pt-6">
+          <TimerDisplay remainingMs={remainingMs} totalMs={totalMs} expired={expired} />
+          <p className="mt-4 text-[15px] text-ink-muted">
+            Ready at{" "}
+            <strong className="tabular font-medium text-ink">{formatClock(at)}</strong>
+          </p>
+        </div>
+        <PrimaryButton variant="warn" onClick={imBack}>
+          I’m back
+        </PrimaryButton>
+        <PrimaryButton variant="ghost" onClick={cancel}>
+          Cancel pause
+        </PrimaryButton>
+        <p className="text-center text-[13px] text-ink-muted">
           Separate · down-regulate · don’t rehearse the argument.
         </p>
       </div>
@@ -134,68 +185,91 @@ export function PauseTimer() {
   }
 
   return (
-    <div className="space-y-6">
-      <div>
-        <p className="text-sm font-semibold text-ink">Duration</p>
-        <div className="mt-2 grid grid-cols-4 gap-2">
-          {DURATIONS.map((d) => (
+    <div className="space-y-4">
+      <div className="card flex flex-col items-center px-4 pb-4 pt-5">
+        <TimerDisplay
+          remainingMs={0}
+          expired={false}
+          idleLabel="00:00"
+          caption="Choose a return time"
+        />
+        <p className="mt-3 text-center text-[15px] leading-normal text-ink-muted">
+          Exact phrase:{" "}
+          <span className="phrase text-[15px] text-ink">“I’ll be ready at ___.”</span>
+        </p>
+      </div>
+
+      <section className="space-y-2">
+        <p className="text-[13px] font-medium text-ink">Duration</p>
+        <div className="grid grid-cols-12 gap-2">
+          {DURATIONS.map((d, i) => (
             <button
               key={d.label}
               type="button"
               onClick={() => startWithMs(d.ms)}
-              className="min-h-12 rounded-lg border border-rule/20 bg-surface-tool text-sm font-semibold text-ink active:bg-accent active:text-paper"
+              className={`${chip} tabular ${i < 4 ? "col-span-3" : "col-span-4"}`}
             >
               {d.label}
             </button>
           ))}
         </div>
-      </div>
-      <div className="space-y-2">
-        <p className="text-sm font-semibold text-ink">Custom minutes</p>
-        <div className="flex gap-2">
-          <input
-            type="number"
-            min={15}
-            max={1440}
-            value={customMinutes}
-            onChange={(e) => setCustomMinutes(e.target.value)}
-            className="min-h-12 w-full rounded-lg border border-rule/25 bg-paper px-3 text-ink"
-          />
-          <PrimaryButton
-            className="w-auto shrink-0 px-6"
-            onClick={() => {
-              const n = Number(customMinutes);
-              if (!Number.isFinite(n) || n < 15 || n > 1440) return;
-              startWithMs(n * 60 * 1000);
-            }}
-          >
-            Start
-          </PrimaryButton>
+      </section>
+
+      <section className="grid grid-cols-1 gap-3 min-[400px]:grid-cols-2">
+        <div className="space-y-2">
+          <label htmlFor="custom-minutes" className="block text-[13px] font-medium text-ink">
+            Custom minutes
+          </label>
+          <div className="flex gap-2">
+            <input
+              id="custom-minutes"
+              type="number"
+              inputMode="numeric"
+              min={15}
+              max={1440}
+              value={customMinutes}
+              onChange={(e) => setCustomMinutes(e.target.value)}
+              className="field-input tabular"
+            />
+            <PrimaryButton
+              fullWidth={false}
+              className="shrink-0 px-5"
+              onClick={() => {
+                const n = Number(customMinutes);
+                if (!Number.isFinite(n) || n < 15 || n > 1440) return;
+                startWithMs(n * 60 * 1000);
+              }}
+            >
+              Start
+            </PrimaryButton>
+          </div>
+          <p className="text-[13px] text-ink-muted">Min 15 · Max 1440 (24h)</p>
         </div>
-        <p className="text-xs text-ink-muted">Min 15 · Max 1440 (24h)</p>
-      </div>
-      <div className="space-y-2">
-        <p className="text-sm font-semibold text-ink">Or return clock time</p>
-        <div className="flex gap-2">
-          <input
-            type="time"
-            value={clockTime}
-            onChange={(e) => setClockTime(e.target.value)}
-            className="min-h-12 w-full rounded-lg border border-rule/25 bg-paper px-3 text-ink"
-          />
-          <PrimaryButton
-            className="w-auto shrink-0 px-6"
-            variant="secondary"
-            onClick={startWithClock}
-            disabled={!clockTime}
-          >
-            Set
-          </PrimaryButton>
+
+        <div className="space-y-2">
+          <label htmlFor="clock-time" className="block text-[13px] font-medium text-ink">
+            Or return at a clock time
+          </label>
+          <div className="flex gap-2">
+            <input
+              id="clock-time"
+              type="time"
+              value={clockTime}
+              onChange={(e) => setClockTime(e.target.value)}
+              className="field-input tabular"
+            />
+            <PrimaryButton
+              fullWidth={false}
+              className="shrink-0 px-5"
+              variant="secondary"
+              onClick={startWithClock}
+              disabled={!clockTime}
+            >
+              Set
+            </PrimaryButton>
+          </div>
         </div>
-      </div>
-      <p className="text-sm text-ink-muted leading-relaxed">
-        Exact phrase: <strong className="text-ink">“I’ll be ready at ___.”</strong>
-      </p>
+      </section>
     </div>
   );
 }

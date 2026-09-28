@@ -1,19 +1,22 @@
+import { MarkedText } from "./MarkedText";
 import { SectionLabel } from "./SectionLabel";
 
 export function StepList({ steps }: { steps: string[] }) {
   return (
-    <section>
+    <section className="space-y-3">
       <SectionLabel>Steps</SectionLabel>
-      <ol className="mt-3 space-y-3">
+      <ol className="card divide-y divide-rule/[0.07] px-4">
         {steps.map((step, i) => (
-          <li key={i} className="flex gap-3">
+          <li key={i} className="flex gap-3 py-3">
             <span
-              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent text-sm font-bold text-paper"
+              className="tabular mt-px flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-accent text-[13px] font-medium text-paper"
               aria-hidden
             >
               {i + 1}
             </span>
-            <span className="pt-1 leading-relaxed text-ink">{step}</span>
+            <span className="pt-0.5 text-[15px] leading-normal text-ink">
+              <MarkedText text={step} />
+            </span>
           </li>
         ))}
       </ol>

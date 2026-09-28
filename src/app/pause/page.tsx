@@ -1,26 +1,25 @@
 import Link from "next/link";
 import { PauseTimer } from "@/components/PauseTimer";
 import { Marker } from "@/components/Marker";
+import { PageHeader } from "@/components/PageHeader";
+import { ArrowRight } from "@/components/icons";
 
 export const metadata = { title: "Pause + Return" };
 
 export default function PausePage() {
   return (
-    <div className="space-y-6">
-      <div>
-        <Marker kind="WARN" />
-        <h1 className="mt-1 text-2xl font-semibold">Pause + Return</h1>
-        <p className="mt-1 text-sm text-ink-muted leading-relaxed">
-          Pair separation with a non-negotiable return time. Protection without
-          disappearance.
-        </p>
-      </div>
+    <div className="space-y-5">
+      <PageHeader eyebrow={<Marker kind="PAUSE" label="Timer" />} title="Pause + Return">
+        Pair separation with a non-negotiable return time. Protection without
+        disappearance.
+      </PageHeader>
       <PauseTimer />
       <Link
         href="/protocols/pause-and-return"
-        className="block text-sm font-semibold text-accent"
+        className="flex min-h-12 items-center justify-between rounded-xl border border-rule/[0.1] bg-white px-4 text-[15px] font-medium text-accent"
       >
-        Full Pause + Return protocol →
+        Full Pause + Return protocol
+        <ArrowRight size={16} />
       </Link>
     </div>
   );

@@ -13,22 +13,183 @@
   --color-surface-tool: #EEF2EF;
   --color-surface-activity: #F3F0E8;
   --color-surface-warn: #F7EDE6;
-  --font-sans: ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial,
-    sans-serif;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui,
+    "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-display: var(--font-source-serif), ui-serif, Georgia, "Times New Roman",
+    serif;
+
+  --shadow-card: 0 1px 2px rgb(26 26 26 / 0.04), 0 4px 14px -6px rgb(44 62 45 / 0.12);
+  --shadow-lift: 0 2px 4px rgb(26 26 26 / 0.05), 0 12px 28px -12px rgb(44 62 45 / 0.22);
+  --shadow-amber: 0 1px 2px rgb(120 70 10 / 0.18), 0 10px 24px -10px rgb(196 122 26 / 0.55);
 }
 
 html {
   -webkit-tap-highlight-color: transparent;
+  background: #f1f3ef;
 }
 
 body {
-  background: var(--color-paper);
   color: var(--color-ink);
   font-family: var(--font-sans);
   min-height: 100dvh;
+  font-size: 15px;
+  line-height: 1.5;
+  text-rendering: optimizeLegibility;
+  /* Soft, intentional canvas on wide screens; the app column sits on top. */
+  background:
+    radial-gradient(1200px 600px at 50% -10%, rgb(61 90 76 / 0.10), transparent 60%),
+    radial-gradient(900px 500px at 100% 100%, rgb(196 122 26 / 0.05), transparent 60%),
+    #f1f3ef;
+  background-attachment: fixed;
 }
 
 a,
 button {
   touch-action: manipulation;
+}
+
+strong,
+b {
+  font-weight: 600;
+}
+
+::selection {
+  background: rgb(61 90 76 / 0.18);
+}
+
+/* Accessible, on-brand focus */
+:where(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: 12px;
+}
+:where(input, textarea):focus-visible {
+  outline-offset: 0;
+}
+
+@layer components {
+  /* Serif display for titles and protocol names */
+  .display {
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--color-accent);
+  }
+
+  /* Spoken phrases and taglines: serif italic */
+  .phrase {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+
+  /* Small tracked label (the only all-caps in the UI) */
+  .eyebrow {
+    font-size: 11px;
+    line-height: 1;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* Elevated card */
+  .card {
+    background: #fff;
+    border: 1px solid rgb(44 62 45 / 0.09);
+    border-radius: 1rem;
+    box-shadow: var(--shadow-card);
+  }
+  .card-interactive {
+    transition: box-shadow 160ms ease, transform 160ms ease, border-color 160ms ease;
+  }
+  @media (hover: hover) {
+    .card-interactive:hover {
+      box-shadow: var(--shadow-lift);
+      border-color: rgb(44 62 45 / 0.16);
+    }
+  }
+  .card-interactive:active {
+    transform: scale(0.992);
+  }
+
+  /* Marker pill (The Tool / Caution / Working / Not Working / Do This / Say This) */
+  .marker-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    height: 1.5rem;
+    padding: 0 0.625rem;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    line-height: 1;
+  }
+
+  /* Quote card for exact phrases */
+  .phrase-block {
+    position: relative;
+    background: #fff;
+    border: 1px solid rgb(61 90 76 / 0.14);
+    border-radius: 0.875rem;
+    padding: 0.875rem 1rem 0.875rem 2.5rem;
+    box-shadow: 0 1px 2px rgb(26 26 26 / 0.03);
+  }
+  .phrase-block::before {
+    content: "\201C";
+    position: absolute;
+    left: 0.75rem;
+    top: 0.35rem;
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-style: normal;
+    line-height: 1;
+    color: rgb(61 90 76 / 0.4);
+  }
+
+  /* Soft brand wash for hero surfaces */
+  .accent-wash {
+    background:
+      radial-gradient(120% 90% at 100% 0%, rgb(61 90 76 / 0.16), transparent 55%),
+      linear-gradient(180deg, #eef2ef 0%, #f6f7f3 100%);
+  }
+
+  .field-input {
+    width: 100%;
+    min-height: 3rem;
+    border-radius: 0.75rem;
+    border: 1px solid rgb(44 62 45 / 0.16);
+    background: #fff;
+    padding: 0.625rem 0.875rem;
+    color: var(--color-ink);
+    line-height: 1.5;
+    transition: border-color 140ms ease, box-shadow 140ms ease;
+  }
+  .field-input::placeholder {
+    color: rgb(74 74 74 / 0.55);
+  }
+  .field-input:focus {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgb(61 90 76 / 0.14);
+    outline: none;
+  }
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
 }
