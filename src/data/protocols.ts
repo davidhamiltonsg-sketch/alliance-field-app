@@ -12,8 +12,10 @@ import card8 from "./cards/morning-evening-rhythm.json";
 import card9 from "./cards/intimacy-pact.json";
 import card10 from "./cards/trust-recovery.json";
 import card11 from "./cards/consistency-pact.json";
+import card12 from "./cards/full-recovery.json";
+import card13 from "./cards/uninvestment-check.json";
 
-export const protocols = [card0, card1, card2, card3, card4, card5, card6, card7, card8, card9, card10, card11] as Protocol[];
+export const protocols = [card0, card1, card2, card3, card4, card5, card6, card7, card8, card9, card10, card11, card12, card13] as Protocol[];
 
 export const protocolSlugs = protocols.map((p) => p.slug);
 

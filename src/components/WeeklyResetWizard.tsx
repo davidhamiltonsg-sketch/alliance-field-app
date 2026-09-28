@@ -4,12 +4,15 @@ import { useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import type { WorksheetDraft } from "@/data/types";
 import {
+  appendWeeklyHistory,
   clearKey,
   emptyWeeklyDraft,
   readWeekly,
+  readWeeklyHistory,
   WEEKLY_KEY,
   writeWeekly,
 } from "@/lib/storage";
+import { buildWeeklyResetIcs } from "@/lib/ics";
 import { PrimaryButton } from "./PrimaryButton";
 import { Field, WizardStep } from "./WizardStep";
 import { WarnBanner } from "./WarnBanner";
@@ -35,6 +38,8 @@ function WeeklyResetWizardClient() {
   const [step, setStep] = useState(1);
   const [draft, setDraft] = useState<WorksheetDraft>(readWeekly);
   const [done, setDone] = useState(false);
+  const [history, setHistory] = useState<WorksheetDraft[]>(readWeeklyHistory);
+  const [calendarAdded, setCalendarAdded] = useState(false);
 
   const update = (patch: Partial<WorksheetDraft>) => {
     setDraft((prev) => {
@@ -63,9 +68,23 @@ function WeeklyResetWizardClient() {
     setDraft(emptyWeeklyDraft());
     setStep(1);
     setDone(false);
+    setCalendarAdded(false);
+  };
+
+  const addToCalendar = () => {
+    const { url, filename } = buildWeeklyResetIcs();
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    setCalendarAdded(true);
   };
 
   if (done) {
+    const recent = history.slice(0, 5);
     return (
       <div className="space-y-4">
         <Marker kind="OK" label="Complete" />
@@ -78,7 +97,33 @@ function WeeklyResetWizardClient() {
             <strong>Review when:</strong> {draft.reviewWhen || "—"}
           </p>
         </div>
-        <PrimaryButton onClick={clear}>Start a new reset</PrimaryButton>
+        <PrimaryButton onClick={addToCalendar}>
+          {calendarAdded ? "Reminder downloaded ✓" : "Add weekly reminder to calendar"}
+        </PrimaryButton>
+        {recent.length > 0 && (
+          <div className="card space-y-2 px-4 py-3.5 text-[13px] leading-normal">
+            <p className="font-medium text-ink-muted">Recent resets</p>
+            <ul className="space-y-1.5">
+              {recent.map((r, i) => (
+                <li key={i} className="text-ink-muted">
+                  {new Date(r.updatedAt).toLocaleDateString(undefined, {
+                    month: "short",
+                    day: "numeric",
+                    year: "numeric",
+                  })}
+                  {r.nextStep ? ` — ${r.nextStep}` : ""}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+        <button
+          type="button"
+          onClick={clear}
+          className="w-full min-h-12 rounded-xl border border-rule/15 text-[15px] font-medium text-ink"
+        >
+          Start a new reset
+        </button>
         <Link
           href="/"
           className="flex min-h-12 items-center justify-center gap-1.5 text-[15px] font-medium text-accent"
@@ -248,6 +293,8 @@ function WeeklyResetWizardClient() {
           onBack={() => setStep(4)}
           onNext={() => {
             writeWeekly(draft);
+            const next = appendWeeklyHistory(draft);
+            setHistory(next);
             setDone(true);
           }}
           nextLabel="Complete reset"

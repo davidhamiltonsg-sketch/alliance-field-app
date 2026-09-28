@@ -2,6 +2,8 @@ import Link from "next/link";
 import { AllianceMark } from "@/components/AllianceMark";
 import { Marker } from "@/components/Marker";
 import { SectionLabel } from "@/components/SectionLabel";
+import { GetFullSystem } from "@/components/GetFullSystem";
+import { WarnBanner } from "@/components/WarnBanner";
 import { ArrowRight, ChevronRight } from "@/components/icons";
 
 export const metadata = { title: "About" };
@@ -81,6 +83,23 @@ export default function AboutPage() {
         </a>
       </section>
 
+      <section className="space-y-2">
+        <SectionLabel>Why this exists</SectionLabel>
+        <p className="text-[15px] leading-normal text-ink">
+          I built THE ALLIANCE out of my own relationship — Dami and I have
+          called what we&apos;re building together &ldquo;the Alliance&rdquo; for
+          years, long before it was a product name. It started as our own
+          working agreement: how we come back to each other, what we say
+          when things go sideways, what we promise not to do. Turning that
+          into named, repeatable protocols is what made it survive bad days
+          and not just good ones.
+        </p>
+        <p className="text-[15px] leading-normal text-ink">
+          This app, the Manual, and the Field Kit are the same system we
+          actually use — not theory borrowed from somewhere else.
+        </p>
+      </section>
+
       <section id="product-line" className="scroll-mt-20 space-y-3">
         <SectionLabel>The product line</SectionLabel>
         <ul className="space-y-2.5">
@@ -111,20 +130,44 @@ export default function AboutPage() {
         className="relative scroll-mt-20 overflow-hidden rounded-2xl border border-pause/25 bg-surface-warn px-4 py-3.5"
       >
         <span className="absolute inset-y-0 left-0 w-1 bg-pause" aria-hidden />
-        <Marker kind="NOTE" label="Detachment" />
+        <Marker kind="NOTE" label="Feeling checked out?" />
         <p className="mt-2 text-[15px] leading-normal">
-          <strong>Detachment / uninvestment:</strong> Use Manual XIII-D
-          Uninvestment Check. If ≥3 signs → Full Recovery + Proof — not hope.
-          Proceed only with regulated Proof when appropriate.
+          <strong>Not sure if it&apos;s space or withdrawal?</strong> Run the
+          Uninvestment Check. Three or more warning signs → schedule a Full
+          Recovery conversation and a Proof window. Hope isn&apos;t a plan.
         </p>
         <Link
-          href="/protocols/proof-protocol"
+          href="/protocols/uninvestment-check"
           className="-mb-1.5 mt-1 inline-flex min-h-11 items-center gap-1.5 text-[15px] font-medium text-repair"
         >
-          Open Proof Protocol
+          Open Uninvestment Check
           <ArrowRight size={16} />
         </Link>
       </section>
+
+      <section
+        id="safety"
+        className="scroll-mt-20 space-y-2"
+      >
+        <SectionLabel>When not to use this</SectionLabel>
+        <WarnBanner pauseLink={false}>
+          This app is a communication and repair tool. It is not a
+          substitute for professional help, and it is not built for
+          situations involving contempt, fear, coercion, or any form of
+          abuse.
+        </WarnBanner>
+        <p className="text-[15px] leading-normal text-ink-muted">
+          If you&apos;re afraid of your partner, if either of you is using these
+          tools to control or punish the other, or if you&apos;re in danger,
+          please contact a licensed therapist, a local support service, or
+          in an emergency, local emergency services. These protocols assume
+          two people acting in good faith toward each other — they are not
+          designed for, and should not be used to manage, an unsafe
+          relationship.
+        </p>
+      </section>
+
+      <GetFullSystem />
 
       <section className="space-y-3">
         <SectionLabel>More</SectionLabel>

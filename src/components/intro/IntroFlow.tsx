@@ -46,7 +46,7 @@ const panels: Panel[] = [
     eyebrow: "Pause + Return",
     icon: "pause-and-return",
     title: "Pause, then return on time.",
-    body: "Give a clock time, 15 minutes to 24 hours. The return is what proves pause, not disappearance.",
+    body: "Give a clock time, 20 minutes to 24 hours. The return is what proves pause, not disappearance.",
     diagram: <PauseTimelineDiagram />,
   },
   {

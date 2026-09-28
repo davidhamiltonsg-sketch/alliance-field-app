@@ -17,7 +17,7 @@ export const V = {
   paper: "#FAFAF8",
   white: "#FFFFFF",
   forest: "#2C3E2D",
-  accent: "#3D5A4C",
+  accent: "#2C3E2D",
   thread: "#6F8177",
   hair: "#9FB2A6",
   brass: "#A8895A",

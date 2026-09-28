@@ -4,6 +4,7 @@ import {
   useCallback,
   useEffect,
   useMemo,
+  useRef,
   useState,
   useSyncExternalStore,
 } from "react";
@@ -16,7 +17,6 @@ import { ArrowRight } from "./icons";
 import { clearKey, PAUSE_KEY, readPause, writePause } from "@/lib/storage";
 
 const DURATIONS = [
-  { label: "15m", ms: 15 * 60 * 1000 },
   { label: "20m", ms: 20 * 60 * 1000 },
   { label: "30m", ms: 30 * 60 * 1000 },
   { label: "1h", ms: 60 * 60 * 1000 },
@@ -27,6 +27,46 @@ const DURATIONS = [
 
 function formatClock(d: Date) {
   return d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+}
+
+/** Plays a short, gentle three-tone chime using the Web Audio API — no audio file needed. */
+function playChime() {
+  try {
+    const Ctx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+    const ctx = new Ctx();
+    const notes = [523.25, 659.25, 783.99]; // C5, E5, G5
+    notes.forEach((freq, i) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "sine";
+      osc.frequency.value = freq;
+      const start = ctx.currentTime + i * 0.22;
+      gain.gain.setValueAtTime(0, start);
+      gain.gain.linearRampToValueAtTime(0.18, start + 0.03);
+      gain.gain.exponentialRampToValueAtTime(0.001, start + 0.5);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(start);
+      osc.stop(start + 0.55);
+    });
+    window.setTimeout(() => ctx.close(), 1600);
+  } catch {
+    /* ignore — audio not available */
+  }
+}
+
+/** Fires a system notification if permission was already granted. */
+function notifyExpired() {
+  try {
+    if (typeof Notification === "undefined") return;
+    if (Notification.permission === "granted") {
+      new Notification("Pause complete", {
+        body: "Your return time has arrived. Read the restart cue before you speak.",
+      });
+    }
+  } catch {
+    /* ignore */
+  }
 }
 
 const noopSubscribe = () => () => {};
@@ -55,6 +95,8 @@ function PauseTimerClient() {
   const [customMinutes, setCustomMinutes] = useState("45");
   const [clockTime, setClockTime] = useState("");
   const [backMode, setBackMode] = useState(false);
+  const [shareCopied, setShareCopied] = useState(false);
+  const alarmFiredForRef = useRef<string | null>(null);
 
   useEffect(() => {
     if (!returnAt || backMode) return;
@@ -69,6 +111,25 @@ function PauseTimerClient() {
 
   const expired = !!returnAt && remainingMs <= 0;
 
+  // Fire the alarm once per pause, the moment it crosses into expired.
+  useEffect(() => {
+    if (expired && returnAt && alarmFiredForRef.current !== returnAt) {
+      alarmFiredForRef.current = returnAt;
+      playChime();
+      notifyExpired();
+    }
+  }, [expired, returnAt]);
+
+  const requestNotifyPermission = () => {
+    try {
+      if (typeof Notification !== "undefined" && Notification.permission === "default") {
+        Notification.requestPermission();
+      }
+    } catch {
+      /* ignore */
+    }
+  };
+
   const startWithMs = useCallback((ms: number) => {
     const startedAt = new Date().toISOString();
     const at = new Date(Date.now() + ms).toISOString();
@@ -77,6 +138,7 @@ function PauseTimerClient() {
     setStartedAt(startedAt);
     setBackMode(false);
     setNow(Date.now());
+    requestNotifyPermission();
   }, []);
 
   const startWithClock = useCallback(() => {
@@ -88,8 +150,8 @@ function PauseTimerClient() {
       target.setDate(target.getDate() + 1);
     }
     const delta = target.getTime() - Date.now();
-    if (delta < 15 * 60 * 1000 || delta > 24 * 60 * 60 * 1000) {
-      // still allow but clamp messaging — min 15m max 24h preferred
+    if (delta < 20 * 60 * 1000 || delta > 24 * 60 * 60 * 1000) {
+      // still allow but clamp messaging — min 20m max 24h preferred
     }
     const started = new Date().toISOString();
     writePause({
@@ -100,7 +162,28 @@ function PauseTimerClient() {
     setStartedAt(started);
     setBackMode(false);
     setNow(Date.now());
+    requestNotifyPermission();
   }, [clockTime]);
+
+  const shareReturnTime = async () => {
+    if (!returnAt) return;
+    const text = `I'll be ready at ${formatClock(new Date(returnAt))}.`;
+    try {
+      if (navigator.share) {
+        await navigator.share({ text });
+        return;
+      }
+    } catch {
+      /* user cancelled or share unsupported — fall through to copy */
+    }
+    try {
+      await navigator.clipboard.writeText(text);
+      setShareCopied(true);
+      window.setTimeout(() => setShareCopied(false), 2000);
+    } catch {
+      /* ignore — nothing more we can do */
+    }
+  };
 
   const cancel = () => {
     clearKey(PAUSE_KEY);
@@ -174,6 +257,9 @@ function PauseTimerClient() {
         <PrimaryButton variant="warn" onClick={imBack}>
           I’m back
         </PrimaryButton>
+        <PrimaryButton variant="secondary" onClick={shareReturnTime}>
+          {shareCopied ? "Copied ✓" : "Share my return time"}
+        </PrimaryButton>
         <PrimaryButton variant="ghost" onClick={cancel}>
           Cancel pause
         </PrimaryButton>
@@ -225,7 +311,7 @@ function PauseTimerClient() {
               id="custom-minutes"
               type="number"
               inputMode="numeric"
-              min={15}
+              min={20}
               max={1440}
               value={customMinutes}
               onChange={(e) => setCustomMinutes(e.target.value)}
@@ -236,14 +322,14 @@ function PauseTimerClient() {
               className="shrink-0 px-5"
               onClick={() => {
                 const n = Number(customMinutes);
-                if (!Number.isFinite(n) || n < 15 || n > 1440) return;
+                if (!Number.isFinite(n) || n < 20 || n > 1440) return;
                 startWithMs(n * 60 * 1000);
               }}
             >
               Start
             </PrimaryButton>
           </div>
-          <p className="text-[13px] text-ink-muted">Min 15 · Max 1440 (24h)</p>
+          <p className="text-[13px] text-ink-muted">Min 20 · Max 1440 (24h)</p>
         </div>
 
         <div className="space-y-2">

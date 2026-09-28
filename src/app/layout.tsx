@@ -4,6 +4,7 @@ import { AppHeader } from "@/components/AppHeader";
 import { AppNav } from "@/components/AppNav";
 import { Splash } from "@/components/splash/Splash";
 import { splashBootScript } from "@/components/splash/boot";
+import { ServiceWorkerRegister } from "@/components/ServiceWorkerRegister";
 import "./globals.css";
 
 const inter = Inter({
@@ -72,7 +73,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#3D5A4C",
+  themeColor: "#2C3E2D",
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
@@ -93,6 +94,7 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: splashBootScript }} />
       </head>
       <body className="min-h-full text-ink">
+        <ServiceWorkerRegister />
         <Splash />
         <div className="relative mx-auto flex min-h-dvh w-full max-w-lg flex-col bg-paper sm:border-x sm:border-rule/[0.07] sm:shadow-[0_0_60px_-20px_rgb(44_62_45/0.25)]">
           <AppHeader />

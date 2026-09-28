@@ -51,6 +51,8 @@ export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
 
       {protocol.warn && <WarnBanner>{protocol.warn}</WarnBanner>}
 
+      <PhraseBlock phrases={protocol.phrases} />
+
       {diagram && diagram.steps.length === protocol.steps.length ? (
         <StepDiagram
           diagram={diagram}
@@ -63,8 +65,6 @@ export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
           <StepList steps={protocol.steps} />
         </>
       )}
-
-      <PhraseBlock phrases={protocol.phrases} />
 
       <section className="space-y-3">
         <SectionLabel>In practice</SectionLabel>

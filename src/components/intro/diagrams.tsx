@@ -360,7 +360,7 @@ export function PauseTimelineDiagram() {
   return (
     <Frame
       viewBox="0 0 340 336"
-      label="Pause + Return timeline: flooded, signal a pause with a return time, separate for 15 minutes to 24 hours, return at the agreed time, restart with warmth then safety."
+      label="Pause + Return timeline: flooded, signal a pause with a return time, separate for 20 minutes to 24 hours, return at the agreed time, restart with warmth then safety."
     >
       {spans.map(([y0, y1, d, dur], i) => (
         <Twist key={y0} x={22} y0={y0} y1={y1} amp={4.6} startOver={i} {...a("dg-draw", d * s, dur * s)} />

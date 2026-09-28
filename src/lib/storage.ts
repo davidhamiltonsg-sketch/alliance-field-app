@@ -2,6 +2,8 @@ import type { CareAuditRow, PauseState, WorksheetDraft } from "@/data/types";
 
 export const PAUSE_KEY = "alliance.field.pause";
 export const WEEKLY_KEY = "alliance.field.weeklyReset";
+export const WEEKLY_HISTORY_KEY = "alliance.field.weeklyResetHistory";
+export const MAX_WEEKLY_HISTORY = 26;
 
 export const CARE_DOMAINS = [
   "Emotional attunement & check-ins",
@@ -88,4 +90,17 @@ export function writeWeekly(draft: WorksheetDraft) {
     ...draft,
     updatedAt: new Date().toISOString(),
   });
+}
+
+export function readWeeklyHistory(): WorksheetDraft[] {
+  return readJson<WorksheetDraft[]>(WEEKLY_HISTORY_KEY) ?? [];
+}
+
+/** Appends a completed Weekly Reset to history, newest first, capped at MAX_WEEKLY_HISTORY. */
+export function appendWeeklyHistory(draft: WorksheetDraft) {
+  const history = readWeeklyHistory();
+  const entry = { ...draft, updatedAt: new Date().toISOString() };
+  const next = [entry, ...history].slice(0, MAX_WEEKLY_HISTORY);
+  writeJson(WEEKLY_HISTORY_KEY, next);
+  return next;
 }
