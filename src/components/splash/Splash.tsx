@@ -44,6 +44,18 @@ export function splashCleared() {
   return s === "leaving" || s === "done" || !document.querySelector(".splash");
 }
 
+/**
+ * Milliseconds the splash has been playing, read from its own CSS animation
+ * clock. The CSS sequence starts when the HTML arrives, not at navigation
+ * start, so performance.now() would cut the lockup short on slow networks.
+ */
+function splashElapsed() {
+  const el = document.querySelector<HTMLElement>(".splash");
+  const anim = el?.getAnimations?.()[0];
+  const t = anim?.currentTime;
+  return typeof t === "number" ? t : performance.now();
+}
+
 export function Splash() {
   const router = useRouter();
   const pathname = usePathname();
@@ -77,7 +89,7 @@ export function Splash() {
 
     if (toIntro) router.prefetch("/intro");
 
-    const now = performance.now();
+    const now = splashElapsed();
     // Hydrated after the CSS fallback already finished: stay out of the way.
     const tooLate = now > leaveAt + FADE_MS;
     if (tooLate || mode === "off") {
