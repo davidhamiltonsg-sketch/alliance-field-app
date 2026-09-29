@@ -323,7 +323,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "steps": [
       {
         "title": "Morning Reset",
-        "detail": "Devices down → touch or eye contact → “How are you going into today?” → one intention.",
+        "detail": "Devices down → touch or eye contact → “How are you feeling about today?” → one intention.",
         "kind": "step",
         "badge": "≤ 5 min"
       },
