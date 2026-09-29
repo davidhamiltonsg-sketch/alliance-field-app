@@ -1,7 +1,8 @@
 import Link from "next/link";
 import type { Protocol } from "@/data/types";
-import { Marker, type MarkerKind } from "./Marker";
+import { Marker } from "./Marker";
 import { PhraseBlock } from "./PhraseBlock";
+import { PracticeTabs } from "./PracticeTabs";
 import { SectionLabel } from "./SectionLabel";
 import { StepList } from "./StepList";
 import { StepDiagram, WhenStrip } from "./visuals/StepDiagram";
@@ -11,28 +12,19 @@ import { WarnBanner } from "./WarnBanner";
 import { FavoriteButton } from "./FavoriteButton";
 import { ArrowLeft, ArrowRight, ChevronRight } from "./icons";
 
-function ExampleCard({
-  kind,
-  children,
-  tone,
-}: {
-  kind: MarkerKind;
-  children: React.ReactNode;
-  tone: string;
-}) {
-  return (
-    <section className={`rounded-2xl border px-4 py-3.5 ${tone}`}>
-      <Marker kind={kind} />
-      <p className="mt-2 text-[15px] leading-normal text-ink">{children}</p>
-    </section>
-  );
-}
+const headerWash: Record<string, string> = {
+  safety: "border-safety/15 bg-safety/[0.05]",
+  pause: "border-pause/15 bg-pause/[0.05]",
+  repair: "border-repair/15 bg-repair/[0.05]",
+  accent: "border-accent/15 bg-accent/[0.05]",
+};
 
 export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
   const diagram = protocolDiagrams[protocol.slug];
+  const tone = protocol.accentHint ?? "accent";
   return (
     <article className="space-y-6">
-      <header className="space-y-3">
+      <header className={`-mx-4 space-y-3 border-b px-4 pb-4 sm:mx-0 sm:rounded-2xl sm:border ${headerWash[tone]}`}>
         <Link
           href="/protocols"
           className="-ml-1 inline-flex min-h-10 items-center gap-1.5 rounded-full px-1 text-[13px] font-medium text-ink-muted hover:text-accent"
@@ -41,7 +33,7 @@ export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
           All protocols
         </Link>
         <div className="flex items-center gap-3">
-          <IconTablet slug={protocol.slug} tone={protocol.accentHint ?? "accent"} size="lg" />
+          <IconTablet slug={protocol.slug} tone={tone} size="lg" />
           <Marker kind="TOOL" />
           <span className="flex-1" />
           <FavoriteButton slug={protocol.slug} recordVisit />
@@ -71,17 +63,7 @@ export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
 
       <section className="space-y-3">
         <SectionLabel>In practice</SectionLabel>
-        <div className="space-y-2.5">
-          <ExampleCard kind="OK" tone="border-safety/20 bg-safety/[0.05]">
-            {protocol.working}
-          </ExampleCard>
-          <ExampleCard kind="FAIL" tone="border-failure/15 bg-failure/[0.04]">
-            {protocol.notWorking}
-          </ExampleCard>
-          <ExampleCard kind="DO" tone="border-rule/10 bg-surface-activity">
-            {protocol.activity}
-          </ExampleCard>
-        </div>
+        <PracticeTabs working={protocol.working} notWorking={protocol.notWorking} activity={protocol.activity} />
       </section>
 
       {protocol.crossLinks.length > 0 && (

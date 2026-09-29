@@ -84,20 +84,19 @@ export default function AboutPage() {
         </a>
       </section>
 
-      <section className="space-y-2">
+      <section className="space-y-3">
         <SectionLabel>Why this exists</SectionLabel>
+        <div className="rounded-2xl border border-accent/20 bg-surface-tool px-4 py-3.5">
+          <p className="phrase text-[16px] leading-snug text-accent">
+            &ldquo;The Alliance&rdquo; was our own working agreement long
+            before it was a product name.
+          </p>
+        </div>
         <p className="text-[15px] leading-normal text-ink">
-          I built THE ALLIANCE out of my own relationship — Dami and I have
-          called what we&apos;re building together &ldquo;the Alliance&rdquo; for
-          years, long before it was a product name. It started as our own
-          working agreement: how we come back to each other, what we say
-          when things go sideways, what we promise not to do. Turning that
-          into named, repeatable protocols is what made it survive bad days
-          and not just good ones.
-        </p>
-        <p className="text-[15px] leading-normal text-ink">
-          This app, the Manual, and the Field Kit are the same system we
-          actually use — not theory borrowed from somewhere else.
+          Dami and I built it from our own relationship — how we come back to
+          each other, what we say when things go sideways, what we promise
+          not to do. This app, the Manual, and the Field Kit are that same
+          system, not theory borrowed from somewhere else.
         </p>
       </section>
 

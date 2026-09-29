@@ -6,35 +6,41 @@ import {
   type Testimonial,
 } from "@/data/testimonials";
 
-function TestimonialCard({ t }: { t: Testimonial }) {
+const chipTone = ["bg-accent/10 text-accent", "bg-repair/10 text-repair", "bg-pause/12 text-[#9A5E10]"];
+
+function TestimonialCard({ t, i }: { t: Testimonial; i: number }) {
   return (
-    <li className="card space-y-2.5 px-4 py-3.5">
-      <QuoteIcon size={18} className="text-accent/50" />
-      <p className="text-[15px] leading-normal text-ink">{t.quote}</p>
-      <p className="text-[13px] font-medium text-ink-muted">— {t.names}</p>
+    <li className="card w-[78%] shrink-0 snap-start space-y-2.5 px-4 py-3.5">
+      <span className={`inline-flex h-7 w-7 items-center justify-center rounded-full ${chipTone[i % chipTone.length]}`}>
+        <QuoteIcon size={14} />
+      </span>
+      <p className="text-[14px] leading-normal text-ink">{t.quote}</p>
+      <p className="text-[12.5px] font-medium text-ink-muted">— {t.names}</p>
     </li>
   );
 }
 
-/** Real testimonials from couples and individuals using the system — shown as a trust signal. */
+/** Real testimonials, shown as a swipeable strip instead of a long stacked list. */
+function TestimonialRow({ items }: { items: Testimonial[] }) {
+  return (
+    <ul className="-mx-4 flex snap-x snap-mandatory gap-2.5 overflow-x-auto px-4 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      {items.map((t, i) => (
+        <TestimonialCard key={t.names} t={t} i={i} />
+      ))}
+    </ul>
+  );
+}
+
 export function Testimonials() {
   return (
     <section className="space-y-5">
       <div className="space-y-3">
         <SectionLabel>What couples are saying</SectionLabel>
-        <ul className="space-y-2.5">
-          {coupleTestimonials.map((t) => (
-            <TestimonialCard key={t.names} t={t} />
-          ))}
-        </ul>
+        <TestimonialRow items={coupleTestimonials} />
       </div>
       <div className="space-y-3">
         <SectionLabel>Individual reviews</SectionLabel>
-        <ul className="space-y-2.5">
-          {individualTestimonials.map((t) => (
-            <TestimonialCard key={t.names} t={t} />
-          ))}
-        </ul>
+        <TestimonialRow items={individualTestimonials} />
       </div>
     </section>
   );
