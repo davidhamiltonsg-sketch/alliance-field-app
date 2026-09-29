@@ -39,7 +39,7 @@ export const situations: Situation[] = [
     id: "daily-drift",
     label: "We feel like roommates",
     description: "Conversations are just logistics; the connection feels thin.",
-    firstMove: "Morning Reset + Evening Landing",
+    firstMove: "Morning Reset + Evening Check-in",
     primaryHref: "/protocols/morning-evening-rhythm",
   },
   {

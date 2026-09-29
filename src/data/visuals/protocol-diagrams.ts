@@ -197,7 +197,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       "kind": "pause",
       "text": "If either partner is flooded: Pause + Return first, then reschedule."
     },
-    "outcome": "Friction lands in a predictable place and stays small. 30-minute timer."
+    "outcome": "Friction stays small and predictable. 30-minute timer."
   },
   "conflict-protocol": {
     "when": "Active conflict or recurring loops, when Warmth is still possible, or after a pause returns you to regulation.",
@@ -328,7 +328,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
         "badge": "≤ 5 min"
       },
       {
-        "title": "Evening Landing",
+        "title": "Evening Check-in",
         "detail": "Decompress side-by-side → no logistics → “How did today actually go?” → one specific appreciation.",
         "kind": "step",
         "badge": "first 10 min"

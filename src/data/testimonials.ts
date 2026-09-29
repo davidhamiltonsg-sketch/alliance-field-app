@@ -21,7 +21,7 @@ export const coupleTestimonials: Testimonial[] = [
   },
   {
     quote:
-      "Switching to the “Team Frame” mindset was a total game-changer for us. Instead of treating each other like the enemy during a disagreement, we actually feel like we're tackling the problem side-by-side now.",
+      "Switching to the “Team Frame” mindset changed how we fight. Instead of treating each other like the enemy during a disagreement, we actually feel like we're on the same side of the problem now.",
     names: "Chloe & Ben",
   },
   {
