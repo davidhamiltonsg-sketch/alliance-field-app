@@ -52,10 +52,10 @@ const panels: Panel[] = [
   },
   {
     id: "pattern-loop",
-    eyebrow: "Pattern loop",
+    eyebrow: "Circuit",
     icon: "conflict-protocol",
-    title: "Interrupt the loop early.",
-    body: "Best point: the pattern. Name the loop, give a holding signal, and use Pause + Return with a committed time.",
+    title: "Interrupt the circuit early.",
+    body: "Best point: the pattern stage. Name the circuit, give a holding signal, and use Pause + Return with a committed time.",
     diagram: <PatternLoopDiagram />,
   },
   {

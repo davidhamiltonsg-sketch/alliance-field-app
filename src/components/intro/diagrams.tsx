@@ -406,7 +406,7 @@ export function PauseTimelineDiagram() {
 }
 
 /* ------------------------------------------------------------------ */
-/* 4. Pattern loop on a woven ring, interrupted at Pattern               */
+/* 4. Circuit on a woven ring, interrupted at Pattern                    */
 /* ------------------------------------------------------------------ */
 export function PatternLoopDiagram() {
   const cx = 170,
@@ -440,7 +440,7 @@ export function PatternLoopDiagram() {
   return (
     <Frame
       viewBox="0 0 340 252"
-      label="Pattern loop: trigger, pattern, escalation, residue, reinforcement, then back to trigger. Interrupt at the pattern stage to stop the loop."
+      label="Circuit: trigger, pattern, escalation, residue, reinforcement, then back to trigger. Interrupt at the pattern stage to stop the circuit."
     >
       <path {...a("dg-fade", 700, 900)} d={`M${ros.join("L")}Z`} fill="none" stroke={V.brass} strokeWidth={0.5} strokeOpacity={0.6} />
       <path {...a("dg-fade", 900, 900)} d={`M${ply.join("L")}Z`} fill="none" stroke={V.brass} strokeWidth={0.8} strokeOpacity={0.75} />
