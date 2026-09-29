@@ -22,6 +22,7 @@ type Panel = {
   icon: string;
   title: string;
   body: string;
+  aside?: string;
   diagram: ReactNode;
 };
 
@@ -72,6 +73,7 @@ const panels: Panel[] = [
     icon: "connection-cards",
     title: "For when things are fine, too.",
     body: "Flip through 35 questions across five stages — Warmth, Curiosity, Care, Repair, Alliance. No protocol needed, just five minutes together.",
+    aside: "Yes, even the couple who's already \"fine\" is allowed to use this.",
     diagram: <ConnectionCardsDiagram />,
   },
 ];
@@ -182,6 +184,11 @@ export function IntroFlow() {
                   </p>
                   <h2 className="display mt-2.5 text-[28px] leading-[1.12]">{p.title}</h2>
                   <p className="mt-2 text-[15px] leading-normal text-ink-muted">{p.body}</p>
+                  {p.aside && (
+                    <p className="mt-1.5 text-[13px] italic leading-snug text-ink-muted/75">
+                      {p.aside}
+                    </p>
+                  )}
                 </div>
               </div>
             </section>

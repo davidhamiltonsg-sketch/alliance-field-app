@@ -65,7 +65,14 @@ export function QuickAccess() {
     setRecent(readRecent());
   }, []);
 
-  if (favorites.length === 0 && recent.length === 0) return null;
+  if (favorites.length === 0 && recent.length === 0) {
+    return (
+      <p className="px-1 text-[13px] leading-normal text-ink-muted">
+        Nothing pinned yet. Star a protocol below and it&apos;ll wait for you
+        here.
+      </p>
+    );
+  }
 
   return (
     <section className="space-y-4">

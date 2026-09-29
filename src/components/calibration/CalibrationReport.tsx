@@ -54,7 +54,7 @@ function CalibrationReportClient() {
   return (
     <div className="space-y-6">
       <PageHeader eyebrow={<Marker kind="TOOL" label="Layer Scan" />} title="Your operating profile">
-        {report.executiveSummary}
+        Both of you finished — no trophy, just the report. {report.executiveSummary}
       </PageHeader>
 
       <section className="space-y-3">

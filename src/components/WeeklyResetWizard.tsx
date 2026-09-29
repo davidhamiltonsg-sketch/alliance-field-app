@@ -89,6 +89,9 @@ function WeeklyResetWizardClient() {
       <div className="space-y-4">
         <Marker kind="OK" label="Complete" />
         <h2 className="display text-[28px] leading-tight">Reset locked</h2>
+        <p className="text-[14px] leading-normal text-ink-muted">
+          Thirty minutes, five questions, zero group text required.
+        </p>
         <div className="card space-y-2 px-4 py-3.5 text-[15px] leading-normal">
           <p>
             <strong>Next step:</strong> {draft.nextStep || "—"}

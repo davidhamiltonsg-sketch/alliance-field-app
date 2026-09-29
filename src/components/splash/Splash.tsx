@@ -25,6 +25,15 @@ const REDUCED_MS = 700;
 const FADE_MS = 420;
 const BOT = /bot|crawler|spider|crawling|slurp|lighthouse|preview/i;
 
+// First-time visitors get the serious tagline. Returning visitors (mode
+// "short") get one of these instead — picked once per load, not a cycle.
+const DEFAULT_TAGLINE = "Built for precision. Designed for connection.";
+const RETURN_TAGLINES = [
+  "Still precise. Still here.",
+  "On time, as promised.",
+  "Back again. That's the whole point.",
+];
+
 type Phase = "css" | "js" | "leaving" | "done";
 
 export const SPLASH_EVENT = "alliance:splash";
@@ -59,6 +68,7 @@ export function Splash() {
   const router = useRouter();
   const pathname = usePathname();
   const [phase, setPhase] = useState<Phase>("css");
+  const [tagline, setTagline] = useState(DEFAULT_TAGLINE);
   const plan = useRef<{ toIntro: boolean; leaveAt: number } | null>(null);
   const timers = useRef<number[]>([]);
 
@@ -80,6 +90,9 @@ export function Splash() {
     const mode = html.dataset.splash ?? "full";
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const first = mode === "full";
+    if (!first) {
+      setTagline(RETURN_TAGLINES[Math.floor(Math.random() * RETURN_TAGLINES.length)]);
+    }
     const toIntro =
       first && window.location.pathname === "/" && !BOT.test(navigator.userAgent);
     const leaveAt = mode === "off" ? 0 : first ? (reduced ? REDUCED_MS : FULL_MS) : SHORT_MS;
@@ -158,7 +171,7 @@ export function Splash() {
           THE ALLIANCE
         </p>
         <p className="splash-tag phrase mt-2 text-[17px] leading-snug text-ink-muted">
-          Built for precision. Designed for connection.
+          {tagline}
         </p>
       </div>
     </div>
