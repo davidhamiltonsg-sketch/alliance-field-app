@@ -121,7 +121,7 @@ export default function AboutPage() {
               <p className="display text-[17px] leading-snug">Field App</p>
               <p className="mt-0.5 text-[13px] leading-snug text-ink-muted">
                 This pocket companion: route under stress, exact phrases, Pause
-                timer, Weekly Reset.
+                timer, Weekly Reset, Profile Calibration.
               </p>
             </div>
           </li>
@@ -200,6 +200,20 @@ export default function AboutPage() {
           </li>
           <li>
             <Link
+              href="/calibrate"
+              className="flex min-h-12 items-center justify-between px-4 text-[15px] font-medium text-ink hover:bg-surface-tool"
+            >
+              <span className="flex flex-col py-2.5">
+                Profile Calibration
+                <span className="text-[13px] font-normal text-ink-muted">
+                  44 questions each — a Layer Scan and a couple report
+                </span>
+              </span>
+              <ChevronRight size={18} className="text-ink-muted/50" />
+            </Link>
+          </li>
+          <li>
+            <Link
               href="/connect"
               className="flex min-h-12 items-center justify-between px-4 text-[15px] font-medium text-ink hover:bg-surface-tool"
             >
@@ -223,8 +237,8 @@ export default function AboutPage() {
           </li>
         </ul>
         <p className="px-1 text-[13px] leading-normal text-ink-muted">
-          Private by default: pause return times and Weekly Reset answers stay
-          on this device.
+          Private by default: pause return times, Weekly Reset answers, and
+          calibration answers all stay on this device.
         </p>
       </section>
     </div>

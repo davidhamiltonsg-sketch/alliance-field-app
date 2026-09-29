@@ -135,6 +135,14 @@ export const StarIcon = ({ filled, ...p }: IconProps & { filled?: boolean }) => 
   </Base>
 );
 
+export const GaugeIcon = (p: IconProps) => (
+  <Base {...p}>
+    <path d="M4 15.5A8 8 0 1 1 20 15.5" />
+    <path d="M12 15.5 15.5 9.5" />
+    <path d="M12 15.5a1.6 1.6 0 1 1 0-3.2 1.6 1.6 0 0 1 0 3.2Z" fill="currentColor" stroke="none" />
+  </Base>
+);
+
 export const ClockIcon = (p: IconProps) => (
   <Base {...p}>
     <circle cx="12" cy="12" r="8.5" />

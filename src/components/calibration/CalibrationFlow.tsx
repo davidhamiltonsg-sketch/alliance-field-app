@@ -1,0 +1,186 @@
+"use client";
+
+import { useState, useSyncExternalStore } from "react";
+import { useRouter } from "next/navigation";
+import { questions } from "@/data/calibration/questions";
+import type { ChoiceKey, PersonKey } from "@/data/calibration/types";
+import { answeredCount, firstUnansweredIndex, isComplete, readCalibration, writeCalibration } from "@/lib/calibration";
+import { CALIBRATION_KEY } from "@/lib/calibration";
+import { clearKey } from "@/lib/storage";
+import { PrimaryButton } from "../PrimaryButton";
+import { ArrowLeft } from "../icons";
+
+const noopSubscribe = () => () => {};
+
+/** Renders the flow only on the client, where saved answers are readable. */
+export function CalibrationFlow() {
+  const mounted = useSyncExternalStore(noopSubscribe, () => true, () => false);
+  if (!mounted) {
+    return <p className="py-6 text-center text-[15px] text-ink-muted">Loading…</p>;
+  }
+  return <CalibrationFlowClient />;
+}
+
+type Phase = "names" | "quiz" | "handoff";
+
+function CalibrationFlowClient() {
+  const router = useRouter();
+  const [state, setState] = useState(readCalibration);
+  const started = answeredCount(state.personA.answers) > 0 || answeredCount(state.personB.answers) > 0;
+
+  const initialPerson: PersonKey = isComplete(state.personA.answers) ? "B" : "A";
+  const [phase, setPhase] = useState<Phase>(started ? "quiz" : "names");
+  const [person, setPerson] = useState<PersonKey>(initialPerson);
+  const [index, setIndex] = useState(() => firstUnansweredIndex(state[initialPerson === "A" ? "personA" : "personB"].answers));
+
+  const personInput = person === "A" ? state.personA : state.personB;
+  const question = questions[index];
+  const answeredHere = answeredCount(personInput.answers);
+
+  const commit = (next: typeof state) => {
+    setState(next);
+    writeCalibration(next);
+  };
+
+  const choose = (choice: ChoiceKey) => {
+    const key = person === "A" ? "personA" : "personB";
+    const next = { ...state, [key]: { ...personInput, answers: { ...personInput.answers, [question.id]: choice } } };
+    commit(next);
+
+    if (index < questions.length - 1) {
+      setIndex(index + 1);
+      return;
+    }
+    // Finished this person's 44 questions.
+    if (person === "A") {
+      setPhase("handoff");
+    } else {
+      router.push("/calibrate/report");
+    }
+  };
+
+  const back = () => {
+    if (index > 0) setIndex(index - 1);
+  };
+
+  const startOver = () => {
+    clearKey(CALIBRATION_KEY);
+    const fresh = readCalibration();
+    setState(fresh);
+    setPerson("A");
+    setIndex(0);
+    setPhase("names");
+  };
+
+  if (phase === "names") {
+    return (
+      <div className="space-y-4">
+        <div className="card space-y-4 px-4 py-4">
+          <div className="space-y-1.5">
+            <p className="text-[13px] font-medium text-ink">Partner A</p>
+            <input
+              className="field-input text-[15px]"
+              value={state.personA.name === "Partner A" ? "" : state.personA.name}
+              placeholder="Partner A"
+              onChange={(e) => commit({ ...state, personA: { ...state.personA, name: e.target.value || "Partner A" } })}
+            />
+          </div>
+          <div className="space-y-1.5">
+            <p className="text-[13px] font-medium text-ink">Partner B</p>
+            <input
+              className="field-input text-[15px]"
+              value={state.personB.name === "Partner B" ? "" : state.personB.name}
+              placeholder="Partner B"
+              onChange={(e) => commit({ ...state, personB: { ...state.personB, name: e.target.value || "Partner B" } })}
+            />
+          </div>
+        </div>
+        <p className="text-[13px] leading-normal text-ink-muted">
+          44 questions each, one at a time. Answer for yourself — hand the device over when it's the other partner's turn.
+        </p>
+        <PrimaryButton onClick={() => setPhase("quiz")}>Begin — {state.personA.name}&apos;s turn</PrimaryButton>
+      </div>
+    );
+  }
+
+  if (phase === "handoff") {
+    return (
+      <div className="space-y-4 text-center">
+        <div className="card space-y-2 px-4 py-6">
+          <p className="display text-[22px] leading-tight">{state.personA.name}&apos;s profile is calibrated.</p>
+          <p className="text-[15px] leading-normal text-ink-muted">
+            Hand the device to {state.personB.name}. Same 44 questions, answered for themself.
+          </p>
+        </div>
+        <PrimaryButton
+          onClick={() => {
+            setPerson("B");
+            setIndex(firstUnansweredIndex(state.personB.answers));
+            setPhase("quiz");
+          }}
+        >
+          Begin — {state.personB.name}&apos;s turn
+        </PrimaryButton>
+      </div>
+    );
+  }
+
+  const pct = Math.round(((index + 1) / questions.length) * 100);
+
+  return (
+    <div className="space-y-4">
+      <div className="space-y-2">
+        <div className="flex items-baseline justify-between">
+          <p className="text-[11px] font-medium uppercase tracking-[0.08em] text-accent">
+            {personInput.name} · Question {index + 1} of {questions.length}
+          </p>
+          <p className="tabular text-[13px] font-medium text-ink-muted">{pct}%</p>
+        </div>
+        <div className="h-1.5 w-full overflow-hidden rounded-full bg-accent/12" role="progressbar" aria-valuemin={1} aria-valuemax={questions.length} aria-valuenow={index + 1}>
+          <div className="h-full rounded-full bg-accent transition-[width]" style={{ width: `${pct}%` }} />
+        </div>
+      </div>
+
+      <section className="card space-y-4 px-4 py-4">
+        <p className="text-[11px] font-medium uppercase tracking-[0.08em] text-ink-muted">{question.domain}</p>
+        <h2 className="display text-[21px] leading-tight">{question.prompt}</h2>
+        <div className="space-y-2.5">
+          {(["a", "b"] as ChoiceKey[]).map((key) => {
+            const text = key === "a" ? question.a : question.b;
+            const selected = personInput.answers[question.id] === key;
+            return (
+              <button
+                key={key}
+                type="button"
+                onClick={() => choose(key)}
+                aria-pressed={selected}
+                className={`w-full rounded-xl border px-4 py-3.5 text-left text-[15px] leading-snug transition-colors ${
+                  selected ? "border-accent bg-accent/10 font-medium text-accent" : "border-rule/15 bg-white text-ink hover:border-accent/30"
+                }`}
+              >
+                {text}
+              </button>
+            );
+          })}
+        </div>
+      </section>
+
+      <div className="flex items-center justify-between">
+        <button
+          type="button"
+          onClick={back}
+          disabled={index === 0}
+          className="inline-flex min-h-11 items-center gap-1.5 text-[15px] font-medium text-accent disabled:pointer-events-none disabled:opacity-30"
+        >
+          <ArrowLeft size={16} />
+          Back
+        </button>
+        <p className="tabular text-[13px] text-ink-muted">{answeredHere}/{questions.length} answered</p>
+      </div>
+
+      <button type="button" onClick={startOver} className="w-full min-h-11 rounded-xl text-[13px] font-medium text-ink-muted hover:bg-ink/[0.04]">
+        Start over
+      </button>
+    </div>
+  );
+}

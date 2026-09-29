@@ -3,7 +3,7 @@ import { AllianceMark } from "@/components/AllianceMark";
 import { SectionLabel } from "@/components/SectionLabel";
 import { SituationCard } from "@/components/SituationCard";
 import { QuickAccess } from "@/components/QuickAccess";
-import { ArrowRight, PauseIcon, LayersIcon } from "@/components/icons";
+import { ArrowRight, PauseIcon, LayersIcon, GaugeIcon } from "@/components/icons";
 import { situations } from "@/data/situations";
 
 export default function HomePage() {
@@ -83,6 +83,24 @@ export default function HomePage() {
           </span>
           <span className="mt-0.5 block text-[13px] leading-tight text-white/85">
             Flip through questions — Warmth, Curiosity, Care, Repair, Alliance.
+          </span>
+        </span>
+        <ArrowRight size={18} className="shrink-0 transition-transform group-hover:translate-x-0.5" />
+      </Link>
+
+      <Link
+        href="/calibrate"
+        className="group flex min-h-16 items-center gap-3.5 rounded-2xl bg-accent px-4 py-3 text-paper shadow-[0_6px_16px_-8px_rgb(61_90_76/0.7)] transition hover:brightness-105 active:scale-[0.99]"
+      >
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/18 ring-1 ring-white/25">
+          <GaugeIcon size={20} strokeWidth={2.25} />
+        </span>
+        <span className="min-w-0 flex-1">
+          <span className="block text-[17px] font-semibold leading-tight">
+            Run Profile Calibration
+          </span>
+          <span className="mt-0.5 block text-[13px] leading-tight text-paper/85">
+            44 questions each → a Layer Scan and a couple report.
           </span>
         </span>
         <ArrowRight size={18} className="shrink-0 transition-transform group-hover:translate-x-0.5" />

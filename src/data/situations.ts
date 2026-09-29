@@ -84,6 +84,16 @@ export const situations: Situation[] = [
     warn: true,
   },
   {
+    id: "outside-pressure",
+    label: "We're getting pressure from outside",
+    description: "Family disapproval, discrimination, or judgment from others is landing on the relationship.",
+    firstMove: "Name it as external, then run the Unity Anchor",
+    primaryHref: "/protocols/unity-anchor",
+    secondaryHrefs: [
+      { label: "Weekly Reset", href: "/protocols/weekly-reset" },
+    ],
+  },
+  {
     id: "attachment-clash",
     label: "We keep clashing the same way",
     description: "One of you chases, one pulls back — or you're just out of sync on timing.",
