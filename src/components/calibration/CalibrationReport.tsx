@@ -3,7 +3,7 @@
 import { useSyncExternalStore } from "react";
 import Link from "next/link";
 import { isComplete, generateProfile, generateCoupleReport, readCalibration } from "@/lib/calibration";
-import type { LayerKey } from "@/data/calibration/types";
+import type { LayerKey, PersonInput, PersonKey, Profile } from "@/data/calibration/types";
 import { PageHeader } from "../PageHeader";
 import { PrimaryButton } from "../PrimaryButton";
 import { SectionLabel } from "../SectionLabel";
@@ -29,17 +29,22 @@ function CalibrationReportClient() {
   const aDone = isComplete(state.personA.answers);
   const bDone = isComplete(state.personB.answers);
 
-  if (!aDone || !bDone) {
+  if (!aDone && !bDone) {
     return (
       <div className="space-y-4">
         <PageHeader eyebrow={<Marker kind="NOTE" label="Not ready yet" />} title="Finish calibration first">
-          {aDone
-            ? `Waiting on ${state.personB.name}'s 44 questions.`
-            : `Waiting on ${state.personA.name}'s 44 questions.`}
+          Answer at least one partner&apos;s 44 questions to see a profile.
         </PageHeader>
-        <PrimaryButton onClick={() => (window.location.href = "/calibrate")}>Continue calibration</PrimaryButton>
+        <PrimaryButton onClick={() => (window.location.href = "/calibrate")}>Start calibration</PrimaryButton>
       </div>
     );
+  }
+
+  if (aDone !== bDone) {
+    const [donePerson, doneInput]: [PersonKey, PersonInput] = aDone ? ["A", state.personA] : ["B", state.personB];
+    const otherName = aDone ? state.personB.name : state.personA.name;
+    const profile = generateProfile(donePerson, doneInput);
+    return <SoloProfile profile={profile} otherName={otherName} />;
   }
 
   const profileA = generateProfile("A", state.personA);
@@ -157,6 +162,67 @@ function CalibrationReportClient() {
       >
         Recalibrate
       </button>
+    </div>
+  );
+}
+
+/** Shown once a single partner has finished — their own profile, with a note that the couple report unlocks once the other partner finishes. */
+function SoloProfile({ profile, otherName }: { profile: Profile; otherName: string }) {
+  return (
+    <div className="space-y-6">
+      <PageHeader eyebrow={<Marker kind="TOOL" label="Solo profile" />} title={`${profile.name}'s operating profile`}>
+        {profile.primaryPattern}
+      </PageHeader>
+
+      <section className="space-y-2.5">
+        <SectionLabel>How safety builds</SectionLabel>
+        <p className="card px-4 py-3.5 text-[15px] leading-normal text-ink">{profile.safetyLogic}</p>
+      </section>
+
+      <section className="space-y-2.5">
+        <SectionLabel>How care lands</SectionLabel>
+        <p className="card px-4 py-3.5 text-[15px] leading-normal text-ink">{profile.careStyle}</p>
+      </section>
+
+      <section className="space-y-2.5">
+        <SectionLabel>Under stress</SectionLabel>
+        <p className="card px-4 py-3.5 text-[15px] leading-normal text-ink">{profile.conflictResponse}</p>
+      </section>
+
+      <section className="space-y-2.5">
+        <SectionLabel>Privacy &amp; autonomy</SectionLabel>
+        <p className="card px-4 py-3.5 text-[15px] leading-normal text-ink">{profile.privacyAutonomy}</p>
+      </section>
+
+      {profile.patterns.length > 0 && (
+        <section className="space-y-2.5">
+          <SectionLabel>Patterns</SectionLabel>
+          <ul className="card divide-y divide-rule/[0.07] px-4">
+            {profile.patterns.map((line) => (
+              <li key={line} className="py-3 text-[15px] leading-normal text-ink">
+                {line}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      <section className="space-y-2.5">
+        <SectionLabel>Likely misreads</SectionLabel>
+        <ul className="card divide-y divide-rule/[0.07] px-4">
+          {profile.likelyMisreads.map((line) => (
+            <li key={line} className="py-3 text-[15px] leading-normal text-ink">
+              {line}
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <div className="rounded-2xl border border-accent/20 bg-surface-tool px-4 py-3.5 text-[14px] leading-normal text-ink-muted">
+        The couple report — Layer Scan, conflict pattern, and recommended tools — unlocks once {otherName} finishes their 44 questions.
+      </div>
+
+      <PrimaryButton onClick={() => (window.location.href = "/calibrate")}>Continue calibration</PrimaryButton>
     </div>
   );
 }

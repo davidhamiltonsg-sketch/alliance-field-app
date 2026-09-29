@@ -142,14 +142,10 @@ export function OutcomeBand({ text }: { text: string }) {
     <div className="v2-outcome flex items-center gap-3 px-4 py-4">
       <svg viewBox="0 0 34 38" width="34" height="38" className="shrink-0" aria-hidden focusable="false">
         <path d={tombD(17, 1.5, 30, 35)} fill={V.forest} stroke={V.brassL} strokeWidth={0.8} />
-        <g transform="translate(5.5 12) scale(0.19) translate(0 -2)" fill="none">
-          <path
-            d="M46 95H38A20 20 0 0 1 18 75V36A16 16 0 0 1 34 20H38C44 20 48 22.5 52 27L69 47C76 55 80 62 80 71C80 84 70 95 60 104C50 95 40 84 40 71C40 62 44 55 51 47L68 27C72 22.5 76 20 82 20H86A16 16 0 0 1 102 36V75A20 20 0 0 1 82 95H74"
-            stroke={V.brassL}
-            strokeWidth={12}
-          />
-          <path d="M51 47L68 27M80 71C80 84 70 95 60 104C50 95 40 84 40 71" stroke={V.forest} strokeWidth={19} />
-          <path d="M51 47L68 27M80 71C80 84 70 95 60 104C50 95 40 84 40 71" stroke={V.brassL} strokeWidth={12} />
+        <g transform="translate(5.5 12) scale(0.19)" fill="none" stroke={V.brassL} strokeLinecap="round">
+          <path d="M60 14L26 106" strokeWidth={10} />
+          <path d="M60 14L94 106" strokeWidth={10} />
+          <path d="M40 74Q50 63 60 74Q70 63 80 74" strokeWidth={8.5} />
         </g>
       </svg>
       <div className="min-w-0">

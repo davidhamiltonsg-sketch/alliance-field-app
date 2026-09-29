@@ -2,6 +2,7 @@
 
 import { useState, useSyncExternalStore } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { questions } from "@/data/calibration/questions";
 import type { ChoiceKey, PersonKey } from "@/data/calibration/types";
 import { answeredCount, firstUnansweredIndex, isComplete, readCalibration, writeCalibration } from "@/lib/calibration";
@@ -121,6 +122,12 @@ function CalibrationFlowClient() {
         >
           Begin — {state.personB.name}&apos;s turn
         </PrimaryButton>
+        <Link
+          href="/calibrate/report"
+          className="inline-flex min-h-11 items-center justify-center text-[14px] font-medium text-accent hover:underline"
+        >
+          View {state.personA.name}&apos;s profile first
+        </Link>
       </div>
     );
   }

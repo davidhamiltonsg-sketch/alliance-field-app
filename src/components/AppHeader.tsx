@@ -11,7 +11,7 @@ export function AppHeader() {
           className="flex min-h-12 items-center gap-2.5"
           aria-label="THE ALLIANCE Field App, home"
         >
-          <AllianceMark size={28} className="text-accent" />
+          <AllianceMark size={28} className="text-accent" waveColor="#A8895A" />
           <span className="text-[13px] font-medium tracking-[0.14em] text-ink">
             THE ALLIANCE
           </span>

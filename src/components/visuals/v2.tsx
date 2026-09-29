@@ -610,22 +610,18 @@ export function Lens({
 
 /* ---------------------------------------------------------------- the mark */
 
-const RIBBON =
-  "M46 95H38A20 20 0 0 1 18 75V36A16 16 0 0 1 34 20H38C44 20 48 22.5 52 27L69 47C76 55 80 62 80 71C80 84 70 95 60 104C50 95 40 84 40 71C40 62 44 55 51 47L68 27C72 22.5 76 20 82 20H86A16 16 0 0 1 102 36V75A20 20 0 0 1 82 95H74";
-const OVER = ["M51 47L68 27", "M80 71C80 84 70 95 60 104C50 95 40 84 40 71"];
+const MARK_LEG_LEFT = "M60 14L26 106";
+const MARK_LEG_RIGHT = "M60 14L94 106";
+const MARK_WAVE = "M40 74Q50 63 60 74Q70 63 80 74";
 
-/** The mark as a single ribbon with over/under knock-outs in the ground colour. */
-export function MarkSeal({ x, y, size, color = V.brassL, bg = V.forest }: { x: number; y: number; size: number; color?: string; bg?: string }) {
+/** THE ALLIANCE mark: two rising strokes meeting at a peak over a soft wave. */
+export function MarkSeal({ x, y, size, color = V.brassL }: { x: number; y: number; size: number; color?: string }) {
   const s = size / 120;
   return (
-    <g transform={`translate(${n(x)} ${n(y)}) scale(${n(s)}) translate(0 -2)`} fill="none">
-      <path d={RIBBON} stroke={color} strokeWidth={12} />
-      {OVER.map((d) => (
-        <path key={d + "k"} d={d} stroke={bg} strokeWidth={19} />
-      ))}
-      {OVER.map((d) => (
-        <path key={d} d={d} stroke={color} strokeWidth={12} />
-      ))}
+    <g transform={`translate(${n(x)} ${n(y)}) scale(${n(s)})`} fill="none" stroke={color} strokeLinecap="round">
+      <path d={MARK_LEG_LEFT} strokeWidth={10} />
+      <path d={MARK_LEG_RIGHT} strokeWidth={10} />
+      <path d={MARK_WAVE} strokeWidth={8.5} />
     </g>
   );
 }

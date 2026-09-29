@@ -28,7 +28,7 @@ export default function HomePage() {
         <div className="relative">
           <div className="flex items-center gap-2.5">
             <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/80 shadow-[0_1px_2px_rgb(26_26_26/0.05)] ring-1 ring-accent/10">
-              <AllianceMark size={30} className="text-accent" title="THE ALLIANCE" />
+              <AllianceMark size={30} className="text-accent" waveColor="#A8895A" title="THE ALLIANCE" />
             </span>
             <span className="eyebrow text-accent">Field App</span>
           </div>
