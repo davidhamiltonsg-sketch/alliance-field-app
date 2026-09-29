@@ -111,7 +111,7 @@ export function SystemDiagram() {
     {
       x: 116,
       title: "Field Kit",
-      sub: ["12 cards,", "8 worksheets"],
+      sub: ["15 cards,", "9 worksheets"],
       fill: V.tint,
       icon: (
         <>
