@@ -122,7 +122,7 @@ export default function HomePage() {
         <p className="text-[13px] leading-normal text-ink-muted">
           THE ALLIANCE · Built for precision. Designed for connection.
           <br />
-          by David Hamilton
+          by David Hamilton and Dr Zhongming Shi
         </p>
       </footer>
     </div>

@@ -65,7 +65,7 @@ export default function AboutPage() {
             Built for precision. Designed for connection.
           </p>
           <p className="mt-3 text-[13px] text-paper/80">
-            by David Hamilton
+            by David Hamilton and Dr Zhongming Shi
           </p>
         </div>
       </section>
