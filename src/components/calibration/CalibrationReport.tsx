@@ -45,6 +45,17 @@ function CalibrationReportClient() {
   if (aDone !== bDone) {
     const [donePerson, doneInput]: [PersonKey, PersonInput] = aDone ? ["A", state.personA] : ["B", state.personB];
     const otherName = aDone ? state.personB.name : state.personA.name;
+    if (donePerson === "A" && state.aPrivate) {
+      return (
+        <div className="space-y-4">
+          <PageHeader eyebrow={<Marker kind="NOTE" label="Private" />} title={`${state.personA.name}’s profile is private`}>
+            {state.personA.name} chose to keep their individual answers and profile private on this shared device.
+            The couple report unlocks once {otherName} finishes their 44 questions.
+          </PageHeader>
+          <PrimaryButton onClick={() => router.push("/calibrate")}>Continue calibration</PrimaryButton>
+        </div>
+      );
+    }
     const profile = generateProfile(donePerson, doneInput);
     return <SoloProfile profile={profile} otherName={otherName} />;
   }
@@ -58,6 +69,12 @@ function CalibrationReportClient() {
       <PageHeader eyebrow={<Marker kind="TOOL" label="Layer Scan" />} title="Your operating profile">
         Both of you finished — no trophy, just the report. {report.executiveSummary}
       </PageHeader>
+
+      {state.aPrivate && (
+        <p className="rounded-2xl border border-accent/20 bg-surface-tool px-4 py-3 text-[13px] leading-normal text-ink-muted">
+          {state.personA.name} kept their individual profile private, so this shows only the couple report.
+        </p>
+      )}
 
       <section className="space-y-3">
         <SectionLabel>Layer Scan</SectionLabel>
@@ -168,8 +185,12 @@ function CalibrationReportClient() {
   );
 }
 
-/** Shown once a single partner has finished — their own profile, with a note that the couple report unlocks once the other partner finishes. */
-function SoloProfile({ profile, otherName }: { profile: Profile; otherName: string }) {
+/**
+ * Shown once a single partner has finished — their own profile, with a note
+ * that the couple report unlocks once the other partner finishes. `preview`
+ * renders just the profile (used on the hand-over screen).
+ */
+export function SoloProfile({ profile, otherName, preview = false }: { profile: Profile; otherName: string; preview?: boolean }) {
   const router = useRouter();
   return (
     <div className="space-y-6">
@@ -221,11 +242,15 @@ function SoloProfile({ profile, otherName }: { profile: Profile; otherName: stri
         </ul>
       </section>
 
-      <div className="rounded-2xl border border-accent/20 bg-surface-tool px-4 py-3.5 text-[14px] leading-normal text-ink-muted">
-        The couple report — Layer Scan, conflict pattern, and recommended tools — unlocks once {otherName} finishes their 44 questions.
-      </div>
+      {!preview && (
+        <>
+          <div className="rounded-2xl border border-accent/20 bg-surface-tool px-4 py-3.5 text-[14px] leading-normal text-ink-muted">
+            The couple report — Layer Scan, conflict pattern, and recommended tools — unlocks once {otherName} finishes their 44 questions.
+          </div>
 
-      <PrimaryButton onClick={() => router.push("/calibrate")}>Continue calibration</PrimaryButton>
+          <PrimaryButton onClick={() => router.push("/calibrate")}>Continue calibration</PrimaryButton>
+        </>
+      )}
     </div>
   );
 }
