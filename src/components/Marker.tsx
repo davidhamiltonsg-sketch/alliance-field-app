@@ -15,12 +15,12 @@ export type MarkerKind =
 const styles: Record<MarkerKind, string> = {
   TOOL: "bg-accent/10 text-accent",
   RULE: "bg-rule/10 text-rule",
-  WARN: "bg-pause/12 text-[#9A5E10]",
-  PAUSE: "bg-pause/12 text-[#9A5E10]",
+  WARN: "bg-pause/12 text-pause-text",
+  PAUSE: "bg-pause/12 text-pause-text",
   DO: "bg-accent text-paper",
   NOTE: "bg-ink/[0.06] text-ink-muted",
   PHRASE: "bg-accent/10 text-accent",
-  OK: "bg-safety/12 text-safety",
+  OK: "bg-safety/12 text-safety-text",
   FAIL: "bg-failure/10 text-failure",
 };
 

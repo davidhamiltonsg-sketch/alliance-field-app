@@ -7,7 +7,11 @@
   --color-rule: #2C3E2D;
   --color-accent: #2C3E2D;
   --color-safety: #2E7D4F;
-  --color-pause: #C47A1A;
+  /* Safety-green for text: >= 5:1 on paper and on safety/10–12 tinted pills. */
+  --color-safety-text: #276B43;
+  --color-pause: #C47A1A; /* fills, rules and icons only — too light for text */
+  /* Pause-amber for text: >= 4.6:1 on paper, surface-warn and pause/12 pills. */
+  --color-pause-text: #8F5610;
   --color-repair: #2F5F8A;
   --color-failure: #A33B2B;
   --color-surface-tool: #EEF2EF;
@@ -599,6 +603,9 @@ html[data-splash="off"] .splash {
 }
 .v2-card--safety {
   border: 2px solid rgb(46 125 79 / 0.85);
+}
+.v2-card--failure {
+  border: 2px solid rgb(163 59 43 / 0.85);
 }
 @media (hover: hover) {
   .v2-card:hover {

@@ -44,7 +44,7 @@ export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
         <p className="text-[17px] leading-normal text-ink">{protocol.concept}</p>
       </header>
 
-      {protocol.warn && <WarnBanner>{protocol.warn}</WarnBanner>}
+      {protocol.warn && <WarnBanner safetyLink={protocol.safetyLink}>{protocol.warn}</WarnBanner>}
 
       <PhraseBlock phrases={protocol.phrases} />
 
@@ -102,7 +102,7 @@ export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
         {protocol.slug === "pause-and-return" && (
           <Link
             href="/pause"
-            className="inline-flex min-h-11 items-center gap-1.5 rounded-full bg-pause px-4 text-[13px] font-medium text-white"
+            className="inline-flex min-h-11 items-center gap-1.5 rounded-full bg-pause px-4 text-[13px] font-medium text-ink"
           >
             Start timer
             <ArrowRight size={16} />

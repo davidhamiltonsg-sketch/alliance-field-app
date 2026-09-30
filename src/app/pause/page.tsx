@@ -15,6 +15,13 @@ export default function PausePage() {
       </PageHeader>
       <PauseTimer />
       <Link
+        href="/help"
+        className="flex min-h-12 items-center justify-between rounded-xl border border-failure/25 bg-surface-warn px-4 text-[15px] font-medium text-failure"
+      >
+        Afraid, not just flooded? Get help
+        <ArrowRight size={16} />
+      </Link>
+      <Link
         href="/protocols/pause-and-return"
         className="flex min-h-12 items-center justify-between rounded-xl border border-rule/[0.1] bg-white px-4 text-[15px] font-medium text-accent"
       >

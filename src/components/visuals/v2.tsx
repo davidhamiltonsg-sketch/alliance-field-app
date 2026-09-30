@@ -608,24 +608,6 @@ export function Lens({
   );
 }
 
-/* ---------------------------------------------------------------- the mark */
-
-const MARK_LEG_LEFT = "M60 14L26 106";
-const MARK_LEG_RIGHT = "M60 14L94 106";
-const MARK_WAVE = "M40 74Q50 63 60 74Q70 63 80 74";
-
-/** THE ALLIANCE mark: two rising strokes meeting at a peak over a soft wave. */
-export function MarkSeal({ x, y, size, color = V.brassL }: { x: number; y: number; size: number; color?: string }) {
-  const s = size / 120;
-  return (
-    <g transform={`translate(${n(x)} ${n(y)}) scale(${n(s)})`} fill="none" stroke={color} strokeLinecap="round">
-      <path d={MARK_LEG_LEFT} strokeWidth={10} />
-      <path d={MARK_LEG_RIGHT} strokeWidth={10} />
-      <path d={MARK_WAVE} strokeWidth={8.5} />
-    </g>
-  );
-}
-
 /** Pause advisory strip: warm paper, amber dashed double hairlines, hourglass-arch. */
 export function AdvisoryStrip({
   x,

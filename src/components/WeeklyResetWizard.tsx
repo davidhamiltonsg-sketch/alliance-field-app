@@ -6,6 +6,7 @@ import type { WorksheetDraft } from "@/data/types";
 import {
   appendWeeklyHistory,
   clearKey,
+  clearWeeklyHistory,
   emptyWeeklyDraft,
   readWeekly,
   readWeeklyHistory,
@@ -35,11 +36,18 @@ export function WeeklyResetWizard() {
 }
 
 function WeeklyResetWizardClient() {
-  const [step, setStep] = useState(1);
+  const [step, setStepState] = useState(1);
+  // Only move focus once the user has moved between steps, not on page load.
+  const [navigated, setNavigated] = useState(false);
+  const setStep = (n: number) => {
+    setNavigated(true);
+    setStepState(n);
+  };
   const [draft, setDraft] = useState<WorksheetDraft>(readWeekly);
   const [done, setDone] = useState(false);
   const [history, setHistory] = useState<WorksheetDraft[]>(readWeeklyHistory);
   const [calendarAdded, setCalendarAdded] = useState(false);
+  const [confirmClear, setConfirmClear] = useState(false);
 
   const update = (patch: Partial<WorksheetDraft>) => {
     setDraft((prev) => {
@@ -66,9 +74,17 @@ function WeeklyResetWizardClient() {
   const clear = () => {
     clearKey(WEEKLY_KEY);
     setDraft(emptyWeeklyDraft());
-    setStep(1);
+    setStepState(1);
+    setNavigated(false);
     setDone(false);
     setCalendarAdded(false);
+    setConfirmClear(false);
+  };
+
+  const clearAll = () => {
+    clearWeeklyHistory();
+    setHistory([]);
+    clear();
   };
 
   const addToCalendar = () => {
@@ -90,7 +106,7 @@ function WeeklyResetWizardClient() {
         <Marker kind="OK" label="Complete" />
         <h2 className="display text-[28px] leading-tight">Reset locked</h2>
         <p className="text-[14px] leading-normal text-ink-muted">
-          Thirty minutes, five questions, zero group text required.
+          Forty minutes, five parts, zero group text required.
         </p>
         <div className="card space-y-2 px-4 py-3.5 text-[15px] leading-normal">
           <p>
@@ -149,6 +165,7 @@ function WeeklyResetWizardClient() {
         <WizardStep
           step={1}
           total={5}
+          focusHeading={navigated}
           title="Appreciation (5 min)"
           onNext={() => setStep(2)}
         >
@@ -171,10 +188,15 @@ function WeeklyResetWizardClient() {
         <WizardStep
           step={2}
           total={5}
-          title="Care Check-in (10–15)"
+          focusHeading={navigated}
+          title="Check the load (15 min)"
           onBack={() => setStep(1)}
           onNext={() => setStep(3)}
         >
+          <p className="text-[13px] leading-normal text-ink-muted">
+            Once a month, run the Care Check-in here: go through each area
+            below.
+          </p>
           <ul className="space-y-3">
             {draft.careAudit.map((row, i) => (
               <li
@@ -234,7 +256,8 @@ function WeeklyResetWizardClient() {
         <WizardStep
           step={3}
           total={5}
-          title="Friction Review"
+          focusHeading={navigated}
+          title="One friction point (15 min)"
           onBack={() => setStep(2)}
           onNext={() => setStep(4)}
         >
@@ -267,7 +290,8 @@ function WeeklyResetWizardClient() {
         <WizardStep
           step={4}
           total={5}
-          title="Request"
+          focusHeading={navigated}
+          title="Requests (5 min, with next steps)"
           onBack={() => setStep(3)}
           onNext={() => setStep(5)}
         >
@@ -292,7 +316,8 @@ function WeeklyResetWizardClient() {
         <WizardStep
           step={5}
           total={5}
-          title="Alignment"
+          focusHeading={navigated}
+          title="Next steps"
           onBack={() => setStep(4)}
           onNext={() => {
             writeWeekly(draft);
@@ -318,13 +343,43 @@ function WeeklyResetWizardClient() {
         </WizardStep>
       )}
 
-      <button
-        type="button"
-        onClick={clear}
-        className="w-full min-h-12 rounded-xl text-[13px] font-medium text-ink-muted hover:bg-ink/[0.04]"
-      >
-        Clear entries
-      </button>
+      {confirmClear ? (
+        <div role="group" aria-label="Clear Weekly Reset data" className="space-y-2 rounded-xl border border-rule/15 bg-white px-3.5 py-3">
+          <p className="text-[13px] leading-normal text-ink-muted">
+            What should be cleared from this device?
+          </p>
+          <button
+            type="button"
+            onClick={clear}
+            className="w-full min-h-11 rounded-xl border border-rule/15 text-[14px] font-medium text-ink"
+          >
+            This week&apos;s answers only
+          </button>
+          <button
+            type="button"
+            onClick={clearAll}
+            className="w-full min-h-11 rounded-xl border border-failure/40 text-[14px] font-medium text-failure"
+          >
+            This week and all history
+            {history.length > 0 ? ` (${history.length} past ${history.length === 1 ? "reset" : "resets"})` : ""}
+          </button>
+          <button
+            type="button"
+            onClick={() => setConfirmClear(false)}
+            className="w-full min-h-11 rounded-xl text-[13px] font-medium text-ink-muted"
+          >
+            Cancel
+          </button>
+        </div>
+      ) : (
+        <button
+          type="button"
+          onClick={() => setConfirmClear(true)}
+          className="w-full min-h-12 rounded-xl text-[13px] font-medium text-ink-muted hover:bg-ink/[0.04]"
+        >
+          Clear entries…
+        </button>
+      )}
     </div>
   );
 }

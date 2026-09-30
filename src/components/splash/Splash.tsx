@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 
 /**
  * Opening splash. Server-rendered so there is no flash of the page before it,
@@ -33,6 +33,14 @@ const RETURN_TAGLINES = [
   "On time, as promised.",
   "Back again. That's the whole point.",
 ];
+
+// Picked once per page load on the client; the server never needs it.
+const RETURN_PICK = Math.floor(Math.random() * RETURN_TAGLINES.length);
+
+const noopSubscribe = () => () => {};
+/** html[data-splash] is set by the boot script before first paint and never changes. */
+const readSplashMode = () => document.documentElement.dataset.splash ?? "full";
+const serverSplashMode = () => "full";
 
 type Phase = "css" | "js" | "leaving" | "done";
 
@@ -68,7 +76,10 @@ export function Splash() {
   const router = useRouter();
   const pathname = usePathname();
   const [phase, setPhase] = useState<Phase>("css");
-  const [tagline, setTagline] = useState(DEFAULT_TAGLINE);
+  // Server render (and hydration) use the first-visit tagline; the client then
+  // switches to a return tagline when the boot script marked this a return visit.
+  const splashMode = useSyncExternalStore(noopSubscribe, readSplashMode, serverSplashMode);
+  const tagline = splashMode === "full" ? DEFAULT_TAGLINE : RETURN_TAGLINES[RETURN_PICK];
   const plan = useRef<{ toIntro: boolean; leaveAt: number } | null>(null);
   const timers = useRef<number[]>([]);
 
@@ -90,9 +101,6 @@ export function Splash() {
     const mode = html.dataset.splash ?? "full";
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const first = mode === "full";
-    if (!first) {
-      setTagline(RETURN_TAGLINES[Math.floor(Math.random() * RETURN_TAGLINES.length)]);
-    }
     const toIntro =
       first && window.location.pathname === "/" && !BOT.test(navigator.userAgent);
     const leaveAt = mode === "off" ? 0 : first ? (reduced ? REDUCED_MS : FULL_MS) : SHORT_MS;

@@ -1,14 +1,15 @@
 "use client";
 
-import { useState, useSyncExternalStore } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import { questions } from "@/data/calibration/questions";
 import type { ChoiceKey, PersonKey } from "@/data/calibration/types";
 import { answeredCount, firstUnansweredIndex, isComplete, readCalibration, writeCalibration } from "@/lib/calibration";
 import { CALIBRATION_KEY } from "@/lib/calibration";
 import { clearKey } from "@/lib/storage";
+import { generateProfile } from "@/lib/calibration";
 import { PrimaryButton } from "../PrimaryButton";
+import { SoloProfile } from "./CalibrationReport";
 import { ArrowLeft } from "../icons";
 
 const noopSubscribe = () => () => {};
@@ -33,6 +34,18 @@ function CalibrationFlowClient() {
   const [phase, setPhase] = useState<Phase>(started ? "quiz" : "names");
   const [person, setPerson] = useState<PersonKey>(initialPerson);
   const [index, setIndex] = useState(() => firstUnansweredIndex(state[initialPerson === "A" ? "personA" : "personB"].answers));
+  const [previewA, setPreviewA] = useState(false);
+
+  // Move focus to the question heading when the question changes (not on load).
+  const questionHeading = useRef<HTMLHeadingElement>(null);
+  const firstRun = useRef(true);
+  useEffect(() => {
+    if (firstRun.current) {
+      firstRun.current = false;
+      return;
+    }
+    questionHeading.current?.focus();
+  }, [index, person, phase]);
 
   const personInput = person === "A" ? state.personA : state.personB;
   const question = questions[index];
@@ -54,6 +67,8 @@ function CalibrationFlowClient() {
     }
     // Finished this person's 44 questions.
     if (person === "A") {
+      // Shared device: A's individual profile is private by default.
+      commit({ ...next, aPrivate: true });
       setPhase("handoff");
     } else {
       router.push("/calibrate/report");
@@ -78,8 +93,12 @@ function CalibrationFlowClient() {
       <div className="space-y-4">
         <div className="card space-y-4 px-4 py-4">
           <div className="space-y-1.5">
-            <p className="text-[13px] font-medium text-ink">Partner A</p>
+            <label htmlFor="partner-a-name" className="block text-[13px] font-medium text-ink">
+              Partner A
+            </label>
             <input
+              id="partner-a-name"
+              autoComplete="off"
               className="field-input text-[15px]"
               value={state.personA.name === "Partner A" ? "" : state.personA.name}
               placeholder="Partner A"
@@ -87,8 +106,12 @@ function CalibrationFlowClient() {
             />
           </div>
           <div className="space-y-1.5">
-            <p className="text-[13px] font-medium text-ink">Partner B</p>
+            <label htmlFor="partner-b-name" className="block text-[13px] font-medium text-ink">
+              Partner B
+            </label>
             <input
+              id="partner-b-name"
+              autoComplete="off"
               className="field-input text-[15px]"
               value={state.personB.name === "Partner B" ? "" : state.personB.name}
               placeholder="Partner B"
@@ -97,7 +120,7 @@ function CalibrationFlowClient() {
           </div>
         </div>
         <p className="text-[13px] leading-normal text-ink-muted">
-          44 questions each, one at a time. Answer for yourself — hand the device over when it's the other partner's turn.
+          44 questions each, one at a time. Answer for yourself — hand the device over when it&apos;s the other partner&apos;s turn.
         </p>
         <PrimaryButton onClick={() => setPhase("quiz")}>Begin — {state.personA.name}&apos;s turn</PrimaryButton>
       </div>
@@ -113,8 +136,38 @@ function CalibrationFlowClient() {
             Hand the device to {state.personB.name}. Same 44 questions, answered for themself.
           </p>
         </div>
+        <fieldset className="card space-y-2.5 px-4 py-4 text-left">
+          <legend className="sr-only">Before you hand over</legend>
+          <p className="text-[15px] font-medium leading-normal text-ink" aria-hidden>
+            Before you hand over
+          </p>
+          <p className="text-[13px] leading-normal text-ink-muted">
+            Your answers are saved on this shared device. Choose what {state.personB.name} can see.
+          </p>
+          {([
+            [true, `Keep my individual profile private — ${state.personB.name} sees only the couple report`],
+            [false, `Share my individual profile with ${state.personB.name}`],
+          ] as const).map(([value, text]) => (
+            <label
+              key={String(value)}
+              className={`flex min-h-12 cursor-pointer items-start gap-3 rounded-xl border px-3.5 py-3 text-[15px] leading-snug ${
+                state.aPrivate === value ? "border-accent bg-accent/[0.06] text-ink" : "border-rule/15 bg-white text-ink"
+              }`}
+            >
+              <input
+                type="radio"
+                name="a-privacy"
+                className="mt-1 accent-[var(--color-accent)]"
+                checked={state.aPrivate === value}
+                onChange={() => commit({ ...state, aPrivate: value })}
+              />
+              {text}
+            </label>
+          ))}
+        </fieldset>
         <PrimaryButton
           onClick={() => {
+            setPreviewA(false);
             setPerson("B");
             setIndex(firstUnansweredIndex(state.personB.answers));
             setPhase("quiz");
@@ -122,12 +175,19 @@ function CalibrationFlowClient() {
         >
           Begin — {state.personB.name}&apos;s turn
         </PrimaryButton>
-        <Link
-          href="/calibrate/report"
+        <button
+          type="button"
+          onClick={() => setPreviewA((v) => !v)}
+          aria-expanded={previewA}
           className="inline-flex min-h-11 items-center justify-center text-[14px] font-medium text-accent hover:underline"
         >
-          View {state.personA.name}&apos;s profile first
-        </Link>
+          {previewA ? "Hide my profile" : `View ${state.personA.name}’s profile first`}
+        </button>
+        {previewA && (
+          <div className="text-left">
+            <SoloProfile profile={generateProfile("A", state.personA)} otherName={state.personB.name} preview />
+          </div>
+        )}
       </div>
     );
   }
@@ -150,7 +210,12 @@ function CalibrationFlowClient() {
 
       <section className="card space-y-4 px-4 py-4">
         <p className="text-[11px] font-medium uppercase tracking-[0.08em] text-ink-muted">{question.domain}</p>
-        <h2 className="display text-[21px] leading-tight">{question.prompt}</h2>
+        <h2 ref={questionHeading} tabIndex={-1} className="display text-[21px] leading-tight focus:outline-none">
+          <span className="sr-only">
+            {personInput.name}, question {index + 1} of {questions.length}:{" "}
+          </span>
+          {question.prompt}
+        </h2>
         <div className="space-y-2.5">
           {(["a", "b"] as ChoiceKey[]).map((key) => {
             const text = key === "a" ? question.a : question.b;

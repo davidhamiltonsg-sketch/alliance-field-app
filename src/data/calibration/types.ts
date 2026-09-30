@@ -45,6 +45,12 @@ export type PersonInput = {
 export type CalibrationState = {
   personA: PersonInput;
   personB: PersonInput;
+  /**
+   * Shared-device privacy: when true, Partner B sees only the couple report,
+   * never Partner A's individual profile. Defaults to true once A finishes;
+   * A can choose to share before handing the device over.
+   */
+  aPrivate: boolean;
 };
 
 export type Profile = {

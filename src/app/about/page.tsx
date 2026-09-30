@@ -54,9 +54,9 @@ export default function AboutPage() {
         />
         <div className="relative flex flex-col items-center">
           <AllianceMark size={76} className="text-paper" title="THE ALLIANCE" />
-          <p className="mt-4 text-[20px] font-medium tracking-[0.14em] pl-[0.14em]">
+          <h1 className="mt-4 text-[20px] font-medium tracking-[0.14em] pl-[0.14em]">
             THE ALLIANCE
-          </p>
+          </h1>
           <p className="mt-2 text-[11px] font-medium uppercase tracking-[0.08em] pl-[0.08em] text-paper/75">
             Field App
           </p>
@@ -135,8 +135,9 @@ export default function AboutPage() {
         <Marker kind="NOTE" label="Feeling checked out?" />
         <p className="mt-2 text-[15px] leading-normal">
           <strong>Not sure if it&apos;s space or withdrawal?</strong> Run the
-          Uninvestment Check. Three or more warning signs → schedule a Full
-          Recovery conversation and a Proof window. Hope isn&apos;t a plan.
+          Uninvestment Check. 0–2 signs: likely needs space. 3 or more: may
+          be pulling away — book a Full Recovery within a week. Hope
+          isn&apos;t a plan.
         </p>
         <Link
           href="/protocols/uninvestment-check"
@@ -147,26 +148,15 @@ export default function AboutPage() {
         </Link>
       </section>
 
-      <section
-        id="safety"
-        className="scroll-mt-20 space-y-2"
-      >
+      <section id="safety" className="scroll-mt-20 space-y-2">
         <SectionLabel>When not to use this</SectionLabel>
-        <WarnBanner pauseLink={false}>
-          This app is a communication and repair tool. It is not a
-          substitute for professional help, and it is not built for
-          situations involving contempt, fear, coercion, or any form of
-          abuse.
+        <WarnBanner pauseLink={false} safetyLink>
+          This app is a communication and repair tool. It is not a substitute
+          for professional help, and it is not built for situations involving
+          contempt, fear, coercion, or any form of abuse. Afraid of your
+          partner, being threatened, or not free to say no? Stop — these tools
+          are not for this. Get outside help.
         </WarnBanner>
-        <p className="text-[15px] leading-normal text-ink-muted">
-          If you&apos;re afraid of your partner, if either of you is using these
-          tools to control or punish the other, or if you&apos;re in danger,
-          please contact a licensed therapist, a local support service, or
-          in an emergency, local emergency services. These protocols assume
-          two people acting in good faith toward each other — they are not
-          designed for, and should not be used to manage, an unsafe
-          relationship.
-        </p>
       </section>
 
       <GetFullSystem />
@@ -174,6 +164,20 @@ export default function AboutPage() {
       <section className="space-y-3">
         <SectionLabel>More</SectionLabel>
         <ul className="card divide-y divide-rule/[0.07] overflow-hidden">
+          <li>
+            <Link
+              href="/help"
+              className="flex min-h-12 items-center justify-between px-4 text-[15px] font-medium text-ink hover:bg-surface-tool"
+            >
+              <span className="flex flex-col py-2.5">
+                Help &amp; safety
+                <span className="text-[13px] font-normal text-ink-muted">
+                  Help lines and when not to use this app
+                </span>
+              </span>
+              <ChevronRight size={18} className="text-ink-muted/50" />
+            </Link>
+          </li>
           <li>
             <Link
               href="/intro"
@@ -237,7 +241,11 @@ export default function AboutPage() {
         </ul>
         <p className="px-1 text-[13px] leading-normal text-ink-muted">
           Private by default: pause return times, Weekly Reset answers, and
-          calibration answers all stay on this device.
+          calibration answers all stay on this device — nothing is sent
+          anywhere.{" "}
+          <Link href="/help#your-data" className="font-medium text-accent underline underline-offset-4">
+            Delete all my data
+          </Link>
         </p>
       </section>
     </div>

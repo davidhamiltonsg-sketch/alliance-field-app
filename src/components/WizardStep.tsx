@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { PrimaryButton } from "./PrimaryButton";
 
 export function WizardStep({
@@ -11,6 +12,7 @@ export function WizardStep({
   onNext,
   nextLabel = "Next",
   backLabel = "Back",
+  focusHeading = false,
 }: {
   step: number;
   total: number;
@@ -20,7 +22,13 @@ export function WizardStep({
   onNext?: () => void;
   nextLabel?: string;
   backLabel?: string;
+  /** Move focus to the step heading on mount (set after the user changes step). */
+  focusHeading?: boolean;
 }) {
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  useEffect(() => {
+    if (focusHeading) headingRef.current?.focus();
+  }, [focusHeading]);
   const pct = Math.round((step / total) * 100);
   return (
     <div className="space-y-4">
@@ -50,7 +58,10 @@ export function WizardStep({
         </div>
       </div>
       <section className="card space-y-4 px-4 pb-4 pt-4">
-        <h2 className="display text-[20px] leading-tight">{title}</h2>
+        <h2 ref={headingRef} tabIndex={-1} className="display text-[20px] leading-tight focus:outline-none">
+          <span className="sr-only">Step {step} of {total}: </span>
+          {title}
+        </h2>
         <div className="space-y-3.5">{children}</div>
       </section>
       <div className="flex gap-2">

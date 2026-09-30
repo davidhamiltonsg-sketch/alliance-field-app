@@ -40,7 +40,7 @@ const panels: Panel[] = [
     eyebrow: "Situation Map",
     icon: "section-when-to-use",
     title: "Find your row. Pull the card.",
-    body: "When you don’t know which card to pull, follow the first match, top to bottom.",
+    body: "Safety comes first: if you’re afraid, threatened, or not free to say no, stop and get outside help. Otherwise, follow the first match, top to bottom.",
     diagram: <SituationMapDiagram />,
   },
   {
@@ -63,8 +63,8 @@ const panels: Panel[] = [
     id: "weekly-reset",
     eyebrow: "Weekly Reset",
     icon: "weekly-reset",
-    title: "Thirty minutes, once a week.",
-    body: "Appreciation, care audit, one friction, requests, alignment. Maintenance, not a trial.",
+    title: "Forty minutes, once a week.",
+    body: "Appreciation, check the load, one friction point, requests, next steps. Maintenance, not a trial.",
     diagram: <WeeklyResetDiagram />,
   },
   {
@@ -159,6 +159,9 @@ export function IntroFlow() {
         <div
           ref={trackRef}
           onScroll={onScroll}
+          tabIndex={0}
+          role="region"
+          aria-label="Introduction panels — use the arrow keys or swipe"
           className="intro-track relative flex min-h-0 flex-1 snap-x snap-mandatory overflow-x-auto"
         >
           {panels.map((p, i) => (
@@ -249,7 +252,7 @@ export function IntroFlow() {
               <div className="grid grid-cols-2 gap-2">
                 <Link
                   href="/pause"
-                  className="flex h-12 items-center justify-center gap-1.5 rounded-2xl border border-pause/35 bg-surface-activity text-[14px] font-semibold text-[#9A5E10] transition active:scale-[0.99]"
+                  className="flex h-12 items-center justify-center gap-1.5 rounded-2xl border border-pause/35 bg-surface-activity text-[14px] font-semibold text-pause-text transition active:scale-[0.99]"
                 >
                   <PauseIcon size={17} />
                   Pause + Return

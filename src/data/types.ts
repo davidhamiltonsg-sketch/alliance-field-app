@@ -24,6 +24,8 @@ export interface Protocol {
   activity: string;
   crossLinks: { label: string; href?: string }[];
   warn?: string;
+  /** Show the "Afraid, not just flooded? Get help" link under the warning. */
+  safetyLink?: boolean;
   accentHint?: "safety" | "pause" | "repair" | "accent";
 }
 
@@ -35,6 +37,8 @@ export interface Situation {
   primaryHref: string;
   secondaryHrefs?: { label: string; href: string }[];
   warn?: boolean;
+  /** Safety row: always first, routes to Help & safety, never to Pause. */
+  danger?: boolean;
 }
 
 export interface CareAuditRow {

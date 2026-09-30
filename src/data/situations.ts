@@ -1,9 +1,18 @@
 import type { Situation } from "./types";
 
 export const situations: Situation[] = [
+  // Safety routing always comes first. Never route "unsafe" to Pause + Return.
+  {
+    id: "unsafe",
+    label: "I'm afraid, being threatened, or not free to say no",
+    description: "Afraid of your partner, threats, pressure, or control — not just a hard conversation.",
+    firstMove: "Stop. These tools are not for this. Get outside help (see Help Lines).",
+    primaryHref: "/help",
+    danger: true,
+  },
   {
     id: "flooded",
-    label: "I'm flooded",
+    label: "I'm flooded or shut down (but safe)",
     description: "Heart racing, can't think straight, want to flee or win the argument.",
     firstMove: "Take a pause first — then Pause + Return",
     primaryHref: "/protocols/pause-and-return",
