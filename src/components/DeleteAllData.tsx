@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { wipeAll } from "@/lib/storage";
 
@@ -21,7 +22,11 @@ export function DeleteAllData() {
         Everything you enter — pause return times, Weekly Reset answers and
         history, calibration answers, favourites — stays on this device. The
         app has no account. The only time any data leaves your device is if
-        you choose to submit your email for updates.
+        you choose to submit your email for updates.{" "}
+        <Link href="/privacy" className="font-medium text-accent underline underline-offset-4">
+          Read the privacy notice
+        </Link>
+        .
       </p>
       {status === "idle" && (
         <button

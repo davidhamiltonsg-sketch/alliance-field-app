@@ -306,6 +306,10 @@ export default function AboutPage() {
           <Link href="/help#your-data" className="font-medium text-accent underline underline-offset-4">
             Delete all my data
           </Link>
+          {" · "}
+          <Link href="/privacy" className="font-medium text-accent underline underline-offset-4">
+            Privacy notice
+          </Link>
         </p>
       </section>
     </div>
