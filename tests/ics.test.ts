@@ -1,6 +1,16 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { KIT } from "@/data/kit";
-import { WEEKLY_RESET_MINUTES, buildStartPlanIcs, buildWeeklyResetIcs } from "@/lib/ics";
+import {
+  CARE_CHECKIN_RRULE,
+  WEEKLY_RESET_MINUTES,
+  WEEKLY_RESET_RRULE,
+  buildKeepGoingIcs,
+  buildStartPlanIcs,
+  buildWeeklyResetIcs,
+  keepGoingIcsText,
+  nextFirstSundayAt,
+  nextSundayAt,
+} from "@/lib/ics";
 
 let captured: Blob | null = null;
 
@@ -71,5 +81,71 @@ describe("buildStartPlanIcs", () => {
     expect(field(lines, "DTSTART")).toBe(iso(start));
     expect(field(lines, "DTEND")).toBe(iso(new Date(start.getTime() + 10 * 60 * 1000)));
     expect(field(lines, "DESCRIPTION")).toContain("Pause + Return");
+  });
+});
+
+describe("keep it going (weekly Reset + monthly Care Check-in)", () => {
+  const events = (text: string) =>
+    text
+      .split("BEGIN:VEVENT")
+      .slice(1)
+      .map((chunk) => chunk.split("END:VEVENT")[0].split("\r\n").filter(Boolean));
+
+  it("uses a weekly Sunday rule and a first-Sunday-of-the-month rule", () => {
+    expect(WEEKLY_RESET_RRULE).toBe("FREQ=WEEKLY;BYDAY=SU");
+    expect(CARE_CHECKIN_RRULE).toBe("FREQ=MONTHLY;BYDAY=1SU");
+    const [weekly, monthly] = events(keepGoingIcsText("19:00", new Date(2026, 8, 30, 12, 0)));
+    expect(field(weekly, "RRULE")).toBe("FREQ=WEEKLY;BYDAY=SU");
+    expect(field(monthly, "RRULE")).toBe("FREQ=MONTHLY;BYDAY=1SU");
+  });
+
+  it("is one CRLF calendar with exactly two events", () => {
+    const text = keepGoingIcsText("19:00", new Date(2026, 8, 30, 12, 0));
+    expect(text).not.toMatch(/[^\r]\n/);
+    const lines = text.split("\r\n");
+    expect(lines[0]).toBe("BEGIN:VCALENDAR");
+    expect(lines.at(-1)).toBe("END:VCALENDAR");
+    expect(events(text)).toHaveLength(2);
+  });
+
+  it("starts at floating local time on the next Sunday and next first Sunday, 40 minutes long", () => {
+    // Wednesday 30 September 2026 → Sunday 4 October (also the first Sunday of October).
+    const [weekly, monthly] = events(keepGoingIcsText("19:00", new Date(2026, 8, 30, 12, 0)));
+    expect(field(weekly, "DTSTART")).toBe("20261004T190000");
+    expect(field(weekly, "DTEND")).toBe("20261004T194000");
+    expect(field(monthly, "DTSTART")).toBe("20261004T190000");
+    expect(field(monthly, "DTEND")).toBe("20261004T194000");
+    for (const e of [weekly, monthly]) expect(field(e, "DTSTART")).not.toMatch(/Z$/);
+  });
+
+  it("honours the chosen time and rolls past a first Sunday that has already gone", () => {
+    // Monday 5 October 2026: next Sunday is the 11th; next first Sunday is 1 November.
+    const [weekly, monthly] = events(keepGoingIcsText("18:30", new Date(2026, 9, 5, 9, 0)));
+    expect(field(weekly, "DTSTART")).toBe("20261011T183000");
+    expect(field(monthly, "DTSTART")).toBe("20261101T183000");
+  });
+
+  it("skips today when the Sunday slot has already passed, and crosses year ends", () => {
+    expect(nextSundayAt(new Date(2026, 9, 4, 20, 0), "19:00")).toEqual(new Date(2026, 9, 11, 19, 0));
+    expect(nextSundayAt(new Date(2026, 9, 4, 18, 0), "19:00")).toEqual(new Date(2026, 9, 4, 19, 0));
+    expect(nextFirstSundayAt(new Date(2026, 11, 6, 20, 0), "19:00")).toEqual(new Date(2027, 0, 3, 19, 0));
+  });
+
+  it("keeps the Care Check-in inside the Weekly Reset, with canonical names", () => {
+    const text = keepGoingIcsText("19:00", new Date(2026, 8, 30, 12, 0));
+    const [weekly, monthly] = events(text);
+    expect(field(weekly, "SUMMARY")).toBe("Weekly Reset (Alliance Protocols)");
+    expect(field(monthly, "SUMMARY")).toBe("Care Check-in inside your Weekly Reset");
+    expect(field(monthly, "DESCRIPTION")).toContain("not an extra meeting");
+    expect(field(weekly, "DESCRIPTION")).toContain("Pause + Return");
+    expect(text).not.toMatch(/care audit/i);
+    expect(new Set(events(text).map((e) => field(e, "UID"))).size).toBe(2);
+  });
+
+  it("returns an object URL and a stable filename", async () => {
+    const result = buildKeepGoingIcs("19:00", new Date(2026, 8, 30, 12, 0));
+    expect(result).toEqual({ url: "blob:test", filename: "alliance-keep-it-going.ics" });
+    expect(captured!.type).toBe("text/calendar;charset=utf-8");
+    expect(await captured!.text()).toContain("RRULE:FREQ=MONTHLY;BYDAY=1SU");
   });
 });

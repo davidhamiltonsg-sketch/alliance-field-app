@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useId, useState } from "react";
 import { PrimaryButton } from "./PrimaryButton";
 import { SIGNUP_CAPTURE_EMAIL, SIGNUP_ENDPOINT } from "@/lib/links";
@@ -72,8 +73,8 @@ export function SignupForm() {
         Not ready yet? Get updates by email
       </label>
       <p className="mt-0.5 text-[13px] leading-snug text-ink-muted">
-        Occasional updates and the link to the full system. Unsubscribe any
-        time. This is the only time the app sends anything off your device.
+        Occasional updates and the link to the full system. This is the only
+        time the app sends anything off your device.
       </p>
       {status === "done" ? (
         <p role="status" className="mt-2 text-[15px] font-medium text-safety-text">
@@ -107,6 +108,14 @@ export function SignupForm() {
           </PrimaryButton>
         </form>
       )}
+      <p className="mt-2 text-[13px] leading-snug text-ink-muted">
+        We&apos;ll only use your email for Alliance Protocols updates.
+        Unsubscribe any time.{" "}
+        <Link href="/privacy" className="font-medium text-accent underline underline-offset-4">
+          Privacy notice
+        </Link>
+        .
+      </p>
       {status === "error" && (
         <p id={`${id}-error`} role="alert" className="mt-2 text-[13px] font-medium text-failure">
           {error}{" "}
