@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { connection } from "next/server";
 import { PageHeader } from "@/components/PageHeader";
 import { safeNext } from "@/lib/launch-lock";
 
@@ -10,6 +11,8 @@ export default async function UnlockPage({
 }: {
   searchParams: Promise<{ next?: string; error?: string }>;
 }) {
+  // Read the lock at request time, never at build time.
+  await connection();
   // Launched (no access code configured): there is nothing to unlock.
   if (!process.env.LAUNCH_ACCESS_CODE?.trim()) notFound();
   const { next, error } = await searchParams;

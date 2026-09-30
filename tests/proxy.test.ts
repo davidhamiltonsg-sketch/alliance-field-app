@@ -134,3 +134,13 @@ describe("proxy: locked", () => {
     }
   });
 });
+
+describe("/unlock page", () => {
+  it("reads the lock at request time (a build without the env var must not bake in a 404)", async () => {
+    const { readFileSync } = await import("node:fs");
+    const src = readFileSync(new URL("../src/app/unlock/page.tsx", import.meta.url), "utf8");
+    const at = (s: string) => src.indexOf(s);
+    expect(at("await connection()")).toBeGreaterThan(-1);
+    expect(at("await connection()")).toBeLessThan(at("notFound()"));
+  });
+});
