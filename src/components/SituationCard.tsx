@@ -35,7 +35,7 @@ const card: Record<Tone, string> = {
 
 const moveText: Record<Tone, string> = {
   failure: "text-failure",
-  pause: "text-[#8F5610]",
+  pause: "text-pause-text",
   repair: "text-repair",
   accent: "text-accent",
 };

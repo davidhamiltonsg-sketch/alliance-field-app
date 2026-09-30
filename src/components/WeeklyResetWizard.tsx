@@ -36,7 +36,13 @@ export function WeeklyResetWizard() {
 }
 
 function WeeklyResetWizardClient() {
-  const [step, setStep] = useState(1);
+  const [step, setStepState] = useState(1);
+  // Only move focus once the user has moved between steps, not on page load.
+  const [navigated, setNavigated] = useState(false);
+  const setStep = (n: number) => {
+    setNavigated(true);
+    setStepState(n);
+  };
   const [draft, setDraft] = useState<WorksheetDraft>(readWeekly);
   const [done, setDone] = useState(false);
   const [history, setHistory] = useState<WorksheetDraft[]>(readWeeklyHistory);
@@ -68,7 +74,8 @@ function WeeklyResetWizardClient() {
   const clear = () => {
     clearKey(WEEKLY_KEY);
     setDraft(emptyWeeklyDraft());
-    setStep(1);
+    setStepState(1);
+    setNavigated(false);
     setDone(false);
     setCalendarAdded(false);
     setConfirmClear(false);
@@ -158,6 +165,7 @@ function WeeklyResetWizardClient() {
         <WizardStep
           step={1}
           total={5}
+          focusHeading={navigated}
           title="Appreciation (5 min)"
           onNext={() => setStep(2)}
         >
@@ -180,6 +188,7 @@ function WeeklyResetWizardClient() {
         <WizardStep
           step={2}
           total={5}
+          focusHeading={navigated}
           title="Check the load (15 min)"
           onBack={() => setStep(1)}
           onNext={() => setStep(3)}
@@ -247,6 +256,7 @@ function WeeklyResetWizardClient() {
         <WizardStep
           step={3}
           total={5}
+          focusHeading={navigated}
           title="One friction point (15 min)"
           onBack={() => setStep(2)}
           onNext={() => setStep(4)}
@@ -280,6 +290,7 @@ function WeeklyResetWizardClient() {
         <WizardStep
           step={4}
           total={5}
+          focusHeading={navigated}
           title="Requests (5 min, with next steps)"
           onBack={() => setStep(3)}
           onNext={() => setStep(5)}
@@ -305,6 +316,7 @@ function WeeklyResetWizardClient() {
         <WizardStep
           step={5}
           total={5}
+          focusHeading={navigated}
           title="Next steps"
           onBack={() => setStep(4)}
           onNext={() => {

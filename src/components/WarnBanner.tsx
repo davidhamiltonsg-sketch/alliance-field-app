@@ -24,7 +24,7 @@ export function WarnBanner({
           {pauseLink && (
             <Link
               href="/pause"
-              className="inline-flex min-h-11 items-center gap-1.5 text-[15px] font-medium text-[#9A5E10] hover:underline underline-offset-4"
+              className="inline-flex min-h-11 items-center gap-1.5 text-[15px] font-medium text-pause-text hover:underline underline-offset-4"
             >
               Open Pause + Return timer
               <ArrowRight size={16} />

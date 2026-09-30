@@ -71,6 +71,44 @@ function notifyExpired() {
 
 const noopSubscribe = () => () => {};
 
+const MIN_MINUTES = 20;
+const MAX_MINUTES = 24 * 60;
+const ANNOUNCE_EVERY_MIN = 5;
+
+function spokenMinutes(total: number) {
+  const h = Math.floor(total / 60);
+  const m = total % 60;
+  const hs = h ? `${h} hour${h === 1 ? "" : "s"}` : "";
+  const ms = m ? `${m} minute${m === 1 ? "" : "s"}` : "";
+  return [hs, ms].filter(Boolean).join(" ") || "less than a minute";
+}
+
+/**
+ * What the screen-reader live region says. Derived from the countdown, but
+ * it only changes at the start, at each 5-minute milestone, and at expiry —
+ * never every second.
+ */
+export function timerAnnouncement({
+  remainingMs,
+  totalMs,
+  expired,
+  returnLabel,
+}: {
+  remainingMs: number;
+  totalMs?: number;
+  expired: boolean;
+  returnLabel: string;
+}) {
+  if (expired) return "Return time reached. Reconnect now.";
+  const step = ANNOUNCE_EVERY_MIN * 60 * 1000;
+  const bucket = Math.ceil(remainingMs / step);
+  const startBucket = totalMs ? Math.ceil(totalMs / step) : bucket;
+  if (bucket >= startBucket) {
+    return `Pause started. Ready at ${returnLabel}.`;
+  }
+  return `${spokenMinutes(bucket * ANNOUNCE_EVERY_MIN)} left. Ready at ${returnLabel}.`;
+}
+
 /** Renders the timer only on the client, where the saved pause is readable. */
 export function PauseTimer() {
   const mounted = useSyncExternalStore(
@@ -97,6 +135,7 @@ function PauseTimerClient() {
   const [backMode, setBackMode] = useState(false);
   const [shareCopied, setShareCopied] = useState(false);
   const [clockTimeError, setClockTimeError] = useState<string | null>(null);
+  const [customError, setCustomError] = useState<string | null>(null);
   const alarmFiredForRef = useRef<string | null>(null);
 
   useEffect(() => {
@@ -203,14 +242,33 @@ function PauseTimerClient() {
     setBackMode(true);
   };
 
+  // One live region, kept mounted across the idle / running / back views
+  // (always the first child of the same outer div), so changes are announced.
+  const liveText =
+    returnAt && !backMode
+      ? timerAnnouncement({
+          remainingMs,
+          totalMs: startedAt ? new Date(returnAt).getTime() - new Date(startedAt).getTime() : undefined,
+          expired,
+          returnLabel: formatClock(new Date(returnAt)),
+        })
+      : "";
+  const live = (
+    <p className="sr-only" role="status" aria-live="polite" aria-atomic="true">
+      {liveText}
+    </p>
+  );
+
   const chip =
     "min-h-12 rounded-xl border border-rule/[0.12] bg-white text-[15px] font-medium text-ink shadow-[0_1px_2px_rgb(26_26_26/0.04)] transition hover:border-pause/40 hover:bg-surface-warn active:scale-[0.98]";
 
   if (backMode) {
     return (
       <div className="space-y-4">
-        <WarnBanner pauseLink={false}>
-          You’re back. Do not restart “where you left off.”
+        {live}
+        <WarnBanner pauseLink={false} safetyLink>
+          You’re back. Do not restart “where you left off.” If you’re afraid,
+          not just flooded, don’t return — get help.
         </WarnBanner>
         <section className="card space-y-3 px-4 py-4">
           <Marker kind="OK" label="Restart cue" />
@@ -254,6 +312,7 @@ function PauseTimerClient() {
       : undefined;
     return (
       <div className="space-y-4">
+        {live}
         <div className="card flex flex-col items-center px-4 pb-5 pt-6">
           <TimerDisplay remainingMs={remainingMs} totalMs={totalMs} expired={expired} />
           <p className="mt-4 text-[15px] text-ink-muted">
@@ -279,6 +338,7 @@ function PauseTimerClient() {
 
   return (
     <div className="space-y-4">
+      {live}
       <div className="card flex flex-col items-center px-4 pb-4 pt-5">
         <TimerDisplay
           remainingMs={0}
@@ -318,10 +378,15 @@ function PauseTimerClient() {
               id="custom-minutes"
               type="number"
               inputMode="numeric"
-              min={20}
-              max={1440}
+              min={MIN_MINUTES}
+              max={MAX_MINUTES}
               value={customMinutes}
-              onChange={(e) => setCustomMinutes(e.target.value)}
+              onChange={(e) => {
+                setCustomMinutes(e.target.value);
+                setCustomError(null);
+              }}
+              aria-invalid={customError ? true : undefined}
+              aria-describedby="custom-minutes-hint"
               className="field-input tabular"
             />
             <PrimaryButton
@@ -329,14 +394,34 @@ function PauseTimerClient() {
               className="shrink-0 px-5"
               onClick={() => {
                 const n = Number(customMinutes);
-                if (!Number.isFinite(n) || n < 20 || n > 1440) return;
+                if (!customMinutes.trim() || !Number.isFinite(n)) {
+                  setCustomError("Enter a number of minutes, 20 to 1440.");
+                  return;
+                }
+                if (n < MIN_MINUTES) {
+                  setCustomError("A pause needs at least 20 minutes to calm down. Pick 20 or more.");
+                  return;
+                }
+                if (n > MAX_MINUTES) {
+                  setCustomError("24 hours (1440 minutes) is the maximum. Pick a shorter pause.");
+                  return;
+                }
+                setCustomError(null);
                 startWithMs(n * 60 * 1000);
               }}
             >
               Start
             </PrimaryButton>
           </div>
-          <p className="text-[13px] text-ink-muted">Min 20 · Max 1440 (24h)</p>
+          {customError ? (
+            <p id="custom-minutes-hint" role="alert" className="text-[13px] text-failure">
+              {customError}
+            </p>
+          ) : (
+            <p id="custom-minutes-hint" className="text-[13px] text-ink-muted">
+              Min 20 · Max 1440 (24h)
+            </p>
+          )}
         </div>
 
         <div className="space-y-2">
@@ -352,6 +437,8 @@ function PauseTimerClient() {
                 setClockTime(e.target.value);
                 setClockTimeError(null);
               }}
+              aria-invalid={clockTimeError ? true : undefined}
+              aria-describedby="clock-time-hint"
               className="field-input tabular"
             />
             <PrimaryButton
@@ -365,9 +452,13 @@ function PauseTimerClient() {
             </PrimaryButton>
           </div>
           {clockTimeError ? (
-            <p className="text-[13px] text-failure">{clockTimeError}</p>
+            <p id="clock-time-hint" role="alert" className="text-[13px] text-failure">
+              {clockTimeError}
+            </p>
           ) : (
-            <p className="text-[13px] text-ink-muted">Min 20 min · Max 24h away</p>
+            <p id="clock-time-hint" className="text-[13px] text-ink-muted">
+              Min 20 min · Max 24h away
+            </p>
           )}
         </div>
       </section>

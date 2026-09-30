@@ -249,7 +249,7 @@ export function IntroFlow() {
               <div className="grid grid-cols-2 gap-2">
                 <Link
                   href="/pause"
-                  className="flex h-12 items-center justify-center gap-1.5 rounded-2xl border border-pause/35 bg-surface-activity text-[14px] font-semibold text-[#9A5E10] transition active:scale-[0.99]"
+                  className="flex h-12 items-center justify-center gap-1.5 rounded-2xl border border-pause/35 bg-surface-activity text-[14px] font-semibold text-pause-text transition active:scale-[0.99]"
                 >
                   <PauseIcon size={17} />
                   Pause + Return

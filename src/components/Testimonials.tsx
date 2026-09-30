@@ -6,7 +6,7 @@ import {
   type Testimonial,
 } from "@/data/testimonials";
 
-const chipTone = ["bg-accent/10 text-accent", "bg-repair/10 text-repair", "bg-pause/12 text-[#9A5E10]"];
+const chipTone = ["bg-accent/10 text-accent", "bg-repair/10 text-repair", "bg-pause/12 text-pause-text"];
 
 function TestimonialCard({ t, i }: { t: Testimonial; i: number }) {
   return (

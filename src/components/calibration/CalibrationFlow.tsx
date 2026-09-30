@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useSyncExternalStore } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { useRouter } from "next/navigation";
 import { questions } from "@/data/calibration/questions";
 import type { ChoiceKey, PersonKey } from "@/data/calibration/types";
@@ -35,6 +35,17 @@ function CalibrationFlowClient() {
   const [person, setPerson] = useState<PersonKey>(initialPerson);
   const [index, setIndex] = useState(() => firstUnansweredIndex(state[initialPerson === "A" ? "personA" : "personB"].answers));
   const [previewA, setPreviewA] = useState(false);
+
+  // Move focus to the question heading when the question changes (not on load).
+  const questionHeading = useRef<HTMLHeadingElement>(null);
+  const firstRun = useRef(true);
+  useEffect(() => {
+    if (firstRun.current) {
+      firstRun.current = false;
+      return;
+    }
+    questionHeading.current?.focus();
+  }, [index, person, phase]);
 
   const personInput = person === "A" ? state.personA : state.personB;
   const question = questions[index];
@@ -82,8 +93,12 @@ function CalibrationFlowClient() {
       <div className="space-y-4">
         <div className="card space-y-4 px-4 py-4">
           <div className="space-y-1.5">
-            <p className="text-[13px] font-medium text-ink">Partner A</p>
+            <label htmlFor="partner-a-name" className="block text-[13px] font-medium text-ink">
+              Partner A
+            </label>
             <input
+              id="partner-a-name"
+              autoComplete="off"
               className="field-input text-[15px]"
               value={state.personA.name === "Partner A" ? "" : state.personA.name}
               placeholder="Partner A"
@@ -91,8 +106,12 @@ function CalibrationFlowClient() {
             />
           </div>
           <div className="space-y-1.5">
-            <p className="text-[13px] font-medium text-ink">Partner B</p>
+            <label htmlFor="partner-b-name" className="block text-[13px] font-medium text-ink">
+              Partner B
+            </label>
             <input
+              id="partner-b-name"
+              autoComplete="off"
               className="field-input text-[15px]"
               value={state.personB.name === "Partner B" ? "" : state.personB.name}
               placeholder="Partner B"
@@ -191,7 +210,12 @@ function CalibrationFlowClient() {
 
       <section className="card space-y-4 px-4 py-4">
         <p className="text-[11px] font-medium uppercase tracking-[0.08em] text-ink-muted">{question.domain}</p>
-        <h2 className="display text-[21px] leading-tight">{question.prompt}</h2>
+        <h2 ref={questionHeading} tabIndex={-1} className="display text-[21px] leading-tight focus:outline-none">
+          <span className="sr-only">
+            {personInput.name}, question {index + 1} of {questions.length}:{" "}
+          </span>
+          {question.prompt}
+        </h2>
         <div className="space-y-2.5">
           {(["a", "b"] as ChoiceKey[]).map((key) => {
             const text = key === "a" ? question.a : question.b;

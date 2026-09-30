@@ -80,13 +80,12 @@ export function TimerDisplay({
             className={`tabular font-medium leading-none tracking-[-0.03em] ${
               long ? "text-[44px]" : "text-[56px]"
             } ${expired ? "text-failure" : idle ? "text-ink/80" : "text-ink"}`}
-            aria-live="polite"
           >
             {label}
           </p>
           <p
             className={`mt-2 text-[11px] font-medium uppercase tracking-[0.08em] ${
-              expired ? "text-failure" : "text-[#9A5E10]"
+              expired ? "text-failure" : "text-pause-text"
             }`}
           >
             {caption ?? (expired ? "Reconnect now" : "Until return")}
