@@ -111,7 +111,7 @@ export function SystemDiagram() {
     {
       x: 116,
       title: "Field Kit",
-      sub: ["16 cards,", "9 worksheets"],
+      sub: ["15 protocol", "cards + Read", "This First,", "9 worksheets"],
       fill: V.tint,
       icon: (
         <>
@@ -141,12 +141,12 @@ export function SystemDiagram() {
     fh = 56;
   return (
     <Frame
-      viewBox="0 0 340 306"
+      viewBox="0 0 340 338"
       label="Manual, Field Kit and Field App work as one system: find the situation, pull the protocol, practise it."
     >
       {cards.map((c, i) => (
         <g key={c.title} {...a("dg-rise", 80 + i * 140)}>
-          <ArchPanel x={c.x} y={4} w={108} h={108} kind="step" fill={c.fill} rt={16} />
+          <ArchPanel x={c.x} y={4} w={108} h={140} kind="step" fill={c.fill} rt={16} />
           <g style={{ color: V.accent }}>
             <Sketch x={c.x + 10} y={16} size={22}>
               {c.icon}
@@ -163,49 +163,52 @@ export function SystemDiagram() {
           ))}
         </g>
       ))}
-      {/* three threads converge on a knot, then a woven twist into the flow */}
-      <g fill="none" stroke={V.thread} strokeWidth={1} strokeLinecap="round">
-        <path {...a("dg-draw", 620, 600)} pathLength={1} d="M54 115C54 140 140 134 163 146" />
-        <path {...a("dg-draw", 620, 600)} pathLength={1} d="M170 115V141" />
-        <path {...a("dg-draw", 620, 600)} pathLength={1} d="M286 115C286 140 200 134 177 146" />
+      {/* everything below the product cards sits 32 units lower (taller cards) */}
+      <g transform="translate(0 32)">
+        {/* three threads converge on a knot, then a woven twist into the flow */}
+        <g fill="none" stroke={V.thread} strokeWidth={1} strokeLinecap="round">
+          <path {...a("dg-draw", 620, 600)} pathLength={1} d="M54 115C54 140 140 134 163 146" />
+          <path {...a("dg-draw", 620, 600)} pathLength={1} d="M170 115V141" />
+          <path {...a("dg-draw", 620, 600)} pathLength={1} d="M286 115C286 140 200 134 177 146" />
+        </g>
+        <g {...a("dg-pop", 600, 300)}>
+          <circle cx={54} cy={115} r={1.9} fill={V.thread} />
+          <circle cx={170} cy={115} r={1.9} fill={V.thread} />
+          <circle cx={286} cy={115} r={1.9} fill={V.thread} />
+        </g>
+        <g {...a("dg-pop", 1080, 360)}>
+          <path d={lensD(170, 147, 22, 11)} fill={V.forest} stroke={V.brass} strokeWidth={0.8} />
+        </g>
+        <Twist x={170} y0={153} y1={176} amp={3.6} {...a("dg-draw", 1150, 320)} />
+        <path {...a("dg-pop", 1400, 260)} d={lancetD(170, 184, Math.PI / 2, 8)} fill={V.thread} />
+        {/* flow: lancet chevrons */}
+        {flow.map((f, i) => {
+          const x = fx[i],
+            w = fw[i];
+          return (
+            <g key={f} {...a("dg-rise", 1400 + i * 220)}>
+              <path d={chevronD(x, fy, w, fh, i === 0, 15)} fill={i === 1 ? V.tint : V.white} />
+              <path d={chevronD(x, fy, w, fh, i === 0, 15)} fill="none" stroke={V.accent} strokeWidth={0.9} strokeLinejoin="round" />
+              <text x={x + (i === 0 ? w / 2 - 6 : w / 2 + 2)} y={fy + 34} textAnchor="middle" fontFamily={SERIF} fontSize={15} fontWeight={600} fill={V.ink}>
+                {f}
+              </text>
+            </g>
+          );
+        })}
+        {/* travelling bead along a thread under the flow */}
+        <g {...a("dg-fade", 2000)}>
+          <Thread pts={[[16, 256], [326, 256]]} color={V.hair} size={7} />
+        </g>
+        <g {...a("dg-move", 2200, 2600, { "--move": "dg-sys-travel", "--iter": "infinite" })}>
+          <circle cx={300} cy={256} r={4.4} fill={V.brassL} stroke={V.forest} strokeWidth={1.2} />
+        </g>
+        {/* flood gate: pause advisory strip */}
+        <AdvisoryStrip x={0} y={272} w={340} h={32} {...a("dg-rise", 2100)}>
+          <text x={42} y={292.5} fontSize={13.5} fill={V.ink}>
+            Flooded? Pause + Return or Green Rule first.
+          </text>
+        </AdvisoryStrip>
       </g>
-      <g {...a("dg-pop", 600, 300)}>
-        <circle cx={54} cy={115} r={1.9} fill={V.thread} />
-        <circle cx={170} cy={115} r={1.9} fill={V.thread} />
-        <circle cx={286} cy={115} r={1.9} fill={V.thread} />
-      </g>
-      <g {...a("dg-pop", 1080, 360)}>
-        <path d={lensD(170, 147, 22, 11)} fill={V.forest} stroke={V.brass} strokeWidth={0.8} />
-      </g>
-      <Twist x={170} y0={153} y1={176} amp={3.6} {...a("dg-draw", 1150, 320)} />
-      <path {...a("dg-pop", 1400, 260)} d={lancetD(170, 184, Math.PI / 2, 8)} fill={V.thread} />
-      {/* flow: lancet chevrons */}
-      {flow.map((f, i) => {
-        const x = fx[i],
-          w = fw[i];
-        return (
-          <g key={f} {...a("dg-rise", 1400 + i * 220)}>
-            <path d={chevronD(x, fy, w, fh, i === 0, 15)} fill={i === 1 ? V.tint : V.white} />
-            <path d={chevronD(x, fy, w, fh, i === 0, 15)} fill="none" stroke={V.accent} strokeWidth={0.9} strokeLinejoin="round" />
-            <text x={x + (i === 0 ? w / 2 - 6 : w / 2 + 2)} y={fy + 34} textAnchor="middle" fontFamily={SERIF} fontSize={15} fontWeight={600} fill={V.ink}>
-              {f}
-            </text>
-          </g>
-        );
-      })}
-      {/* travelling bead along a thread under the flow */}
-      <g {...a("dg-fade", 2000)}>
-        <Thread pts={[[16, 256], [326, 256]]} color={V.hair} size={7} />
-      </g>
-      <g {...a("dg-move", 2200, 2600, { "--move": "dg-sys-travel", "--iter": "infinite" })}>
-        <circle cx={300} cy={256} r={4.4} fill={V.brassL} stroke={V.forest} strokeWidth={1.2} />
-      </g>
-      {/* flood gate: pause advisory strip */}
-      <AdvisoryStrip x={0} y={272} w={340} h={32} {...a("dg-rise", 2100)}>
-        <text x={42} y={292.5} fontSize={13.5} fill={V.ink}>
-          Flooded? Pause + Return or Green Rule first.
-        </text>
-      </AdvisoryStrip>
     </Frame>
   );
 }
@@ -400,7 +403,7 @@ export function PauseTimelineDiagram() {
         <path d={archD(48, 188, 104, 26, 10, 1.5)} fill={V.white} />
         <StatusOutline kind="pause" inset={2.4} d={(i) => archD(48 + i, 188 + i, 104 - 2 * i, 26 - 2 * i, 10 - i, 1.5)} />
         <text x={100} y={205.5} textAnchor="middle" fontSize={13.5} fontWeight={600} fill={V.pauseInk} className="tabular">
-          15 min – 24 h
+          20 min – 24 h
         </text>
       </g>
       <text {...a("dg-fade", 2750 * s)} x={160} y={205.5} fontSize={13.5} fill={V.muted}>
