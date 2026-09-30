@@ -6,6 +6,7 @@ import type { WorksheetDraft } from "@/data/types";
 import {
   appendWeeklyHistory,
   clearKey,
+  clearWeeklyHistory,
   emptyWeeklyDraft,
   readWeekly,
   readWeeklyHistory,
@@ -40,6 +41,7 @@ function WeeklyResetWizardClient() {
   const [done, setDone] = useState(false);
   const [history, setHistory] = useState<WorksheetDraft[]>(readWeeklyHistory);
   const [calendarAdded, setCalendarAdded] = useState(false);
+  const [confirmClear, setConfirmClear] = useState(false);
 
   const update = (patch: Partial<WorksheetDraft>) => {
     setDraft((prev) => {
@@ -69,6 +71,13 @@ function WeeklyResetWizardClient() {
     setStep(1);
     setDone(false);
     setCalendarAdded(false);
+    setConfirmClear(false);
+  };
+
+  const clearAll = () => {
+    clearWeeklyHistory();
+    setHistory([]);
+    clear();
   };
 
   const addToCalendar = () => {
@@ -322,13 +331,43 @@ function WeeklyResetWizardClient() {
         </WizardStep>
       )}
 
-      <button
-        type="button"
-        onClick={clear}
-        className="w-full min-h-12 rounded-xl text-[13px] font-medium text-ink-muted hover:bg-ink/[0.04]"
-      >
-        Clear entries
-      </button>
+      {confirmClear ? (
+        <div role="group" aria-label="Clear Weekly Reset data" className="space-y-2 rounded-xl border border-rule/15 bg-white px-3.5 py-3">
+          <p className="text-[13px] leading-normal text-ink-muted">
+            What should be cleared from this device?
+          </p>
+          <button
+            type="button"
+            onClick={clear}
+            className="w-full min-h-11 rounded-xl border border-rule/15 text-[14px] font-medium text-ink"
+          >
+            This week&apos;s answers only
+          </button>
+          <button
+            type="button"
+            onClick={clearAll}
+            className="w-full min-h-11 rounded-xl border border-failure/40 text-[14px] font-medium text-failure"
+          >
+            This week and all history
+            {history.length > 0 ? ` (${history.length} past ${history.length === 1 ? "reset" : "resets"})` : ""}
+          </button>
+          <button
+            type="button"
+            onClick={() => setConfirmClear(false)}
+            className="w-full min-h-11 rounded-xl text-[13px] font-medium text-ink-muted"
+          >
+            Cancel
+          </button>
+        </div>
+      ) : (
+        <button
+          type="button"
+          onClick={() => setConfirmClear(true)}
+          className="w-full min-h-12 rounded-xl text-[13px] font-medium text-ink-muted hover:bg-ink/[0.04]"
+        >
+          Clear entries…
+        </button>
+      )}
     </div>
   );
 }

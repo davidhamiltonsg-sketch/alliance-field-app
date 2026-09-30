@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { DeleteAllData } from "@/components/DeleteAllData";
 import { Marker } from "@/components/Marker";
 import { PageHeader } from "@/components/PageHeader";
 import { SectionLabel } from "@/components/SectionLabel";
@@ -96,6 +97,11 @@ export default function HelpPage() {
             an unsafe relationship.
           </p>
         </div>
+      </section>
+
+      <section id="your-data" className="scroll-mt-20 space-y-3">
+        <SectionLabel>Your data</SectionLabel>
+        <DeleteAllData />
       </section>
 
       <section className="space-y-3">

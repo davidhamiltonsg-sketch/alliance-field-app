@@ -241,7 +241,11 @@ export default function AboutPage() {
         </ul>
         <p className="px-1 text-[13px] leading-normal text-ink-muted">
           Private by default: pause return times, Weekly Reset answers, and
-          calibration answers all stay on this device.
+          calibration answers all stay on this device — nothing is sent
+          anywhere.{" "}
+          <Link href="/help#your-data" className="font-medium text-accent underline underline-offset-4">
+            Delete all my data
+          </Link>
         </p>
       </section>
     </div>

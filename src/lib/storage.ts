@@ -1,5 +1,8 @@
 import type { CareAuditRow, PauseState, WorksheetDraft } from "@/data/types";
 
+/** Every key this app writes starts with this prefix (see wipeAll). */
+export const STORAGE_PREFIX = "alliance.";
+
 export const PAUSE_KEY = "alliance.field.pause";
 export const WEEKLY_KEY = "alliance.field.weeklyReset";
 export const WEEKLY_HISTORY_KEY = "alliance.field.weeklyResetHistory";
@@ -69,6 +72,47 @@ export function clearKey(key: string) {
   } catch {
     /* ignore */
   }
+}
+
+/** Lists every localStorage key this app owns (prefix "alliance."). */
+export function allianceKeys(): string[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const ls = window.localStorage;
+    const keys: string[] = [];
+    for (let i = 0; i < ls.length; i++) {
+      const k = ls.key(i);
+      if (k && k.startsWith(STORAGE_PREFIX)) keys.push(k);
+    }
+    return keys;
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * Deletes everything this app has stored on this device: every "alliance.*"
+ * localStorage key and all Cache Storage entries (the offline copy of the
+ * app). Nothing is stored anywhere else, so afterwards nothing is left.
+ * Returns the number of localStorage keys removed.
+ */
+export async function wipeAll(): Promise<number> {
+  if (typeof window === "undefined") return 0;
+  const keys = allianceKeys();
+  keys.forEach(clearKey);
+  try {
+    if ("caches" in window) {
+      const names = await window.caches.keys();
+      await Promise.all(names.map((name) => window.caches.delete(name)));
+    }
+  } catch {
+    /* Cache Storage unavailable (private mode, old browser) — nothing cached */
+  }
+  return keys.length;
+}
+
+export function clearWeeklyHistory() {
+  clearKey(WEEKLY_HISTORY_KEY);
 }
 
 export function readPause(): PauseState {
