@@ -9,11 +9,11 @@ import { ArrowLeft, ArrowRight, PauseIcon } from "../icons";
 import { ProtocolIcon } from "../visuals/ProtocolIcon";
 import {
   ConnectionCardsDiagram,
-  PatternLoopDiagram,
+  CoreFiveDiagram,
   PauseTimelineDiagram,
+  ResetStepsDiagram,
   SituationMapDiagram,
   SystemDiagram,
-  WeeklyResetDiagram,
 } from "./diagrams";
 
 type Panel = {
@@ -23,25 +23,38 @@ type Panel = {
   title: string;
   body: string;
   aside?: string;
+  /** Adds the "afraid, not just flooded?" line with a link to Help & safety. */
+  safety?: boolean;
   diagram: ReactNode;
 };
 
+// Value first: something usable tonight, then how to choose, then what to
+// learn. The product system comes last, and only as an offer.
 const panels: Panel[] = [
   {
-    id: "system",
-    eyebrow: "The system",
-    icon: "section-concept",
-    title: "One system, three parts.",
-    body: "The Manual is the deep system, the Kit is the install layer, and this app routes you to the right card in the moment.",
-    diagram: <SystemDiagram />,
+    id: "reset",
+    eyebrow: "Use it tonight",
+    icon: "60-second-reset",
+    title: "If it’s getting heated: the 60-Second Reset.",
+    body: "Stop, say it, a touch only if welcome, three breaths, then an exact time to keep talking. About a minute.",
+    safety: true,
+    diagram: <ResetStepsDiagram />,
   },
   {
     id: "situation-map",
     eyebrow: "Situation Map",
     icon: "section-when-to-use",
-    title: "Find your row. Pull the card.",
-    body: "Safety comes first: if you’re afraid, threatened, or not free to say no, stop and get outside help. Otherwise, follow the first match, top to bottom.",
+    title: "Not sure what to do? Follow the first match.",
+    body: "Safety comes first: if you’re afraid, threatened, or not free to say no, stop and get outside help. Otherwise, read top to bottom and take the first row that fits.",
     diagram: <SituationMapDiagram />,
+  },
+  {
+    id: "core-5",
+    eyebrow: "The Core 5",
+    icon: "section-concept",
+    title: "Start with five tools.",
+    body: "They cover most hard moments. Learn these first; the rest can wait. The 7-day start plan takes about 10 minutes a day.",
+    diagram: <CoreFiveDiagram />,
   },
   {
     id: "pause-and-return",
@@ -52,22 +65,6 @@ const panels: Panel[] = [
     diagram: <PauseTimelineDiagram />,
   },
   {
-    id: "pattern-loop",
-    eyebrow: "Circuit",
-    icon: "conflict-protocol",
-    title: "Interrupt the circuit early.",
-    body: "Best point: the pattern stage. Name the circuit, give a holding signal, and use Pause + Return with a committed time.",
-    diagram: <PatternLoopDiagram />,
-  },
-  {
-    id: "weekly-reset",
-    eyebrow: "Weekly Reset",
-    icon: "weekly-reset",
-    title: "Forty minutes, once a week.",
-    body: "Appreciation, check the load, one friction point, requests, next steps. Maintenance, not a trial.",
-    diagram: <WeeklyResetDiagram />,
-  },
-  {
     id: "connection-cards",
     eyebrow: "Connection Cards",
     icon: "connection-cards",
@@ -75,6 +72,14 @@ const panels: Panel[] = [
     body: "Flip through 35 questions across five stages — Warmth, Curiosity, Care, Repair, Alliance. No protocol needed, just five minutes together.",
     aside: "Yes, even the couple who's already \"fine\" is allowed to use this.",
     diagram: <ConnectionCardsDiagram />,
+  },
+  {
+    id: "system",
+    eyebrow: "Optional",
+    icon: "section-concept",
+    title: "Want the full system?",
+    body: "This app is free, and works on its own. If it helps, the Operating Manual and Field Kit go deeper — full protocols, printable cards, worksheets.",
+    diagram: <SystemDiagram />,
   },
 ];
 
@@ -187,6 +192,19 @@ export function IntroFlow() {
                   </p>
                   <h2 className="display mt-2.5 text-[28px] leading-[1.12]">{p.title}</h2>
                   <p className="mt-2 text-[15px] leading-normal text-ink-muted">{p.body}</p>
+                  {p.safety && (
+                    <p className="mt-2 text-[13px] leading-snug text-ink">
+                      Afraid of your partner, being threatened, or not free to
+                      say no? These tools are not for this.{" "}
+                      <Link
+                        href="/help"
+                        tabIndex={i === index ? undefined : -1}
+                        className="font-medium text-failure underline underline-offset-4"
+                      >
+                        Get outside help
+                      </Link>
+                    </p>
+                  )}
                   {p.aside && (
                     <p className="mt-1.5 text-[13px] italic leading-snug text-ink-muted/75">
                       {p.aside}
@@ -243,13 +261,19 @@ export function IntroFlow() {
           ) : (
             <div className="space-y-2">
               <Link
-                href="/"
+                href="/start"
                 className="flex h-12 items-center justify-center gap-2 rounded-2xl bg-accent text-[15px] font-semibold text-paper shadow-[0_8px_20px_-10px_rgb(61_90_76/0.7)] transition active:scale-[0.99]"
               >
-                Start with the Situation Map
+                Start the 7-day plan
                 <ArrowRight size={18} />
               </Link>
               <div className="grid grid-cols-2 gap-2">
+                <Link
+                  href="/"
+                  className="flex h-12 items-center justify-center gap-1.5 rounded-2xl border border-accent/30 bg-white text-[14px] font-semibold text-accent transition active:scale-[0.99]"
+                >
+                  Situation Map
+                </Link>
                 <Link
                   href="/pause"
                   className="flex h-12 items-center justify-center gap-1.5 rounded-2xl border border-pause/35 bg-surface-activity text-[14px] font-semibold text-pause-text transition active:scale-[0.99]"
@@ -257,14 +281,13 @@ export function IntroFlow() {
                   <PauseIcon size={17} />
                   Pause + Return
                 </Link>
-                <Link
-                  href="/connect"
-                  className="flex h-12 items-center justify-center gap-1.5 rounded-2xl border border-repair/35 bg-repair/[0.08] text-[14px] font-semibold text-repair transition active:scale-[0.99]"
-                >
-                  <ProtocolIcon slug="connection-cards" size={17} />
-                  Connection Cards
-                </Link>
               </div>
+              <Link
+                href="/about#product-line"
+                className="flex min-h-11 items-center justify-center text-[14px] font-medium text-accent underline-offset-4 hover:underline"
+              >
+                See the full system (optional)
+              </Link>
             </div>
           )}
         </footer>

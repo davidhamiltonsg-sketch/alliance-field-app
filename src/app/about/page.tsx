@@ -186,7 +186,7 @@ export default function AboutPage() {
               <span className="flex flex-col py-2.5">
                 Intro
                 <span className="text-[13px] font-normal text-ink-muted">
-                  How the app works, in five short panels
+                  How the app works, in six short panels
                 </span>
               </span>
               <ChevronRight size={18} className="text-ink-muted/50" />
