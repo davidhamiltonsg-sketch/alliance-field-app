@@ -1,6 +1,61 @@
 import { KIT } from "@/data/kit";
 
-/** Builds downloadable .ics files: the recurring Weekly Reset and the 7-day start plan reminder. */
+/**
+ * Builds downloadable .ics files (RFC 5545): the recurring Weekly Reset, the
+ * 7-day start plan reminder, "Keep it going" and the Pause + Return time.
+ * Every text value goes through escapeText and every line through foldLine.
+ */
+
+/** Escapes a TEXT value: backslash, semicolon, comma and newlines. */
+export function escapeText(value: string): string {
+  return value
+    .replace(/\\/g, "\\\\")
+    .replace(/;/g, "\\;")
+    .replace(/,/g, "\\,")
+    .replace(/\r\n|\r|\n/g, "\\n");
+}
+
+const utf8 = new TextEncoder();
+
+/**
+ * Folds a content line to at most 75 octets per physical line (CRLF + one
+ * space before each continuation), never splitting a UTF-8 character.
+ */
+export function foldLine(line: string): string {
+  const parts: string[] = [];
+  let current = "";
+  let bytes = 0;
+  let limit = 75;
+  for (const ch of line) {
+    const n = utf8.encode(ch).length;
+    if (bytes + n > limit) {
+      parts.push(current);
+      current = "";
+      bytes = 0;
+      limit = 74; // the leading space counts towards the 75
+    }
+    current += ch;
+    bytes += n;
+  }
+  parts.push(current);
+  return parts.join("\r\n ");
+}
+
+/** A property whose value is free text (escaped). */
+const text = (name: string, value: string) => `${name}:${escapeText(value)}`;
+
+/** Joins raw content lines into a folded CRLF calendar body. */
+function calendar(lines: string[]): string {
+  return ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//ALLIANCE PROTOCOLS//Field App//EN", ...lines, "END:VCALENDAR"]
+    .map(foldLine)
+    .join("\r\n");
+}
+
+function toBlobUrl(ics: string, filename: string) {
+  const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
+  return { url: URL.createObjectURL(blob), filename };
+}
+
 function pad(n: number) {
   return String(n).padStart(2, "0");
 }
@@ -27,24 +82,21 @@ export function buildWeeklyResetIcs(fromDate = new Date()): { url: string; filen
   const uid = `alliance-weekly-reset-${start.getTime()}@alliance-field-app`;
   const stamp = toIcsDate(new Date());
 
-  const ics = [
-    "BEGIN:VCALENDAR",
-    "VERSION:2.0",
-    "PRODID:-//ALLIANCE PROTOCOLS//Field App//EN",
+  const ics = calendar([
     "BEGIN:VEVENT",
     `UID:${uid}`,
     `DTSTAMP:${stamp}`,
     `DTSTART:${toIcsDate(start)}`,
     `DTEND:${toIcsDate(end)}`,
-    "SUMMARY:Weekly Reset (Alliance Protocols)",
-    "DESCRIPTION:Scheduled maintenance meeting (about 40 minutes) — appreciation, check the load, one friction point, requests, next steps. Not a fight forum: if either partner is flooded, Pause + Return and reschedule.",
+    text("SUMMARY", "Weekly Reset (Alliance Protocols)"),
+    text(
+      "DESCRIPTION",
+      "Scheduled maintenance meeting (about 40 minutes) — appreciation, check the load, one friction point, requests, next steps. Not a fight forum: if either partner is flooded, Pause + Return and reschedule."
+    ),
     "RRULE:FREQ=WEEKLY;INTERVAL=1",
     "END:VEVENT",
-    "END:VCALENDAR",
-  ].join("\r\n");
-
-  const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
-  return { url: URL.createObjectURL(blob), filename: "alliance-weekly-reset.ics" };
+  ]);
+  return toBlobUrl(ics, "alliance-weekly-reset.ics");
 }
 
 /**
@@ -63,24 +115,21 @@ export function buildStartPlanIcs(
   const end = new Date(start.getTime() + 10 * 60 * 1000);
   const uid = `alliance-start-plan-${start.getTime()}@alliance-field-app`;
 
-  const ics = [
-    "BEGIN:VCALENDAR",
-    "VERSION:2.0",
-    "PRODID:-//ALLIANCE PROTOCOLS//Field App//EN",
+  const ics = calendar([
     "BEGIN:VEVENT",
     `UID:${uid}`,
     `DTSTAMP:${toIcsDate(new Date())}`,
     `DTSTART:${toIcsDate(start)}`,
     `DTEND:${toIcsDate(end)}`,
     `RRULE:FREQ=DAILY;COUNT=${days}`,
-    "SUMMARY:Alliance start plan (10 min)",
-    "DESCRIPTION:Today's step of the 7-day start plan — open the Field App at /start. Day 7 is your first Weekly Reset (about 40 minutes). If either of you is flooded, Pause + Return first.",
+    text("SUMMARY", "Alliance start plan (10 min)"),
+    text(
+      "DESCRIPTION",
+      "Today's step of the 7-day start plan — open the Field App at /start. Day 7 is your first Weekly Reset (about 40 minutes). If either of you is flooded, Pause + Return first."
+    ),
     "END:VEVENT",
-    "END:VCALENDAR",
-  ].join("\r\n");
-
-  const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
-  return { url: URL.createObjectURL(blob), filename: "alliance-start-plan.ics" };
+  ]);
+  return toBlobUrl(ics, "alliance-start-plan.ics");
 }
 
 /** Local wall-clock "floating" time (no Z, no TZID): the event stays at 7pm wherever the user is. */
@@ -146,35 +195,60 @@ export function keepGoingIcsText(time = "19:00", fromDate = new Date()): string 
     `DTSTART:${toFloatingDate(start)}`,
     `DTEND:${toFloatingDate(new Date(start.getTime() + minutes))}`,
     `RRULE:${rrule}`,
-    `SUMMARY:${summary}`,
-    `DESCRIPTION:${description}`,
+    text("SUMMARY", summary),
+    text("DESCRIPTION", description),
     "END:VEVENT",
   ];
 
-  return [
-    "BEGIN:VCALENDAR",
-    "VERSION:2.0",
-    "PRODID:-//ALLIANCE PROTOCOLS//Field App//EN",
+  return calendar([
     ...event(
       "alliance-keep-going-weekly-reset",
       weekly,
       WEEKLY_RESET_RRULE,
       "Weekly Reset (Alliance Protocols)",
-      "Five parts\\, about 40 minutes — appreciation\\, check the load\\, one friction point\\, requests\\, next steps. Not a fight forum: if either partner is flooded\\, Pause + Return and reschedule."
+      "Five parts, about 40 minutes — appreciation, check the load, one friction point, requests, next steps. Not a fight forum: if either partner is flooded, Pause + Return and reschedule."
     ),
     ...event(
       "alliance-keep-going-care-checkin",
       monthly,
       CARE_CHECKIN_RRULE,
       "Care Check-in inside your Weekly Reset",
-      "First Weekly Reset of the month: during Check the load\\, run the Care Check-in — go through each area of care and ask if the load feels fair. Same 40 minutes\\, not an extra meeting. Open the Field App at /weekly-reset."
+      "First Weekly Reset of the month: during Check the load, run the Care Check-in — go through each area of care and ask if the load feels fair. Same 40 minutes, not an extra meeting. Open the Field App at /weekly-reset."
     ),
-    "END:VCALENDAR",
-  ].join("\r\n");
+  ]);
 }
 
 /** Returns an object URL for the "Keep it going" calendar (weekly Reset + monthly Care Check-in). */
 export function buildKeepGoingIcs(time = "19:00", fromDate = new Date()): { url: string; filename: string } {
-  const blob = new Blob([keepGoingIcsText(time, fromDate)], { type: "text/calendar;charset=utf-8" });
-  return { url: URL.createObjectURL(blob), filename: "alliance-keep-it-going.ics" };
+  return toBlobUrl(keepGoingIcsText(time, fromDate), "alliance-keep-it-going.ics");
+}
+
+/**
+ * The Pause + Return time as a one-off event with an alarm at the return
+ * time — a backstop for phones that silence the in-app chime in the background.
+ */
+export function pauseReturnIcsText(returnAt: Date, now = new Date()): string {
+  const end = new Date(returnAt.getTime() + 5 * 60 * 1000);
+  return calendar([
+    "BEGIN:VEVENT",
+    `UID:alliance-pause-return-${returnAt.getTime()}@alliance-field-app`,
+    `DTSTAMP:${toIcsDate(now)}`,
+    `DTSTART:${toIcsDate(returnAt)}`,
+    `DTEND:${toIcsDate(end)}`,
+    text("SUMMARY", "Return time (Pause + Return)"),
+    text(
+      "DESCRIPTION",
+      "Time to come back, as promised. Restart with warmth, then safety; don't restart where you left off. If you're afraid, not just flooded, don't return — get outside help."
+    ),
+    "BEGIN:VALARM",
+    "ACTION:DISPLAY",
+    text("DESCRIPTION", "Return time (Pause + Return)"),
+    "TRIGGER:PT0M",
+    "END:VALARM",
+    "END:VEVENT",
+  ]);
+}
+
+export function buildPauseReturnIcs(returnAt: Date, now = new Date()): { url: string; filename: string } {
+  return toBlobUrl(pauseReturnIcsText(returnAt, now), "alliance-return-time.ics");
 }
