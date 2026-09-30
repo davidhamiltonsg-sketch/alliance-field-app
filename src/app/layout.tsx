@@ -28,7 +28,7 @@ const sourceSerif = Source_Serif_4({
 const launchScreens = launchScreenList as [number, number, number][];
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://alliance-field-app.vercel.app"),
+  metadataBase: new URL("https://allianceprotocols.com"),
   title: {
     default: "ALLIANCE PROTOCOLS · Field App",
     template: "%s · Alliance Protocols Field App",
