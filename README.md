@@ -1,8 +1,8 @@
 # alliance-field-app
 
-THE ALLIANCE · Field App — Built for precision. Designed for connection.
+ALLIANCE PROTOCOLS · Field App — Built for precision. Designed for connection.
 
-The pocket companion to THE ALLIANCE Operating Manual and Field Kit, by David
+The pocket companion to the Alliance Protocols Operating Manual and Field Kit, by David
 Hamilton and Dr Zhongming Shi: a Situation Map that routes you to the right
 protocol card, a Pause + Return timer, the Weekly Reset wizard, Profile
 Calibration and Connection Cards. Next.js (App Router) + Tailwind CSS v4,

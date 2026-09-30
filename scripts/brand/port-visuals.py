@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Port the THE ALLIANCE visuals library into app code.
+"""Port the ALLIANCE PROTOCOLS visuals library into app code.
 
 Reads the v2 library at /workspace/alliance-product/visuals (or $VISUALS_DIR)
 and writes:

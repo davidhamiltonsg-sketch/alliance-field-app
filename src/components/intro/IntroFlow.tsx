@@ -145,8 +145,8 @@ export function IntroFlow() {
         <header className="relative flex h-14 shrink-0 items-center justify-between pl-4 pr-2">
           <span className="flex items-center gap-2.5">
             <AllianceMark size={26} className="text-accent" />
-            <span className="text-[13px] font-medium tracking-[0.14em] text-ink">
-              THE ALLIANCE
+            <span className="whitespace-nowrap text-[13px] font-medium tracking-[0.1em] text-ink">
+              ALLIANCE PROTOCOLS
             </span>
           </span>
           <Link

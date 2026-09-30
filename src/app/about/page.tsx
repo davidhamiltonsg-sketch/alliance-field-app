@@ -24,7 +24,7 @@ const products = [
   {
     name: "Complete Bundle",
     tag: "Bundle",
-    body: "Manual and Kit together, with this Field App as the pocket companion.",
+    body: "Manual and Kit together, with the Alliance Protocols Field App as the pocket companion.",
   },
 ];
 
@@ -54,15 +54,16 @@ export default function AboutPage() {
           aria-hidden
         />
         <div className="relative flex flex-col items-center">
-          <AllianceMark size={76} className="text-paper" title="THE ALLIANCE" />
+          <AllianceMark size={76} className="text-paper" title="ALLIANCE PROTOCOLS" />
           <h1 className="mt-4 text-[20px] font-medium tracking-[0.14em] pl-[0.14em]">
-            THE ALLIANCE
+            ALLIANCE PROTOCOLS
           </h1>
           <p className="mt-2 text-[11px] font-medium uppercase tracking-[0.08em] pl-[0.08em] text-paper/75">
             Field App
           </p>
           <div className="my-4 h-px w-40 bg-paper/25" aria-hidden />
-          <p className="phrase text-[17px] leading-snug">
+          <p className="phrase text-[17px] leading-snug">We are an alliance.</p>
+          <p className="phrase mt-0.5 text-[17px] leading-snug">
             Built for precision. Designed for connection.
           </p>
           <p className="mt-3 text-[13px] text-paper/80">
@@ -90,7 +91,7 @@ export default function AboutPage() {
         <div className="rounded-2xl border border-accent/20 bg-surface-tool px-4 py-3.5">
           <p className="phrase text-[16px] leading-snug text-accent">
             &ldquo;The Alliance&rdquo; was our own working agreement long
-            before it was a product name.
+            before Alliance Protocols was a product.
           </p>
         </div>
         <p className="text-[15px] leading-normal text-ink">
@@ -106,7 +107,7 @@ export default function AboutPage() {
           <span id="lineage-heading">Where these tools come from</span>
         </SectionLabel>
         <p className="text-[15px] leading-normal text-ink">
-          The Alliance is our own synthesis, written by the authors. It is
+          Alliance Protocols is our own synthesis, written by the authors. It is
           informed by research and clinical frameworks, adapted into named
           tools:
         </p>

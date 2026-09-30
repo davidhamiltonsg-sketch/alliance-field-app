@@ -30,16 +30,16 @@ const launchScreens = launchScreenList as [number, number, number][];
 export const metadata: Metadata = {
   metadataBase: new URL("https://alliance-field-app.vercel.app"),
   title: {
-    default: "THE ALLIANCE · Field App",
-    template: "%s · THE ALLIANCE Field App",
+    default: "ALLIANCE PROTOCOLS · Field App",
+    template: "%s · Alliance Protocols Field App",
   },
   description:
-    "Built for precision. Designed for connection. Field companion to THE ALLIANCE Manual and Kit.",
-  applicationName: "THE ALLIANCE Field App",
+    "Built for precision. Designed for connection. Field companion to the Alliance Protocols Manual and Kit.",
+  applicationName: "Alliance Protocols Field App",
   authors: [{ name: "David Hamilton" }, { name: "Dr Zhongming Shi" }],
   appleWebApp: {
     capable: true,
-    title: "Alliance Field",
+    title: "Alliance",
     statusBarStyle: "default",
     startupImage: launchScreens.map(([w, h, r]) => ({
       url: `/splash/launch-${w * r}x${h * r}.png`,
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
     apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
   },
   openGraph: {
-    title: "THE ALLIANCE · Field App",
+    title: "ALLIANCE PROTOCOLS · Field App",
     description: "Built for precision. Designed for connection.",
     images: [{ url: "/icon-512.png", width: 512, height: 512 }],
   },
