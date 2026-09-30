@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { KeepItGoing } from "@/components/KeepItGoing";
 import { Marker } from "@/components/Marker";
 import { PageHeader } from "@/components/PageHeader";
 import { WeeklyResetWizard } from "@/components/WeeklyResetWizard";
@@ -13,6 +14,7 @@ export default function WeeklyResetPage() {
         Five parts, about 40 minutes. A maintenance meeting, not a trial. Your answers save on this device.
       </PageHeader>
       <WeeklyResetWizard />
+      <KeepItGoing />
       <Link
         href="/protocols/weekly-reset"
         className="flex min-h-12 items-center justify-between rounded-xl border border-rule/[0.1] bg-white px-4 text-[15px] font-medium text-accent"

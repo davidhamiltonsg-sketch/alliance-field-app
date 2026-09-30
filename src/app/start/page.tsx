@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { KeepItGoing } from "@/components/KeepItGoing";
 import { Marker } from "@/components/Marker";
 import { PageHeader } from "@/components/PageHeader";
 import { SoloStart } from "@/components/SoloStart";
@@ -60,6 +61,8 @@ export default function StartPage() {
       </ol>
 
       <StartReminder />
+
+      <KeepItGoing lead="After day 7, keep the habit." />
 
       <SoloStart />
 
