@@ -6,6 +6,7 @@ import { QuickAccess } from "@/components/QuickAccess";
 import { ArrowRight, PauseIcon, LayersIcon, GaugeIcon } from "@/components/icons";
 import { situations } from "@/data/situations";
 import { WarnBanner } from "@/components/WarnBanner";
+import { CoreFive } from "@/components/CoreFive";
 
 export default function HomePage() {
   return (
@@ -43,13 +44,22 @@ export default function HomePage() {
             Start here when you don’t know which card to pull. Follow the first
             matching row.
           </p>
-          <Link
-            href="/intro"
-            className="mt-3 inline-flex min-h-10 items-center gap-1.5 rounded-full text-[13px] font-medium text-accent hover:underline"
-          >
-            New here? See how it works
-            <ArrowRight size={15} />
-          </Link>
+          <div className="mt-3 flex flex-wrap gap-x-4">
+            <Link
+              href="/start"
+              className="inline-flex min-h-10 items-center gap-1.5 rounded-full text-[13px] font-medium text-accent hover:underline"
+            >
+              New here? Start the 7-day plan
+              <ArrowRight size={15} />
+            </Link>
+            <Link
+              href="/intro"
+              className="inline-flex min-h-10 items-center gap-1.5 rounded-full text-[13px] font-medium text-accent hover:underline"
+            >
+              See how it works
+              <ArrowRight size={15} />
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -122,6 +132,8 @@ export default function HomePage() {
           leave safely and use the help lines.
         </WarnBanner>
       </section>
+
+      <CoreFive />
 
       <footer className="flex flex-col items-center gap-2 pt-3 text-center">
         <AllianceMark size={22} className="text-accent/70" />

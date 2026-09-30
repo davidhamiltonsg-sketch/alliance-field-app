@@ -5,6 +5,8 @@ import Link from "next/link";
 import { ChevronRight, StarIcon } from "./icons";
 import { IconTablet } from "./visuals/IconTablet";
 import { FavoriteButton } from "./FavoriteButton";
+import { SectionLabel } from "./SectionLabel";
+import { coreFiveSlugs } from "@/data/core5";
 import { readFavorites } from "@/lib/storage";
 import type { Protocol } from "@/data/types";
 
@@ -42,6 +44,51 @@ export function ProtocolSearch({ protocols }: { protocols: Protocol[] }) {
     return list;
   }, [protocols, query, favoritesOnly, favorites]);
 
+  // No search or filter: show the Core 5 first, then everything else as "Advanced".
+  const grouped =
+    !query.trim() && !favoritesOnly
+      ? {
+          core: coreFiveSlugs
+            .map((slug) => protocols.find((p) => p.slug === slug))
+            .filter((p): p is Protocol => Boolean(p)),
+          advanced: protocols.filter((p) => !coreFiveSlugs.includes(p.slug)),
+        }
+      : null;
+
+  const renderList = (list: Protocol[]) => (
+    <ul className="space-y-2.5">
+      {list.map((p) => {
+        const tone = p.accentHint ?? "accent";
+        return (
+          <li key={p.slug}>
+            <Link
+              href={`/protocols/${p.slug}`}
+              className="v2-card relative flex min-h-14 items-center gap-3 py-3.5 pl-6 pr-3"
+            >
+              <span className={`v2-edge v2-edge--${tone}`} aria-hidden />
+              <IconTablet slug={p.slug} tone={tone} size="md" />
+              <span className="min-w-0 flex-1">
+                <span className="display block text-[17px] leading-snug">
+                  {p.title}
+                </span>
+                <span className="mt-0.5 line-clamp-2 block text-[13px] leading-snug text-ink-muted">
+                  {p.concept}
+                </span>
+              </span>
+              <FavoriteButton
+                slug={p.slug}
+                size={17}
+                compact
+                onChange={setFavorites}
+              />
+              <ChevronRight size={20} className="shrink-0 text-ink-muted/50" />
+            </Link>
+          </li>
+        );
+      })}
+    </ul>
+  );
+
   return (
     <div className="space-y-4">
       <div className="relative">
@@ -77,38 +124,23 @@ export function ProtocolSearch({ protocols }: { protocols: Protocol[] }) {
             ? "No favorites yet. Tap the star on any card to save it here."
             : <>No cards match &ldquo;{query}&rdquo;. Try a different word, or browse the full list from the Situation Map.</>}
         </p>
+      ) : grouped ? (
+        <div className="space-y-5">
+          <section className="space-y-2.5" aria-labelledby="group-core">
+            <SectionLabel>
+              <span id="group-core">Core 5 — start here</span>
+            </SectionLabel>
+            {renderList(grouped.core)}
+          </section>
+          <section className="space-y-2.5" aria-labelledby="group-advanced">
+            <SectionLabel>
+              <span id="group-advanced">Advanced</span>
+            </SectionLabel>
+            {renderList(grouped.advanced)}
+          </section>
+        </div>
       ) : (
-        <ul className="space-y-2.5">
-          {filtered.map((p) => {
-            const tone = p.accentHint ?? "accent";
-            return (
-              <li key={p.slug}>
-                <Link
-                  href={`/protocols/${p.slug}`}
-                  className="v2-card relative flex min-h-14 items-center gap-3 py-3.5 pl-6 pr-3"
-                >
-                  <span className={`v2-edge v2-edge--${tone}`} aria-hidden />
-                  <IconTablet slug={p.slug} tone={tone} size="md" />
-                  <span className="min-w-0 flex-1">
-                    <span className="display block text-[17px] leading-snug">
-                      {p.title}
-                    </span>
-                    <span className="mt-0.5 line-clamp-2 block text-[13px] leading-snug text-ink-muted">
-                      {p.concept}
-                    </span>
-                  </span>
-                  <FavoriteButton
-                    slug={p.slug}
-                    size={17}
-                    compact
-                    onChange={setFavorites}
-                  />
-                  <ChevronRight size={20} className="shrink-0 text-ink-muted/50" />
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
+        renderList(filtered)
       )}
     </div>
   );
