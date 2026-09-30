@@ -11,6 +11,8 @@ import { START_PLAN_DAYS, startDays } from "@/data/start";
 import { TOGETHER_CITATION, commonMoves, togetherFaq, togetherTools, whoFor } from "@/data/together";
 import { protocolDiagrams } from "@/data/visuals/protocol-diagrams";
 import { precacheUrls } from "../scripts/generate-sw.mjs";
+import { ACCESS_COOKIE } from "@/lib/launch-lock";
+import { CONTACT_EMAIL, FULL_SYSTEM_URL, httpsUrlOrNull } from "@/lib/links";
 
 const cardsDir = join(__dirname, "../src/data/cards");
 const cardFiles = readdirSync(cardsDir).filter((f) => f.endsWith(".json"));
@@ -196,9 +198,17 @@ describe("/privacy", () => {
     expect(src).toContain("Dr Zhongming Shi");
     expect(src).toContain("PDPA");
     expect(src).toContain("/help#your-data");
-    expect(src).toContain("SIGNUP_CAPTURE_EMAIL");
+    expect(src).toContain("CONTACT_EMAIL");
     expect(src).toMatch(/Vercel/);
     expect(src).toMatch(/under\s+18/);
+  });
+
+  it("discloses the pre-launch access cookie by its real name and lifetime", () => {
+    expect(src).toContain(ACCESS_COOKIE);
+    expect(src).toMatch(/httpOnly/);
+    expect(src).toMatch(/30 days/);
+    expect(src).not.toMatch(/analytics, cookies or trackers|and no\s+cookies/i);
+    expect(componentSource("DeleteAllData")).toMatch(/cookie/);
   });
 
   it("is linked from the email signup, Help (Your data) and About", () => {
@@ -252,5 +262,17 @@ describe("banned claims", () => {
   it("new pages never say evidence-based, proven or clinically", () => {
     const text = [pageSource("privacy"), pageSource("together"), componentSource("KeepItGoing"), JSON.stringify([commonMoves, togetherFaq, togetherTools, whoFor])].join(" ");
     expect(text).not.toMatch(/evidence[- ]based|\bproven\b|clinically/i);
+  });
+});
+
+describe("contact and store links", () => {
+  it("has a real contact address and never links to a placeholder store", () => {
+    expect(CONTACT_EMAIL).toMatch(/^[^@\s]+@[^@\s]+\.[a-z]{2,}$/);
+    expect(CONTACT_EMAIL).not.toMatch(/thealliance\.app/);
+    if (!process.env.NEXT_PUBLIC_FULL_SYSTEM_URL) expect(FULL_SYSTEM_URL).toBeNull();
+    expect(httpsUrlOrNull("http://example.com")).toBeNull();
+    expect(httpsUrlOrNull("javascript:alert(1)")).toBeNull();
+    expect(httpsUrlOrNull("https://store.example/p")).toBe("https://store.example/p");
+    expect(componentSource("GetFullSystem")).toMatch(/Coming soon/);
   });
 });

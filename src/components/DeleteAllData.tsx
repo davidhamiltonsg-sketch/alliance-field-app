@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { wipeAll } from "@/lib/storage";
 
 type Status = "idle" | "confirm" | "working" | "done";
@@ -9,11 +9,28 @@ type Status = "idle" | "confirm" | "working" | "done";
 /** Confirm-guarded "Delete all my data" for everything stored on this device. */
 export function DeleteAllData() {
   const [status, setStatus] = useState<Status>("idle");
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const openRef = useRef<HTMLButtonElement>(null);
+  const statusRef = useRef<HTMLParagraphElement>(null);
+  // Only move focus after the user acts, never on first render.
+  const acted = useRef(false);
+
+  useEffect(() => {
+    if (!acted.current) return;
+    if (status === "confirm") dialogRef.current?.focus();
+    else if (status === "idle") openRef.current?.focus();
+    else if (status === "done") statusRef.current?.focus();
+  }, [status]);
+
+  const go = (next: Status) => {
+    acted.current = true;
+    setStatus(next);
+  };
 
   const wipe = async () => {
-    setStatus("working");
+    go("working");
     await wipeAll();
-    setStatus("done");
+    go("done");
   };
 
   return (
@@ -22,7 +39,9 @@ export function DeleteAllData() {
         Everything you enter — pause return times, Weekly Reset answers and
         history, calibration answers, favourites — stays on this device. The
         app has no account. The only time any data leaves your device is if
-        you choose to submit your email for updates.{" "}
+        you choose to submit your email for updates. (While early access is
+        on, one sign-in cookie remembers the access code; it holds nothing
+        about you.){" "}
         <Link href="/privacy" className="font-medium text-accent underline underline-offset-4">
           Read the privacy notice
         </Link>
@@ -30,23 +49,34 @@ export function DeleteAllData() {
       </p>
       {status === "idle" && (
         <button
+          ref={openRef}
           type="button"
-          onClick={() => setStatus("confirm")}
+          onClick={() => go("confirm")}
           className="w-full min-h-12 rounded-xl border border-failure/40 text-[15px] font-semibold text-failure hover:bg-failure/[0.06]"
         >
           Delete all my data
         </button>
       )}
       {(status === "confirm" || status === "working") && (
-        <div role="alertdialog" aria-labelledby="wipe-q" className="space-y-3 rounded-xl bg-surface-warn px-3.5 py-3">
+        <div
+          ref={dialogRef}
+          role="alertdialog"
+          aria-modal="false"
+          aria-labelledby="wipe-q"
+          tabIndex={-1}
+          onKeyDown={(e) => {
+            if (e.key === "Escape" && status === "confirm") go("idle");
+          }}
+          className="space-y-3 rounded-xl bg-surface-warn px-3.5 py-3 outline-none focus-visible:ring-2 focus-visible:ring-accent"
+        >
           <p id="wipe-q" className="text-[15px] font-medium leading-normal text-ink">
-            Delete everything this app has saved on this device, including the
-            offline copy? This can&apos;t be undone.
+            Delete everything this app has saved in this browser, including
+            the offline copy? This can&apos;t be undone.
           </p>
           <div className="flex gap-2">
             <button
               type="button"
-              onClick={() => setStatus("idle")}
+              onClick={() => go("idle")}
               className="min-h-12 flex-1 rounded-xl border border-rule/15 bg-white text-[15px] font-medium text-ink"
             >
               Cancel
@@ -62,8 +92,15 @@ export function DeleteAllData() {
           </div>
         </div>
       )}
-      <p role="status" className="text-[15px] font-medium text-safety-text empty:hidden">
-        {status === "done" ? "Deleted. Nothing from this app is left on this device." : ""}
+      <p
+        ref={statusRef}
+        role="status"
+        tabIndex={-1}
+        className="text-[15px] font-medium text-safety-text outline-none empty:hidden"
+      >
+        {status === "done"
+          ? "Deleted. Your saved answers and the offline copy are gone from this browser. If you open the app again, it starts fresh."
+          : ""}
       </p>
     </div>
   );

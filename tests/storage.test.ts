@@ -126,4 +126,30 @@ describe("wipeAll", () => {
     await expect(wipeAll()).resolves.toBe(1);
     expect(readFavorites()).toEqual([]);
   });
+
+  it("unregisters every service worker registration", async () => {
+    const unregistered: string[] = [];
+    const reg = (scope: string) => ({ scope, unregister: async () => (unregistered.push(scope), true) });
+    vi.stubGlobal("caches", { keys: async () => [], delete: async () => true });
+    const sw = { getRegistrations: async () => [reg("/"), reg("/old/")] };
+    Object.defineProperty(window.navigator, "serviceWorker", { value: sw, configurable: true });
+    try {
+      await wipeAll();
+      expect(unregistered.sort()).toEqual(["/", "/old/"]);
+    } finally {
+      delete (window.navigator as unknown as { serviceWorker?: unknown }).serviceWorker;
+    }
+  });
+
+  it("still clears storage when service worker lookup fails", async () => {
+    writeJson(FAVORITES_KEY, ["x"]);
+    vi.stubGlobal("caches", { keys: async () => [], delete: async () => true });
+    const sw = { getRegistrations: async () => { throw new Error("SecurityError"); } };
+    Object.defineProperty(window.navigator, "serviceWorker", { value: sw, configurable: true });
+    try {
+      await expect(wipeAll()).resolves.toBe(1);
+    } finally {
+      delete (window.navigator as unknown as { serviceWorker?: unknown }).serviceWorker;
+    }
+  });
 });

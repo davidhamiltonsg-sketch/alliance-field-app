@@ -3,14 +3,14 @@
 import Link from "next/link";
 import { useId, useState } from "react";
 import { PrimaryButton } from "./PrimaryButton";
-import { SIGNUP_CAPTURE_EMAIL, SIGNUP_ENDPOINT } from "@/lib/links";
+import { CONTACT_EMAIL, SIGNUP_ENDPOINT } from "@/lib/links";
 
 type Status = "idle" | "sending" | "done" | "error";
 
 /**
  * Email signup. With NEXT_PUBLIC_SIGNUP_ENDPOINT set, POSTs a form-encoded
  * `email` to it (Buttondown / ConvertKit / Formspree style) and shows inline
- * success or error. Without it, opens a mailto: to SIGNUP_CAPTURE_EMAIL.
+ * success or error. Without it, opens a mailto: to CONTACT_EMAIL.
  * No third-party scripts; the email is the only data this app ever sends.
  */
 export function SignupForm() {
@@ -22,7 +22,7 @@ export function SignupForm() {
   const mailtoHref = (address: string) => {
     const subject = encodeURIComponent("Send me the Alliance system link");
     const body = encodeURIComponent(`Please add me to the list: ${address}`);
-    return `mailto:${SIGNUP_CAPTURE_EMAIL}?subject=${subject}&body=${body}`;
+    return `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
   };
 
   const submit = async (e: React.FormEvent) => {
