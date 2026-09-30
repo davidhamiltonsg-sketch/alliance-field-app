@@ -15,6 +15,9 @@ export const SIGNUP_CAPTURE_EMAIL = "hello@thealliance.app";
  */
 export const SIGNUP_ENDPOINT = process.env.NEXT_PUBLIC_SIGNUP_ENDPOINT?.trim() || "";
 
+/** Free lead magnet: printable Situation Map (drop the PDF in public/downloads/). */
+export const SITUATION_MAP_PDF = "/downloads/situation-map.pdf";
+
 /** One-line positioning, used in GetFullSystem and on /about. */
 export const POSITIONING_LINE =
   "One payment. No subscription. Works offline. Your data stays on your phone.";

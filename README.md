@@ -84,11 +84,11 @@ On a shared device, Profile Calibration asks Partner A before the hand-over
 whether Partner B may see A's individual profile (private by default); B then
 sees only the couple report.
 
-## Email signup
+## Email signup and free download
 
 The "Get the full system" card (`src/components/GetFullSystem.tsx`, on
-About) has a Gumroad link (`FULL_SYSTEM_URL` in `src/lib/links.ts`) and an
-email signup.
+About) has a Gumroad link (`FULL_SYSTEM_URL` in `src/lib/links.ts`), a free
+printable Situation Map and an email signup.
 
 | Variable                      | Purpose                                                                                     |
 | ----------------------------- | ------------------------------------------------------------------------------------------- |
@@ -102,6 +102,10 @@ email signup.
 - Unset: the form falls back to opening a `mailto:` to `SIGNUP_CAPTURE_EMAIL`.
 - The form shows inline success (`role="status"`) and error (`role="alert"`,
   with a mailto fallback). No third-party scripts are loaded.
+
+The printable map is served from `public/downloads/situation-map.pdf`
+(`SITUATION_MAP_PDF`). Only `public/downloads/.gitkeep` is committed: drop the
+real PDF in before deploying, or the link 404s.
 
 ## Safety page
 

@@ -1,11 +1,12 @@
 import { SectionLabel } from "./SectionLabel";
 import { SignupForm } from "./SignupForm";
+import { SituationMapDownload } from "./SituationMapDownload";
 import { FULL_SYSTEM_URL, POSITIONING_LINE } from "@/lib/links";
 
 /**
  * Free-app CTA (decision #3): the app stays free as the way in. This card
- * offers the full Manual + Field Kit purchase, and an email signup for
- * anyone not ready to buy yet.
+ * offers the full Manual + Field Kit purchase, a free printable Situation
+ * Map, and an email signup for anyone not ready to buy yet.
  */
 export function GetFullSystem() {
   return (
@@ -26,6 +27,10 @@ export function GetFullSystem() {
         >
           Get the full system
         </a>
+
+        <div className="border-t border-rule/[0.08] pt-3">
+          <SituationMapDownload />
+        </div>
 
         <div className="border-t border-rule/[0.08] pt-3">
           <SignupForm />
