@@ -10,19 +10,9 @@ import { fileURLToPath } from "node:url";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const pub = (f) => join(root, "public", f);
-// iOS launch screens (portrait): [cssWidth, cssHeight, dpr]
-export const launchScreens = [
-  [440, 956, 3],
-  [402, 874, 3],
-  [430, 932, 3],
-  [393, 852, 3],
-  [428, 926, 3],
-  [390, 844, 3],
-  [375, 812, 3],
-  [414, 896, 3],
-  [414, 896, 2],
-  [375, 667, 2],
-];
+// iOS launch screens (portrait): [cssWidth, cssHeight, dpr]. Shared with
+// src/app/layout.tsx, which emits the matching apple-touch-startup-image links.
+export const launchScreens = JSON.parse(readFileSync(join(root, "src/data/launch-screens.json"), "utf8"));
 const launchName = ([w, h, r]) => `splash/launch-${w * r}x${h * r}.png`;
 const outputs = [
   "apple-touch-icon.png",
