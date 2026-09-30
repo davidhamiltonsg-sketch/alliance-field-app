@@ -67,16 +67,20 @@ function cacheVersion() {
 
 export const precacheUrls = () => [...new Set([...staticRoutes().sort(), ...protocolRoutes().sort(), ...assets])];
 
-if (import.meta.url === `file://${process.argv[1]}`) {
-  const version = cacheVersion();
-  const urls = precacheUrls();
-  const template = readFileSync(join(root, "scripts/sw.template.js"), "utf8");
+/** Renders the worker from the template: exactly one of each placeholder, both replaced. */
+export function renderServiceWorker(template, version, urls) {
   for (const token of ["__CACHE_VERSION__", "__PRECACHE_URLS__"]) {
     if (template.split(token).length !== 2) throw new Error(`[sw] expected exactly one ${token} in the template`);
   }
-  const out = template
-    .replace("__CACHE_VERSION__", version)
-    .replace("__PRECACHE_URLS__", JSON.stringify(urls, null, 2));
+  return template.replace("__CACHE_VERSION__", version).replace("__PRECACHE_URLS__", JSON.stringify(urls, null, 2));
+}
+
+export const readTemplate = () => readFileSync(join(root, "scripts/sw.template.js"), "utf8");
+
+if (import.meta.url === `file://${process.argv[1]}`) {
+  const version = cacheVersion();
+  const urls = precacheUrls();
+  const out = renderServiceWorker(readTemplate(), version, urls);
   writeFileSync(join(root, "public/sw.js"), out);
   console.log(`[sw] public/sw.js: cache ${version}, ${urls.length} precached URLs`);
 }

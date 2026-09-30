@@ -16,6 +16,7 @@ import { Marker } from "./Marker";
 import { ArrowRight } from "./icons";
 import { clearKey, PAUSE_KEY, readPause, writePause } from "@/lib/storage";
 import { timerAnnouncement } from "@/lib/timer";
+import { buildPauseReturnIcs } from "@/lib/ics";
 import { KIT } from "@/data/kit";
 
 const DURATIONS = [
@@ -31,11 +32,34 @@ function formatClock(d: Date) {
   return d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 }
 
+type AudioCtor = typeof AudioContext;
+let audioCtx: AudioContext | null = null;
+
+/**
+ * Creates (or resumes) the shared AudioContext. Must run inside a user
+ * gesture (the Start/Set click): browsers keep contexts created later, e.g.
+ * from a timer callback, suspended, so the chime would never sound.
+ */
+function primeAudio() {
+  try {
+    if (!audioCtx) {
+      const Ctx: AudioCtor | undefined =
+        window.AudioContext || (window as unknown as { webkitAudioContext?: AudioCtor }).webkitAudioContext;
+      if (!Ctx) return;
+      audioCtx = new Ctx();
+    }
+    if (audioCtx.state === "suspended") void audioCtx.resume();
+  } catch {
+    /* audio not available */
+  }
+}
+
 /** Plays a short, gentle three-tone chime using the Web Audio API — no audio file needed. */
 function playChime() {
   try {
-    const Ctx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-    const ctx = new Ctx();
+    const ctx = audioCtx;
+    if (!ctx) return;
+    if (ctx.state === "suspended") void ctx.resume();
     const notes = [523.25, 659.25, 783.99]; // C5, E5, G5
     notes.forEach((freq, i) => {
       const osc = ctx.createOscillator();
@@ -51,24 +75,55 @@ function playChime() {
       osc.start(start);
       osc.stop(start + 0.55);
     });
-    window.setTimeout(() => ctx.close(), 1600);
   } catch {
     /* ignore — audio not available */
   }
 }
 
-/** Fires a system notification if permission was already granted. */
-function notifyExpired() {
+const NOTIFY_TITLE = "Pause complete";
+const NOTIFY_OPTIONS: NotificationOptions = {
+  body: "Your return time has arrived. Read the restart cue before you speak.",
+  tag: "alliance-pause-return",
+  icon: "/icon-192.png",
+};
+
+/**
+ * Fires a system notification if permission was already granted. Prefers the
+ * service worker (the only way that works on Android and installed iOS apps),
+ * falling back to the page-level Notification constructor.
+ */
+async function notifyExpired() {
   try {
-    if (typeof Notification === "undefined") return;
-    if (Notification.permission === "granted") {
-      new Notification("Pause complete", {
-        body: "Your return time has arrived. Read the restart cue before you speak.",
-      });
+    if (typeof Notification === "undefined" || Notification.permission !== "granted") return;
+    if ("serviceWorker" in navigator) {
+      const registration = await Promise.race([
+        navigator.serviceWorker.ready,
+        new Promise<null>((resolve) => window.setTimeout(() => resolve(null), 1500)),
+      ]);
+      if (registration) {
+        await registration.showNotification(NOTIFY_TITLE, NOTIFY_OPTIONS);
+        return;
+      }
     }
   } catch {
-    /* ignore */
+    /* fall through to the page-level notification */
   }
+  try {
+    new Notification(NOTIFY_TITLE, NOTIFY_OPTIONS);
+  } catch {
+    /* ignore — e.g. Android Chrome only allows notifications from a worker */
+  }
+}
+
+function downloadReturnTime(returnAt: string) {
+  const { url, filename } = buildPauseReturnIcs(new Date(returnAt));
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
 }
 
 const noopSubscribe = () => () => {};
@@ -123,7 +178,7 @@ function PauseTimerClient() {
     if (expired && returnAt && alarmFiredForRef.current !== returnAt) {
       alarmFiredForRef.current = returnAt;
       playChime();
-      notifyExpired();
+      void notifyExpired();
     }
   }, [expired, returnAt]);
 
@@ -138,6 +193,7 @@ function PauseTimerClient() {
   };
 
   const startWithMs = useCallback((ms: number) => {
+    primeAudio();
     const startedAt = new Date().toISOString();
     const at = new Date(Date.now() + ms).toISOString();
     writePause({ returnAt: at, startedAt });
@@ -166,6 +222,7 @@ function PauseTimerClient() {
       return;
     }
     setClockTimeError(null);
+    primeAudio();
     const started = new Date().toISOString();
     writePause({
       returnAt: target.toISOString(),
@@ -203,6 +260,13 @@ function PauseTimerClient() {
     setReturnAt(null);
     setStartedAt(null);
     setBackMode(false);
+  };
+
+  const [calendarAdded, setCalendarAdded] = useState(false);
+  const addToCalendar = () => {
+    if (!returnAt) return;
+    downloadReturnTime(returnAt);
+    setCalendarAdded(true);
   };
 
   const imBack = () => {
@@ -293,6 +357,17 @@ function PauseTimerClient() {
         <PrimaryButton variant="secondary" onClick={shareReturnTime}>
           {shareCopied ? "Copied ✓" : "Share my return time"}
         </PrimaryButton>
+        <PrimaryButton variant="secondary" onClick={addToCalendar}>
+          Add return time to calendar (.ics)
+        </PrimaryButton>
+        <p role="status" className="text-center text-[13px] font-medium text-safety-text empty:hidden">
+          {calendarAdded ? "Calendar file downloaded — open it to add the alarm." : ""}
+        </p>
+        <p className="rounded-xl bg-surface-warn px-3.5 py-2.5 text-[13px] leading-snug text-ink">
+          <strong className="font-medium">Keep this screen open</strong> —
+          phones may silence alarms in the background. For a backup, add the
+          return time to your calendar.
+        </p>
         <PrimaryButton variant="ghost" onClick={cancel}>
           Cancel pause
         </PrimaryButton>
