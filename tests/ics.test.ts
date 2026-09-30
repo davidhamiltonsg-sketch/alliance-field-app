@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { KIT } from "@/data/kit";
-import { WEEKLY_RESET_MINUTES, buildWeeklyResetIcs } from "@/lib/ics";
+import { WEEKLY_RESET_MINUTES, buildStartPlanIcs, buildWeeklyResetIcs } from "@/lib/ics";
 
 let captured: Blob | null = null;
 
@@ -56,5 +56,20 @@ describe("buildWeeklyResetIcs", () => {
     expect(description).toContain("check the load");
     expect(description).toContain("Pause + Return");
     expect(description).not.toMatch(/care audit/i);
+  });
+});
+
+describe("buildStartPlanIcs", () => {
+  it("is a daily, seven-occurrence, 10-minute reminder starting tomorrow at the chosen local time", async () => {
+    const from = new Date(2026, 2, 2, 9, 30);
+    const result = buildStartPlanIcs("19:45", from);
+    expect(result.filename).toBe("alliance-start-plan.ics");
+    const lines = (await captured!.text()).split("\r\n");
+    expect(field(lines, "RRULE")).toBe("FREQ=DAILY;COUNT=7");
+    const start = new Date(2026, 2, 3, 19, 45);
+    const iso = (d: Date) => d.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
+    expect(field(lines, "DTSTART")).toBe(iso(start));
+    expect(field(lines, "DTEND")).toBe(iso(new Date(start.getTime() + 10 * 60 * 1000)));
+    expect(field(lines, "DESCRIPTION")).toContain("Pause + Return");
   });
 });

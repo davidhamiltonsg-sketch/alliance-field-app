@@ -1,6 +1,6 @@
 import { KIT } from "@/data/kit";
 
-/** Builds a downloadable .ics file for a recurring or one-off Weekly Reset reminder. */
+/** Builds downloadable .ics files: the recurring Weekly Reset and the 7-day start plan reminder. */
 function pad(n: number) {
   return String(n).padStart(2, "0");
 }
@@ -45,4 +45,40 @@ export function buildWeeklyResetIcs(fromDate = new Date()): { url: string; filen
 
   const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
   return { url: URL.createObjectURL(blob), filename: "alliance-weekly-reset.ics" };
+}
+
+/**
+ * Returns an object URL for a daily 10-minute reminder for the 7-day start
+ * plan, at the given local time ("HH:MM"), starting tomorrow.
+ */
+export function buildStartPlanIcs(
+  time = "20:00",
+  fromDate = new Date(),
+  days = 7
+): { url: string; filename: string } {
+  const [h, m] = time.split(":").map((n) => Number(n));
+  const start = new Date(fromDate);
+  start.setDate(start.getDate() + 1);
+  start.setHours(Number.isFinite(h) ? h : 20, Number.isFinite(m) ? m : 0, 0, 0);
+  const end = new Date(start.getTime() + 10 * 60 * 1000);
+  const uid = `alliance-start-plan-${start.getTime()}@alliance-field-app`;
+
+  const ics = [
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "PRODID:-//THE ALLIANCE//Field App//EN",
+    "BEGIN:VEVENT",
+    `UID:${uid}`,
+    `DTSTAMP:${toIcsDate(new Date())}`,
+    `DTSTART:${toIcsDate(start)}`,
+    `DTEND:${toIcsDate(end)}`,
+    `RRULE:FREQ=DAILY;COUNT=${days}`,
+    "SUMMARY:Alliance start plan (10 min)",
+    "DESCRIPTION:Today's step of the 7-day start plan — open the Field App at /start. Day 7 is your first Weekly Reset (about 40 minutes). If either of you is flooded, Pause + Return first.",
+    "END:VEVENT",
+    "END:VCALENDAR",
+  ].join("\r\n");
+
+  const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
+  return { url: URL.createObjectURL(blob), filename: "alliance-start-plan.ics" };
 }
