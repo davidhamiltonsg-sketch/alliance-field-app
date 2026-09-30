@@ -1,3 +1,5 @@
+import { KIT } from "@/data/kit";
+
 /** Builds a downloadable .ics file for a recurring or one-off Weekly Reset reminder. */
 function pad(n: number) {
   return String(n).padStart(2, "0");
@@ -16,7 +18,7 @@ function toIcsDate(d: Date) {
 }
 
 /** Canonical Weekly Reset length (Manual/Kit): five parts, about 40 minutes. */
-export const WEEKLY_RESET_MINUTES = 40;
+export const WEEKLY_RESET_MINUTES = KIT.weeklyResetMinutes;
 
 /** Returns an object URL for a Weekly Reset calendar event, one week from now, 40 minutes. */
 export function buildWeeklyResetIcs(fromDate = new Date()): { url: string; filename: string } {

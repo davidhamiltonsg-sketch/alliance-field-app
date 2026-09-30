@@ -1,4 +1,5 @@
 import type { CSSProperties, ReactNode } from "react";
+import { KIT } from "@/data/kit";
 import { ProtocolIcon } from "../visuals/ProtocolIcon";
 import {
   AdvisoryStrip,
@@ -98,7 +99,7 @@ export function SystemDiagram() {
     {
       x: 0,
       title: "Manual",
-      sub: ["26 chapters,", "three parts"],
+      sub: [`${KIT.manualChapters} chapters,`, "three parts"],
       fill: V.white,
       icon: (
         <>
@@ -111,7 +112,7 @@ export function SystemDiagram() {
     {
       x: 116,
       title: "Field Kit",
-      sub: ["15 protocol", "cards + Read", "This First,", "9 worksheets"],
+      sub: [`${KIT.protocolCards} protocol`, "cards + Read", "This First,", `${KIT.worksheets} worksheets`],
       fill: V.tint,
       icon: (
         <>
