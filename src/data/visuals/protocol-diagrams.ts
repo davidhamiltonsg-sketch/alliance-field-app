@@ -192,12 +192,13 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
         "title": "Requests",
         "detail": "One specific ask each for next week.",
         "kind": "step",
-        "badge": "5 min, with next steps"
+        "badge": "5 min"
       },
       {
         "title": "Next steps",
         "detail": "One next step + a review time.",
-        "kind": "step"
+        "kind": "step",
+        "badge": "same 5 min"
       }
     ],
     "note": {
@@ -284,7 +285,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     ],
     "note": {
       "kind": "note",
-      "text": "Best on residue under 48 hours old. Deliver within 10 minutes."
+      "text": "Start within minutes if you can; complete within 24 hours."
     },
     "outcome": "Residue clears before it hardens."
   },
@@ -307,7 +308,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
         "kind": "step"
       },
       {
-        "title": "Track",
+        "title": "Record",
         "detail": "Tally or table; facts first at review.",
         "kind": "step"
       },
@@ -386,7 +387,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Safety check",
-        "detail": "If contempt or safety issues: repair chapters first.",
+        "detail": "Pressure after a no: Green Rule or Trust Recovery first. Again, or unable to say no: Help Lines.",
         "kind": "failure"
       }
     ],
@@ -398,7 +399,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "steps": [
       {
         "title": "Name the breach",
-        "detail": "Clearly, without deflection.",
+        "detail": "The partner who broke trust names it, without deflection. The hurt partner never confesses in return.",
         "kind": "step"
       },
       {
@@ -412,8 +413,8 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
         "kind": "step"
       },
       {
-        "title": "Track",
-        "detail": "Behaviour Window table: facts.",
+        "title": "Record",
+        "detail": "Behaviour Window table: facts, seen and reviewed at the agreed check-in.",
         "kind": "step",
         "badge": "weekly"
       },
@@ -483,7 +484,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Impact",
-        "detail": "Acknowledge the impact before either of you explains.",
+        "detail": "Acknowledge the impact before either of you explains. One-sided breach: only the partner who caused it acknowledges.",
         "kind": "repair"
       },
       {
@@ -499,7 +500,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Say it out loud",
-        "detail": "“We made it through this. We’re still here.”",
+        "detail": "Only if it’s true for both of you: “We made it through this. We’re still here.”",
         "kind": "repair"
       }
     ],
@@ -519,6 +520,11 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
         "badge": "8 signs"
       },
       {
+        "title": "Contempt? Skip the count",
+        "detail": "Contempt means stop and get outside support first. Fear or coercion too, at any count.",
+        "kind": "failure"
+      },
+      {
         "title": "Likely needs space",
         "detail": "Pause + Return and small repairs.",
         "kind": "pause",
@@ -529,11 +535,6 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
         "detail": "Book a Full Recovery and set proof. Don’t wait it out.",
         "kind": "repair",
         "badge": "3 or more · within a week"
-      },
-      {
-        "title": "Safety first",
-        "detail": "Contempt, fear or coercion at any count: safety and outside support.",
-        "kind": "failure"
       },
       {
         "title": "Review",

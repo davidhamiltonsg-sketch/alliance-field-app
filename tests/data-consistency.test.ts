@@ -101,6 +101,81 @@ describe("CANON numbers and wording", () => {
   });
 });
 
+describe("CANON round 3", () => {
+  const LEAVING = "Deciding not to rebuild, or to end the relationship, is a valid outcome of this protocol, not a failure of it.";
+  const all = (slug: string) => JSON.stringify(getProtocol(slug));
+
+  it("says leaving is valid on Trust Recovery, Full Recovery and the Uninvestment Check", () => {
+    for (const slug of ["trust-recovery", "full-recovery", "uninvestment-check"]) {
+      expect(getProtocol(slug)!.note, slug).toBe(LEAVING);
+    }
+    expect(componentSource("ProtocolLayout")).toContain("protocol.note");
+  });
+
+  it("Uninvestment Check: sign 4 wording, contempt skips the count, routing", () => {
+    const card = getProtocol("uninvestment-check")!;
+    expect(card.activity).toContain("(4) doing more on your own in place of shared time (time apart is healthy)");
+    const contempt = "If contempt is one of your signs, skip the count: contempt means stop and get outside support first.";
+    expect(card.activity).toContain(contempt);
+    expect(card.steps.join(" ")).toContain(contempt);
+    expect(card.warn).toContain(contempt);
+    expect(card.steps.join(" ")).toContain("Full Recovery within a week");
+    expect(card.crossLinks.map((c) => c.href)).toContain("/protocols/trust-recovery");
+  });
+
+  it("Micro-Repair uses the one canonical window", () => {
+    const text = [all("micro-repair"), JSON.stringify(protocolDiagrams["micro-repair"])].join(" ");
+    expect(text.toLowerCase()).toContain("start within minutes if you can; complete within 24 hours");
+    expect(text).not.toMatch(/48[- ]hour|within (10|ten) minutes/i);
+  });
+
+  it("Full Recovery and Trust Recovery handle one-sided breaches", () => {
+    const full = getProtocol("full-recovery")!.steps.join(" ");
+    expect(full).toContain("only that partner acknowledges impact; the hurt partner is never asked to confess in return");
+    expect(full).toContain("only if it's true for both of you");
+    expect(getProtocol("trust-recovery")!.steps[0]).toContain("never asked to confess in return");
+  });
+
+  it("Intimacy Pact never routes repeated pressure to in-house tools only", () => {
+    const card = getProtocol("intimacy-pact")!;
+    const last = card.steps.at(-1)!;
+    expect(last).toMatch(/Green Rule or Trust Recovery/);
+    expect(last).toMatch(/If it happens again, or either of you feels unable to say no, stop and use the Help Lines/);
+    expect(card.warn).toMatch(/Help Lines/);
+    expect(card.safetyLink).toBe(true);
+  });
+
+  it("never asks to track or verify the other partner", () => {
+    const text = JSON.stringify([getProtocol("trust-recovery"), getProtocol("proof-protocol")]);
+    expect(text).not.toMatch(/\btrack(ing)? (the facts|it)\b|\bverify\b/i);
+    expect(text).toContain("see and review at the agreed check-in");
+  });
+
+  it("Weekly Reset part 4 is Requests, part 5 is Next steps", () => {
+    const card = getProtocol("weekly-reset")!;
+    expect(card.steps[3]).toMatch(/^Requests — /);
+    expect(card.steps[4]).toMatch(/^Next steps — /);
+    expect(protocolDiagrams["weekly-reset"].steps.map((s) => s.title).slice(3)).toEqual(["Requests", "Next steps"]);
+    expect(componentSource("WeeklyResetWizard")).toContain('title="Requests"');
+    expect(componentSource("WeeklyResetWizard")).not.toContain("Requests (5 min, with next steps)");
+  });
+
+  it("Situation Map (app and intro diagram) splits trust breach from pulling away and routes outside pressure to Unity Anchor", () => {
+    const byId = Object.fromEntries(situations.map((s) => [s.id, s]));
+    expect(byId["trust-breach"].primaryHref).toBe("/protocols/trust-recovery");
+    expect(byId["trust-breach"].firstMove).toContain("Trust Recovery + Proof");
+    expect(byId["detachment"].primaryHref).toBe("/protocols/uninvestment-check");
+    expect(byId["detachment"].label).toMatch(/Pulling away/);
+    expect(byId["outside-pressure"].primaryHref).toBe("/protocols/unity-anchor");
+    expect(byId["outside-pressure"].label).toMatch(/Outside pressure, disapproval or jealousy about others/);
+    const diagrams = readFileSync(join(__dirname, "../src/components/intro/diagrams.tsx"), "utf8");
+    expect(diagrams).toContain('q: ["Trust breach?"]');
+    expect(diagrams).toContain('q: ["Pulling away?"]');
+    expect(diagrams).toContain('a: ["Unity Anchor"]');
+    expect(diagrams).not.toContain("Trust breach or");
+  });
+});
+
 describe("safety routing", () => {
   it("puts the safety row first, routed to Help, never to Pause", () => {
     expect(situations[0].danger).toBe(true);

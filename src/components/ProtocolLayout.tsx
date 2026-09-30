@@ -61,6 +61,13 @@ export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
         </>
       )}
 
+      {protocol.note && (
+        <aside className="card space-y-2 px-4 py-3.5" aria-label="Note">
+          <Marker kind="NOTE" />
+          <p className="text-[15px] leading-normal text-ink">{protocol.note}</p>
+        </aside>
+      )}
+
       <section className="space-y-3">
         <SectionLabel>In practice</SectionLabel>
         <PracticeTabs working={protocol.working} notWorking={protocol.notWorking} activity={protocol.activity} />

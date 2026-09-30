@@ -24,6 +24,8 @@ export interface Protocol {
   activity: string;
   crossLinks: { label: string; href?: string }[];
   warn?: string;
+  /** A closing note shown after the steps (e.g. "Leaving is valid"). */
+  note?: string;
   /** Show the "Afraid, not just flooded? Get help" link under the warning. */
   safetyLink?: boolean;
   accentHint?: "safety" | "pause" | "repair" | "accent";

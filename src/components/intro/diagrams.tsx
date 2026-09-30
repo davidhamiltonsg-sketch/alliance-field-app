@@ -220,14 +220,15 @@ export function SystemDiagram() {
 export function SituationMapDiagram() {
   // Safety routing always comes first; "unsafe" never routes to Pause + Return.
   const rows: { q: string[]; a: string[]; icon: string; kind: Kind }[] = [
-    { q: ["Afraid, threatened,", "or not free", "to say no?"], a: ["Stop. Get", "outside help"], icon: "section-caution", kind: "failure" },
+    { q: ["Afraid, threatened,", "not free to say no?"], a: ["Stop. Get", "outside help"], icon: "section-caution", kind: "failure" },
     { q: ["Flooded or shut", "down (but safe)?"], a: ["Pause + Return"], icon: "pause-and-return", kind: "step" },
-    { q: ["Trust breach or", "uninvestment?"], a: ["Trust Recovery", "+ Proof"], icon: "trust-recovery", kind: "repair" },
-    { q: ["Conflict starting?"], a: ["Green Rule, then", "Overlay or", "Conflict"], icon: "conflict-protocol", kind: "step" },
+    { q: ["Trust breach?"], a: ["Trust Recovery", "+ Proof"], icon: "trust-recovery", kind: "repair" },
+    { q: ["Pulling away?"], a: ["Uninvestment", "Check"], icon: "section-not-working", kind: "repair" },
+    { q: ["Outside pressure", "or jealousy?"], a: ["Unity Anchor"], icon: "unity-anchor", kind: "step" },
   ];
   const top = 24,
-    pitch = 76,
-    h = 64,
+    pitch = 58,
+    h = 48,
     lw = 160,
     lcx = 80,
     bx = 182,
@@ -238,7 +239,7 @@ export function SituationMapDiagram() {
   return (
     <Frame
       viewBox="0 0 340 336"
-      label="Situation Map: answer yes or no from the top. Afraid, threatened, or not free to say no: stop and get outside help. Flooded or shut down but safe routes to Pause + Return."
+      label="Situation Map: answer yes or no from the top. Afraid, threatened, or not free to say no: stop and get outside help. Flooded or shut down but safe: Pause + Return. Trust breach: Trust Recovery plus Proof. Pulling away: Uninvestment Check. Outside pressure, disapproval or jealousy about others: Unity Anchor."
     >
       <text x={2} y={13} fontSize={13.5} fill={V.muted} {...a("dg-fade", 0)}>
         Follow the first match, top to bottom.
@@ -281,7 +282,7 @@ export function SituationMapDiagram() {
             {i < rows.length - 1 && (
               <g {...a("dg-fade", 300 + i * 230)}>
                 <Twist x={lcx} y0={y + h - 1} y1={y + pitch + 1} amp={3.4} startOver={i} />
-                <text x={lcx + 11} y={y + h + 12} fontFamily={SERIF} fontStyle="italic" fontSize={13.5} fill={V.muted}>
+                <text x={lcx + 11} y={y + h + 9} fontFamily={SERIF} fontStyle="italic" fontSize={11.5} fill={V.muted}>
                   no
                 </text>
               </g>
@@ -304,7 +305,7 @@ export function SituationMapDiagram() {
         <path {...a("dg-pulse", 2000, undefined, { "--pulse": 1.12 })} d={archD(bx, hy, bw, h, 14)} fill="none" stroke={V.safety} strokeWidth={2} />
         <StatusOutline {...a("dg-pop", 1750, 420)} kind="safety" d={() => archD(bx, hy, bw, h, 14)} />
         <Glyph kind="safety" x={bx + bw - 20} y={hy + 7} s={13} {...a("dg-pop", 1800, 360)} />
-        <text {...a("dg-fade", 1850)} x={bx + 9} y={hy + h / 2 + 20} fontSize={13.5} fill={V.muted}>
+        <text {...a("dg-fade", 1850)} x={bx + 36} y={hy + h / 2 + 14} fontSize={12} fill={V.muted}>
           or 60-Second Reset
         </text>
       </g>
@@ -537,8 +538,8 @@ export function WeeklyResetDiagram() {
     { title: "Appreciation", sub: "5 min" },
     { title: "Check the load", sub: "15 min" },
     { title: "One friction point", sub: "15 min · 2% Rule" },
-    { title: "Requests", sub: "5 min, with next steps" },
-    { title: "Next steps", sub: "Next step + review" },
+    { title: "Requests", sub: "5 min" },
+    { title: "Next steps", sub: "same 5 min" },
   ];
   const seg = 72,
     gapDeg = 15;
