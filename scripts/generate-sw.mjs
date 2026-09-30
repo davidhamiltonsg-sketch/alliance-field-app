@@ -10,6 +10,9 @@ import { fileURLToPath } from "node:url";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const appDir = join(root, "src/app");
 
+/** Pages that must never be cached offline (the pre-launch lock screen). */
+const NOT_PRECACHED = new Set(["/unlock"]);
+
 /** Static routes: every page.tsx outside a [dynamic] segment. */
 function staticRoutes(dir = appDir) {
   const routes = [];
@@ -19,7 +22,8 @@ function staticRoutes(dir = appDir) {
       if (!name.startsWith("[")) routes.push(...staticRoutes(full));
     } else if (name === "page.tsx") {
       const rel = relative(appDir, dir).split(sep).join("/");
-      routes.push(rel ? `/${rel}` : "/");
+      const route = rel ? `/${rel}` : "/";
+      if (!NOT_PRECACHED.has(route)) routes.push(route);
     }
   }
   return routes;
