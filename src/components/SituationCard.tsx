@@ -12,9 +12,10 @@ function iconSlugFor(href: string): string | null {
   return protocolIconSlugs.includes(slug) ? slug : null;
 }
 
-type Tone = "pause" | "repair" | "accent";
+type Tone = "failure" | "pause" | "repair" | "accent";
 
 function toneFor(situation: Situation): Tone {
+  if (situation.danger) return "failure";
   if (situation.warn) return "pause";
   const slug = situation.primaryHref.startsWith("/protocols/")
     ? situation.primaryHref.replace("/protocols/", "")
@@ -26,18 +27,21 @@ function toneFor(situation: Situation): Tone {
 }
 
 const card: Record<Tone, string> = {
+  failure: "v2-card--failure",
   pause: "v2-card--pause",
   repair: "v2-card--repair",
   accent: "",
 };
 
 const moveText: Record<Tone, string> = {
+  failure: "text-failure",
   pause: "text-[#8F5610]",
   repair: "text-repair",
   accent: "text-accent",
 };
 
 const threadColor: Record<Tone, string> = {
+  failure: V.failure,
   pause: V.pause,
   repair: V.repair,
   accent: V.thread,
@@ -75,7 +79,7 @@ export function SituationCard({
   index?: number;
 }) {
   const tone = toneFor(situation);
-  const iconSlug = situation.warn ? null : iconSlugFor(situation.primaryHref);
+  const iconSlug = situation.warn || situation.danger ? null : iconSlugFor(situation.primaryHref);
   return (
     <li>
       <div className={`v2-card ${card[tone]} overflow-hidden`}>

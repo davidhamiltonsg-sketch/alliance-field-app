@@ -40,7 +40,7 @@ const panels: Panel[] = [
     eyebrow: "Situation Map",
     icon: "section-when-to-use",
     title: "Find your row. Pull the card.",
-    body: "When you don’t know which card to pull, follow the first match, top to bottom.",
+    body: "Safety comes first: if you’re afraid, threatened, or not free to say no, stop and get outside help. Otherwise, follow the first match, top to bottom.",
     diagram: <SituationMapDiagram />,
   },
   {

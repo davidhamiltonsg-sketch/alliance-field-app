@@ -19,13 +19,22 @@ export function AppHeader() {
             FIELD
           </span>
         </Link>
-        <Link
-          href="/pause"
-          className="inline-flex h-12 w-12 items-center justify-center rounded-full text-pause transition-colors hover:bg-pause/10"
-          aria-label="Open Pause + Return timer"
-        >
-          <TimerIcon size={22} />
-        </Link>
+        <div className="flex items-center">
+          <Link
+            href="/help"
+            className="inline-flex h-12 items-center rounded-full px-3 text-[13px] font-semibold text-failure transition-colors hover:bg-failure/10"
+            aria-label="Help and safety: help lines"
+          >
+            Help
+          </Link>
+          <Link
+            href="/pause"
+            className="inline-flex h-12 w-12 items-center justify-center rounded-full text-pause transition-colors hover:bg-pause/10"
+            aria-label="Open Pause + Return timer"
+          >
+            <TimerIcon size={22} />
+          </Link>
+        </div>
       </div>
     </header>
   );

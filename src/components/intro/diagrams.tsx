@@ -214,10 +214,11 @@ export function SystemDiagram() {
 /* 2. Situation Map: lens questions, first match routes to a card        */
 /* ------------------------------------------------------------------ */
 export function SituationMapDiagram() {
+  // Safety routing always comes first; "unsafe" never routes to Pause + Return.
   const rows: { q: string[]; a: string[]; icon: string; kind: Kind }[] = [
-    { q: ["Flooded, shut", "down, or unsafe", "to speak?"], a: ["Pause + Return"], icon: "pause-and-return", kind: "step" },
+    { q: ["Afraid, threatened,", "or not free", "to say no?"], a: ["Stop. Get", "outside help"], icon: "section-caution", kind: "failure" },
+    { q: ["Flooded or shut", "down (but safe)?"], a: ["Pause + Return"], icon: "pause-and-return", kind: "step" },
     { q: ["Trust breach or", "uninvestment?"], a: ["Trust Recovery", "+ Proof"], icon: "trust-recovery", kind: "repair" },
-    { q: ["Daily drift or", "weekly upkeep?"], a: ["Rhythm +", "Weekly Reset"], icon: "morning-evening-rhythm", kind: "step" },
     { q: ["Conflict starting?"], a: ["Green Rule, then", "Overlay or", "Conflict"], icon: "conflict-protocol", kind: "step" },
   ];
   const top = 24,
@@ -228,10 +229,12 @@ export function SituationMapDiagram() {
     bx = 182,
     bw = 158;
   const lh = 15;
+  const HI = 1; // highlighted route: Flooded (but safe) → Pause + Return
+  const hy = top + HI * pitch;
   return (
     <Frame
       viewBox="0 0 340 336"
-      label="Situation Map: answer yes or no from the top. Flooded, shut down, or unsafe to speak routes straight to Pause + Return."
+      label="Situation Map: answer yes or no from the top. Afraid, threatened, or not free to say no: stop and get outside help. Flooded or shut down but safe routes to Pause + Return."
     >
       <text x={2} y={13} fontSize={13.5} fill={V.muted} {...a("dg-fade", 0)}>
         Follow the first match, top to bottom.
@@ -240,11 +243,12 @@ export function SituationMapDiagram() {
         const y = top + i * pitch;
         const cy = y + h / 2;
         const qy = cy - ((r.q.length - 1) * lh) / 2 + 5;
-        const first = i === 0;
-        const ay = first ? cy - 3 : cy - ((r.a.length - 1) * lh) / 2 + 5;
-        const color = r.kind === "repair" ? V.repair : V.accent;
+        const hi = i === HI;
+        const lit = i <= HI;
+        const ay = hi ? cy - 3 : cy - ((r.a.length - 1) * lh) / 2 + 5;
+        const color = r.kind === "repair" ? V.repair : r.kind === "failure" ? V.failure : V.accent;
         return (
-          <g key={i} className={first ? undefined : "dg-dim"} style={first ? undefined : t(1700 + i * 60, 600, { "--dim": 0.42 })}>
+          <g key={i} className={lit ? undefined : "dg-dim"} style={lit ? undefined : t(1700 + i * 60, 600, { "--dim": 0.42 })}>
             <Lens cx={lcx} cy={cy} w={lw} h={h} {...a("dg-rise", 150 + i * 230)} />
             <g {...a("dg-rise", 150 + i * 230)}>
               {r.q.map((l, j) => (
@@ -256,15 +260,16 @@ export function SituationMapDiagram() {
             <Thread
               pts={[[lcx + lw / 2 + 1, cy], [bx - 1, cy]]}
               size={7}
+              color={r.kind === "failure" ? V.failure : undefined}
               line={a("dg-draw", 350 + i * 230, 260)}
               ends={a("dg-pop", 340 + i * 230, 200)}
               tipAnim={a("dg-pop", 560 + i * 230, 240)}
             />
             <g {...a("dg-rise", 420 + i * 230)}>
               <ArchPanel x={bx} y={y} w={bw} h={h} kind={r.kind} rt={14} />
-              <IconSeat slug={r.icon} cx={bx + 18} cy={first ? cy - 8 : cy} size={20} color={color} />
+              <IconSeat slug={r.icon} cx={bx + 18} cy={hi ? cy - 8 : cy} size={20} color={color} />
               {r.a.map((l, j) => (
-                <text key={l} x={bx + 36} y={ay + j * lh} fontFamily={SERIF} fontSize={14} fontWeight={600} fill={V.ink}>
+                <text key={l} x={bx + 36} y={ay + j * lh} fontFamily={SERIF} fontSize={14} fontWeight={600} fill={r.kind === "failure" ? V.failure : V.ink}>
                   {l}
                 </text>
               ))}
@@ -280,11 +285,11 @@ export function SituationMapDiagram() {
           </g>
         );
       })}
-      {/* highlighted route: Flooded → Pause + Return */}
+      {/* highlighted route: Flooded (but safe) → Pause + Return */}
       <g>
-        <path {...a("dg-fade", 1350, 400)} d={lensD(lcx, top + h / 2, lw, h)} fill="none" stroke={V.pause} strokeWidth={2.2} />
+        <path {...a("dg-fade", 1350, 400)} d={lensD(lcx, hy + h / 2, lw, h)} fill="none" stroke={V.pause} strokeWidth={2.2} />
         <Thread
-          pts={[[lcx + lw / 2 + 1, top + h / 2], [bx - 1, top + h / 2]]}
+          pts={[[lcx + lw / 2 + 1, hy + h / 2], [bx - 1, hy + h / 2]]}
           color={V.pause}
           sw={1.8}
           size={8}
@@ -292,15 +297,15 @@ export function SituationMapDiagram() {
           ends={a("dg-pop", 1450, 200)}
           tipAnim={a("dg-pop", 1700, 260)}
         />
-        <path {...a("dg-pulse", 2000, undefined, { "--pulse": 1.12 })} d={archD(bx, top, bw, h, 14)} fill="none" stroke={V.safety} strokeWidth={2} />
-        <StatusOutline {...a("dg-pop", 1750, 420)} kind="safety" d={() => archD(bx, top, bw, h, 14)} />
-        <Glyph kind="safety" x={bx + bw - 20} y={top + 7} s={13} {...a("dg-pop", 1800, 360)} />
-        <text {...a("dg-fade", 1850)} x={bx + 9} y={top + h / 2 + 20} fontSize={13.5} fill={V.muted}>
+        <path {...a("dg-pulse", 2000, undefined, { "--pulse": 1.12 })} d={archD(bx, hy, bw, h, 14)} fill="none" stroke={V.safety} strokeWidth={2} />
+        <StatusOutline {...a("dg-pop", 1750, 420)} kind="safety" d={() => archD(bx, hy, bw, h, 14)} />
+        <Glyph kind="safety" x={bx + bw - 20} y={hy + 7} s={13} {...a("dg-pop", 1800, 360)} />
+        <text {...a("dg-fade", 1850)} x={bx + 9} y={hy + h / 2 + 20} fontSize={13.5} fill={V.muted}>
           or 60-Second Reset
         </text>
       </g>
       <text x={2} y={331} fontSize={13.5} fill={V.muted} {...a("dg-fade", 1300)}>
-        Three more rows follow in the map.
+        More rows follow in the map.
       </text>
     </Frame>
   );

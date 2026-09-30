@@ -5,6 +5,7 @@ import { SituationCard } from "@/components/SituationCard";
 import { QuickAccess } from "@/components/QuickAccess";
 import { ArrowRight, PauseIcon, LayersIcon, GaugeIcon } from "@/components/icons";
 import { situations } from "@/data/situations";
+import { WarnBanner } from "@/components/WarnBanner";
 
 export default function HomePage() {
   return (
@@ -115,6 +116,11 @@ export default function HomePage() {
             <SituationCard key={s.id} situation={s} index={i} />
           ))}
         </ul>
+        <WarnBanner pauseLink={false} safetyLink>
+          Pause + Return is for flooding, never for fear. If threats, fear,
+          coercion or violence appear, don&apos;t return at the set time —
+          leave safely and use the help lines.
+        </WarnBanner>
       </section>
 
       <footer className="flex flex-col items-center gap-2 pt-3 text-center">

@@ -600,6 +600,9 @@ html[data-splash="off"] .splash {
 .v2-card--safety {
   border: 2px solid rgb(46 125 79 / 0.85);
 }
+.v2-card--failure {
+  border: 2px solid rgb(163 59 43 / 0.85);
+}
 @media (hover: hover) {
   .v2-card:hover {
     box-shadow: var(--shadow-lift);
