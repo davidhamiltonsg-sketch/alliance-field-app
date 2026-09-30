@@ -159,6 +159,9 @@ export function IntroFlow() {
         <div
           ref={trackRef}
           onScroll={onScroll}
+          tabIndex={0}
+          role="region"
+          aria-label="Introduction panels — use the arrow keys or swipe"
           className="intro-track relative flex min-h-0 flex-1 snap-x snap-mandatory overflow-x-auto"
         >
           {panels.map((p, i) => (

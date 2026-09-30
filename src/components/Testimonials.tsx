@@ -23,7 +23,10 @@ function TestimonialCard({ t, i }: { t: Testimonial; i: number }) {
 /** Real testimonials, shown as a swipeable strip instead of a long stacked list. */
 function TestimonialRow({ items }: { items: Testimonial[] }) {
   return (
-    <ul className="-mx-4 flex snap-x snap-mandatory gap-2.5 overflow-x-auto px-4 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+    <ul
+      tabIndex={0}
+      aria-label="Testimonials — scroll sideways for more"
+      className="-mx-4 flex snap-x snap-mandatory gap-2.5 overflow-x-auto px-4 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
       {items.map((t, i) => (
         <TestimonialCard key={t.names} t={t} i={i} />
       ))}

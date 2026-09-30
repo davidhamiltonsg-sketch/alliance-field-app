@@ -6,7 +6,7 @@ import { Marker } from "./Marker";
 type Tab = "working" | "notWorking" | "activity";
 
 const TABS: { key: Tab; label: string; tone: string }[] = [
-  { key: "working", label: "Working", tone: "border-safety/30 bg-safety/10 text-safety" },
+  { key: "working", label: "Working", tone: "border-safety/30 bg-safety/10 text-safety-text" },
   { key: "notWorking", label: "Not working", tone: "border-failure/25 bg-failure/[0.08] text-failure" },
   { key: "activity", label: "Try it", tone: "border-accent/25 bg-accent/10 text-accent" },
 ];

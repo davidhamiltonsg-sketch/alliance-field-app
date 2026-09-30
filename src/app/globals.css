@@ -7,6 +7,8 @@
   --color-rule: #2C3E2D;
   --color-accent: #2C3E2D;
   --color-safety: #2E7D4F;
+  /* Safety-green for text: >= 5:1 on paper and on safety/10–12 tinted pills. */
+  --color-safety-text: #276B43;
   --color-pause: #C47A1A; /* fills, rules and icons only — too light for text */
   /* Pause-amber for text: >= 4.6:1 on paper, surface-warn and pause/12 pills. */
   --color-pause-text: #8F5610;

@@ -56,7 +56,7 @@ export function DeleteAllData() {
           </div>
         </div>
       )}
-      <p role="status" className="text-[15px] font-medium text-safety empty:hidden">
+      <p role="status" className="text-[15px] font-medium text-safety-text empty:hidden">
         {status === "done" ? "Deleted. Nothing from this app is left on this device." : ""}
       </p>
     </div>

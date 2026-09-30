@@ -20,9 +20,9 @@ function shuffle<T>(arr: T[]): T[] {
 
 const accentClasses: Record<string, { bg: string; text: string; ring: string }> = {
   accent: { bg: "bg-accent", text: "text-accent", ring: "ring-accent/25" },
-  pause: { bg: "bg-pause", text: "text-pause-text", ring: "ring-pause/25" },
+  pause: { bg: "bg-pause-text", text: "text-pause-text", ring: "ring-pause/25" },
   repair: { bg: "bg-repair", text: "text-repair", ring: "ring-repair/25" },
-  safety: { bg: "bg-safety", text: "text-safety", ring: "ring-safety/25" },
+  safety: { bg: "bg-safety", text: "text-safety-text", ring: "ring-safety/25" },
 };
 
 type Filter = "all" | ConnectionStage;

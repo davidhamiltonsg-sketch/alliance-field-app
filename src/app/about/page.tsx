@@ -54,9 +54,9 @@ export default function AboutPage() {
         />
         <div className="relative flex flex-col items-center">
           <AllianceMark size={76} className="text-paper" title="THE ALLIANCE" />
-          <p className="mt-4 text-[20px] font-medium tracking-[0.14em] pl-[0.14em]">
+          <h1 className="mt-4 text-[20px] font-medium tracking-[0.14em] pl-[0.14em]">
             THE ALLIANCE
-          </p>
+          </h1>
           <p className="mt-2 text-[11px] font-medium uppercase tracking-[0.08em] pl-[0.08em] text-paper/75">
             Field App
           </p>

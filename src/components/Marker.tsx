@@ -20,7 +20,7 @@ const styles: Record<MarkerKind, string> = {
   DO: "bg-accent text-paper",
   NOTE: "bg-ink/[0.06] text-ink-muted",
   PHRASE: "bg-accent/10 text-accent",
-  OK: "bg-safety/12 text-safety",
+  OK: "bg-safety/12 text-safety-text",
   FAIL: "bg-failure/10 text-failure",
 };
 
