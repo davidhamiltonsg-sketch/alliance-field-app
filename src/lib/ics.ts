@@ -15,10 +15,13 @@ function toIcsDate(d: Date) {
   );
 }
 
-/** Returns an object URL for a Weekly Reset calendar event, one week from now, 30 minutes. */
+/** Canonical Weekly Reset length (Manual/Kit): five parts, about 40 minutes. */
+export const WEEKLY_RESET_MINUTES = 40;
+
+/** Returns an object URL for a Weekly Reset calendar event, one week from now, 40 minutes. */
 export function buildWeeklyResetIcs(fromDate = new Date()): { url: string; filename: string } {
   const start = new Date(fromDate.getTime() + 7 * 24 * 60 * 60 * 1000);
-  const end = new Date(start.getTime() + 30 * 60 * 1000);
+  const end = new Date(start.getTime() + WEEKLY_RESET_MINUTES * 60 * 1000);
   const uid = `alliance-weekly-reset-${start.getTime()}@alliance-field-app`;
   const stamp = toIcsDate(new Date());
 
@@ -32,7 +35,7 @@ export function buildWeeklyResetIcs(fromDate = new Date()): { url: string; filen
     `DTSTART:${toIcsDate(start)}`,
     `DTEND:${toIcsDate(end)}`,
     "SUMMARY:Weekly Reset (The Alliance)",
-    "DESCRIPTION:Scheduled maintenance meeting — appreciation, care audit, friction review, request, alignment. Not a fight forum: if either partner is flooded, Pause + Return and reschedule.",
+    "DESCRIPTION:Scheduled maintenance meeting (about 40 minutes) — appreciation, check the load, one friction point, requests, next steps. Not a fight forum: if either partner is flooded, Pause + Return and reschedule.",
     "RRULE:FREQ=WEEKLY;INTERVAL=1",
     "END:VEVENT",
     "END:VCALENDAR",

@@ -135,8 +135,9 @@ export default function AboutPage() {
         <Marker kind="NOTE" label="Feeling checked out?" />
         <p className="mt-2 text-[15px] leading-normal">
           <strong>Not sure if it&apos;s space or withdrawal?</strong> Run the
-          Uninvestment Check. Three or more warning signs → schedule a Full
-          Recovery conversation and a Proof window. Hope isn&apos;t a plan.
+          Uninvestment Check. 0–2 signs: likely needs space. 3 or more: may
+          be pulling away — book a Full Recovery within a week. Hope
+          isn&apos;t a plan.
         </p>
         <Link
           href="/protocols/uninvestment-check"

@@ -531,10 +531,10 @@ export function WeeklyResetDiagram() {
     r = 60;
   const steps = [
     { title: "Appreciation", sub: "5 min" },
-    { title: "Care Check-in", sub: "10–15 min" },
-    { title: "Friction Review", sub: "10–15 min · 2% Rule" },
-    { title: "Requests", sub: "One ask each" },
-    { title: "Alignment", sub: "Next step + review" },
+    { title: "Check the load", sub: "15 min" },
+    { title: "One friction point", sub: "15 min · 2% Rule" },
+    { title: "Requests", sub: "5 min, with next steps" },
+    { title: "Next steps", sub: "Next step + review" },
   ];
   const seg = 72,
     gapDeg = 15;
@@ -552,7 +552,7 @@ export function WeeklyResetDiagram() {
   return (
     <Frame
       viewBox="0 0 340 280"
-      label="Weekly Reset agenda: appreciation 5 minutes, care audit 10 to 15, friction review 10 to 15, requests, alignment. A 30-minute timer, same day and time each week."
+      label="Weekly Reset agenda: appreciation 5 minutes, check the load 15, one friction point 15, requests and next steps 5. A 40-minute timer, same day and time each week."
     >
       {/* guilloche centre ring and the brass ply of the woven ring */}
       <g {...a("dg-fade", 150, 900)}>
@@ -589,7 +589,7 @@ export function WeeklyResetDiagram() {
       })}
       <g {...a("dg-fade", 200)}>
         <text x={cx} y={cy + 5} textAnchor="middle" fontFamily={SERIF} fontSize={32} fontWeight={600} fill={V.accent} className="tabular">
-          30
+          40
         </text>
         <text x={cx} y={cy + 24} textAnchor="middle" fontSize={13.5} fill={V.muted}>
           minutes

@@ -49,7 +49,7 @@ export const installDays: InstallDay[] = [
     day: 5,
     title: "Your first Weekly Reset",
     bullets: [
-      "Use the in-app Weekly Reset wizard (30-minute timer).",
+      "Use the in-app Weekly Reset wizard (40-minute timer).",
       "One friction point each → one request; agree next steps.",
     ],
     proof: "Reset completed; next three weeks on the calendar.",

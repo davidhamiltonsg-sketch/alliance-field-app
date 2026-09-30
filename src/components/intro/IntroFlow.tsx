@@ -63,8 +63,8 @@ const panels: Panel[] = [
     id: "weekly-reset",
     eyebrow: "Weekly Reset",
     icon: "weekly-reset",
-    title: "Thirty minutes, once a week.",
-    body: "Appreciation, care audit, one friction, requests, alignment. Maintenance, not a trial.",
+    title: "Forty minutes, once a week.",
+    body: "Appreciation, check the load, one friction point, requests, next steps. Maintenance, not a trial.",
     diagram: <WeeklyResetDiagram />,
   },
   {

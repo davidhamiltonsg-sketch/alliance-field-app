@@ -186,7 +186,7 @@ const TOOL_SLUG: Record<string, string> = {
   "60-Second Reset": "60-second-reset",
   "Pause + Return": "pause-and-return",
   "Weekly Reset": "weekly-reset",
-  "Care Audit": "weekly-reset",
+  "Care Check-in": "weekly-reset",
   "Micro-Repair": "micro-repair",
   "Conflict Protocol": "conflict-protocol",
   "Accountability Sequence": "conflict-protocol",
@@ -216,7 +216,7 @@ function routeTools(a: Profile, b: Profile, health: Record<LayerKey, number>) {
     add("Pause + Return", "Privacy and closeness needs are far enough apart to be misread as rejection or pressure.");
   }
   if (diff(a.scores.careVisibility, b.scores.careVisibility) > 14 || diff(a.scores.warmthNeed, b.scores.structureNeed) > 18 || diff(b.scores.warmthNeed, a.scores.structureNeed) > 18) {
-    add("Care Audit", "Care grammar mismatch — one of you may be caring in a language the other can't feel.");
+    add("Care Check-in", "Care grammar mismatch — one of you may be caring in a language the other can't feel.");
   }
   if (average([a.scores.proofOrientation, b.scores.proofOrientation]) > 64) {
     add("Consistency Pact", "Trust needs behaviour, evidence, and a review window here, not just words.");

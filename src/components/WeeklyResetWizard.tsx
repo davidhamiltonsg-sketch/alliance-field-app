@@ -90,7 +90,7 @@ function WeeklyResetWizardClient() {
         <Marker kind="OK" label="Complete" />
         <h2 className="display text-[28px] leading-tight">Reset locked</h2>
         <p className="text-[14px] leading-normal text-ink-muted">
-          Thirty minutes, five questions, zero group text required.
+          Forty minutes, five parts, zero group text required.
         </p>
         <div className="card space-y-2 px-4 py-3.5 text-[15px] leading-normal">
           <p>
@@ -171,10 +171,14 @@ function WeeklyResetWizardClient() {
         <WizardStep
           step={2}
           total={5}
-          title="Care Check-in (10–15)"
+          title="Check the load (15 min)"
           onBack={() => setStep(1)}
           onNext={() => setStep(3)}
         >
+          <p className="text-[13px] leading-normal text-ink-muted">
+            Once a month, run the Care Check-in here: go through each area
+            below.
+          </p>
           <ul className="space-y-3">
             {draft.careAudit.map((row, i) => (
               <li
@@ -234,7 +238,7 @@ function WeeklyResetWizardClient() {
         <WizardStep
           step={3}
           total={5}
-          title="Friction Review"
+          title="One friction point (15 min)"
           onBack={() => setStep(2)}
           onNext={() => setStep(4)}
         >
@@ -267,7 +271,7 @@ function WeeklyResetWizardClient() {
         <WizardStep
           step={4}
           total={5}
-          title="Request"
+          title="Requests (5 min, with next steps)"
           onBack={() => setStep(3)}
           onNext={() => setStep(5)}
         >
@@ -292,7 +296,7 @@ function WeeklyResetWizardClient() {
         <WizardStep
           step={5}
           total={5}
-          title="Alignment"
+          title="Next steps"
           onBack={() => setStep(4)}
           onNext={() => {
             writeWeekly(draft);

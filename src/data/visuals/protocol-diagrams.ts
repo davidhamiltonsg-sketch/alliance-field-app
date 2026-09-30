@@ -171,24 +171,25 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
         "badge": "5 min"
       },
       {
-        "title": "Care Check-in",
-        "detail": "Where supported, where alone? Is the load fair?",
+        "title": "Check the load",
+        "detail": "Where supported, where alone? Is the load fair? Monthly: Care Check-in.",
         "kind": "step",
-        "badge": "10–15 min"
+        "badge": "15 min"
       },
       {
-        "title": "Friction Review",
+        "title": "One friction point",
         "detail": "One small friction each; apply the 2% Rule.",
         "kind": "step",
-        "badge": "10–15 min"
+        "badge": "15 min"
       },
       {
         "title": "Requests",
         "detail": "One specific ask each for next week.",
-        "kind": "step"
+        "kind": "step",
+        "badge": "5 min, with next steps"
       },
       {
-        "title": "Alignment",
+        "title": "Next steps",
         "detail": "One next step + a review time.",
         "kind": "step"
       }
@@ -197,7 +198,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       "kind": "pause",
       "text": "If either partner is flooded: Pause + Return first, then reschedule."
     },
-    "outcome": "Friction stays small and predictable. 30-minute timer."
+    "outcome": "Friction stays small and predictable. 40-minute timer."
   },
   "conflict-protocol": {
     "when": "Active conflict or recurring loops, when Warmth is still possible, or after a pause returns you to regulation.",
@@ -323,7 +324,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "steps": [
       {
         "title": "Morning Reset",
-        "detail": "Devices down → touch or eye contact → “How are you feeling about today?” → one intention.",
+        "detail": "Devices down → touch (if welcome) or eye contact → “How are you feeling about today?” → one intention.",
         "kind": "step",
         "badge": "≤ 5 min"
       },
@@ -363,7 +364,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Warm Decline",
-        "detail": "Install Warm Decline + alternative closeness options.",
+        "detail": "Optional warm-no wording. A no needs no script, reason, or substitute.",
         "kind": "step"
       },
       {
@@ -396,7 +397,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Define the change",
-        "detail": "One specific, observable behaviour change.",
+        "detail": "One specific, observable change. Transparency is offered, time-limited, never monitoring.",
         "kind": "step"
       },
       {
