@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 
 /**
@@ -76,7 +76,6 @@ function splashElapsed() {
 
 export function Splash() {
   const router = useRouter();
-  const pathname = usePathname();
   const [phase, setPhase] = useState<Phase>("css");
   // Server render (and hydration) use the first-visit tagline; the client then
   // switches to a return tagline when the boot script marked this a return visit.
@@ -109,8 +108,6 @@ export function Splash() {
     plan.current = { toIntro, leaveAt };
     const list = timers.current;
 
-    if (toIntro) router.prefetch("/intro");
-
     const now = splashElapsed();
     // Hydrated after the CSS fallback already finished: stay out of the way.
     const tooLate = now > leaveAt + FADE_MS;
@@ -123,20 +120,12 @@ export function Splash() {
 
     list.push(window.setTimeout(() => setPhase((p) => (p === "css" ? "js" : p)), 0));
     const remaining = Math.max(0, leaveAt - now);
-    if (toIntro) {
-      list.push(window.setTimeout(handOff, Math.max(0, remaining - 260)));
-    }
+    // First visit: move to the intro straight away, underneath the splash, so
+    // it is rendered and ready (not loading) by the time the splash lifts.
+    if (toIntro) handOff();
     list.push(window.setTimeout(leave, remaining));
     return () => list.forEach(clearTimeout);
   }, [handOff, leave, router]);
-
-  // Once the intro has taken over, make sure we fade promptly.
-  useEffect(() => {
-    if (pathname === "/intro" && phase === "js" && plan.current && !plan.current.toIntro) {
-      const t = window.setTimeout(leave, 120);
-      return () => clearTimeout(t);
-    }
-  }, [pathname, phase, leave]);
 
   const skip = useCallback(() => {
     handOff();
