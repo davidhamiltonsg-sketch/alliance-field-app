@@ -41,7 +41,7 @@ export function StartReminder() {
           />
         </label>
         <PrimaryButton variant="secondary" fullWidth={false} className="flex-1" onClick={download}>
-          Add daily reminder (.ics)
+          Add reminder (.ics)
         </PrimaryButton>
       </div>
       <p role="status" className="text-[13px] font-medium text-safety-text empty:hidden">
