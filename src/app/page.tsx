@@ -6,6 +6,7 @@ import { QuickAccess } from "@/components/QuickAccess";
 import { ArrowRight, PauseIcon, LayersIcon, GaugeIcon } from "@/components/icons";
 import { situations } from "@/data/situations";
 import { WarnBanner } from "@/components/WarnBanner";
+import { CoreFive } from "@/components/CoreFive";
 
 export default function HomePage() {
   return (
@@ -29,7 +30,7 @@ export default function HomePage() {
         <div className="relative">
           <div className="flex items-center gap-2.5">
             <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/80 shadow-[0_1px_2px_rgb(26_26_26/0.05)] ring-1 ring-accent/10">
-              <AllianceMark size={30} className="text-accent" waveColor="#A8895A" title="THE ALLIANCE" />
+              <AllianceMark size={30} className="text-accent" waveColor="#A8895A" title="ALLIANCE PROTOCOLS" />
             </span>
             <span className="eyebrow text-accent">Field App</span>
           </div>
@@ -37,19 +38,31 @@ export default function HomePage() {
             Situation Map
           </h1>
           <p className="phrase mt-1.5 text-[17px] leading-snug text-ink-muted">
+            We are an alliance.
+          </p>
+          <p className="phrase mt-0.5 text-[17px] leading-snug text-ink-muted">
             Built for precision. Designed for connection.
           </p>
           <p className="mt-3 text-[15px] leading-normal text-ink-muted">
             Start here when you don’t know which card to pull. Follow the first
             matching row.
           </p>
-          <Link
-            href="/intro"
-            className="mt-3 inline-flex min-h-10 items-center gap-1.5 rounded-full text-[13px] font-medium text-accent hover:underline"
-          >
-            New here? See how it works
-            <ArrowRight size={15} />
-          </Link>
+          <div className="mt-3 flex flex-wrap gap-x-4">
+            <Link
+              href="/start"
+              className="inline-flex min-h-10 items-center gap-1.5 rounded-full text-[13px] font-medium text-accent hover:underline"
+            >
+              New here? Start the 7-day plan
+              <ArrowRight size={15} />
+            </Link>
+            <Link
+              href="/intro"
+              className="inline-flex min-h-10 items-center gap-1.5 rounded-full text-[13px] font-medium text-accent hover:underline"
+            >
+              See how it works
+              <ArrowRight size={15} />
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -123,10 +136,14 @@ export default function HomePage() {
         </WarnBanner>
       </section>
 
+      <CoreFive />
+
       <footer className="flex flex-col items-center gap-2 pt-3 text-center">
         <AllianceMark size={22} className="text-accent/70" />
         <p className="text-[13px] leading-normal text-ink-muted">
-          THE ALLIANCE · Built for precision. Designed for connection.
+          ALLIANCE PROTOCOLS · We are an alliance.
+          <br />
+          Built for precision. Designed for connection.
           <br />
           by David Hamilton and Dr Zhongming Shi
         </p>

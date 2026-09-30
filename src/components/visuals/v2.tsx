@@ -1,7 +1,7 @@
 import type { CSSProperties, ReactNode } from "react";
 
 /**
- * THE ALLIANCE visual language v2, ported from the visuals library
+ * ALLIANCE PROTOCOLS visual language v2, ported from the visuals library
  * (/workspace/alliance-product/visuals/src/lib.py) for use inside React SVG.
  *
  * Motif: the interlocking-arch mark. Panels are arch-topped, numerals sit in

@@ -1,7 +1,7 @@
 {
-  "name": "THE ALLIANCE · Field App",
-  "short_name": "Alliance Field",
-  "description": "Built for precision. Designed for connection. Field companion for THE ALLIANCE.",
+  "name": "Alliance Protocols · Field App",
+  "short_name": "Alliance",
+  "description": "Built for precision. Designed for connection. Field companion for Alliance Protocols.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

@@ -694,3 +694,86 @@ export function ConnectionCardsDiagram() {
     </Frame>
   );
 }
+
+/* ------------------------------------------------------------------ */
+/* 0. 60-Second Alliance Reset: five numbered steps, one minute         */
+/* ------------------------------------------------------------------ */
+export function ResetStepsDiagram() {
+  const steps = [
+    { title: "Stop", sub: "Quit trying to win or solve it." },
+    { title: "Say it", sub: "“I want to connect, not fight.”" },
+    { title: "Touch", sub: "Brief — and only if it’s welcome." },
+    { title: "Breathe", sub: "Three slow breaths together." },
+    { title: "Return", sub: "Pick an exact time to keep talking." },
+  ];
+  const pitch = 56,
+    h = 48;
+  return (
+    <Frame
+      viewBox="0 0 340 336"
+      label="60-Second Alliance Reset: stop, say “I want to connect, not fight”, a brief touch only if welcome, three slow breaths, then pick an exact time to keep talking. Afraid, not just flooded? Stop and get help."
+    >
+      {steps.map((s, i) => {
+        const y = 4 + i * pitch;
+        const at = 150 + i * 260;
+        return (
+          <g key={s.title} {...a("dg-rise", at)}>
+            <ArchPanel x={0} y={y} w={340} h={h} kind={i === 4 ? "safety" : "step"} rt={12} fill={i === 4 ? V.tint : V.white} />
+            <Medallion cx={24} cy={y + h / 2} n={i + 1} w={20} h={24} size={14} />
+            <text x={48} y={y + 21} fontFamily={SERIF} fontSize={15} fontWeight={600} fill={V.ink}>
+              {s.title}
+            </text>
+            <text x={48} y={y + 38} fontSize={13.5} fill={V.muted}>
+              {s.sub}
+            </text>
+          </g>
+        );
+      })}
+      <AdvisoryStrip x={0} y={292} w={340} h={40} {...a("dg-rise", 1600)}>
+        <text x={42} y={316.5} fontSize={13.5} fill={V.ink}>
+          Afraid, not just flooded? Stop. Get help.
+        </text>
+      </AdvisoryStrip>
+    </Frame>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* 7. The Core 5: the five tools to learn first                         */
+/* ------------------------------------------------------------------ */
+export function CoreFiveDiagram() {
+  const tools: { slug: string; title: string; sub: string; color: string }[] = [
+    { slug: "green-rule", title: "Green Rule (Safety Gate)", sub: "Honesty is never punished.", color: V.safety },
+    { slug: "pause-and-return", title: "Pause + Return", sub: "20 min – 24 h, exact return time.", color: V.pause },
+    { slug: "60-second-reset", title: "60-Second Alliance Reset", sub: "Stop a fight to win.", color: V.pause },
+    { slug: "weekly-reset", title: "Weekly Reset", sub: "Five parts, about 40 minutes.", color: V.accent },
+    { slug: "micro-repair", title: "Micro-Repairs", sub: "Small repairs, early.", color: V.repair },
+  ];
+  const pitch = 64,
+    h = 56;
+  return (
+    <Frame
+      viewBox="0 0 340 336"
+      label="The Core 5: Green Rule (Safety Gate), Pause + Return, 60-Second Alliance Reset, Weekly Reset, Micro-Repairs."
+    >
+      {tools.map((tl, i) => {
+        const y = 8 + i * pitch;
+        return (
+          <g key={tl.slug} {...a("dg-rise", 150 + i * 220)}>
+            <ArchPanel x={0} y={y} w={340} h={h} kind="step" rt={12} fill={V.white} />
+            <IconSeat slug={tl.slug} cx={26} cy={y + h / 2} size={24} color={tl.color} />
+            <text x={54} y={y + 24} fontFamily={SERIF} fontSize={15} fontWeight={600} fill={V.ink}>
+              {tl.title}
+            </text>
+            <text x={54} y={y + 42} fontSize={13.5} fill={V.muted}>
+              {tl.sub}
+            </text>
+            <text x={326} y={y + 24} textAnchor="end" fontFamily={SERIF} fontStyle="italic" fontSize={14} fill={V.brass} className="tabular">
+              {i + 1}
+            </text>
+          </g>
+        );
+      })}
+    </Frame>
+  );
+}

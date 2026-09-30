@@ -6,6 +6,7 @@ import { GetFullSystem } from "@/components/GetFullSystem";
 import { Testimonials } from "@/components/Testimonials";
 import { WarnBanner } from "@/components/WarnBanner";
 import { ArrowRight, ChevronRight } from "@/components/icons";
+import { aboutAuthors, authorNames } from "@/data/authors";
 
 export const metadata = { title: "About" };
 
@@ -23,7 +24,7 @@ const products = [
   {
     name: "Complete Bundle",
     tag: "Bundle",
-    body: "Manual and Kit together, with this Field App as the pocket companion.",
+    body: "Manual and Kit together, with the Alliance Protocols Field App as the pocket companion.",
   },
 ];
 
@@ -53,15 +54,16 @@ export default function AboutPage() {
           aria-hidden
         />
         <div className="relative flex flex-col items-center">
-          <AllianceMark size={76} className="text-paper" title="THE ALLIANCE" />
+          <AllianceMark size={76} className="text-paper" title="ALLIANCE PROTOCOLS" />
           <h1 className="mt-4 text-[20px] font-medium tracking-[0.14em] pl-[0.14em]">
-            THE ALLIANCE
+            ALLIANCE PROTOCOLS
           </h1>
           <p className="mt-2 text-[11px] font-medium uppercase tracking-[0.08em] pl-[0.08em] text-paper/75">
             Field App
           </p>
           <div className="my-4 h-px w-40 bg-paper/25" aria-hidden />
-          <p className="phrase text-[17px] leading-snug">
+          <p className="phrase text-[17px] leading-snug">We are an alliance.</p>
+          <p className="phrase mt-0.5 text-[17px] leading-snug">
             Built for precision. Designed for connection.
           </p>
           <p className="mt-3 text-[13px] text-paper/80">
@@ -89,15 +91,59 @@ export default function AboutPage() {
         <div className="rounded-2xl border border-accent/20 bg-surface-tool px-4 py-3.5">
           <p className="phrase text-[16px] leading-snug text-accent">
             &ldquo;The Alliance&rdquo; was our own working agreement long
-            before it was a product name.
+            before Alliance Protocols was a product.
           </p>
         </div>
         <p className="text-[15px] leading-normal text-ink">
           Dami and I built it from our own relationship — how we come back to
           each other, what we say when things go sideways, what we promise
           not to do. This app, the Manual, and the Field Kit are that same
-          system, not theory borrowed from somewhere else.
+          system, written down so other couples can use it.
         </p>
+      </section>
+
+      <section className="space-y-3" aria-labelledby="lineage-heading">
+        <SectionLabel>
+          <span id="lineage-heading">Where these tools come from</span>
+        </SectionLabel>
+        <p className="text-[15px] leading-normal text-ink">
+          Alliance Protocols is our own synthesis, written by the authors. It is
+          informed by research and clinical frameworks, adapted into named
+          tools:
+        </p>
+        <ul className="space-y-1.5 pl-4 text-[15px] leading-normal text-ink-muted">
+          <li className="list-disc">
+            <strong className="font-medium text-ink">Gottman research</strong> — flooding,
+            repair attempts, gentle start-up, rituals of connection.
+          </li>
+          <li className="list-disc">
+            <strong className="font-medium text-ink">Emotionally Focused Therapy</strong> —
+            attachment, and the pursue–withdraw cycle.
+          </li>
+          <li className="list-disc">
+            <strong className="font-medium text-ink">Structured time-out practice</strong> —
+            stepping away with an agreed return.
+          </li>
+          <li className="list-disc">
+            <strong className="font-medium text-ink">Minority-stress research</strong> —
+            how outside pressure lands on a couple.
+          </li>
+        </ul>
+        <p className="text-[13px] leading-normal text-ink-muted">
+          The system as a whole has not been tested in a controlled study.
+          It is a practical toolkit, not therapy, and not a substitute for
+          professional help.
+        </p>
+      </section>
+
+      <section className="space-y-3" aria-labelledby="authors-heading">
+        <SectionLabel>
+          <span id="authors-heading">About the authors</span>
+        </SectionLabel>
+        <div className="card px-4 py-3.5">
+          <h3 className="display text-[17px] leading-snug">{authorNames.join(" & ")}</h3>
+          <p className="mt-2 text-[15px] leading-normal text-ink">{aboutAuthors}</p>
+        </div>
       </section>
 
       <Testimonials />
@@ -186,7 +232,21 @@ export default function AboutPage() {
               <span className="flex flex-col py-2.5">
                 Intro
                 <span className="text-[13px] font-normal text-ink-muted">
-                  How the app works, in five short panels
+                  How the app works, in six short panels
+                </span>
+              </span>
+              <ChevronRight size={18} className="text-ink-muted/50" />
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/start"
+              className="flex min-h-12 items-center justify-between px-4 text-[15px] font-medium text-ink hover:bg-surface-tool"
+            >
+              <span className="flex flex-col py-2.5">
+                7-day start
+                <span className="text-[13px] font-normal text-ink-muted">
+                  The Core 5, about 10 minutes a day
                 </span>
               </span>
               <ChevronRight size={18} className="text-ink-muted/50" />
@@ -241,8 +301,8 @@ export default function AboutPage() {
         </ul>
         <p className="px-1 text-[13px] leading-normal text-ink-muted">
           Private by default: pause return times, Weekly Reset answers, and
-          calibration answers all stay on this device — nothing is sent
-          anywhere.{" "}
+          calibration answers all stay on this device. The only time data
+          leaves it is if you choose to submit your email for updates.{" "}
           <Link href="/help#your-data" className="font-medium text-accent underline underline-offset-4">
             Delete all my data
           </Link>

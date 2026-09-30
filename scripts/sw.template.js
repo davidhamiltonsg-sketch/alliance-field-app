@@ -1,4 +1,4 @@
-// THE ALLIANCE · Field App — offline service worker.
+// ALLIANCE PROTOCOLS · Field App — offline service worker.
 //
 // TEMPLATE: public/sw.js is generated from this file by
 // scripts/generate-sw.mjs (runs in `predev` and `prebuild`). Edit this file,

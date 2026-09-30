@@ -1,5 +1,5 @@
 /**
- * THE ALLIANCE mark: two rising strokes meeting at a peak, with a soft
+ * ALLIANCE PROTOCOLS mark: two rising strokes meeting at a peak, with a soft
  * double-arch wave beneath — the same brandmark used across the Manual,
  * Field Kit, and companion book. Vector, so it stays crisp at any size.
  * `color` sets the two peak strokes (defaults to currentColor); pass
@@ -64,7 +64,7 @@ export function AllianceLockup({
     <span className={`inline-flex items-center gap-3 ${className}`}>
       <AllianceMark size={s.mark} className="shrink-0 text-accent" waveColor="#A8895A" />
       <span className="flex flex-col leading-none">
-        <span className={`font-medium text-ink ${s.name}`}>THE ALLIANCE</span>
+        <span className={`font-medium text-ink ${s.name}`}>ALLIANCE PROTOCOLS</span>
         {subtitle ? (
           <span
             className={`mt-1.5 font-medium uppercase tracking-[0.08em] text-accent ${s.sub}`}

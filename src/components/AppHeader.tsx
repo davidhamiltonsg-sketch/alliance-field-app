@@ -5,17 +5,17 @@ import { TimerIcon } from "./icons";
 export function AppHeader() {
   return (
     <header className="sticky top-0 z-40 border-b border-rule/[0.08] bg-paper/80 backdrop-blur-md supports-[backdrop-filter]:bg-paper/70">
-      <div className="flex h-14 items-center justify-between gap-3 pl-4 pr-2">
+      <div className="flex h-14 items-center justify-between gap-2 pl-4 pr-2">
         <Link
           href="/"
           className="flex min-h-12 items-center gap-2.5"
-          aria-label="THE ALLIANCE Field App, home"
+          aria-label="Alliance Protocols Field App, home"
         >
           <AllianceMark size={28} className="text-accent" waveColor="#A8895A" />
-          <span className="text-[13px] font-medium tracking-[0.14em] text-ink">
-            THE ALLIANCE
+          <span className="whitespace-nowrap text-[11px] font-medium tracking-[0.06em] text-ink min-[360px]:text-[13px] min-[360px]:tracking-[0.1em]">
+            ALLIANCE PROTOCOLS
           </span>
-          <span className="rounded-full border border-accent/20 bg-surface-tool px-2 py-[3px] text-[11px] font-medium tracking-[0.08em] text-accent">
+          <span className="hidden rounded-full border border-accent/20 bg-surface-tool px-2 py-[3px] text-[11px] font-medium tracking-[0.08em] text-accent min-[400px]:inline">
             FIELD
           </span>
         </Link>

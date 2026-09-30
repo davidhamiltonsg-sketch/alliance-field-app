@@ -28,6 +28,8 @@ const BOT = /bot|crawler|spider|crawling|slurp|lighthouse|preview/i;
 // First-time visitors get the serious tagline. Returning visitors (mode
 // "short") get one of these instead — picked once per load, not a cycle.
 const DEFAULT_TAGLINE = "Built for precision. Designed for connection.";
+// Shown on its own line above the first-visit tagline.
+const ALLIANCE_LINE = "We are an alliance.";
 const RETURN_TAGLINES = [
   "Still precise. Still here.",
   "On time, as promised.",
@@ -176,9 +178,18 @@ export function Splash() {
           </g>
         </svg>
         <p className="splash-word mt-7 text-[17px] font-medium tracking-[0.14em] text-ink">
-          THE ALLIANCE
+          ALLIANCE PROTOCOLS
         </p>
-        <p className="splash-tag phrase mt-2 text-[17px] leading-snug text-ink-muted">
+        {splashMode === "full" ? (
+          <p className="splash-tag phrase mt-2 text-[17px] leading-snug text-ink-muted">
+            {ALLIANCE_LINE}
+          </p>
+        ) : null}
+        <p
+          className={`splash-tag phrase text-[17px] leading-snug text-ink-muted ${
+            splashMode === "full" ? "mt-0.5" : "mt-2"
+          }`}
+        >
           {tagline}
         </p>
       </div>
