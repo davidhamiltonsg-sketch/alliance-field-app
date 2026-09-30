@@ -164,7 +164,9 @@ describe("Core 5 and the 7-day start plan", () => {
 
 describe("About the authors", () => {
   it("credits both authors and never renders a [[placeholder]] bio", () => {
-    expect(authors.map((a) => a.name)).toEqual(["David Hamilton", "Dr Zhongming Shi"]);
+    expect(authors.map((a) => a.name)).toEqual(["David Hamilton", "Dr Zhongming Shi (Dami)"]);
+    // Both bios are filled in, so both render.
+    expect(publishedAuthors()).toHaveLength(2);
     for (const a of publishedAuthors()) expect(a.bio.trim().startsWith("[[")).toBe(false);
     expect(publishedAuthors([{ name: "X", role: "", bio: "[[BIO_X]]" }])).toEqual([]);
     expect(publishedAuthors([{ name: "X", role: "", bio: "Real bio." }])).toHaveLength(1);

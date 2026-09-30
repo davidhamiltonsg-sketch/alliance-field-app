@@ -6,8 +6,7 @@ import { GetFullSystem } from "@/components/GetFullSystem";
 import { Testimonials } from "@/components/Testimonials";
 import { WarnBanner } from "@/components/WarnBanner";
 import { ArrowRight, ChevronRight } from "@/components/icons";
-import { publishedAuthors } from "@/data/authors";
-import { POSITIONING_LINE } from "@/lib/links";
+import { authorsClosing, authorsIntro, publishedAuthors } from "@/data/authors";
 
 export const metadata = { title: "About" };
 
@@ -142,6 +141,7 @@ export default function AboutPage() {
           <SectionLabel>
             <span id="authors-heading">About the authors</span>
           </SectionLabel>
+          <p className="text-[15px] leading-normal text-ink">{authorsIntro}</p>
           <ul className="space-y-2.5">
             {authorsToShow.map((a) => (
               <li key={a.name} className="card px-4 py-3.5">
@@ -159,6 +159,7 @@ export default function AboutPage() {
               </li>
             ))}
           </ul>
+          <p className="text-[14px] italic leading-normal text-ink-muted">{authorsClosing}</p>
         </section>
       )}
 
@@ -166,7 +167,6 @@ export default function AboutPage() {
 
       <section id="product-line" className="scroll-mt-20 space-y-3">
         <SectionLabel>The product line</SectionLabel>
-        <p className="text-[15px] font-medium leading-normal text-accent">{POSITIONING_LINE}</p>
         <ul className="space-y-2.5">
           {products.map((p) => (
             <li key={p.name} className="card flex items-center gap-3.5 p-2.5 pr-4">
