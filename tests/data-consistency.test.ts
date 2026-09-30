@@ -1,13 +1,14 @@
 import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { aboutAuthors, authorNames } from "@/data/authors";
+import { aboutAuthors, authorNames, authorsCoupleLine } from "@/data/authors";
 import { coreFive, coreFiveSlugs } from "@/data/core5";
 import { KIT } from "@/data/kit";
 import { emergencyNumbers, helpRegions } from "@/data/help";
 import { getProtocol, protocolSlugs, protocols } from "@/data/protocols";
 import { situations } from "@/data/situations";
 import { START_PLAN_DAYS, startDays } from "@/data/start";
+import { TOGETHER_CITATION, commonMoves, togetherFaq, togetherTools, whoFor } from "@/data/together";
 import { protocolDiagrams } from "@/data/visuals/protocol-diagrams";
 import { precacheUrls } from "../scripts/generate-sw.mjs";
 
@@ -174,10 +175,82 @@ describe("About the authors", () => {
 describe("offline precache", () => {
   it("covers every static route and every protocol page", () => {
     const urls = precacheUrls();
-    for (const route of ["/", "/about", "/calibrate", "/connect", "/help", "/pause", "/protocols", "/start", "/weekly-reset"]) {
+    for (const route of ["/", "/about", "/calibrate", "/connect", "/help", "/pause", "/privacy", "/protocols", "/start", "/together", "/weekly-reset"]) {
       expect(urls).toContain(route);
     }
     for (const slug of protocolSlugs) expect(urls).toContain(`/protocols/${slug}`);
     expect(urls.some((u) => u.includes("["))).toBe(false);
+  });
+});
+
+const appDir = join(__dirname, "../src/app");
+const pageSource = (route: string) => readFileSync(join(appDir, route, "page.tsx"), "utf8");
+const componentSource = (name: string) => readFileSync(join(__dirname, "../src/components", `${name}.tsx`), "utf8");
+
+describe("/privacy", () => {
+  const src = pageSource("privacy");
+
+  it("is dated, names both authors and Singapore's PDPA, and points to data deletion", () => {
+    expect(src).toContain("30 September 2026");
+    expect(src).toContain("David Hamilton");
+    expect(src).toContain("Dr Zhongming Shi");
+    expect(src).toContain("PDPA");
+    expect(src).toContain("/help#your-data");
+    expect(src).toContain("SIGNUP_CAPTURE_EMAIL");
+    expect(src).toMatch(/Vercel/);
+    expect(src).toMatch(/under\s+18/);
+  });
+
+  it("is linked from the email signup, Help (Your data) and About", () => {
+    expect(componentSource("SignupForm")).toContain('href="/privacy"');
+    expect(componentSource("SignupForm")).toMatch(/only use your email for Alliance Protocols updates/);
+    expect(componentSource("DeleteAllData")).toContain('href="/privacy"');
+    expect(pageSource("about")).toContain('href="/privacy"');
+  });
+
+  it("matches the code: no analytics or tracker packages or scripts", () => {
+    const pkg = JSON.parse(readFileSync(join(__dirname, "../package.json"), "utf8"));
+    const deps = Object.keys({ ...pkg.dependencies, ...pkg.devDependencies });
+    expect(deps.filter((d) => /analytics|speed-insights|gtag|plausible|posthog|segment|sentry|mixpanel/i.test(d))).toEqual([]);
+    expect(readFileSync(join(appDir, "layout.tsx"), "utf8")).not.toMatch(/googletagmanager|gtag|Analytics/);
+  });
+});
+
+describe("/together", () => {
+  it("links only real routes and keeps the Faber, Zare & Williams 2026 citation", () => {
+    const routes = new Set(precacheUrls());
+    for (const t of togetherTools) expect(routes, t.href).toContain(t.href);
+    expect(togetherTools.map((t) => t.href)).toEqual(
+      expect.arrayContaining(["/protocols/unity-anchor", "/"])
+    );
+    expect(TOGETHER_CITATION.text).toMatch(/Faber, Zare & Williams/);
+    expect(TOGETHER_CITATION.text).toContain("2026");
+    expect(TOGETHER_CITATION.href).toMatch(/^https:\/\/pubmed\.ncbi\.nlm\.nih\.gov\//);
+    expect(authorsCoupleLine).toContain("biracial couple");
+  });
+
+  it("routes safety to Help and states the Unity Anchor guardrail", () => {
+    const src = pageSource("together");
+    expect(src).toContain("WarnBanner pauseLink={false} safetyLink");
+    expect(src).toContain("never how much access a relative gets");
+    expect(src).toContain('href="/protocols/unity-anchor"');
+  });
+
+  it("is linked from /about and the Unity Anchor card", () => {
+    expect(pageSource("about")).toContain('href="/together"');
+    expect(getProtocol("unity-anchor")!.crossLinks.map((c) => c.href)).toContain("/together");
+  });
+
+  it("carries no pricing and none of the banned phrasings", () => {
+    const text = [pageSource("together"), JSON.stringify([commonMoves, togetherFaq, togetherTools, whoFor])].join(" ");
+    expect(text).not.toMatch(/\$\d|price|buy\b/i);
+    expect(text).not.toMatch(/exotic|colou?r-?blind|sees no colou?r/i);
+  });
+});
+
+describe("banned claims", () => {
+  it("new pages never say evidence-based, proven or clinically", () => {
+    const text = [pageSource("privacy"), pageSource("together"), componentSource("KeepItGoing"), JSON.stringify([commonMoves, togetherFaq, togetherTools, whoFor])].join(" ");
+    expect(text).not.toMatch(/evidence[- ]based|\bproven\b|clinically/i);
   });
 });
