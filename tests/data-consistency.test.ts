@@ -1,7 +1,7 @@
 import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { authors, publishedAuthors } from "@/data/authors";
+import { aboutAuthors, authorNames } from "@/data/authors";
 import { coreFive, coreFiveSlugs } from "@/data/core5";
 import { KIT } from "@/data/kit";
 import { emergencyNumbers, helpRegions } from "@/data/help";
@@ -163,13 +163,11 @@ describe("Core 5 and the 7-day start plan", () => {
 });
 
 describe("About the authors", () => {
-  it("credits both authors and never renders a [[placeholder]] bio", () => {
-    expect(authors.map((a) => a.name)).toEqual(["David Hamilton", "Dr Zhongming Shi (Dami)"]);
-    // Both bios are filled in, so both render.
-    expect(publishedAuthors()).toHaveLength(2);
-    for (const a of publishedAuthors()) expect(a.bio.trim().startsWith("[[")).toBe(false);
-    expect(publishedAuthors([{ name: "X", role: "", bio: "[[BIO_X]]" }])).toEqual([]);
-    expect(publishedAuthors([{ name: "X", role: "", bio: "Real bio." }])).toHaveLength(1);
+  it("credits both authors in one combined bio, with no placeholders", () => {
+    expect(authorNames).toEqual(["David Hamilton", "Dr Zhongming Shi (Dami)"]);
+    expect(aboutAuthors).toContain("David");
+    expect(aboutAuthors).toContain("Dami");
+    expect(aboutAuthors).not.toMatch(/\[\[/);
   });
 });
 

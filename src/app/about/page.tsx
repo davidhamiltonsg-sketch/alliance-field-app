@@ -6,7 +6,7 @@ import { GetFullSystem } from "@/components/GetFullSystem";
 import { Testimonials } from "@/components/Testimonials";
 import { WarnBanner } from "@/components/WarnBanner";
 import { ArrowRight, ChevronRight } from "@/components/icons";
-import { authorsClosing, authorsIntro, publishedAuthors } from "@/data/authors";
+import { aboutAuthors, authorNames } from "@/data/authors";
 
 export const metadata = { title: "About" };
 
@@ -46,7 +46,6 @@ function CoverThumb({ tag }: { tag: string }) {
 }
 
 export default function AboutPage() {
-  const authorsToShow = publishedAuthors();
   return (
     <div className="space-y-6">
       <section className="relative overflow-hidden rounded-3xl bg-accent px-5 pb-6 pt-7 text-center text-paper shadow-[var(--shadow-lift)]">
@@ -136,32 +135,15 @@ export default function AboutPage() {
         </p>
       </section>
 
-      {authorsToShow.length > 0 && (
-        <section className="space-y-3" aria-labelledby="authors-heading">
-          <SectionLabel>
-            <span id="authors-heading">About the authors</span>
-          </SectionLabel>
-          <p className="text-[15px] leading-normal text-ink">{authorsIntro}</p>
-          <ul className="space-y-2.5">
-            {authorsToShow.map((a) => (
-              <li key={a.name} className="card px-4 py-3.5">
-                <h3 className="display text-[17px] leading-snug">
-                  {a.url ? (
-                    <a href={a.url} target="_blank" rel="noopener noreferrer" className="underline-offset-4 hover:underline">
-                      {a.name}
-                    </a>
-                  ) : (
-                    a.name
-                  )}
-                </h3>
-                {a.role && <p className="mt-0.5 text-[13px] text-ink-muted">{a.role}</p>}
-                <p className="mt-2 text-[15px] leading-normal text-ink">{a.bio}</p>
-              </li>
-            ))}
-          </ul>
-          <p className="text-[14px] italic leading-normal text-ink-muted">{authorsClosing}</p>
-        </section>
-      )}
+      <section className="space-y-3" aria-labelledby="authors-heading">
+        <SectionLabel>
+          <span id="authors-heading">About the authors</span>
+        </SectionLabel>
+        <div className="card px-4 py-3.5">
+          <h3 className="display text-[17px] leading-snug">{authorNames.join(" & ")}</h3>
+          <p className="mt-2 text-[15px] leading-normal text-ink">{aboutAuthors}</p>
+        </div>
+      </section>
 
       <Testimonials />
 
