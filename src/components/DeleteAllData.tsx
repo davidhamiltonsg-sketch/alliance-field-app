@@ -20,7 +20,8 @@ export function DeleteAllData() {
       <p className="text-[15px] leading-normal text-ink">
         Everything you enter — pause return times, Weekly Reset answers and
         history, calibration answers, favourites — stays on this device. The
-        app has no account and sends nothing anywhere.
+        app has no account. The only time any data leaves your device is if
+        you choose to submit your email for updates.
       </p>
       {status === "idle" && (
         <button

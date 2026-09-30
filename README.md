@@ -68,8 +68,9 @@ responses are written to the cache.
 
 ## Where data is stored
 
-Nowhere but this device. There is no account, backend or analytics, and the
-app sends no user data over the network. Everything is in `localStorage`
+Nowhere but this device. There is no account, backend or analytics. The only
+user data the app ever sends is an email address, and only when someone
+chooses to submit the "Get updates" form (see *Email signup* below). Everything is in `localStorage`
 under keys starting with `alliance.` (see `src/lib/storage.ts`): pause return
 time, Weekly Reset draft and history, calibration answers (and Partner A's
 privacy choice), favourites, recent protocols, and whether the intro was
@@ -82,6 +83,25 @@ The Weekly Reset "Clear entries" button can also clear history.
 On a shared device, Profile Calibration asks Partner A before the hand-over
 whether Partner B may see A's individual profile (private by default); B then
 sees only the couple report.
+
+## Email signup
+
+The "Get the full system" card (`src/components/GetFullSystem.tsx`, on
+About) has a Gumroad link (`FULL_SYSTEM_URL` in `src/lib/links.ts`) and an
+email signup.
+
+| Variable                      | Purpose                                                                                     |
+| ----------------------------- | ------------------------------------------------------------------------------------------- |
+| `NEXT_PUBLIC_SIGNUP_ENDPOINT` | URL the signup form POSTs to, form-encoded, with a single `email` field. Optional.          |
+
+- Works with Buttondown (`https://buttondown.com/api/emails/embed-subscribe/<you>`),
+  ConvertKit/Kit form URLs and Formspree (`https://formspree.io/f/<id>`),
+  or anything that accepts a form-encoded `email`.
+- It is read at **build time** (it's a `NEXT_PUBLIC_` variable): set it in
+  Vercel's project env vars, or `.env.local` for local builds, then rebuild.
+- Unset: the form falls back to opening a `mailto:` to `SIGNUP_CAPTURE_EMAIL`.
+- The form shows inline success (`role="status"`) and error (`role="alert"`,
+  with a mailto fallback). No third-party scripts are loaded.
 
 ## Safety page
 
