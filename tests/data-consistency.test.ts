@@ -1,6 +1,7 @@
 import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
+import { authors, publishedAuthors } from "@/data/authors";
 import { coreFive, coreFiveSlugs } from "@/data/core5";
 import { KIT } from "@/data/kit";
 import { emergencyNumbers, helpRegions } from "@/data/help";
@@ -158,6 +159,15 @@ describe("Core 5 and the 7-day start plan", () => {
   it("never offers a pause shorter than 20 minutes", () => {
     for (const d of startDays) expect(d.task).not.toMatch(/\b(10|15|ten|fifteen)[- ]?min(ute)? (pause|break)/i);
     expect(startDays.find((d) => d.slug === "pause-and-return")!.task).toContain("20 minutes minimum, 24 hours max");
+  });
+});
+
+describe("About the authors", () => {
+  it("credits both authors and never renders a [[placeholder]] bio", () => {
+    expect(authors.map((a) => a.name)).toEqual(["David Hamilton", "Dr Zhongming Shi"]);
+    for (const a of publishedAuthors()) expect(a.bio.trim().startsWith("[[")).toBe(false);
+    expect(publishedAuthors([{ name: "X", role: "", bio: "[[BIO_X]]" }])).toEqual([]);
+    expect(publishedAuthors([{ name: "X", role: "", bio: "Real bio." }])).toHaveLength(1);
   });
 });
 

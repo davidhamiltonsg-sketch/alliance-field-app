@@ -6,6 +6,8 @@ import { GetFullSystem } from "@/components/GetFullSystem";
 import { Testimonials } from "@/components/Testimonials";
 import { WarnBanner } from "@/components/WarnBanner";
 import { ArrowRight, ChevronRight } from "@/components/icons";
+import { publishedAuthors } from "@/data/authors";
+import { POSITIONING_LINE } from "@/lib/links";
 
 export const metadata = { title: "About" };
 
@@ -45,6 +47,7 @@ function CoverThumb({ tag }: { tag: string }) {
 }
 
 export default function AboutPage() {
+  const authorsToShow = publishedAuthors();
   return (
     <div className="space-y-6">
       <section className="relative overflow-hidden rounded-3xl bg-accent px-5 pb-6 pt-7 text-center text-paper shadow-[var(--shadow-lift)]">
@@ -96,14 +99,74 @@ export default function AboutPage() {
           Dami and I built it from our own relationship — how we come back to
           each other, what we say when things go sideways, what we promise
           not to do. This app, the Manual, and the Field Kit are that same
-          system, not theory borrowed from somewhere else.
+          system, written down so other couples can use it.
         </p>
       </section>
+
+      <section className="space-y-3" aria-labelledby="lineage-heading">
+        <SectionLabel>
+          <span id="lineage-heading">Where these tools come from</span>
+        </SectionLabel>
+        <p className="text-[15px] leading-normal text-ink">
+          The Alliance is our own synthesis, written by the authors. It is
+          informed by research and clinical frameworks, adapted into named
+          tools:
+        </p>
+        <ul className="space-y-1.5 pl-4 text-[15px] leading-normal text-ink-muted">
+          <li className="list-disc">
+            <strong className="font-medium text-ink">Gottman research</strong> — flooding,
+            repair attempts, gentle start-up, rituals of connection.
+          </li>
+          <li className="list-disc">
+            <strong className="font-medium text-ink">Emotionally Focused Therapy</strong> —
+            attachment, and the pursue–withdraw cycle.
+          </li>
+          <li className="list-disc">
+            <strong className="font-medium text-ink">Structured time-out practice</strong> —
+            stepping away with an agreed return.
+          </li>
+          <li className="list-disc">
+            <strong className="font-medium text-ink">Minority-stress research</strong> —
+            how outside pressure lands on a couple.
+          </li>
+        </ul>
+        <p className="text-[13px] leading-normal text-ink-muted">
+          The system as a whole has not been tested in a controlled study.
+          It is a practical toolkit, not therapy, and not a substitute for
+          professional help.
+        </p>
+      </section>
+
+      {authorsToShow.length > 0 && (
+        <section className="space-y-3" aria-labelledby="authors-heading">
+          <SectionLabel>
+            <span id="authors-heading">About the authors</span>
+          </SectionLabel>
+          <ul className="space-y-2.5">
+            {authorsToShow.map((a) => (
+              <li key={a.name} className="card px-4 py-3.5">
+                <h3 className="display text-[17px] leading-snug">
+                  {a.url ? (
+                    <a href={a.url} target="_blank" rel="noopener noreferrer" className="underline-offset-4 hover:underline">
+                      {a.name}
+                    </a>
+                  ) : (
+                    a.name
+                  )}
+                </h3>
+                {a.role && <p className="mt-0.5 text-[13px] text-ink-muted">{a.role}</p>}
+                <p className="mt-2 text-[15px] leading-normal text-ink">{a.bio}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       <Testimonials />
 
       <section id="product-line" className="scroll-mt-20 space-y-3">
         <SectionLabel>The product line</SectionLabel>
+        <p className="text-[15px] font-medium leading-normal text-accent">{POSITIONING_LINE}</p>
         <ul className="space-y-2.5">
           {products.map((p) => (
             <li key={p.name} className="card flex items-center gap-3.5 p-2.5 pr-4">
@@ -187,6 +250,20 @@ export default function AboutPage() {
                 Intro
                 <span className="text-[13px] font-normal text-ink-muted">
                   How the app works, in six short panels
+                </span>
+              </span>
+              <ChevronRight size={18} className="text-ink-muted/50" />
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/start"
+              className="flex min-h-12 items-center justify-between px-4 text-[15px] font-medium text-ink hover:bg-surface-tool"
+            >
+              <span className="flex flex-col py-2.5">
+                7-day start
+                <span className="text-[13px] font-normal text-ink-muted">
+                  The Core 5, about 10 minutes a day
                 </span>
               </span>
               <ChevronRight size={18} className="text-ink-muted/50" />
