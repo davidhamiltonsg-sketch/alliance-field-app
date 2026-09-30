@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { BOT_UA_SOURCE } from "./boot";
 
 /**
  * Opening splash. Server-rendered so there is no flash of the page before it,
@@ -23,7 +24,7 @@ const FULL_MS = 1950; // fade starts; gone by ~2.37 s
 const SHORT_MS = 260;
 const REDUCED_MS = 700;
 const FADE_MS = 420;
-const BOT = /bot|crawler|spider|crawling|slurp|lighthouse|preview/i;
+const BOT = new RegExp(BOT_UA_SOURCE, "i");
 
 // First-time visitors get the serious tagline. Returning visitors (mode
 // "short") get one of these instead — picked once per load, not a cycle.
@@ -120,8 +121,8 @@ export function Splash() {
 
     list.push(window.setTimeout(() => setPhase((p) => (p === "css" ? "js" : p)), 0));
     const remaining = Math.max(0, leaveAt - now);
-    // First visit: move to the intro straight away, underneath the splash, so
-    // it is rendered and ready (not loading) by the time the splash lifts.
+    // Fallback for when the boot script couldn't redirect: move to the intro
+    // straight away, underneath the splash, so it's ready when the splash lifts.
     if (toIntro) handOff();
     list.push(window.setTimeout(leave, remaining));
     return () => list.forEach(clearTimeout);
