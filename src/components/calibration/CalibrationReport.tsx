@@ -2,6 +2,7 @@
 
 import { useSyncExternalStore } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { isComplete, generateProfile, generateCoupleReport, readCalibration } from "@/lib/calibration";
 import type { LayerKey, PersonInput, PersonKey, Profile } from "@/data/calibration/types";
 import { PageHeader } from "../PageHeader";
@@ -25,6 +26,7 @@ export function CalibrationReport() {
 const LAYER_ORDER: LayerKey[] = ["Atmosphere", "Structure", "Repair", "Protection", "Insight"];
 
 function CalibrationReportClient() {
+  const router = useRouter();
   const state = readCalibration();
   const aDone = isComplete(state.personA.answers);
   const bDone = isComplete(state.personB.answers);
@@ -35,7 +37,7 @@ function CalibrationReportClient() {
         <PageHeader eyebrow={<Marker kind="NOTE" label="Not ready yet" />} title="Finish calibration first">
           Answer at least one partner&apos;s 44 questions to see a profile.
         </PageHeader>
-        <PrimaryButton onClick={() => (window.location.href = "/calibrate")}>Start calibration</PrimaryButton>
+        <PrimaryButton onClick={() => router.push("/calibrate")}>Start calibration</PrimaryButton>
       </div>
     );
   }
@@ -157,7 +159,7 @@ function CalibrationReportClient() {
 
       <button
         type="button"
-        onClick={() => (window.location.href = "/calibrate")}
+        onClick={() => router.push("/calibrate")}
         className="w-full min-h-12 rounded-xl border border-rule/15 text-[15px] font-medium text-ink"
       >
         Recalibrate
@@ -168,6 +170,7 @@ function CalibrationReportClient() {
 
 /** Shown once a single partner has finished — their own profile, with a note that the couple report unlocks once the other partner finishes. */
 function SoloProfile({ profile, otherName }: { profile: Profile; otherName: string }) {
+  const router = useRouter();
   return (
     <div className="space-y-6">
       <PageHeader eyebrow={<Marker kind="TOOL" label="Solo profile" />} title={`${profile.name}'s operating profile`}>
@@ -222,7 +225,7 @@ function SoloProfile({ profile, otherName }: { profile: Profile; otherName: stri
         The couple report — Layer Scan, conflict pattern, and recommended tools — unlocks once {otherName} finishes their 44 questions.
       </div>
 
-      <PrimaryButton onClick={() => (window.location.href = "/calibrate")}>Continue calibration</PrimaryButton>
+      <PrimaryButton onClick={() => router.push("/calibrate")}>Continue calibration</PrimaryButton>
     </div>
   );
 }
