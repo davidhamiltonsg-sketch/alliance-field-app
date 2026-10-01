@@ -232,7 +232,8 @@ export function SituationMapDiagram() {
         const hi = i === HI;
         const lit = i <= HI;
         const ay = hi ? cy - 3 : cy - ((r.a.length - 1) * lh) / 2 + 5;
-        const color = r.kind === "repair" ? V.repair : r.kind === "failure" ? V.failure : V.accent;
+        // The safety glyph is safety green on a light tile (CANON round 5); the label stays red.
+        const color = r.kind === "repair" ? V.repair : r.icon === "help-safety" ? V.safety : r.kind === "failure" ? V.failure : V.accent;
         return (
           <g key={i} className={lit ? undefined : "dg-dim"} style={lit ? undefined : t(1700 + i * 60, 600, { "--dim": 0.42 })}>
             <Lens cx={lcx} cy={cy} w={lw} h={h} {...a("dg-rise", 150 + i * 230)} />
@@ -481,7 +482,7 @@ export function ResetStepsDiagram() {
   const steps = [
     { title: "Stop", sub: "Quit trying to win or solve it." },
     { title: "Say it", sub: "“I want to connect, not fight.”" },
-    { title: "Touch", sub: "Brief — and only if it’s welcome." },
+    { title: "Touch (only if welcome)", sub: "A brief touch is enough." },
     { title: "Breathe", sub: "Three slow breaths together." },
     { title: "Return", sub: "Pick an exact time to keep talking." },
   ];
