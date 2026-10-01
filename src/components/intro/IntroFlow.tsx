@@ -98,7 +98,8 @@ export function IntroFlow() {
   // Only the first panels' diagrams render up front; later ones mount as you
   // get near them (and stay mounted), keeping the first paint light.
   const [reached, setReached] = useState(1);
-  if (index + 1 > reached) setReached(Math.min(last, index + 1));
+  const want = Math.min(last, index + 1);
+  if (want > reached) setReached(want);
 
   // Arm the diagrams (hidden until their panel is active) and remember the intro.
   useEffect(() => {
