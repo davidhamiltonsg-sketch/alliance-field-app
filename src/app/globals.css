@@ -62,7 +62,7 @@ body {
   text-rendering: optimizeLegibility;
   /* Soft, intentional canvas on wide screens; the app column sits on top. */
   background:
-    radial-gradient(1200px 600px at 50% -10%, rgb(61 90 76 / 0.10), transparent 60%),
+    radial-gradient(1200px 600px at 50% -10%, rgb(44 62 45 / 0.10), transparent 60%),
     radial-gradient(900px 500px at 100% 100%, rgb(196 122 26 / 0.05), transparent 60%),
     #f1f3ef;
   background-attachment: fixed;
@@ -79,7 +79,7 @@ b {
 }
 
 ::selection {
-  background: rgb(61 90 76 / 0.18);
+  background: rgb(44 62 45 / 0.18);
 }
 
 /* Accessible, on-brand focus */
@@ -159,7 +159,7 @@ b {
   .phrase-block {
     position: relative;
     background: #fff;
-    border: 1px solid rgb(61 90 76 / 0.14);
+    border: 1px solid rgb(44 62 45 / 0.14);
     border-radius: 0.875rem;
     padding: 0.875rem 1rem 0.875rem 2.5rem;
     box-shadow: 0 1px 2px rgb(26 26 26 / 0.03);
@@ -173,13 +173,13 @@ b {
     font-size: 2rem;
     font-style: normal;
     line-height: 1;
-    color: rgb(61 90 76 / 0.4);
+    color: rgb(44 62 45 / 0.4);
   }
 
   /* Soft brand wash for hero surfaces */
   .accent-wash {
     background:
-      radial-gradient(120% 90% at 100% 0%, rgb(61 90 76 / 0.16), transparent 55%),
+      radial-gradient(120% 90% at 100% 0%, rgb(44 62 45 / 0.16), transparent 55%),
       linear-gradient(180deg, #eef2ef 0%, #f6f7f3 100%);
   }
 
@@ -201,7 +201,7 @@ b {
   }
   .field-input:focus {
     border-color: var(--color-accent);
-    box-shadow: 0 0 0 3px rgb(61 90 76 / 0.14);
+    box-shadow: 0 0 0 3px rgb(44 62 45 / 0.14);
     outline: none;
   }
 }
@@ -451,7 +451,7 @@ html[data-splash="off"] .splash {
   position: relative;
   border-radius: var(--arch);
   background: #fff;
-  border: 1px solid rgb(61 90 76 / 0.8);
+  border: 1px solid rgb(44 62 45 / 0.8);
 }
 .v2-panel::after {
   content: none;
@@ -462,7 +462,7 @@ html[data-splash="off"] .splash {
 }
 /* standard step: single forest hairline */
 .v2-step {
-  border-color: rgb(61 90 76 / 0.75);
+  border-color: rgb(44 62 45 / 0.75);
 }
 /* pause: fine dashed double hairline, warm paper */
 .v2-pause {
@@ -541,7 +541,7 @@ html[data-splash="off"] .splash {
   position: relative;
   background: #fff;
   border-radius: 20px 20px 5px 5px;
-  border: 1px solid rgb(61 90 76 / 0.28);
+  border: 1px solid rgb(44 62 45 / 0.28);
   box-shadow: var(--shadow-card);
   transition: box-shadow 160ms ease, transform 160ms ease;
 }

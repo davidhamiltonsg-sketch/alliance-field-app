@@ -525,12 +525,18 @@ export function Lens({
   );
 }
 
-/** Pause advisory strip: warm paper, amber dashed double hairlines, hourglass-arch. */
+/**
+ * Advisory strip across a diagram, styled by what it is about: pause (warm
+ * paper, amber dashed double hairlines, Pause + Return glyph), safety (tint,
+ * safety-green rules, safety glyph) or connection (warm paper, brass rules,
+ * Connection Cards glyph).
+ */
 export function AdvisoryStrip({
   x,
   y,
   w,
   h,
+  kind = "pause",
   children,
   className,
   style,
@@ -539,20 +545,26 @@ export function AdvisoryStrip({
   y: number;
   w: number;
   h: number;
+  kind?: "pause" | "safety" | "connection";
   children: ReactNode;
   className?: string;
   style?: CSSProperties;
 }) {
+  const look = {
+    pause: { fill: V.warm, rule: V.pause, dash: "4 2.4", icon: "pause-and-return" as IconId, color: V.pause },
+    safety: { fill: V.tint, rule: V.safety, dash: undefined, icon: "section-safety" as IconId, color: V.safety },
+    connection: { fill: V.warm, rule: V.brass, dash: undefined, icon: "connection-cards" as IconId, color: V.accent },
+  }[kind];
   return (
     <g className={className} style={style}>
-      <rect x={x} y={y} width={w} height={h} fill={V.warm} />
+      <rect x={x} y={y} width={w} height={h} fill={look.fill} />
       {[0.5, 3.2].map((o, i) => (
-        <g key={o} stroke={V.pause} strokeWidth={i ? 0.6 : 0.9} strokeDasharray="4 2.4">
+        <g key={o} stroke={look.rule} strokeWidth={i ? 0.6 : 0.9} strokeDasharray={look.dash}>
           <path d={`M${x} ${y + o}H${x + w}`} />
           <path d={`M${x} ${y + h - o}H${x + w}`} />
         </g>
       ))}
-      <Glyph kind="pause" x={x + 9} y={y + h / 2 - 8} s={16} />
+      <ApIconG id={look.icon} x={x + 9} y={y + h / 2 - 8} size={16} color={look.color} mono={kind === "safety"} />
       <path d={`M${x + 33} ${y + 8}V${y + h - 8}`} stroke={V.rim} strokeWidth={0.6} />
       {children}
     </g>

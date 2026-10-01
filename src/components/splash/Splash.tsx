@@ -149,7 +149,7 @@ export function Splash() {
       aria-label="Skip opening"
     >
       <div
-        className="splash-glow pointer-events-none absolute inset-0 bg-[radial-gradient(60%_40%_at_50%_42%,rgb(61_90_76/0.10),transparent_70%)]"
+        className="splash-glow pointer-events-none absolute inset-0 bg-[radial-gradient(60%_40%_at_50%_42%,rgb(44_62_45/0.10),transparent_70%)]"
         aria-hidden
       />
       <div className="relative flex flex-col items-center px-8 text-center">

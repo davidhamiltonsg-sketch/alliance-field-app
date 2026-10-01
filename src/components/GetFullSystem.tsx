@@ -24,7 +24,7 @@ export function GetFullSystem() {
             href={FULL_SYSTEM_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-accent px-4 text-base font-semibold text-paper shadow-[0_6px_16px_-8px_rgb(61_90_76/0.7)] transition hover:bg-[#35503f] active:scale-[0.99]"
+            className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-accent px-4 text-base font-semibold text-paper shadow-[0_6px_16px_-8px_rgb(44_62_45/0.7)] transition hover:brightness-110 active:scale-[0.99]"
           >
             Get the full system
             <span className="sr-only"> (opens in a new tab)</span>

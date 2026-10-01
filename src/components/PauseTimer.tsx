@@ -604,7 +604,7 @@ function CalmPause({
             <ApIcon id="pause-and-return" size={18} />
             {expired ? "Return time" : "Pause + Return · ready at"}
           </h2>
-          <div className="relative mt-5 flex h-64 w-64 items-center justify-center">
+          <div className="relative mt-5 flex h-[min(18rem,78vw)] w-[min(18rem,78vw)] items-center justify-center">
             <span className="calm-breath absolute inset-0 rounded-full bg-pause/[0.13]" aria-hidden />
             <span className="absolute inset-6 rounded-full border border-pause/40 bg-paper/70" aria-hidden />
             <div className="relative">

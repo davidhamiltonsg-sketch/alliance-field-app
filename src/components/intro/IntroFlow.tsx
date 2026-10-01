@@ -144,7 +144,7 @@ export function IntroFlow() {
       <div className="relative flex h-dvh w-full max-w-lg flex-col bg-paper sm:border-x sm:border-rule/[0.07] sm:shadow-[0_0_60px_-20px_rgb(44_62_45/0.25)]">
         {/* soft brand wash */}
         <div
-          className="pointer-events-none absolute inset-x-0 top-0 h-80 bg-[radial-gradient(120%_80%_at_50%_0%,rgb(61_90_76/0.10),transparent_70%)]"
+          className="pointer-events-none absolute inset-x-0 top-0 h-80 bg-[radial-gradient(120%_80%_at_50%_0%,rgb(44_62_45/0.10),transparent_70%)]"
           aria-hidden
         />
         <h1 className="sr-only">Welcome to the Alliance Protocols Field App</h1>
@@ -185,13 +185,17 @@ export function IntroFlow() {
               aria-roledescription="slide"
               aria-label={`${i + 1} of ${panels.length}: ${p.eyebrow}`}
               aria-hidden={i !== index ? true : undefined}
+              // Scrollable on short screens: keep the active panel reachable by keyboard.
+              tabIndex={i === index ? 0 : -1}
             >
-              <div className="mx-auto my-auto w-full max-w-[420px] pb-2">
-                <div className="rounded-[26px_26px_6px_6px] border border-rule/15 bg-white/90 p-2 shadow-[var(--shadow-card)]">
-                  {/* equal-height stage so headlines line up across panels */}
-                  <div className="flex aspect-[340/336] w-full items-center">{i <= reached ? p.diagram : null}</div>
+              <div className="mx-auto flex w-full max-w-[420px] flex-1 flex-col justify-center pb-2">
+                {/* The stage takes the height that's left (equal across panels, so
+                    headlines line up) and shrinks on short screens so the text
+                    stays in view. */}
+                <div className="flex min-h-[200px] max-h-[436px] max-w-full flex-1 basis-0 items-center justify-center self-center rounded-[26px_26px_6px_6px] border border-rule/15 bg-white/90 p-2 shadow-[var(--shadow-card)]">
+                  <div className="flex aspect-[340/336] h-full max-w-full items-center">{i <= reached ? p.diagram : null}</div>
                 </div>
-                <div className="mt-5">
+                <div className="mt-5 shrink-0">
                   <p className="eyebrow flex items-center gap-1.5 text-accent">
                     <ApIcon id={p.icon} size={18} />
                     {p.eyebrow}
@@ -210,6 +214,16 @@ export function IntroFlow() {
                         Get outside help
                       </Link>
                     </p>
+                  )}
+                  {p.id === "system" && (
+                    <Link
+                      href="/about#product-line"
+                      tabIndex={i === index ? undefined : -1}
+                      className="mt-1 inline-flex min-h-11 items-center gap-1.5 text-base font-medium text-accent underline-offset-4 hover:underline"
+                    >
+                      See the Manual and Kit
+                      <ArrowRight size={16} />
+                    </Link>
                   )}
                   {p.aside && (
                     <p className="mt-1.5 text-sm italic leading-snug text-ink-muted/75">
@@ -258,7 +272,7 @@ export function IntroFlow() {
               <button
                 type="button"
                 onClick={() => goTo(index + 1)}
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-accent text-base font-semibold text-paper shadow-[0_8px_20px_-10px_rgb(61_90_76/0.7)] transition active:scale-[0.99]"
+                className="inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-accent text-base font-semibold text-paper shadow-[0_8px_20px_-10px_rgb(44_62_45/0.7)] transition active:scale-[0.99]"
               >
                 Next
                 <ArrowRight size={18} />
@@ -268,7 +282,7 @@ export function IntroFlow() {
             <div className="space-y-2">
               <Link
                 href="/start"
-                className="flex h-12 items-center justify-center gap-2 rounded-2xl bg-accent text-base font-semibold text-paper shadow-[0_8px_20px_-10px_rgb(61_90_76/0.7)] transition active:scale-[0.99]"
+                className="flex h-12 items-center justify-center gap-2 rounded-2xl bg-accent text-base font-semibold text-paper shadow-[0_8px_20px_-10px_rgb(44_62_45/0.7)] transition active:scale-[0.99]"
               >
                 Start the 7-day plan
                 <ArrowRight size={18} />
@@ -288,12 +302,6 @@ export function IntroFlow() {
                   Pause + Return
                 </Link>
               </div>
-              <Link
-                href="/about#product-line"
-                className="flex min-h-11 items-center justify-center text-sm font-medium text-accent underline-offset-4 hover:underline"
-              >
-                See the full system (optional)
-              </Link>
             </div>
           )}
         </footer>

@@ -40,7 +40,7 @@ export function AppNav() {
                 <span
                   className={`flex h-8 w-14 items-center justify-center rounded-full transition-colors ${
                     active
-                      ? "bg-accent text-paper shadow-[0_4px_12px_-4px_rgb(61_90_76/0.6)]"
+                      ? "bg-accent text-paper shadow-[0_4px_12px_-4px_rgb(44_62_45/0.6)]"
                       : "text-ink-muted group-hover:bg-accent/[0.07] group-hover:text-accent"
                   }`}
                 >

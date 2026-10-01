@@ -7,10 +7,10 @@ type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
 
 const variants = {
   primary:
-    "bg-accent text-paper shadow-[0_6px_16px_-8px_rgb(61_90_76/0.7)] hover:bg-[#35503f]",
+    "bg-accent text-paper shadow-[0_6px_16px_-8px_rgb(44_62_45/0.7)] hover:brightness-110",
   secondary:
     "border border-rule/15 bg-white text-ink shadow-[0_1px_2px_rgb(26_26_26/0.04)] hover:border-rule/25",
-  warn: "bg-gradient-to-b from-[#CF8527] to-[#B86F15] text-white shadow-[var(--shadow-amber)] hover:brightness-105",
+  warn: "bg-pause text-ink shadow-[var(--shadow-amber)] hover:brightness-105",
   ghost: "text-accent hover:bg-accent/[0.06]",
 };
 

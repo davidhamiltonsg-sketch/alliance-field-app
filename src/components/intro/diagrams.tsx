@@ -465,7 +465,7 @@ export function ConnectionCardsDiagram() {
           questions
         </text>
       </g>
-      <AdvisoryStrip x={0} y={246} w={340} h={32} {...a("dg-rise", 3000)}>
+      <AdvisoryStrip kind="connection" x={0} y={246} w={340} h={32} {...a("dg-rise", 3000)}>
         <text x={42} y={266.5} fontSize={13.5} fill={V.ink}>
           No wrong answers — flip a card, go deeper.
         </text>
@@ -497,7 +497,7 @@ export function ResetStepsDiagram() {
         const at = 150 + i * 260;
         return (
           <g key={s.title} {...a("dg-rise", at)}>
-            <ArchPanel x={0} y={y} w={340} h={h} kind={i === 4 ? "safety" : "step"} rt={12} fill={i === 4 ? V.tint : V.white} />
+            <ArchPanel x={0} y={y} w={340} h={h} kind={i === 4 ? "pause" : "step"} rt={12} fill={i === 4 ? V.warm : V.white} />
             <Medallion cx={24} cy={y + h / 2} n={i + 1} w={20} h={24} size={14} />
             <text x={48} y={y + 21} fontFamily={SERIF} fontSize={15} fontWeight={600} fill={V.ink}>
               {s.title}
@@ -508,7 +508,7 @@ export function ResetStepsDiagram() {
           </g>
         );
       })}
-      <AdvisoryStrip x={0} y={292} w={340} h={40} {...a("dg-rise", 1600)}>
+      <AdvisoryStrip kind="safety" x={0} y={292} w={340} h={40} {...a("dg-rise", 1600)}>
         <text x={42} y={316.5} fontSize={13.5} fill={V.ink}>
           Afraid, not just flooded? Stop. Get help.
         </text>
