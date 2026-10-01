@@ -48,8 +48,8 @@ export function FavoriteButton({
       aria-label="Favourite"
       className={`flex shrink-0 items-center justify-center rounded-full transition-colors ${
         compact
-          ? "h-9 w-9"
-          : `h-10 w-10 border ${
+          ? "h-11 w-11"
+          : `h-11 w-11 border ${
               favorite
                 ? "border-accent/30 bg-accent/10"
                 : "border-rule/15 bg-white"

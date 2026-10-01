@@ -76,7 +76,7 @@ export function ProtocolSearch({ protocols }: { protocols: Protocol[] }) {
                 <span className="display mt-1 block text-lg leading-snug">
                   {p.title}
                 </span>
-                <span className="mt-0.5 line-clamp-2 block text-sm leading-snug text-ink-muted">
+                <span className="mt-0.5 line-clamp-2 text-sm leading-snug text-ink-muted">
                   {subtitle ? `${subtitle.charAt(0).toUpperCase()}${subtitle.slice(1)}. ` : ""}
                   {p.concept}
                 </span>
@@ -113,7 +113,7 @@ export function ProtocolSearch({ protocols }: { protocols: Protocol[] }) {
           type="button"
           onClick={() => setFavoritesOnly((v) => !v)}
           aria-pressed={favoritesOnly}
-          className={`inline-flex min-h-9 items-center gap-1.5 rounded-full px-3.5 text-sm font-medium transition-colors ${
+          className={`inline-flex min-h-11 items-center gap-1.5 rounded-full px-3.5 text-sm font-medium transition-colors ${
             favoritesOnly
               ? "bg-accent text-paper"
               : "border border-rule/15 bg-white text-ink-muted"

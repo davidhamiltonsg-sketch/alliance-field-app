@@ -34,7 +34,7 @@ export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
       <header className={`-mx-4 space-y-3 border-b px-4 pb-4 sm:mx-0 sm:rounded-2xl sm:border ${headerWash[tone]}`}>
         <Link
           href="/protocols"
-          className="-ml-1 inline-flex min-h-10 items-center gap-1.5 rounded-full px-1 text-sm font-medium text-ink-muted hover:text-accent"
+          className="-ml-1 inline-flex min-h-11 items-center gap-1.5 rounded-full px-1 text-sm font-medium text-ink-muted hover:text-accent"
         >
           <ArrowLeft size={16} />
           All protocols

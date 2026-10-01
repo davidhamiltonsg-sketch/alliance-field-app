@@ -8,7 +8,7 @@ export function AppHeader() {
       <div className="flex h-14 items-center justify-between gap-2 pl-4 pr-2">
         <Link
           href="/"
-          className="flex min-h-12 items-center gap-2.5"
+          className="flex min-h-12 min-w-12 items-center gap-2.5"
           aria-label="Alliance Protocols Field App, home"
         >
           <AllianceMark size={28} className="text-accent" waveColor="#A8895A" />
