@@ -229,8 +229,9 @@ function PauseTimerClient() {
 
   const startWithMs = useCallback((ms: number) => {
     primeAudio();
-    const startedAt = new Date().toISOString();
-    const at = new Date(Date.now() + ms).toISOString();
+    const t = Date.now(); // one clock read, so the pause is exactly ms long
+    const startedAt = new Date(t).toISOString();
+    const at = new Date(t + ms).toISOString();
     writePause({ returnAt: at, startedAt });
     setReturnAt(at);
     setStartedAt(startedAt);
