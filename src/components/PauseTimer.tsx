@@ -7,6 +7,7 @@ import {
   useRef,
   useState,
   useSyncExternalStore,
+  type ReactNode,
 } from "react";
 import Link from "next/link";
 import { PrimaryButton } from "./PrimaryButton";
@@ -165,7 +166,19 @@ function PauseTimerClient() {
   // to the regular page (the pause keeps running either way).
   const [calm, setCalm] = useState(true);
   const calmActive = calm && !!returnAt && !backMode;
-  const exitCalm = useCallback(() => setCalm(false), []);
+  // Where focus should land after the view changes (the calm view, "I'm
+  // back" and Cancel/Clear all unmount the control that had focus).
+  const focusNextRef = useRef<string | null>(null);
+  const exitCalm = useCallback(() => {
+    focusNextRef.current = "calm-reopen";
+    setCalm(false);
+  }, []);
+  useEffect(() => {
+    const id = focusNextRef.current;
+    if (!id) return;
+    focusNextRef.current = null;
+    document.getElementById(id)?.focus();
+  });
 
   // Hide the app header and bottom nav while the calm view is up.
   useEffect(() => {
@@ -273,6 +286,7 @@ function PauseTimerClient() {
   };
 
   const cancel = () => {
+    focusNextRef.current = "pause-duration";
     clearKey(PAUSE_KEY);
     setReturnAt(null);
     setStartedAt(null);
@@ -287,6 +301,7 @@ function PauseTimerClient() {
   };
 
   const imBack = () => {
+    focusNextRef.current = "restart-cue";
     setBackMode(true);
   };
 
@@ -318,7 +333,12 @@ function PauseTimerClient() {
           You’re back. Do not restart “where you left off.” If you’re afraid,
           not just flooded, don’t return — get help.
         </WarnBanner>
-        <section className="card space-y-3 px-4 py-4">
+        <section
+          id="restart-cue"
+          tabIndex={-1}
+          aria-label="Restart cue"
+          className="card space-y-3 px-4 py-4 focus:outline-none"
+        >
           <Marker kind="DO" label="Restart cue" />
           <ol className="space-y-2 text-base leading-normal">
             <li className="flex gap-3">
@@ -356,8 +376,8 @@ function PauseTimerClient() {
   if (returnAt && calm) {
     return (
       <div className="space-y-4">
-        {live}
         <CalmPause
+          live={live}
           returnLabel={formatClock(new Date(returnAt))}
           remainingMs={remainingMs}
           expired={expired}
@@ -376,7 +396,7 @@ function PauseTimerClient() {
     return (
       <div className="space-y-4">
         {live}
-        <PrimaryButton variant="secondary" onClick={() => setCalm(true)}>
+        <PrimaryButton id="calm-reopen" variant="secondary" onClick={() => setCalm(true)}>
           Full-screen calm view
         </PrimaryButton>
         <div className="card flex flex-col items-center px-4 pb-5 pt-6">
@@ -430,7 +450,9 @@ function PauseTimerClient() {
       </div>
 
       <section className="space-y-2">
-        <p className="text-sm font-medium text-ink">Duration</p>
+        <p id="pause-duration" tabIndex={-1} className="text-sm font-medium text-ink focus:outline-none">
+          Duration
+        </p>
         <div className="grid grid-cols-12 gap-2">
           {DURATIONS.map((d, i) => (
             <button
@@ -554,7 +576,9 @@ function CalmPause({
   expired,
   onBack,
   onExit,
+  live,
 }: {
+  live: ReactNode;
   returnLabel: string;
   remainingMs: number;
   expired: boolean;
@@ -567,7 +591,25 @@ function CalmPause({
   }, []);
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onExit();
+      if (e.key === "Escape") {
+        onExit();
+        return;
+      }
+      // Keep keyboard focus inside the full-screen view (it is modal).
+      const root = rootRef.current;
+      if (e.key !== "Tab" || !root) return;
+      const items = [...root.querySelectorAll<HTMLElement>("a[href], button:not([disabled])")];
+      if (items.length === 0) return;
+      const first = items[0];
+      const lastItem = items[items.length - 1];
+      const active = document.activeElement;
+      if (e.shiftKey && (active === first || active === root || !root.contains(active))) {
+        e.preventDefault();
+        lastItem.focus();
+      } else if (!e.shiftKey && (active === lastItem || !root.contains(active))) {
+        e.preventDefault();
+        first.focus();
+      }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -577,9 +619,13 @@ function CalmPause({
     <section
       ref={rootRef}
       tabIndex={-1}
+      role="dialog"
+      aria-modal="true"
       aria-labelledby="calm-heading"
       className="fixed inset-0 z-[60] flex flex-col overflow-y-auto bg-surface-activity focus:outline-none"
     >
+      {/* The timer's live region sits inside the modal so it is still announced. */}
+      {live}
       <div className="mx-auto flex w-full max-w-lg flex-1 flex-col px-5 pb-[calc(env(safe-area-inset-bottom)+20px)] pt-[calc(env(safe-area-inset-top)+8px)]">
         <div className="flex items-center justify-between">
           <button
@@ -608,7 +654,7 @@ function CalmPause({
             <span className="calm-breath absolute inset-0 rounded-full bg-pause/[0.13]" aria-hidden />
             <span className="absolute inset-6 rounded-full border border-pause/40 bg-paper/70" aria-hidden />
             <div className="relative">
-              <p className={`tabular text-2xl font-semibold ${expired ? "text-failure" : "text-ink"}`}>{returnLabel}</p>
+              <p className={`tabular text-2xl font-semibold ${expired ? "text-pause-text" : "text-ink"}`}>{returnLabel}</p>
               <p className="tabular mt-2 text-sm text-ink-muted">
                 {expired ? "Time to reconnect" : `${formatRemaining(remainingMs)} to go`}
               </p>
