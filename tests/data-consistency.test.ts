@@ -283,7 +283,8 @@ describe("Core 5 and the 7-day start plan", () => {
 
 describe("About the authors", () => {
   it("credits both authors in one combined bio, with no placeholders", () => {
-    expect(authorNames).toEqual(["David Hamilton", "Dr Zhongming Shi (Dami)"]);
+    expect(authorNames).toEqual(["David Hamilton", "Dr Zhongming Shi"]);
+    expect(aboutAuthors).toContain("Dr Zhongming Shi (known to everyone as Dami)");
     expect(aboutAuthors).toContain("David");
     expect(aboutAuthors).toContain("Dami");
     expect(aboutAuthors).not.toMatch(/\[\[/);

@@ -153,7 +153,7 @@ export default function AboutPage() {
           <span id="authors-heading">About the authors</span>
         </SectionLabel>
         <div className="card px-4 py-3.5">
-          <h3 className="display text-lg leading-snug">{authorNames.join(" & ")}</h3>
+          <h3 className="display text-lg leading-snug">{authorNames.join(" and ")}</h3>
           <p className="mt-2 text-base leading-normal text-ink">{aboutAuthors}</p>
         </div>
       </section>
@@ -221,7 +221,7 @@ export default function AboutPage() {
 
       <section className="space-y-3">
         <SectionLabel>More</SectionLabel>
-        <ul className="card divide-y divide-rule/[0.07] overflow-hidden">
+        <ul className="card divide-y divide-rule/30 overflow-hidden">
           <li>
             <Link
               href="/help"
