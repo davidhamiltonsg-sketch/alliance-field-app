@@ -321,7 +321,7 @@ export function PauseTimelineDiagram() {
     { y: 82, title: "Say it, set a time", detail: "“I need a pause. I’ll be ready at ___.”", at: 1300 },
     { y: 146, title: "Step away", detail: "Walk, shower, breathe, music.", at: 2200 },
     { y: 250, title: "Come back", detail: "At the agreed time, even briefly.", at: 3850 },
-    { y: 306, title: "Restart warm", detail: "Warm up, check it’s safe. Not “where we left off”.", at: 4700 },
+    { y: 306, title: "Restart warm", detail: "Warm up and check it’s safe first.", at: 4700 },
   ];
   // woven spine between stations (window occupies 140–226)
   const spans: [number, number, number, number][] = [

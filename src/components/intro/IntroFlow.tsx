@@ -35,7 +35,7 @@ const panels: Panel[] = [
     id: "reset",
     eyebrow: "Use it tonight",
     icon: "60-second-reset",
-    title: "If it’s getting heated: the 60-Second Reset.",
+    title: "If it’s getting heated: the 60-Second Alliance Reset.",
     body: "Stop, say it, a touch only if welcome, three breaths, then an exact time to keep talking. About a minute.",
     safety: true,
     diagram: <ResetStepsDiagram />,
@@ -61,7 +61,7 @@ const panels: Panel[] = [
     eyebrow: "Pause + Return",
     icon: "pause-and-return",
     title: "Pause, then return on time.",
-    body: "Give a clock time, 20 minutes to 24 hours. The return is what proves pause, not disappearance.",
+    body: "Give a clock time, 20 minutes to 24 hours. Coming back on time is what makes it a pause, not a disappearance.",
     diagram: <PauseTimelineDiagram />,
   },
   {
@@ -70,7 +70,6 @@ const panels: Panel[] = [
     icon: "connection-cards",
     title: "For when things are fine, too.",
     body: "Flip through 35 questions across five stages — Warmth, Curiosity, Care, Repair, Alliance. No protocol needed, just five minutes together.",
-    aside: "Yes, even the couple who’s already “fine” is allowed to use this.",
     diagram: <ConnectionCardsDiagram />,
   },
   {
@@ -237,13 +236,13 @@ export function IntroFlow() {
         </div>
 
         <footer className="relative shrink-0 px-5 pb-[calc(env(safe-area-inset-bottom)+16px)] pt-2">
-          <div className="flex items-center justify-center gap-2 pb-3" role="group" aria-label="Choose a panel">
+          <div className="flex items-center justify-center pb-1" role="group" aria-label="Choose a panel">
             {panels.map((p, i) => (
               <button
                 key={p.id}
                 type="button"
                 onClick={() => goTo(i)}
-                className="flex h-6 items-center justify-center px-0.5"
+                className="flex h-11 min-w-11 items-center justify-center"
                 aria-label={`Go to ${i + 1}: ${p.eyebrow}`}
                 aria-current={i === index ? "step" : undefined}
               >
