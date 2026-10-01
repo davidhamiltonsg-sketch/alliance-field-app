@@ -14,6 +14,11 @@ export default function WeeklyResetPage() {
         Five parts, about 40 minutes. A maintenance meeting, not a trial. Your answers save on this device.
       </PageHeader>
       <WeeklyResetWizard />
+      <p className="px-1 text-sm leading-normal text-ink-muted">
+        Only the five parts fit in 40 minutes. Anything else (Proof reviews,
+        enrichment picks, governance) goes to the Monthly Review, a longer
+        once-a-month check on how the system is working.
+      </p>
       <KeepItGoing />
       <Link
         href="/protocols/weekly-reset"

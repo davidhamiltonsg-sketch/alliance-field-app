@@ -89,6 +89,9 @@ export default function AboutPage() {
           A relationship operating system with named tools — clear protocols,
           not pep talks.
         </p>
+        <p className="text-base leading-normal text-ink-muted">
+          The scripts are training wheels. Use your own words as soon as you can.
+        </p>
         <a
           href="#product-line"
           className="inline-flex min-h-11 items-center gap-1.5 text-base font-medium text-accent"
@@ -193,9 +196,9 @@ export default function AboutPage() {
         <Marker kind="NOTE" label="Feeling checked out?" />
         <p className="mt-2 text-base leading-normal">
           <strong>Not sure if it’s space or withdrawal?</strong> Run the
-          Uninvestment Check. 0–2 signs: likely needs space. 3 or more: may
-          be pulling away — book a Full Recovery within a week. Hope
-          isn’t a plan.
+          Uninvestment Check. 0 signs: nothing to fix. 1–2: likely needs
+          space and small repairs. 3 or more: may be pulling away — book a
+          Full Recovery conversation within a week. Hope isn’t a plan.
         </p>
         <Link
           href="/protocols/uninvestment-check"

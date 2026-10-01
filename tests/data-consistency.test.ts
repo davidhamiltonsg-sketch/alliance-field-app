@@ -82,11 +82,14 @@ describe("CANON numbers and wording", () => {
     expect(minutes.reduce((a, b) => a + b, 0)).toBe(KIT.weeklyResetMinutes);
   });
 
-  it("Uninvestment Check lists 8 signs and the 0–2 / 3+ bands", () => {
+  it("Uninvestment Check lists 8 signs and the 0 / 1–2 / 3+ bands (CANON round 6)", () => {
     const card = getProtocol("uninvestment-check")!;
     expect(card.activity.match(/\(\d\)/g)).toHaveLength(8);
-    expect(card.steps.join(" ")).toContain("0–2 signs");
-    expect(card.steps.join(" ")).toContain("3 or more signs");
+    const steps = card.steps.join(" ");
+    expect(steps).toContain("0 signs → nothing to fix");
+    expect(steps).toContain("1–2 signs → likely needs space and small repairs (Micro-Repair, Morning + Evening Rhythm)");
+    expect(steps).toContain("3 or more signs → may be pulling away");
+    expect(steps).not.toContain("0–2");
   });
 
   it("uses canonical names", () => {
@@ -120,7 +123,7 @@ describe("CANON round 3", () => {
     expect(card.activity).toContain(contempt);
     expect(card.steps.join(" ")).toContain(contempt);
     expect(card.warn).toContain(contempt);
-    expect(card.steps.join(" ")).toContain("Full Recovery within a week");
+    expect(card.steps.join(" ")).toContain("Full Recovery conversation within a week");
     expect(card.crossLinks.map((c) => c.href)).toContain("/protocols/trust-recovery");
   });
 
@@ -168,7 +171,7 @@ describe("CANON round 3", () => {
     expect(byId["detachment"].primaryHref).toBe("/protocols/uninvestment-check");
     expect(byId["detachment"].label).toMatch(/Pulling away/);
     expect(byId["outside-pressure"].primaryHref).toBe("/protocols/unity-anchor");
-    expect(byId["outside-pressure"].label).toMatch(/Outside pressure, disapproval or jealousy about others/);
+    expect(byId["outside-pressure"].label).toBe("Outside pressure or disapproval from family, friends or strangers");
     const diagrams = readFileSync(join(__dirname, "../src/components/intro/diagrams.tsx"), "utf8");
     expect(diagrams).toContain('q: ["Trust breach?"]');
     expect(diagrams).toContain('q: ["Pulling away?"]');
@@ -392,5 +395,108 @@ describe("contact and store links", () => {
     expect(httpsUrlOrNull("javascript:alert(1)")).toBeNull();
     expect(httpsUrlOrNull("https://store.example/p")).toBe("https://store.example/p");
     expect(componentSource("GetFullSystem")).toMatch(/Coming soon/);
+  });
+});
+
+describe("CANON round 6", () => {
+  const byId = Object.fromEntries(situations.map((s) => [s.id, s]));
+  const allCopy = JSON.stringify([protocols, protocolDiagrams, situations, commonMoves, togetherTools, togetherFaq, whoFor]);
+
+  it("jealousy is a safety-row matter, never routed to Unity Anchor", () => {
+    expect(byId["unsafe"].description).toContain("This includes jealousy that leads to checking, restricting, or accusing.");
+    expect(JSON.stringify(byId["outside-pressure"])).not.toMatch(/jealous/i);
+    expect(JSON.stringify(getProtocol("unity-anchor"))).not.toMatch(/jealous/i);
+    expect(JSON.stringify(protocolDiagrams["unity-anchor"])).not.toMatch(/jealous|log it/i);
+    expect(allCopy).not.toMatch(/log (it|jealousy)[^.]*Weekly Reset/i);
+  });
+
+  it("Unity Anchor: outside pressure only; partner pressure goes to the Green Rule; carries the safety line", () => {
+    const card = getProtocol("unity-anchor")!;
+    expect(card.whenToUse).toContain("If the pressure comes from your partner, this isn’t a Unity Anchor situation");
+    expect(card.warn).toContain("Afraid of your partner, being threatened, or not free to say no? Stop");
+    expect(card.safetyLink).toBe(true);
+    expect(card.crossLinks.map((c) => c.href)).toContain("/protocols/green-rule");
+  });
+
+  it("row 11 says housemates, never roommates", () => {
+    expect(byId["daily-drift"].label).toBe("We feel like housemates");
+    expect(allCopy).not.toMatch(/roommate/i);
+  });
+
+  it("Intimacy Pact steps 1 and 4 use the round 6 consent wording", () => {
+    const card = getProtocol("intimacy-pact")!;
+    expect(card.steps[0]).toBe("Before you initiate, think about how it lands for the other person. If you’re declining, you owe nothing: just say no.");
+    expect(card.steps[3]).toContain("body language can signal interest, but a clear yes is still asked for");
+  });
+
+  it("Trust Recovery and Proof: feelings and questions first, the record is an aid; disputed and coerced cases stop", () => {
+    const trust = getProtocol("trust-recovery")!;
+    expect(trust.steps.join(" ")).toContain("the hurt partner’s feelings and questions come first; the record is an aid, never the judge");
+    expect(trust.warn).toContain("If you can’t agree that a breach happened, this tool isn’t for it");
+    expect(trust.warn).toContain("If refusing the “voluntary” transparency would feel unsafe, it isn’t voluntary");
+    expect(getProtocol("proof-protocol")!.steps.join(" ")).toContain("feelings and questions come first; the record is an aid, never the judge");
+    expect(allCopy).not.toMatch(/hypernotic|record first|facts first|right breach/i);
+  });
+
+  it("“afraid” only appears in safety content; the Green Rule names its misuse", () => {
+    const green = getProtocol("green-rule")!;
+    expect(green.working).not.toMatch(/afraid/i);
+    expect(green.notWorking).toContain("Misuse: saying “this doesn’t feel safe” to shut down every complaint");
+    for (const p of protocols) {
+      for (const field of [p.concept, p.whenToUse, p.working, p.notWorking, p.activity, ...p.steps, ...p.phrases.map((x) => x.text)]) {
+        if (/\bafraid\b/i.test(field)) expect(field, p.slug).toMatch(/Help Lines|outside help|Afraid of your partner/);
+      }
+    }
+  });
+
+  it("Pause + Return flooding signs leave out contempt", () => {
+    const signs = "racing heart, tunnel vision, can’t think straight";
+    expect(getProtocol("pause-and-return")!.whenToUse).toContain(signs);
+    expect(getProtocol("pause-and-return")!.whenToUse).not.toMatch(/contempt/i);
+    expect(protocolDiagrams["pause-and-return"].when).not.toMatch(/contempt/i);
+    expect(byId["flooded"].description).not.toMatch(/contempt/i);
+  });
+
+  it("Uninvestment Check: within a week, and no one caused drift", () => {
+    const card = getProtocol("uninvestment-check")!;
+    expect(JSON.stringify(card)).not.toMatch(/before you leave the conversation/);
+    expect(card.activity).toContain("book a Full Recovery conversation within a week");
+    expect(card.steps.join(" ")).toContain("For drift, no one “caused” it: you both name your part.");
+  });
+
+  it("Weekly Reset scope rule names the Monthly Review", () => {
+    expect(getProtocol("weekly-reset")!.activity).toContain(
+      "Only the five parts fit in 40 minutes: anything else (Proof reviews, enrichment picks, governance) goes to the Monthly Review, a longer once-a-month check",
+    );
+  });
+
+  it("/together points at the live Situation Map row", () => {
+    const map = togetherTools.find((t) => t.href === "/")!;
+    expect(map.note).toContain(`“${byId["outside-pressure"].label}”`);
+  });
+
+  it("Help lists the round 6 additions with the verified numbers", async () => {
+    const { ownBehaviourLines, PRIVATE_STORAGE_NOTE } = await import("@/data/help");
+    const all = [...helpRegions.flatMap((r) => r.lines), ...ownBehaviourLines];
+    const byDisplay = Object.fromEntries(all.map((l) => [l.display, l]));
+    expect(byDisplay["0808 8024040"].label).toMatch(/Respect/);
+    expect(byDisplay["0808 8010327"].label).toMatch(/Men’s Advice Line/);
+    expect(byDisplay["1300 766 491"].label).toMatch(/Men’s Referral Service/);
+    expect(byDisplay["6555 0390"].label).toBe("PAVE (office hours)");
+    expect(byDisplay["1800 777 5555"].label).toMatch(/AWARE/);
+    expect(byDisplay["70999"].href).toBe("sms:70999");
+    expect(all.map((l) => l.display)).not.toContain("71999");
+    expect(byDisplay["116 016"].label).toBe("Helpline for women experiencing violence, where available");
+    for (const l of all.filter((l) => l.href.startsWith("tel:"))) expect(l.href.slice(4), l.label).toBe(l.display.replace(/\D/g, ""));
+    expect(PRIVATE_STORAGE_NOTE).toContain("keep this somewhere private");
+  });
+
+  it("states “scripts are training wheels” exactly once in the app", () => {
+    const walk = (d: string): string[] =>
+      readdirSync(d, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(join(d, e.name)) : [join(d, e.name)]));
+    const hits = walk(join(__dirname, "../src"))
+      .filter((f) => /\.(tsx?|json)$/.test(f))
+      .flatMap((f) => readFileSync(f, "utf8").match(/scripts are training wheels/gi) ?? []);
+    expect(hits).toHaveLength(1);
   });
 });

@@ -40,6 +40,7 @@ export const helpRegions: HelpRegion[] = [
     lines: [
       { label: "National Domestic Abuse Helpline (Refuge)", display: "0808 2000 247", href: "tel:08082000247" },
       { label: "Samaritans", display: "116 123", href: "tel:116123" },
+      { label: "Men’s Advice Line (men experiencing abuse)", display: "0808 8010327", href: "tel:08088010327" },
     ],
   },
   {
@@ -54,9 +55,32 @@ export const helpRegions: HelpRegion[] = [
     lines: [
       { label: "National Anti-Violence & Sexual Harassment Helpline", display: "1800 777 0000", href: "tel:18007770000" },
       { label: "SOS", display: "1767", href: "tel:1767" },
+      { label: "AWARE Women’s Helpline", display: "1800 777 5555", href: "tel:18007775555" },
+      { label: "Police by SMS, if you can’t speak", display: "70999", href: "sms:70999" },
+    ],
+  },
+  {
+    region: "EU",
+    lines: [
+      { label: "Helpline for women experiencing violence, where available", display: "116 016", href: "tel:116016" },
     ],
   },
 ];
+
+/**
+ * CANON round 6: for anyone worried about their own behaviour. Numbers as
+ * verified by the authors on each service's own site (1 October 2026); PAVE
+ * answers in office hours only.
+ */
+export const ownBehaviourLines: (HelpNumber & { region: string })[] = [
+  { region: "UK", label: "Respect Phoneline", display: "0808 8024040", href: "tel:08088024040" },
+  { region: "Australia", label: "Men’s Referral Service", display: "1300 766 491", href: "tel:1300766491" },
+  { region: "Singapore", label: "PAVE (office hours)", display: "6555 0390", href: "tel:65550390" },
+];
+
+/** CANON round 6 safety note for people whose phone or books may be checked. */
+export const PRIVATE_STORAGE_NOTE =
+  "If someone checks your phone or books, keep this somewhere private; you can find the Help Lines at allianceprotocols.com/help.";
 
 /** CANON round 5: the LGBTQ+-affirming line, printed after the regional lines. */
 export const LGBTQ_LINE =

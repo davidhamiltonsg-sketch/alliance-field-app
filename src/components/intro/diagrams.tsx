@@ -203,7 +203,7 @@ export function SituationMapDiagram() {
   const rows: { q: string[]; a: string[]; icon: IconId; kind: Kind }[] = [
     { q: ["Afraid, threatened,", "not free to say no?"], a: ["Stop. Get", "outside help"], icon: "help-safety", kind: "failure" },
     { q: ["Flooded or shut", "down (but safe)?"], a: ["Pause + Return"], icon: "pause-and-return", kind: "step" },
-    { q: ["Outside pressure", "or jealousy?"], a: ["Unity Anchor"], icon: "unity-anchor", kind: "step" },
+    { q: ["Outside pressure", "or disapproval?"], a: ["Unity Anchor"], icon: "unity-anchor", kind: "step" },
     { q: ["Trust breach?"], a: ["Trust Recovery", "+ Proof"], icon: "trust-recovery", kind: "repair" },
     { q: ["Pulling away?"], a: ["Uninvestment", "Check"], icon: "uninvestment-check", kind: "repair" },
   ];
@@ -220,7 +220,7 @@ export function SituationMapDiagram() {
   return (
     <Frame
       viewBox="0 0 340 336"
-      label="Situation Map: answer yes or no from the top. Afraid, threatened, or not free to say no: stop and get outside help. Flooded or shut down but safe: Pause + Return. Outside pressure, disapproval or jealousy about others: Unity Anchor. Trust breach: Trust Recovery plus Proof. Pulling away: Uninvestment Check."
+      label="Situation Map: answer yes or no from the top. Afraid, threatened, or not free to say no: stop and get outside help. Flooded or shut down but safe: Pause + Return. Outside pressure or disapproval from family, friends or strangers: Unity Anchor. Trust breach: Trust Recovery plus Proof. Pulling away: Uninvestment Check."
     >
       <text x={2} y={13} fontSize={13.5} fill={V.muted} {...a("dg-fade", 0)}>
         Follow the first match, top to bottom.

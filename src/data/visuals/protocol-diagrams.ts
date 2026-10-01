@@ -25,7 +25,7 @@ export interface ProtocolDiagram {
 
 export const protocolDiagrams: Record<string, ProtocolDiagram> = {
   "pause-and-return": {
-    "when": "Either partner is flooded or shut down: racing heart, tunnel vision, contempt, urge to flee or win.",
+    "when": "Either partner is flooded or shut down: racing heart, tunnel vision, can’t think straight, urge to flee or win.",
     "steps": [
       {
         "title": "Say it",
@@ -309,7 +309,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Record it simply",
-        "detail": "Tally or table; facts first at review.",
+        "detail": "A count or a table. At review, feelings and questions first; the record is an aid.",
         "kind": "step"
       },
       {
@@ -360,8 +360,8 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "when": "Initiating or declining feels tense; intimacy stall; after a trust dent; preventive Structure.",
     "steps": [
       {
-        "title": "Picture their side",
-        "detail": "Invest in your partner’s experience before only your own.",
+        "title": "Think how it lands",
+        "detail": "Before you initiate, think how it lands for them. Declining? You owe nothing: just say no.",
         "kind": "step"
       },
       {
@@ -376,7 +376,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Say what you enjoy",
-        "detail": "Name initiation preferences: verbal / nonverbal; timing.",
+        "detail": "How you like to be approached: body language can signal interest; a clear yes is still asked for.",
         "kind": "step"
       },
       {
@@ -420,7 +420,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Check in",
-        "detail": "Record first, then feelings; extend, adjust, or close.",
+        "detail": "The hurt partner’s feelings and questions first; the record is an aid, never the judge. Extend, adjust, or close.",
         "kind": "repair"
       },
       {
@@ -526,13 +526,13 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Likely needs space",
-        "detail": "Pause + Return and small repairs.",
-        "kind": "pause",
-        "badge": "0–2"
+        "detail": "0 signs: nothing to fix. 1–2: small repairs (Micro-Repair, Morning + Evening Rhythm).",
+        "kind": "step",
+        "badge": "1–2"
       },
       {
         "title": "May be pulling away",
-        "detail": "Book a Full Recovery and set proof. Don’t wait it out.",
+        "detail": "Book a Full Recovery conversation. For drift, no one “caused” it: both name your part.",
         "kind": "repair",
         "badge": "3 or more · within a week"
       },
@@ -546,16 +546,16 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "outcome": "You know which repair to reach for, instead of hoping."
   },
   "unity-anchor": {
-    "when": "Family disapproval, discrimination, or outside judgement is landing on the two of you.",
+    "when": "Family disapproval, discrimination, or outside judgement is landing on the two of you. Pressure from your partner isn’t this: Green Rule first.",
     "steps": [
       {
         "title": "Pause before reacting",
-        "detail": "Don’t react to the pressure itself yet. What’s needed: reassurance, a plan, or just to vent?",
+        "detail": "Don’t act on the comment or the look in the moment.",
         "kind": "step"
       },
       {
         "title": "Trace the source",
-        "detail": "Is this about us, or their disapproval landing on us? “That’s coming from them, not from us.”",
+        "detail": "Is this about us, or their disapproval landing on us? “That’s coming from them, not from us.” What’s needed: reassurance, a plan, or just to vent?",
         "kind": "step"
       },
       {
@@ -565,9 +565,8 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Agree your response",
-        "detail": "Decide together how the couple responds; log it at the Weekly Reset.",
-        "kind": "step",
-        "badge": "Weekly Reset"
+        "detail": "Decide together how the two of you respond next time.",
+        "kind": "step"
       }
     ],
     "note": {

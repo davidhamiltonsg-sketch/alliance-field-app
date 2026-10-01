@@ -4,7 +4,15 @@ import { Marker } from "@/components/Marker";
 import { PageHeader } from "@/components/PageHeader";
 import { SectionLabel } from "@/components/SectionLabel";
 import { ArrowRight } from "@/components/icons";
-import { ELSEWHERE_LINE, emergencyNumbers, helpRegions, lgbtqLines } from "@/data/help";
+import { QuickExit } from "@/components/QuickExit";
+import {
+  ELSEWHERE_LINE,
+  PRIVATE_STORAGE_NOTE,
+  emergencyNumbers,
+  helpRegions,
+  lgbtqLines,
+  ownBehaviourLines,
+} from "@/data/help";
 
 export const metadata = { title: "Help & safety" };
 
@@ -15,6 +23,8 @@ export default function HelpPage() {
         Afraid of your partner, being threatened, or not free to say no? Stop.
         These tools are not for this. Get outside help.
       </PageHeader>
+
+      <QuickExit />
 
       <section
         aria-labelledby="danger-heading"
@@ -93,7 +103,46 @@ export default function HelpPage() {
             ))}
           </ul>
         </div>
+        <div className="card overflow-hidden">
+          <h3 className="px-4 pb-1 pt-3 text-sm font-semibold uppercase tracking-[0.08em] text-accent">
+            Worried about your own behaviour?
+          </h3>
+          <ul className="divide-y divide-rule/30">
+            {ownBehaviourLines.map((l) => (
+              <li key={l.href}>
+                <a
+                  href={l.href}
+                  className="flex min-h-12 items-center justify-between gap-3 px-4 py-2.5 hover:bg-surface-tool"
+                >
+                  <span className="min-w-0 text-base leading-snug text-ink">
+                    <span className="text-ink-muted">{l.region}: </span>
+                    {l.label}
+                  </span>
+                  <span className="tabular shrink-0 text-base font-semibold text-accent underline underline-offset-4">
+                    {l.display}
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
         <p className="px-1 text-base leading-normal text-ink-muted">{ELSEWHERE_LINE}</p>
+      </section>
+
+      <section aria-labelledby="private-heading" className="space-y-3">
+        <SectionLabel>
+          <span id="private-heading">Keeping this private</span>
+        </SectionLabel>
+        <div className="card space-y-3 px-4 py-4 text-base leading-normal text-ink">
+          <p>{PRIVATE_STORAGE_NOTE}</p>
+          <p className="text-ink-muted">
+            On a shared phone or computer, this page can show up in the
+            browser’s history. A private or incognito window keeps it out, or
+            you can delete it from the history afterwards. &ldquo;Leave this
+            page quickly&rdquo; swaps this page for a weather search, so the
+            Back button doesn’t bring it straight back.
+          </p>
+        </div>
       </section>
 
       <section id="not-for" className="scroll-mt-20 space-y-3">
