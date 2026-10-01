@@ -53,7 +53,7 @@ const panels: Panel[] = [
     eyebrow: "The Core 5",
     icon: "tier-core",
     title: "Start with five tools.",
-    body: "They cover most hard moments. Learn these first; the rest can wait. The 7-day start plan takes about 10 minutes a day.",
+    body: "They cover most hard moments. Learn these first; the rest can wait. The 7-day plan takes about 10 minutes a day.",
     diagram: <CoreFiveDiagram />,
   },
   {
@@ -150,10 +150,19 @@ export function IntroFlow() {
         <header className="relative flex h-14 shrink-0 items-center justify-between pl-4 pr-2">
           <span className="flex items-center gap-2.5">
             <AllianceMark size={26} className="text-accent" />
-            <span className="whitespace-nowrap text-sm font-medium tracking-[0.1em] text-ink">
+            <span className="hidden whitespace-nowrap text-sm font-medium tracking-[0.1em] text-ink min-[360px]:inline">
               ALLIANCE PROTOCOLS
             </span>
           </span>
+          <span className="flex items-center">
+          {/* Help is one tap away on every screen, the intro included. */}
+          <Link
+            href="/help"
+            className="inline-flex min-h-11 items-center rounded-full px-3 text-sm font-semibold text-failure transition-colors hover:bg-failure/10"
+            aria-label="Help and safety: help lines"
+          >
+            Help
+          </Link>
           <Link
             href="/"
             className={`inline-flex min-h-11 items-center rounded-full px-4 text-base font-medium text-accent transition-opacity hover:bg-accent/[0.06] ${
@@ -164,6 +173,7 @@ export function IntroFlow() {
           >
             Skip
           </Link>
+          </span>
         </header>
 
         <div
