@@ -73,7 +73,7 @@ export const startDays: StartDay[] = [
   {
     day: 7,
     title: "Weekly Reset #1",
-    task: "All five parts, a 40-minute timer, one friction point only. Each makes one request; agree one next step. Book the next three weeks before you stand up.",
+    task: "All five parts, a 40-minute timer, one friction point each. Each makes one request; agree one next step. Book the next three weeks before you stand up.",
     proof: "Reset done; next three weeks in the calendar.",
     minutes: 40,
     slug: "weekly-reset",
