@@ -7,7 +7,8 @@ export function SituationMapDownload() {
     <div>
       <p className="text-sm font-medium text-ink">Free: printable Situation Map</p>
       <p className="mt-0.5 text-sm leading-snug text-ink-muted">
-        The one-page map, safety row first. Stick it on the fridge.
+        The two-sided map from the Field Kit, safety row first, with the
+        Quick Reference and Help Lines on the back. Keep it on the fridge.
       </p>
       <a
         href={SITUATION_MAP_PDF}

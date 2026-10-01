@@ -4,7 +4,7 @@ import { Marker } from "@/components/Marker";
 import { PageHeader } from "@/components/PageHeader";
 import { SectionLabel } from "@/components/SectionLabel";
 import { ArrowRight } from "@/components/icons";
-import { ELSEWHERE_LINE, emergencyNumbers, helpRegions } from "@/data/help";
+import { ELSEWHERE_LINE, emergencyNumbers, helpRegions, lgbtqLines } from "@/data/help";
 
 export const metadata = { title: "Help & safety" };
 
@@ -69,6 +69,30 @@ export default function HelpPage() {
             </li>
           ))}
         </ul>
+        <div className="card overflow-hidden">
+          <h3 className="px-4 pb-1 pt-3 text-sm font-semibold uppercase tracking-[0.08em] text-accent">
+            LGBTQ+-affirming
+          </h3>
+          <ul className="divide-y divide-rule/[0.07]">
+            {lgbtqLines.map((l) => (
+              <li key={l.href}>
+                <a
+                  href={l.href}
+                  {...(l.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  className="flex min-h-12 items-center justify-between gap-3 px-4 py-2.5 hover:bg-surface-tool"
+                >
+                  <span className="min-w-0 text-base leading-snug text-ink">
+                    <span className="text-ink-muted">{l.region}: </span>
+                    {l.label}
+                  </span>
+                  <span className="tabular shrink-0 text-base font-semibold text-accent underline underline-offset-4">
+                    {l.display}
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
         <p className="px-1 text-base leading-normal text-ink-muted">{ELSEWHERE_LINE}</p>
       </section>
 

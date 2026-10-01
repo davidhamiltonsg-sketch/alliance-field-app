@@ -214,6 +214,13 @@ describe("safety routing", () => {
     }
   });
 
+  it("adds the canonical LGBTQ+-affirming line (CANON round 5)", async () => {
+    const { LGBTQ_LINE, lgbtqLines } = await import("@/data/help");
+    expect(LGBTQ_LINE).toBe(registry.helpLinesExtra);
+    for (const l of lgbtqLines) expect(LGBTQ_LINE).toContain(l.display);
+    for (const l of lgbtqLines.filter((l) => l.href.startsWith("tel:"))) expect(l.href.slice(4)).toBe(l.display.replace(/\D/g, ""));
+  });
+
   it("Green Rule and Pause + Return link to Help", () => {
     expect(getProtocol("green-rule")!.safetyLink).toBe(true);
     expect(getProtocol("pause-and-return")!.safetyLink).toBe(true);

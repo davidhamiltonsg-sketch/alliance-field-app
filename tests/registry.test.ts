@@ -223,12 +223,6 @@ describe("registry: worksheets", () => {
 });
 
 describe("Go deeper pointers", () => {
-  // Kit card names as printed on the Field Kit cards (CANON round 4).
-  const KIT_CARDS = [
-    "Green Rule", "Pause + Return", "60-Second Reset", "Micro-Repair", "Weekly Reset", "System Overlay",
-    "Conflict Protocol", "Proof Protocol", "Trust Recovery", "Full Recovery", "Uninvestment Check",
-    "Unity Anchor", "Morning + Evening Rhythm", "Intimacy Pact", "Consistency Pact",
-  ];
   // Chapter numbers and titles from the Operating Manual's table of contents.
   const MANUAL = new Map<string, string>([
     ["I", "Executive Summary"], ["II", "Fast Start Guide"], ["III", "Introduction"],
@@ -243,11 +237,14 @@ describe("Go deeper pointers", () => {
     ["XVIII", "Alliance Enrichment"], ["XVIII-A", "The Sun Memory Protocol"], ["XIX", "Alliance Governance"],
   ]);
 
-  it("names a real Manual chapter and Kit card for every protocol", async () => {
+  it("names a real Manual chapter (and Companion chapter) for every protocol", async () => {
     const { goDeeper, manualChapters } = await import("@/data/go-deeper");
     expect(Object.keys(goDeeper).sort()).toEqual(protocols.map((p) => p.slug).sort());
     for (const c of Object.values(manualChapters)) expect(MANUAL.get(c.num)).toBe(c.title);
-    expect(Object.values(goDeeper).map((g) => g.kitCard).sort()).toEqual([...KIT_CARDS].sort());
+    // Companion chapters as headed in the Companion Book (I–VIII) or its founders' note.
+    for (const g of Object.values(goDeeper)) {
+      if (g.companion) expect(g.companion).toMatch(/^Companion(?: Ch (?:I|II|III|IV|V|VI|VII|VIII)|: The Third Voice)$/);
+    }
   });
 });
 

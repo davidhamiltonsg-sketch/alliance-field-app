@@ -130,7 +130,7 @@ export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
           <li className="flex items-center gap-2">
             <ApIcon id="field-kit" size={20} className="text-accent" />
             <span>
-              Field Kit: the <span className="text-ink">{deeper?.kitCard ?? protocol.title}</span> card
+              Field Kit: the <span className="text-ink">{protocol.title}</span> card
               {sheets.length > 0 ? (
                 <>
                   {" "}and the <span className="text-ink">{sheets.map((w) => w.name).join(" and ")}</span>
@@ -140,6 +140,14 @@ export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
               , to keep on the fridge.
             </span>
           </li>
+          {deeper?.companion && (
+            <li className="flex items-center gap-2">
+              <ApIcon id="companion" size={20} className="text-accent" />
+              <span>
+                <span className="text-ink">{deeper.companion}</span>, for why it works.
+              </span>
+            </li>
+          )}
         </ul>
       </section>
 

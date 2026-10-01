@@ -1,8 +1,8 @@
 /**
  * "Go deeper" pointers (CANON round 4 format roles): the Operating Manual
- * chapter and the Field Kit card for each protocol. Chapter numbers and
- * titles are the Manual's own (checked by tests/registry.test.ts); Kit card
- * names are the names printed on the cards.
+ * chapter, the Field Kit card and the Companion Book chapter for each protocol. Chapter numbers and
+ * titles are the Manual's own (checked by tests/registry.test.ts). Names
+ * are registry names (CANON round 5).
  */
 export interface ManualChapter {
   /** Roman chapter number as printed, e.g. "XIII-A". */
@@ -31,22 +31,28 @@ export const manualChapters = {
 
 type ChapterKey = keyof typeof manualChapters;
 
-export const goDeeper: Record<string, { chapter: ChapterKey; kitCard: string }> = {
-  "green-rule": { chapter: "I", kitCard: "Green Rule" },
-  "pause-and-return": { chapter: "IV", kitCard: "Pause + Return" },
-  "60-second-reset": { chapter: "II", kitCard: "60-Second Reset" },
-  "micro-repair": { chapter: "XIII-A", kitCard: "Micro-Repair" },
-  "weekly-reset": { chapter: "XII", kitCard: "Weekly Reset" },
-  "system-overlay": { chapter: "I", kitCard: "System Overlay" },
-  "conflict-protocol": { chapter: "XIII", kitCard: "Conflict Protocol" },
-  "proof-protocol": { chapter: "XV", kitCard: "Proof Protocol" },
-  "trust-recovery": { chapter: "XVI", kitCard: "Trust Recovery" },
-  "full-recovery": { chapter: "XIII-B", kitCard: "Full Recovery" },
-  "uninvestment-check": { chapter: "XIII-D", kitCard: "Uninvestment Check" },
-  "unity-anchor": { chapter: "IX", kitCard: "Unity Anchor" },
-  "morning-evening-rhythm": { chapter: "XI", kitCard: "Morning + Evening Rhythm" },
-  "intimacy-pact": { chapter: "XIV", kitCard: "Intimacy Pact" },
-  "consistency-pact": { chapter: "XVII", kitCard: "Consistency Pact" },
+/**
+ * Manual chapter and Companion Book chapter for each protocol. The Kit card
+ * carries the registry name (the protocol title). Companion chapters match
+ * the Manual's own "Go deeper" lines; "The Third Voice" is the founders'
+ * note, not a numbered chapter.
+ */
+export const goDeeper: Record<string, { chapter: ChapterKey; companion?: string }> = {
+  "green-rule": { chapter: "I", companion: "Companion Ch I" },
+  "pause-and-return": { chapter: "IV", companion: "Companion Ch II" },
+  "60-second-reset": { chapter: "II", companion: "Companion Ch II" },
+  "micro-repair": { chapter: "XIII-A", companion: "Companion Ch I" },
+  "weekly-reset": { chapter: "XII", companion: "Companion Ch V" },
+  "system-overlay": { chapter: "I", companion: "Companion: The Third Voice" },
+  "conflict-protocol": { chapter: "XIII", companion: "Companion Ch II" },
+  "proof-protocol": { chapter: "XV", companion: "Companion Ch VI" },
+  "trust-recovery": { chapter: "XVI", companion: "Companion Ch VI" },
+  "full-recovery": { chapter: "XIII-B", companion: "Companion Ch IV" },
+  "uninvestment-check": { chapter: "XIII-D", companion: "Companion Ch V" },
+  "unity-anchor": { chapter: "IX" },
+  "morning-evening-rhythm": { chapter: "XI", companion: "Companion Ch V" },
+  "intimacy-pact": { chapter: "XIV" },
+  "consistency-pact": { chapter: "XVII" },
 };
 
 /** "Chapter XIII-A, Micro-Repairs" */

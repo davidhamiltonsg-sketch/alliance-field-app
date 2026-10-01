@@ -79,7 +79,7 @@ export const WEEKLY_RESET_MINUTES = KIT.weeklyResetMinutes;
 export function buildWeeklyResetIcs(fromDate = new Date()): { url: string; filename: string } {
   const start = new Date(fromDate.getTime() + 7 * 24 * 60 * 60 * 1000);
   const end = new Date(start.getTime() + WEEKLY_RESET_MINUTES * 60 * 1000);
-  const uid = `alliance-weekly-reset-${start.getTime()}@alliance-field-app`;
+  const uid = `alliance-weekly-reset-${start.getTime()}@allianceprotocols.com`;
   const stamp = toIcsDate(new Date());
 
   const ics = calendar([
@@ -113,7 +113,7 @@ export function buildStartPlanIcs(
   start.setDate(start.getDate() + 1);
   start.setHours(Number.isFinite(h) ? h : 20, Number.isFinite(m) ? m : 0, 0, 0);
   const end = new Date(start.getTime() + 10 * 60 * 1000);
-  const uid = `alliance-start-plan-${start.getTime()}@alliance-field-app`;
+  const uid = `alliance-start-plan-${start.getTime()}@allianceprotocols.com`;
 
   const ics = calendar([
     "BEGIN:VEVENT",
@@ -190,7 +190,7 @@ export function keepGoingIcsText(time = "19:00", fromDate = new Date()): string 
 
   const event = (uid: string, start: Date, rrule: string, summary: string, description: string) => [
     "BEGIN:VEVENT",
-    `UID:${uid}-${start.getTime()}@alliance-field-app`,
+    `UID:${uid}-${start.getTime()}@allianceprotocols.com`,
     `DTSTAMP:${stamp}`,
     `DTSTART:${toFloatingDate(start)}`,
     `DTEND:${toFloatingDate(new Date(start.getTime() + minutes))}`,
@@ -231,7 +231,7 @@ export function pauseReturnIcsText(returnAt: Date, now = new Date()): string {
   const end = new Date(returnAt.getTime() + 5 * 60 * 1000);
   return calendar([
     "BEGIN:VEVENT",
-    `UID:alliance-pause-return-${returnAt.getTime()}@alliance-field-app`,
+    `UID:alliance-pause-return-${returnAt.getTime()}@allianceprotocols.com`,
     `DTSTAMP:${toIcsDate(now)}`,
     `DTSTART:${toIcsDate(returnAt)}`,
     `DTEND:${toIcsDate(end)}`,
