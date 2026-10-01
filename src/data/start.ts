@@ -57,9 +57,9 @@ export const startDays: StartDay[] = [
   {
     day: 5,
     title: "Daily anchors",
-    task: "Run a short version of the morning and the evening check-in (about 5 minutes apiece) and mark both on a shared note.",
+    task: "Run a morning check-in (5 minutes or less) and an evening check-in (about 10 minutes), and mark both on a shared note.",
     proof: "Both anchors marked on the note.",
-    minutes: 10,
+    minutes: 15,
     slug: "morning-evening-rhythm",
   },
   {
