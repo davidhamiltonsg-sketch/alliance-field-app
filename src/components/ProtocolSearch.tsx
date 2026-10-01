@@ -115,7 +115,7 @@ export function ProtocolSearch({ protocols }: { protocols: Protocol[] }) {
           aria-pressed={favoritesOnly}
           className={`inline-flex min-h-9 items-center gap-1.5 rounded-full px-3.5 text-sm font-medium transition-colors ${
             favoritesOnly
-              ? "bg-pause text-ink"
+              ? "bg-accent text-paper"
               : "border border-rule/15 bg-white text-ink-muted"
           }`}
         >

@@ -147,7 +147,7 @@ describe("registry: banned wording", () => {
     const all = texts.map((t) => t.text);
     expect(all).toContain("What’s happening right now?");
     expect(all).toContain("Morning + Evening Rhythm");
-    expect(all.some((t) => t.startsWith("Remove from favourites"))).toBe(true);
+    expect(all).toContain("Favourites only");
   });
 
   it("no user-facing string matches a banned pattern", () => {

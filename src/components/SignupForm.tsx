@@ -72,7 +72,7 @@ export function SignupForm() {
         time the app sends anything off your device.
       </p>
       {status === "done" ? (
-        <p role="status" className="mt-2 text-base font-medium text-safety-text">
+        <p role="status" className="mt-2 text-base font-medium text-accent">
           {SIGNUP_ENDPOINT
             ? "Sent — check your inbox to confirm."
             : "Your email app should open with a message ready to send."}

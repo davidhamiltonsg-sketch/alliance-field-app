@@ -67,7 +67,7 @@ export function KeepItGoing({ lead }: { lead?: string }) {
           The file is made on this device. Prefer another day? Move the events
           in your calendar after adding them.
         </p>
-        <p role="status" className="text-sm font-medium text-safety-text empty:hidden">
+        <p role="status" className="text-sm font-medium text-accent empty:hidden">
           {added ? "Calendar file downloaded — open it to add both reminders." : ""}
         </p>
       </div>

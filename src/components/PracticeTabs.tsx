@@ -6,13 +6,13 @@ import { Marker } from "./Marker";
 type Tab = "working" | "notWorking" | "activity";
 
 const TABS: { key: Tab; label: string; tone: string }[] = [
-  { key: "working", label: "Working", tone: "border-safety/30 bg-safety/10 text-safety-text" },
+  { key: "working", label: "Working", tone: "border-accent/30 bg-accent/10 text-accent" },
   { key: "notWorking", label: "Not working", tone: "border-failure/25 bg-failure/[0.08] text-failure" },
-  { key: "activity", label: "Try it", tone: "border-accent/25 bg-accent/10 text-accent" },
+  { key: "activity", label: "Practise", tone: "border-accent/25 bg-accent/10 text-accent" },
 ];
 
 const cardTone: Record<Tab, string> = {
-  working: "border-safety/20 bg-safety/[0.05]",
+  working: "border-accent/15 bg-accent/[0.04]",
   notWorking: "border-failure/15 bg-failure/[0.04]",
   activity: "border-rule/10 bg-surface-activity",
 };
@@ -39,6 +39,8 @@ export function PracticeTabs({
             key={t.key}
             type="button"
             role="tab"
+            id={`practice-tab-${t.key}`}
+            aria-controls="practice-panel"
             aria-selected={tab === t.key}
             onClick={() => setTab(t.key)}
             className={`min-h-9 flex-1 rounded-full border px-2 text-xs font-medium transition-colors ${
@@ -49,7 +51,12 @@ export function PracticeTabs({
           </button>
         ))}
       </div>
-      <section className={`rounded-2xl border px-4 py-3.5 ${cardTone[tab]}`}>
+      <section
+        id="practice-panel"
+        role="tabpanel"
+        aria-labelledby={`practice-tab-${tab}`}
+        className={`rounded-2xl border px-4 py-3.5 ${cardTone[tab]}`}
+      >
         <Marker kind={kind} />
         <p className="mt-2 text-base leading-normal text-ink">{text}</p>
       </section>

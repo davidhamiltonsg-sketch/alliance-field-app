@@ -26,7 +26,7 @@ export function WarnBanner({
     <div
       role="alert"
       className={`v2-card relative px-4 py-3.5 text-base leading-normal shadow-none ${
-        safety ? "v2-card--safety bg-surface-tool" : "v2-card--pause bg-surface-warn"
+        safety ? "v2-card--safety bg-surface-tool" : "bg-surface-warn"
       }`}
     >
       {safety ? <Marker kind="SAFETY" /> : <Marker kind="WARN" />}

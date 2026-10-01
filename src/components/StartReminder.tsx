@@ -44,7 +44,7 @@ export function StartReminder() {
           Add reminder (.ics)
         </PrimaryButton>
       </div>
-      <p role="status" className="text-sm font-medium text-safety-text empty:hidden">
+      <p role="status" className="text-sm font-medium text-accent empty:hidden">
         {added ? "Reminder downloaded — open it to add it to your calendar." : ""}
       </p>
     </div>

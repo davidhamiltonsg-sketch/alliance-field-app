@@ -97,7 +97,7 @@ export function DeleteAllData() {
         ref={statusRef}
         role="status"
         tabIndex={-1}
-        className="text-base font-medium text-safety-text outline-none empty:hidden"
+        className="text-base font-medium text-accent outline-none empty:hidden"
       >
         {status === "done"
           ? "Deleted. Your saved answers and the offline copy are gone from this browser. If you open the app again, it starts fresh."

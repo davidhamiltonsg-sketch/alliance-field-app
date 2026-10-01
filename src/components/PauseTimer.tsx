@@ -415,7 +415,7 @@ function PauseTimerClient() {
         <PrimaryButton variant="secondary" onClick={addToCalendar}>
           Add return time to calendar (.ics)
         </PrimaryButton>
-        <p role="status" className="text-center text-sm font-medium text-safety-text empty:hidden">
+        <p role="status" className="text-center text-sm font-medium text-accent empty:hidden">
           {calendarAdded ? "Calendar file downloaded — open it to add the alarm." : ""}
         </p>
         <p className="rounded-xl bg-surface-warn px-3.5 py-2.5 text-sm leading-snug text-ink">
