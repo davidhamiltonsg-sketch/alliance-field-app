@@ -12,17 +12,17 @@ export function AppHeader() {
           aria-label="Alliance Protocols Field App, home"
         >
           <AllianceMark size={28} className="text-accent" waveColor="#A8895A" />
-          <span className="whitespace-nowrap text-[11px] font-medium tracking-[0.06em] text-ink min-[360px]:text-[13px] min-[360px]:tracking-[0.1em]">
+          <span className="whitespace-nowrap text-xs font-medium tracking-[0.06em] text-ink min-[360px]:text-sm min-[360px]:tracking-[0.1em]">
             ALLIANCE PROTOCOLS
           </span>
-          <span className="hidden rounded-full border border-accent/20 bg-surface-tool px-2 py-[3px] text-[11px] font-medium tracking-[0.08em] text-accent min-[400px]:inline">
+          <span className="hidden rounded-full border border-accent/20 bg-surface-tool px-2 py-[3px] text-xs font-medium tracking-[0.08em] text-accent min-[400px]:inline">
             FIELD
           </span>
         </Link>
         <div className="flex items-center">
           <Link
             href="/help"
-            className="inline-flex h-12 items-center rounded-full px-3 text-[13px] font-semibold text-failure transition-colors hover:bg-failure/10"
+            className="inline-flex h-12 items-center rounded-full px-3 text-sm font-semibold text-failure transition-colors hover:bg-failure/10"
             aria-label="Help and safety: help lines"
           >
             Help

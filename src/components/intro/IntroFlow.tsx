@@ -151,13 +151,13 @@ export function IntroFlow() {
         <header className="relative flex h-14 shrink-0 items-center justify-between pl-4 pr-2">
           <span className="flex items-center gap-2.5">
             <AllianceMark size={26} className="text-accent" />
-            <span className="whitespace-nowrap text-[13px] font-medium tracking-[0.1em] text-ink">
+            <span className="whitespace-nowrap text-sm font-medium tracking-[0.1em] text-ink">
               ALLIANCE PROTOCOLS
             </span>
           </span>
           <Link
             href="/"
-            className={`inline-flex min-h-11 items-center rounded-full px-4 text-[15px] font-medium text-accent transition-opacity hover:bg-accent/[0.06] ${
+            className={`inline-flex min-h-11 items-center rounded-full px-4 text-base font-medium text-accent transition-opacity hover:bg-accent/[0.06] ${
               index === last ? "pointer-events-none opacity-0" : ""
             }`}
             aria-hidden={index === last}
@@ -196,10 +196,10 @@ export function IntroFlow() {
                     <ProtocolIcon slug={p.icon} size={15} strokeWidth={2} />
                     {p.eyebrow}
                   </p>
-                  <h2 className="display mt-2.5 text-[28px] leading-[1.12]">{p.title}</h2>
-                  <p className="mt-2 text-[15px] leading-normal text-ink-muted">{p.body}</p>
+                  <h2 className="display mt-2.5 text-xl leading-[1.12]">{p.title}</h2>
+                  <p className="mt-2 text-base leading-normal text-ink-muted">{p.body}</p>
                   {p.safety && (
-                    <p className="mt-2 text-[13px] leading-snug text-ink">
+                    <p className="mt-2 text-sm leading-snug text-ink">
                       Afraid of your partner, being threatened, or not free to
                       say no? These tools are not for this.{" "}
                       <Link
@@ -212,7 +212,7 @@ export function IntroFlow() {
                     </p>
                   )}
                   {p.aside && (
-                    <p className="mt-1.5 text-[13px] italic leading-snug text-ink-muted/75">
+                    <p className="mt-1.5 text-sm italic leading-snug text-ink-muted/75">
                       {p.aside}
                     </p>
                   )}
@@ -258,7 +258,7 @@ export function IntroFlow() {
               <button
                 type="button"
                 onClick={() => goTo(index + 1)}
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-accent text-[15px] font-semibold text-paper shadow-[0_8px_20px_-10px_rgb(61_90_76/0.7)] transition active:scale-[0.99]"
+                className="inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-accent text-base font-semibold text-paper shadow-[0_8px_20px_-10px_rgb(61_90_76/0.7)] transition active:scale-[0.99]"
               >
                 Next
                 <ArrowRight size={18} />
@@ -268,7 +268,7 @@ export function IntroFlow() {
             <div className="space-y-2">
               <Link
                 href="/start"
-                className="flex h-12 items-center justify-center gap-2 rounded-2xl bg-accent text-[15px] font-semibold text-paper shadow-[0_8px_20px_-10px_rgb(61_90_76/0.7)] transition active:scale-[0.99]"
+                className="flex h-12 items-center justify-center gap-2 rounded-2xl bg-accent text-base font-semibold text-paper shadow-[0_8px_20px_-10px_rgb(61_90_76/0.7)] transition active:scale-[0.99]"
               >
                 Start the 7-day plan
                 <ArrowRight size={18} />
@@ -276,13 +276,13 @@ export function IntroFlow() {
               <div className="grid grid-cols-2 gap-2">
                 <Link
                   href="/"
-                  className="flex h-12 items-center justify-center gap-1.5 rounded-2xl border border-accent/30 bg-white text-[14px] font-semibold text-accent transition active:scale-[0.99]"
+                  className="flex h-12 items-center justify-center gap-1.5 rounded-2xl border border-accent/30 bg-white text-sm font-semibold text-accent transition active:scale-[0.99]"
                 >
                   Situation Map
                 </Link>
                 <Link
                   href="/pause"
-                  className="flex h-12 items-center justify-center gap-1.5 rounded-2xl border border-pause/35 bg-surface-activity text-[14px] font-semibold text-pause-text transition active:scale-[0.99]"
+                  className="flex h-12 items-center justify-center gap-1.5 rounded-2xl border border-pause/35 bg-surface-activity text-sm font-semibold text-pause-text transition active:scale-[0.99]"
                 >
                   <PauseIcon size={17} />
                   Pause + Return
@@ -290,7 +290,7 @@ export function IntroFlow() {
               </div>
               <Link
                 href="/about#product-line"
-                className="flex min-h-11 items-center justify-center text-[14px] font-medium text-accent underline-offset-4 hover:underline"
+                className="flex min-h-11 items-center justify-center text-sm font-medium text-accent underline-offset-4 hover:underline"
               >
                 See the full system (optional)
               </Link>

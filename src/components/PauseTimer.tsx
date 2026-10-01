@@ -291,7 +291,7 @@ function PauseTimerClient() {
   );
 
   const chip =
-    "min-h-12 rounded-xl border border-rule/[0.12] bg-white text-[15px] font-medium text-ink shadow-[0_1px_2px_rgb(26_26_26/0.04)] transition hover:border-pause/40 hover:bg-surface-warn active:scale-[0.98]";
+    "min-h-12 rounded-xl border border-rule/[0.12] bg-white text-base font-medium text-ink shadow-[0_1px_2px_rgb(26_26_26/0.04)] transition hover:border-pause/40 hover:bg-surface-warn active:scale-[0.98]";
 
   if (backMode) {
     return (
@@ -303,28 +303,28 @@ function PauseTimerClient() {
         </WarnBanner>
         <section className="card space-y-3 px-4 py-4">
           <Marker kind="OK" label="Restart cue" />
-          <ol className="space-y-2 text-[15px] leading-normal">
+          <ol className="space-y-2 text-base leading-normal">
             <li className="flex gap-3">
-              <span className="tabular flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent text-[13px] font-medium text-paper">1</span>
+              <span className="tabular flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent text-sm font-medium text-paper">1</span>
               <span><strong>Warmth</strong> — one warm true sentence.</span>
             </li>
             <li className="flex gap-3">
-              <span className="tabular flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent text-[13px] font-medium text-paper">2</span>
+              <span className="tabular flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent text-sm font-medium text-paper">2</span>
               <span><strong>Safety</strong> — Alliance not threatened this moment.</span>
             </li>
             <li className="flex gap-3">
-              <span className="tabular flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent text-[13px] font-medium text-paper">3</span>
+              <span className="tabular flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent text-sm font-medium text-paper">3</span>
               <span>Only then: Expression → Request → Alignment.</span>
             </li>
           </ol>
           <ul className="space-y-2 pt-1">
-            <li className="phrase-block phrase text-[17px] leading-snug">I’m back. I’m on your team.</li>
-            <li className="phrase-block phrase text-[17px] leading-snug">This isn’t a breakup conversation.</li>
+            <li className="phrase-block phrase text-base leading-snug">I’m back. I’m on your team.</li>
+            <li className="phrase-block phrase text-base leading-snug">This isn’t a breakup conversation.</li>
           </ul>
         </section>
         <Link
           href="/protocols/system-overlay"
-          className="flex min-h-12 items-center justify-center gap-1.5 text-[15px] font-medium text-repair"
+          className="flex min-h-12 items-center justify-center gap-1.5 text-base font-medium text-repair"
         >
           Open System Overlay
           <ArrowRight size={16} />
@@ -346,7 +346,7 @@ function PauseTimerClient() {
         {live}
         <div className="card flex flex-col items-center px-4 pb-5 pt-6">
           <TimerDisplay remainingMs={remainingMs} totalMs={totalMs} expired={expired} />
-          <p className="mt-4 text-[15px] text-ink-muted">
+          <p className="mt-4 text-base text-ink-muted">
             Ready at{" "}
             <strong className="tabular font-medium text-ink">{formatClock(at)}</strong>
           </p>
@@ -360,10 +360,10 @@ function PauseTimerClient() {
         <PrimaryButton variant="secondary" onClick={addToCalendar}>
           Add return time to calendar (.ics)
         </PrimaryButton>
-        <p role="status" className="text-center text-[13px] font-medium text-safety-text empty:hidden">
+        <p role="status" className="text-center text-sm font-medium text-safety-text empty:hidden">
           {calendarAdded ? "Calendar file downloaded — open it to add the alarm." : ""}
         </p>
-        <p className="rounded-xl bg-surface-warn px-3.5 py-2.5 text-[13px] leading-snug text-ink">
+        <p className="rounded-xl bg-surface-warn px-3.5 py-2.5 text-sm leading-snug text-ink">
           <strong className="font-medium">Keep this screen open</strong> —
           phones may silence alarms in the background. For a backup, add the
           return time to your calendar.
@@ -371,7 +371,7 @@ function PauseTimerClient() {
         <PrimaryButton variant="ghost" onClick={cancel}>
           Cancel pause
         </PrimaryButton>
-        <p className="text-center text-[13px] text-ink-muted">
+        <p className="text-center text-sm text-ink-muted">
           Separate · calm down · don’t rehearse the argument.
         </p>
       </div>
@@ -388,14 +388,14 @@ function PauseTimerClient() {
           idleLabel="00:00"
           caption="Choose a return time"
         />
-        <p className="mt-3 text-center text-[15px] leading-normal text-ink-muted">
+        <p className="mt-3 text-center text-base leading-normal text-ink-muted">
           Exact phrase:{" "}
-          <span className="phrase text-[15px] text-ink">“I’ll be ready at ___.”</span>
+          <span className="phrase text-base text-ink">“I’ll be ready at ___.”</span>
         </p>
       </div>
 
       <section className="space-y-2">
-        <p className="text-[13px] font-medium text-ink">Duration</p>
+        <p className="text-sm font-medium text-ink">Duration</p>
         <div className="grid grid-cols-12 gap-2">
           {DURATIONS.map((d, i) => (
             <button
@@ -412,7 +412,7 @@ function PauseTimerClient() {
 
       <section className="grid grid-cols-1 gap-3 min-[400px]:grid-cols-2">
         <div className="space-y-2">
-          <label htmlFor="custom-minutes" className="block text-[13px] font-medium text-ink">
+          <label htmlFor="custom-minutes" className="block text-sm font-medium text-ink">
             Custom minutes
           </label>
           <div className="flex gap-2">
@@ -456,18 +456,18 @@ function PauseTimerClient() {
             </PrimaryButton>
           </div>
           {customError ? (
-            <p id="custom-minutes-hint" role="alert" className="text-[13px] text-failure">
+            <p id="custom-minutes-hint" role="alert" className="text-sm text-failure">
               {customError}
             </p>
           ) : (
-            <p id="custom-minutes-hint" className="text-[13px] text-ink-muted">
+            <p id="custom-minutes-hint" className="text-sm text-ink-muted">
               Min 20 · Max 1440 (24h)
             </p>
           )}
         </div>
 
         <div className="space-y-2">
-          <label htmlFor="clock-time" className="block text-[13px] font-medium text-ink">
+          <label htmlFor="clock-time" className="block text-sm font-medium text-ink">
             Or return at a clock time
           </label>
           <div className="flex gap-2">
@@ -494,11 +494,11 @@ function PauseTimerClient() {
             </PrimaryButton>
           </div>
           {clockTimeError ? (
-            <p id="clock-time-hint" role="alert" className="text-[13px] text-failure">
+            <p id="clock-time-hint" role="alert" className="text-sm text-failure">
               {clockTimeError}
             </p>
           ) : (
-            <p id="clock-time-hint" className="text-[13px] text-ink-muted">
+            <p id="clock-time-hint" className="text-sm text-ink-muted">
               Min 20 min · Max 24h away
             </p>
           )}

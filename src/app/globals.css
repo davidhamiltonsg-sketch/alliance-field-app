@@ -13,10 +13,30 @@
   /* Pause-amber for text: >= 4.6:1 on paper, surface-warn and pause/12 pills. */
   --color-pause-text: #8F5610;
   --color-repair: #2F5F8A;
+  /* Stop / get help / "Not working" only. */
   --color-failure: #A33B2B;
+  --color-stop: #A33B2B;
+  /* Connection only: the logo bridge, Connection Cards, icon accent strokes. Never text. */
+  --color-brass: #A8895A;
   --color-surface-tool: #EEF2EF;
   --color-surface-activity: #F3F0E8;
   --color-surface-warn: #F7EDE6;
+
+  /* Type scale (design/tokens.json): 12 / 14 / 16 / 20 / 28 / 40. The
+     Tailwind defaults are cleared so only these six sizes exist. */
+  --text-*: initial;
+  --text-xs: 12px;
+  --text-xs--line-height: 1.4;
+  --text-sm: 14px;
+  --text-sm--line-height: 1.45;
+  --text-base: 16px;
+  --text-base--line-height: 1.5;
+  --text-lg: 20px;
+  --text-lg--line-height: 1.35;
+  --text-xl: 28px;
+  --text-xl--line-height: 1.2;
+  --text-2xl: 40px;
+  --text-2xl--line-height: 1.1;
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui,
     "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -37,7 +57,7 @@ body {
   color: var(--color-ink);
   font-family: var(--font-sans);
   min-height: 100dvh;
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.5;
   text-rendering: optimizeLegibility;
   /* Soft, intentional canvas on wide screens; the app column sits on top. */
@@ -92,7 +112,7 @@ b {
 
   /* Small tracked label (the only all-caps in the UI) */
   .eyebrow {
-    font-size: 11px;
+    font-size: 12px;
     line-height: 1;
     font-weight: 500;
     letter-spacing: 0.08em;
@@ -127,7 +147,7 @@ b {
     height: 1.5rem;
     padding: 0 0.625rem;
     border-radius: 999px;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -171,6 +191,8 @@ b {
     background: #fff;
     padding: 0.625rem 0.875rem;
     color: var(--color-ink);
+    /* Never below 16px: iOS zooms into smaller inputs. */
+    font-size: 16px;
     line-height: 1.5;
     transition: border-color 140ms ease, box-shadow 140ms ease;
   }

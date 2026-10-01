@@ -24,13 +24,13 @@ export function StartReminder() {
 
   return (
     <div className="card space-y-3 px-4 py-4">
-      <p className="text-[15px] font-medium text-ink">Want a daily nudge?</p>
-      <p className="text-[13px] leading-snug text-ink-muted">
+      <p className="text-base font-medium text-ink">Want a daily nudge?</p>
+      <p className="text-sm leading-snug text-ink-muted">
         Adds a 10-minute reminder to your calendar for the next seven days,
         starting tomorrow. The file is made on this device.
       </p>
       <div className="flex items-end gap-2">
-        <label htmlFor={id} className="flex flex-col gap-1 text-[13px] font-medium text-ink">
+        <label htmlFor={id} className="flex flex-col gap-1 text-sm font-medium text-ink">
           Time
           <input
             id={id}
@@ -44,7 +44,7 @@ export function StartReminder() {
           Add reminder (.ics)
         </PrimaryButton>
       </div>
-      <p role="status" className="text-[13px] font-medium text-safety-text empty:hidden">
+      <p role="status" className="text-sm font-medium text-safety-text empty:hidden">
         {added ? "Reminder downloaded — open it to add it to your calendar." : ""}
       </p>
     </div>

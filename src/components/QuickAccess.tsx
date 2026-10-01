@@ -38,7 +38,7 @@ function Strip({
               className="v2-card flex w-[152px] shrink-0 flex-col items-start gap-2 px-3.5 py-3"
             >
               <IconTablet slug={p.slug} tone={tone} size="sm" />
-              <span className="display line-clamp-2 text-[14px] leading-snug">
+              <span className="display line-clamp-2 text-sm leading-snug">
                 {p.title}
               </span>
             </Link>
@@ -67,7 +67,7 @@ export function QuickAccess() {
 
   if (favorites.length === 0 && recent.length === 0) {
     return (
-      <p className="px-1 text-[13px] leading-normal text-ink-muted">
+      <p className="px-1 text-sm leading-normal text-ink-muted">
         Nothing pinned yet. Star a protocol below and it&apos;ll wait for you
         here.
       </p>

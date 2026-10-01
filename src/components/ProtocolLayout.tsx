@@ -27,7 +27,7 @@ export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
       <header className={`-mx-4 space-y-3 border-b px-4 pb-4 sm:mx-0 sm:rounded-2xl sm:border ${headerWash[tone]}`}>
         <Link
           href="/protocols"
-          className="-ml-1 inline-flex min-h-10 items-center gap-1.5 rounded-full px-1 text-[13px] font-medium text-ink-muted hover:text-accent"
+          className="-ml-1 inline-flex min-h-10 items-center gap-1.5 rounded-full px-1 text-sm font-medium text-ink-muted hover:text-accent"
         >
           <ArrowLeft size={16} />
           All protocols
@@ -38,10 +38,10 @@ export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
           <span className="flex-1" />
           <FavoriteButton slug={protocol.slug} recordVisit />
         </div>
-        <h1 className="display text-[28px] leading-[1.08]">
+        <h1 className="display text-xl leading-[1.08]">
           {protocol.title}
         </h1>
-        <p className="text-[17px] leading-normal text-ink">{protocol.concept}</p>
+        <p className="text-base leading-normal text-ink">{protocol.concept}</p>
       </header>
 
       {protocol.warn && <WarnBanner safetyLink={protocol.safetyLink}>{protocol.warn}</WarnBanner>}
@@ -64,7 +64,7 @@ export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
       {protocol.note && (
         <aside className="card space-y-2 px-4 py-3.5" aria-label="Note">
           <Marker kind="NOTE" />
-          <p className="text-[15px] leading-normal text-ink">{protocol.note}</p>
+          <p className="text-base leading-normal text-ink">{protocol.note}</p>
         </aside>
       )}
 
@@ -82,13 +82,13 @@ export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
                 {c.href ? (
                   <Link
                     href={c.href}
-                    className="flex min-h-12 items-center justify-between gap-3 px-4 text-[15px] font-medium text-ink transition-colors hover:bg-surface-tool"
+                    className="flex min-h-12 items-center justify-between gap-3 px-4 text-base font-medium text-ink transition-colors hover:bg-surface-tool"
                   >
                     {c.label}
                     <ChevronRight size={18} className="text-ink-muted/50" />
                   </Link>
                 ) : (
-                  <span className="flex min-h-12 items-center px-4 text-[15px] text-ink-muted">
+                  <span className="flex min-h-12 items-center px-4 text-base text-ink-muted">
                     {c.label}
                   </span>
                 )}
@@ -101,7 +101,7 @@ export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
       <nav className="flex flex-wrap items-center gap-2 border-t border-rule/[0.08] pt-4">
         <Link
           href="/"
-          className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-rule/15 bg-white px-4 text-[13px] font-medium text-accent"
+          className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-rule/15 bg-white px-4 text-sm font-medium text-accent"
         >
           <ArrowLeft size={16} />
           Situation Map
@@ -109,7 +109,7 @@ export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
         {protocol.slug === "pause-and-return" && (
           <Link
             href="/pause"
-            className="inline-flex min-h-11 items-center gap-1.5 rounded-full bg-pause px-4 text-[13px] font-medium text-ink"
+            className="inline-flex min-h-11 items-center gap-1.5 rounded-full bg-pause px-4 text-sm font-medium text-ink"
           >
             Start timer
             <ArrowRight size={16} />
@@ -118,7 +118,7 @@ export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
         {protocol.slug === "weekly-reset" && (
           <Link
             href="/weekly-reset"
-            className="inline-flex min-h-11 items-center gap-1.5 rounded-full bg-accent px-4 text-[13px] font-medium text-paper"
+            className="inline-flex min-h-11 items-center gap-1.5 rounded-full bg-accent px-4 text-sm font-medium text-paper"
           >
             Open Weekly Reset
             <ArrowRight size={16} />

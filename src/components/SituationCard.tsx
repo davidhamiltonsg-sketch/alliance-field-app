@@ -90,15 +90,15 @@ export function SituationCard({
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2.5">
               {typeof index === "number" && <LensNumber n={String(index + 1).padStart(2, "0")} />}
-              <span className="text-[17px] font-medium leading-snug text-ink">
+              <span className="text-base font-medium leading-snug text-ink">
                 {situation.label}
               </span>
             </div>
-            <span className="mt-1 block text-[13px] leading-snug text-ink-muted">
+            <span className="mt-1 block text-sm leading-snug text-ink-muted">
               {situation.description}
             </span>
             <span
-              className={`mt-2.5 flex items-center gap-2 text-[13px] font-medium leading-snug ${moveText[tone]}`}
+              className={`mt-2.5 flex items-center gap-2 text-sm font-medium leading-snug ${moveText[tone]}`}
             >
               <RouteThread color={threadColor[tone]} />
               {iconSlug && (
@@ -123,7 +123,7 @@ export function SituationCard({
                 href={s.href}
                 className="group inline-flex min-h-12 items-center"
               >
-                <span className="v2-tab inline-flex h-8 items-center gap-1 px-3 text-[13px] font-medium text-repair transition-colors group-hover:bg-repair/[0.06]">
+                <span className="v2-tab inline-flex h-8 items-center gap-1 px-3 text-sm font-medium text-repair transition-colors group-hover:bg-repair/[0.06]">
                   {s.label}
                   <ChevronRight size={14} strokeWidth={2.25} />
                 </span>

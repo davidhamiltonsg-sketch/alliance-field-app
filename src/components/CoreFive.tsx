@@ -12,7 +12,7 @@ export function CoreFive() {
       <SectionLabel>
         <span id="core-five-heading">Start with the Core 5</span>
       </SectionLabel>
-      <p className="px-1 text-[15px] leading-normal text-ink-muted">
+      <p className="px-1 text-base leading-normal text-ink-muted">
         Five tools cover most hard moments. Learn these first; everything else
         can wait.
       </p>
@@ -30,11 +30,11 @@ export function CoreFive() {
                 <span className={`v2-edge v2-edge--${tone}`} aria-hidden />
                 <IconTablet slug={c.slug} tone={tone} size="sm" />
                 <span className="min-w-0 flex-1">
-                  <span className="display block text-[16px] leading-snug">
+                  <span className="display block text-base leading-snug">
                     <span className="tabular text-ink-muted">{i + 1}. </span>
                     {p.title}
                   </span>
-                  <span className="mt-0.5 block text-[13px] leading-snug text-ink-muted">
+                  <span className="mt-0.5 block text-sm leading-snug text-ink-muted">
                     {c.why}
                   </span>
                 </span>
@@ -46,7 +46,7 @@ export function CoreFive() {
       </ol>
       <Link
         href="/start"
-        className="inline-flex min-h-11 items-center gap-1.5 px-1 text-[15px] font-medium text-accent"
+        className="inline-flex min-h-11 items-center gap-1.5 px-1 text-base font-medium text-accent"
       >
         Follow the 7-day start plan
         <ArrowRight size={16} />

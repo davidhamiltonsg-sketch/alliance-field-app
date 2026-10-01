@@ -13,23 +13,20 @@ export const metadata = { title: "About" };
 const products = [
   {
     name: "Operating Manual",
-    tag: "Manual",
     body: "Depth, theory, Full Recovery, decks.",
   },
   {
     name: "Field Kit",
-    tag: "Kit",
     body: "Cards, worksheets, Situation Map — the source for this app.",
   },
   {
     name: "Complete Bundle",
-    tag: "Bundle",
     body: "Manual and Kit together, with the Alliance Protocols Field App as the pocket companion.",
   },
 ];
 
-/** Miniature of the store covers: accent field, mark, tracked label. */
-function CoverThumb({ tag }: { tag: string }) {
+/** Miniature of the store covers: accent field and mark (the name sits beside it). */
+function CoverThumb() {
   return (
     <span
       className="relative flex h-[79px] w-14 shrink-0 flex-col items-center justify-center gap-1.5 overflow-hidden rounded-md bg-accent text-paper shadow-[0_2px_6px_rgb(26_26_26/0.18)]"
@@ -38,9 +35,6 @@ function CoverThumb({ tag }: { tag: string }) {
       <span className="absolute inset-0 bg-[radial-gradient(80%_60%_at_50%_0%,rgb(255_255_255/0.16),transparent_70%)]" />
       <AllianceMark size={24} className="relative" />
       <span className="relative h-px w-7 bg-paper/35" />
-      <span className="relative text-[6.5px] font-medium uppercase tracking-[0.08em] pl-[0.08em]">
-        {tag}
-      </span>
     </span>
   );
 }
@@ -55,31 +49,31 @@ export default function AboutPage() {
         />
         <div className="relative flex flex-col items-center">
           <AllianceMark size={76} className="text-paper" title="ALLIANCE PROTOCOLS" />
-          <h1 className="mt-4 text-[20px] font-medium tracking-[0.14em] pl-[0.14em]">
+          <h1 className="mt-4 text-lg font-medium tracking-[0.14em] pl-[0.14em]">
             ALLIANCE PROTOCOLS
           </h1>
-          <p className="mt-2 text-[11px] font-medium uppercase tracking-[0.08em] pl-[0.08em] text-paper/75">
+          <p className="mt-2 text-xs font-medium uppercase tracking-[0.08em] pl-[0.08em] text-paper/75">
             Field App
           </p>
           <div className="my-4 h-px w-40 bg-paper/25" aria-hidden />
-          <p className="phrase text-[17px] leading-snug">We are an alliance.</p>
-          <p className="phrase mt-0.5 text-[17px] leading-snug">
+          <p className="phrase text-base leading-snug">We are an alliance.</p>
+          <p className="phrase mt-0.5 text-base leading-snug">
             Built for precision. Designed for connection.
           </p>
-          <p className="mt-3 text-[13px] text-paper/80">
+          <p className="mt-3 text-sm text-paper/80">
             by David Hamilton and Dr Zhongming Shi
           </p>
         </div>
       </section>
 
       <section className="space-y-2">
-        <p className="text-[15px] leading-normal text-ink">
+        <p className="text-base leading-normal text-ink">
           A relationship operating system with named tools — clear protocols,
           not pep talks.
         </p>
         <a
           href="#product-line"
-          className="inline-flex min-h-11 items-center gap-1.5 text-[15px] font-medium text-accent"
+          className="inline-flex min-h-11 items-center gap-1.5 text-base font-medium text-accent"
         >
           Explore the product line
           <ArrowRight size={16} />
@@ -89,12 +83,12 @@ export default function AboutPage() {
       <section className="space-y-3">
         <SectionLabel>Why this exists</SectionLabel>
         <div className="rounded-2xl border border-accent/20 bg-surface-tool px-4 py-3.5">
-          <p className="phrase text-[16px] leading-snug text-accent">
+          <p className="phrase text-base leading-snug text-accent">
             &ldquo;The Alliance&rdquo; was our own working agreement long
             before Alliance Protocols was a product.
           </p>
         </div>
-        <p className="text-[15px] leading-normal text-ink">
+        <p className="text-base leading-normal text-ink">
           Dami and I built it from our own relationship — how we come back to
           each other, what we say when things go sideways, what we promise
           not to do. This app, the Manual, and the Field Kit are that same
@@ -106,12 +100,12 @@ export default function AboutPage() {
         <SectionLabel>
           <span id="lineage-heading">Where these tools come from</span>
         </SectionLabel>
-        <p className="text-[15px] leading-normal text-ink">
+        <p className="text-base leading-normal text-ink">
           Alliance Protocols is our own synthesis, written by the authors. It is
           informed by research and clinical frameworks, adapted into named
           tools:
         </p>
-        <ul className="space-y-1.5 pl-4 text-[15px] leading-normal text-ink-muted">
+        <ul className="space-y-1.5 pl-4 text-base leading-normal text-ink-muted">
           <li className="list-disc">
             <strong className="font-medium text-ink">Gottman research</strong> — flooding,
             repair attempts, gentle start-up, rituals of connection.
@@ -129,7 +123,7 @@ export default function AboutPage() {
             how outside pressure lands on a couple.
           </li>
         </ul>
-        <p className="text-[13px] leading-normal text-ink-muted">
+        <p className="text-sm leading-normal text-ink-muted">
           The system as a whole has not been tested in a controlled study.
           It is a practical toolkit, not therapy, and not a substitute for
           professional help.
@@ -141,8 +135,8 @@ export default function AboutPage() {
           <span id="authors-heading">About the authors</span>
         </SectionLabel>
         <div className="card px-4 py-3.5">
-          <h3 className="display text-[17px] leading-snug">{authorNames.join(" & ")}</h3>
-          <p className="mt-2 text-[15px] leading-normal text-ink">{aboutAuthors}</p>
+          <h3 className="display text-lg leading-snug">{authorNames.join(" & ")}</h3>
+          <p className="mt-2 text-base leading-normal text-ink">{aboutAuthors}</p>
         </div>
       </section>
 
@@ -153,18 +147,18 @@ export default function AboutPage() {
         <ul className="space-y-2.5">
           {products.map((p) => (
             <li key={p.name} className="card flex items-center gap-3.5 p-2.5 pr-4">
-              <CoverThumb tag={p.tag} />
+              <CoverThumb />
               <div className="min-w-0">
-                <p className="display text-[17px] leading-snug">{p.name}</p>
-                <p className="mt-0.5 text-[13px] leading-snug text-ink-muted">{p.body}</p>
+                <p className="display text-lg leading-snug">{p.name}</p>
+                <p className="mt-0.5 text-sm leading-snug text-ink-muted">{p.body}</p>
               </div>
             </li>
           ))}
           <li className="card flex items-center gap-3.5 border-accent/20 bg-surface-tool p-2.5 pr-4">
-            <CoverThumb tag="App" />
+            <CoverThumb />
             <div className="min-w-0">
-              <p className="display text-[17px] leading-snug">Field App</p>
-              <p className="mt-0.5 text-[13px] leading-snug text-ink-muted">
+              <p className="display text-lg leading-snug">Field App</p>
+              <p className="mt-0.5 text-sm leading-snug text-ink-muted">
                 This pocket companion: route under stress, exact phrases, Pause
                 timer, Weekly Reset, Profile Calibration.
               </p>
@@ -179,7 +173,7 @@ export default function AboutPage() {
       >
         <span className="absolute inset-y-0 left-0 w-1 bg-pause" aria-hidden />
         <Marker kind="NOTE" label="Feeling checked out?" />
-        <p className="mt-2 text-[15px] leading-normal">
+        <p className="mt-2 text-base leading-normal">
           <strong>Not sure if it&apos;s space or withdrawal?</strong> Run the
           Uninvestment Check. 0–2 signs: likely needs space. 3 or more: may
           be pulling away — book a Full Recovery within a week. Hope
@@ -187,7 +181,7 @@ export default function AboutPage() {
         </p>
         <Link
           href="/protocols/uninvestment-check"
-          className="-mb-1.5 mt-1 inline-flex min-h-11 items-center gap-1.5 text-[15px] font-medium text-repair"
+          className="-mb-1.5 mt-1 inline-flex min-h-11 items-center gap-1.5 text-base font-medium text-repair"
         >
           Open Uninvestment Check
           <ArrowRight size={16} />
@@ -213,11 +207,11 @@ export default function AboutPage() {
           <li>
             <Link
               href="/help"
-              className="flex min-h-12 items-center justify-between px-4 text-[15px] font-medium text-ink hover:bg-surface-tool"
+              className="flex min-h-12 items-center justify-between px-4 text-base font-medium text-ink hover:bg-surface-tool"
             >
               <span className="flex flex-col py-2.5">
                 Help &amp; safety
-                <span className="text-[13px] font-normal text-ink-muted">
+                <span className="text-sm font-normal text-ink-muted">
                   Help lines and when not to use this app
                 </span>
               </span>
@@ -227,11 +221,11 @@ export default function AboutPage() {
           <li>
             <Link
               href="/intro"
-              className="flex min-h-12 items-center justify-between px-4 text-[15px] font-medium text-ink hover:bg-surface-tool"
+              className="flex min-h-12 items-center justify-between px-4 text-base font-medium text-ink hover:bg-surface-tool"
             >
               <span className="flex flex-col py-2.5">
                 Intro
-                <span className="text-[13px] font-normal text-ink-muted">
+                <span className="text-sm font-normal text-ink-muted">
                   How the app works, in six short panels
                 </span>
               </span>
@@ -241,11 +235,11 @@ export default function AboutPage() {
           <li>
             <Link
               href="/start"
-              className="flex min-h-12 items-center justify-between px-4 text-[15px] font-medium text-ink hover:bg-surface-tool"
+              className="flex min-h-12 items-center justify-between px-4 text-base font-medium text-ink hover:bg-surface-tool"
             >
               <span className="flex flex-col py-2.5">
                 7-day start
-                <span className="text-[13px] font-normal text-ink-muted">
+                <span className="text-sm font-normal text-ink-muted">
                   The Core 5, about 10 minutes a day
                 </span>
               </span>
@@ -255,11 +249,11 @@ export default function AboutPage() {
           <li>
             <Link
               href="/together"
-              className="flex min-h-12 items-center justify-between px-4 text-[15px] font-medium text-ink hover:bg-surface-tool"
+              className="flex min-h-12 items-center justify-between px-4 text-base font-medium text-ink hover:bg-surface-tool"
             >
               <span className="flex flex-col py-2.5">
                 Together against outside pressure
-                <span className="text-[13px] font-normal text-ink-muted">
+                <span className="text-sm font-normal text-ink-muted">
                   For interracial, intercultural and other couples facing outside pressure
                 </span>
               </span>
@@ -269,7 +263,7 @@ export default function AboutPage() {
           <li>
             <Link
               href="/install"
-              className="flex min-h-12 items-center justify-between px-4 text-[15px] font-medium text-ink hover:bg-surface-tool"
+              className="flex min-h-12 items-center justify-between px-4 text-base font-medium text-ink hover:bg-surface-tool"
             >
               7-Day Install plan
               <ChevronRight size={18} className="text-ink-muted/50" />
@@ -278,11 +272,11 @@ export default function AboutPage() {
           <li>
             <Link
               href="/calibrate"
-              className="flex min-h-12 items-center justify-between px-4 text-[15px] font-medium text-ink hover:bg-surface-tool"
+              className="flex min-h-12 items-center justify-between px-4 text-base font-medium text-ink hover:bg-surface-tool"
             >
               <span className="flex flex-col py-2.5">
                 Profile Calibration
-                <span className="text-[13px] font-normal text-ink-muted">
+                <span className="text-sm font-normal text-ink-muted">
                   44 questions each — a Layer Scan and a couple report
                 </span>
               </span>
@@ -292,11 +286,11 @@ export default function AboutPage() {
           <li>
             <Link
               href="/connect"
-              className="flex min-h-12 items-center justify-between px-4 text-[15px] font-medium text-ink hover:bg-surface-tool"
+              className="flex min-h-12 items-center justify-between px-4 text-base font-medium text-ink hover:bg-surface-tool"
             >
               <span className="flex flex-col py-2.5">
                 Connection Cards
-                <span className="text-[13px] font-normal text-ink-muted">
+                <span className="text-sm font-normal text-ink-muted">
                   A flip-card game for reconnecting on purpose
                 </span>
               </span>
@@ -306,14 +300,14 @@ export default function AboutPage() {
           <li>
             <Link
               href="/"
-              className="flex min-h-12 items-center justify-between px-4 text-[15px] font-medium text-ink hover:bg-surface-tool"
+              className="flex min-h-12 items-center justify-between px-4 text-base font-medium text-ink hover:bg-surface-tool"
             >
               Situation Map
               <ChevronRight size={18} className="text-ink-muted/50" />
             </Link>
           </li>
         </ul>
-        <p className="px-1 text-[13px] leading-normal text-ink-muted">
+        <p className="px-1 text-sm leading-normal text-ink-muted">
           Private by default: pause return times, Weekly Reset answers, and
           calibration answers all stay on this device. The only time data
           leaves it is if you choose to submit your email for updates.{" "}

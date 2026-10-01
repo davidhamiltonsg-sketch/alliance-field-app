@@ -37,7 +37,7 @@ export default function TogetherPage() {
 
       <Link
         href="/protocols/unity-anchor"
-        className="flex min-h-12 items-center justify-between rounded-xl bg-accent px-4 text-[15px] font-semibold text-paper"
+        className="flex min-h-12 items-center justify-between rounded-xl bg-accent px-4 text-base font-semibold text-paper"
       >
         Open the Unity Anchor
         <ArrowRight size={16} />
@@ -47,7 +47,7 @@ export default function TogetherPage() {
         <SectionLabel>
           <span id="about-heading">What this is about</span>
         </SectionLabel>
-        <div className="space-y-3 text-[15px] leading-normal text-ink">
+        <div className="space-y-3 text-base leading-normal text-ink">
           <p>
             Some pressure on a relationship starts inside it: chores, money,
             sex, sleep. Some starts outside — {outsideExamples.slice(0, -1).join("; ")}; or{" "}
@@ -60,7 +60,7 @@ export default function TogetherPage() {
             outside strain can reach into couples&apos; lives. The protocols
             draw on that literature; they don&apos;t claim to settle it.
           </p>
-          <p className="text-[13px] leading-normal text-ink-muted">
+          <p className="text-sm leading-normal text-ink-muted">
             {TOGETHER_CITATION.text}{" "}
             <a
               href={TOGETHER_CITATION.href}
@@ -72,7 +72,7 @@ export default function TogetherPage() {
             </a>
           </p>
           <div className="rounded-2xl border border-accent/20 bg-surface-tool px-4 py-3.5">
-            <p className="text-[15px] leading-normal text-ink">
+            <p className="text-base leading-normal text-ink">
               The hard part is rarely the comment itself. It&apos;s what comes
               after: one of you wants to confront it, the other wants to keep
               the peace. One of you felt it, the other didn&apos;t see it.
@@ -90,8 +90,8 @@ export default function TogetherPage() {
         </SectionLabel>
         <ol className="card space-y-2.5 px-4 py-4">
           {anchor.steps.map((step, i) => (
-            <li key={i} className="flex gap-3 text-[15px] leading-normal text-ink">
-              <span className="tabular flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent text-[13px] font-medium text-paper">
+            <li key={i} className="flex gap-3 text-base leading-normal text-ink">
+              <span className="tabular flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent text-sm font-medium text-paper">
                 {i + 1}
               </span>
               <span className="min-w-0">{step}</span>
@@ -99,7 +99,7 @@ export default function TogetherPage() {
           ))}
         </ol>
         <PhraseBlock phrases={anchor.phrases.slice(0, 2)} />
-        <div className="card px-4 py-3.5 text-[15px] leading-normal text-ink">
+        <div className="card px-4 py-3.5 text-base leading-normal text-ink">
           <p>
             <strong className="font-medium">Built-in safeguard.</strong> The
             Unity Anchor decides how the two of you respond to outside
@@ -117,9 +117,9 @@ export default function TogetherPage() {
         <ul className="space-y-2.5">
           {commonMoves.map((m) => (
             <li key={m.move} className="card px-4 py-3.5">
-              <h3 className="display text-[17px] leading-snug">{m.move}</h3>
-              <p className="mt-1 text-[13px] leading-snug text-ink-muted">{m.result}</p>
-              <p className="mt-2 text-[15px] leading-normal text-ink">
+              <h3 className="display text-lg leading-snug">{m.move}</h3>
+              <p className="mt-1 text-sm leading-snug text-ink-muted">{m.result}</p>
+              <p className="mt-2 text-base leading-normal text-ink">
                 <span className="font-medium text-accent">Alliance move: </span>
                 {m.alliance}
               </p>
@@ -137,11 +137,11 @@ export default function TogetherPage() {
             <li key={t.href}>
               <Link
                 href={t.href}
-                className="flex min-h-12 items-center justify-between gap-3 px-4 text-[15px] font-medium text-ink hover:bg-surface-tool"
+                className="flex min-h-12 items-center justify-between gap-3 px-4 text-base font-medium text-ink hover:bg-surface-tool"
               >
                 <span className="flex flex-col py-2.5">
                   {t.label}
-                  <span className="text-[13px] font-normal text-ink-muted">{t.note}</span>
+                  <span className="text-sm font-normal text-ink-muted">{t.note}</span>
                 </span>
                 <ChevronRight size={18} className="shrink-0 text-ink-muted/50" />
               </Link>
@@ -154,7 +154,7 @@ export default function TogetherPage() {
         <SectionLabel>
           <span id="who-heading">Who it&apos;s for</span>
         </SectionLabel>
-        <ul className="space-y-1.5 pl-5 text-[15px] leading-normal text-ink">
+        <ul className="space-y-1.5 pl-5 text-base leading-normal text-ink">
           {whoFor.map((w) => (
             <li key={w} className="list-disc">
               {w}
@@ -167,7 +167,7 @@ export default function TogetherPage() {
         <SectionLabel>
           <span id="notfor-heading">Who it&apos;s not for</span>
         </SectionLabel>
-        <ul className="space-y-1.5 pl-5 text-[15px] leading-normal text-ink">
+        <ul className="space-y-1.5 pl-5 text-base leading-normal text-ink">
           {notFor.map((w) => (
             <li key={w} className="list-disc">
               {w}
@@ -185,7 +185,7 @@ export default function TogetherPage() {
         <SectionLabel>
           <span id="limits-heading">Where this comes from, and its limits</span>
         </SectionLabel>
-        <div className="card space-y-3 px-4 py-4 text-[15px] leading-normal text-ink">
+        <div className="card space-y-3 px-4 py-4 text-base leading-normal text-ink">
           <p>{authorsCoupleLine}</p>
           <p>
             Alliance Protocols is informed by research and clinical frameworks,
@@ -208,14 +208,14 @@ export default function TogetherPage() {
         <ul className="space-y-2.5">
           {togetherFaq.map((f) => (
             <li key={f.q} className="card px-4 py-3.5">
-              <h3 className="text-[15px] font-semibold leading-snug text-ink">{f.q}</h3>
-              <p className="mt-1.5 text-[15px] leading-normal text-ink-muted">{f.a}</p>
+              <h3 className="text-base font-semibold leading-snug text-ink">{f.q}</h3>
+              <p className="mt-1.5 text-base leading-normal text-ink-muted">{f.a}</p>
             </li>
           ))}
         </ul>
       </section>
 
-      <Link href="/" className="inline-flex min-h-12 items-center gap-1.5 text-[15px] font-medium text-accent">
+      <Link href="/" className="inline-flex min-h-12 items-center gap-1.5 text-base font-medium text-accent">
         <ArrowLeft size={16} />
         Situation Map
       </Link>

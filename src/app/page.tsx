@@ -34,30 +34,30 @@ export default function HomePage() {
             </span>
             <span className="eyebrow text-accent">Field App</span>
           </div>
-          <h1 className="display mt-4 text-[28px] leading-[1.05]">
+          <h1 className="display mt-4 text-xl leading-[1.05]">
             Situation Map
           </h1>
-          <p className="phrase mt-1.5 text-[17px] leading-snug text-ink-muted">
+          <p className="phrase mt-1.5 text-base leading-snug text-ink-muted">
             We are an alliance.
           </p>
-          <p className="phrase mt-0.5 text-[17px] leading-snug text-ink-muted">
+          <p className="phrase mt-0.5 text-base leading-snug text-ink-muted">
             Built for precision. Designed for connection.
           </p>
-          <p className="mt-3 text-[15px] leading-normal text-ink-muted">
+          <p className="mt-3 text-base leading-normal text-ink-muted">
             Start here when you don’t know which card to pull. Follow the first
             matching row.
           </p>
           <div className="mt-3 flex flex-wrap gap-x-4">
             <Link
               href="/start"
-              className="inline-flex min-h-10 items-center gap-1.5 rounded-full text-[13px] font-medium text-accent hover:underline"
+              className="inline-flex min-h-10 items-center gap-1.5 rounded-full text-sm font-medium text-accent hover:underline"
             >
               New here? Start the 7-day plan
               <ArrowRight size={15} />
             </Link>
             <Link
               href="/intro"
-              className="inline-flex min-h-10 items-center gap-1.5 rounded-full text-[13px] font-medium text-accent hover:underline"
+              className="inline-flex min-h-10 items-center gap-1.5 rounded-full text-sm font-medium text-accent hover:underline"
             >
               See how it works
               <ArrowRight size={15} />
@@ -74,10 +74,10 @@ export default function HomePage() {
           <PauseIcon size={20} strokeWidth={2.25} />
         </span>
         <span className="min-w-0 flex-1">
-          <span className="block text-[17px] font-semibold leading-tight">
+          <span className="block text-base font-semibold leading-tight">
             Start Pause + Return
           </span>
-          <span className="mt-0.5 block text-[13px] leading-tight text-white/85">
+          <span className="mt-0.5 block text-sm leading-tight text-white/85">
             Flooded? Set a return time first.
           </span>
         </span>
@@ -92,10 +92,10 @@ export default function HomePage() {
           <LayersIcon size={20} strokeWidth={2.25} />
         </span>
         <span className="min-w-0 flex-1">
-          <span className="block text-[17px] font-semibold leading-tight">
+          <span className="block text-base font-semibold leading-tight">
             Play Connection Cards
           </span>
-          <span className="mt-0.5 block text-[13px] leading-tight text-white/85">
+          <span className="mt-0.5 block text-sm leading-tight text-white/85">
             Flip through questions — Warmth, Curiosity, Care, Repair, Alliance.
           </span>
         </span>
@@ -110,10 +110,10 @@ export default function HomePage() {
           <GaugeIcon size={20} strokeWidth={2.25} />
         </span>
         <span className="min-w-0 flex-1">
-          <span className="block text-[17px] font-semibold leading-tight">
+          <span className="block text-base font-semibold leading-tight">
             Run Profile Calibration
           </span>
-          <span className="mt-0.5 block text-[13px] leading-tight text-paper/85">
+          <span className="mt-0.5 block text-sm leading-tight text-paper/85">
             44 questions each → a Layer Scan and a couple report.
           </span>
         </span>
@@ -140,7 +140,7 @@ export default function HomePage() {
 
       <footer className="flex flex-col items-center gap-2 pt-3 text-center">
         <AllianceMark size={22} className="text-accent/70" />
-        <p className="text-[13px] leading-normal text-ink-muted">
+        <p className="text-sm leading-normal text-ink-muted">
           ALLIANCE PROTOCOLS · We are an alliance.
           <br />
           Built for precision. Designed for connection.

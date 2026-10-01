@@ -20,10 +20,10 @@ export default function HelpPage() {
         aria-labelledby="danger-heading"
         className="v2-card v2-card--failure space-y-3 bg-surface-warn px-4 py-4 shadow-none"
       >
-        <h2 id="danger-heading" className="text-[17px] font-semibold leading-snug text-failure">
+        <h2 id="danger-heading" className="text-base font-semibold leading-snug text-failure">
           Immediate danger
         </h2>
-        <p className="text-[15px] leading-normal text-ink">
+        <p className="text-base leading-normal text-ink">
           Call your local emergency number.
         </p>
         <ul className="grid grid-cols-2 gap-2 min-[400px]:grid-cols-4">
@@ -33,8 +33,8 @@ export default function HelpPage() {
                 href={n.href}
                 className="flex min-h-12 flex-col items-center justify-center rounded-xl bg-failure px-2 py-1.5 text-center text-white"
               >
-                <span className="tabular text-[17px] font-semibold leading-tight">{n.display}</span>
-                <span className="text-[11px] font-medium leading-tight text-white/90">{n.label}</span>
+                <span className="tabular text-lg font-semibold leading-tight">{n.display}</span>
+                <span className="text-xs font-medium leading-tight text-white/90">{n.label}</span>
               </a>
             </li>
           ))}
@@ -48,7 +48,7 @@ export default function HelpPage() {
         <ul className="space-y-3">
           {helpRegions.map((r) => (
             <li key={r.region} className="card overflow-hidden">
-              <h3 className="px-4 pb-1 pt-3 text-[13px] font-semibold uppercase tracking-[0.08em] text-accent">
+              <h3 className="px-4 pb-1 pt-3 text-sm font-semibold uppercase tracking-[0.08em] text-accent">
                 {r.region}
               </h3>
               <ul className="divide-y divide-rule/[0.07]">
@@ -58,8 +58,8 @@ export default function HelpPage() {
                       href={l.href}
                       className="flex min-h-12 items-center justify-between gap-3 px-4 py-2.5 hover:bg-surface-tool"
                     >
-                      <span className="min-w-0 text-[15px] leading-snug text-ink">{l.label}</span>
-                      <span className="tabular shrink-0 text-[15px] font-semibold text-accent underline underline-offset-4">
+                      <span className="min-w-0 text-base leading-snug text-ink">{l.label}</span>
+                      <span className="tabular shrink-0 text-base font-semibold text-accent underline underline-offset-4">
                         {l.display}
                       </span>
                     </a>
@@ -69,12 +69,12 @@ export default function HelpPage() {
             </li>
           ))}
         </ul>
-        <p className="px-1 text-[15px] leading-normal text-ink-muted">{ELSEWHERE_LINE}</p>
+        <p className="px-1 text-base leading-normal text-ink-muted">{ELSEWHERE_LINE}</p>
       </section>
 
       <section id="not-for" className="scroll-mt-20 space-y-3">
         <SectionLabel>When not to use this app</SectionLabel>
-        <div className="card space-y-3 px-4 py-4 text-[15px] leading-normal text-ink">
+        <div className="card space-y-3 px-4 py-4 text-base leading-normal text-ink">
           <p>
             This app is a communication and repair tool. It is not a substitute
             for professional help, and it is not built for situations involving
@@ -108,14 +108,14 @@ export default function HelpPage() {
         <SectionLabel>Flooded, but safe?</SectionLabel>
         <Link
           href="/pause"
-          className="flex min-h-12 items-center justify-between rounded-xl border border-rule/[0.1] bg-white px-4 text-[15px] font-medium text-accent"
+          className="flex min-h-12 items-center justify-between rounded-xl border border-rule/[0.1] bg-white px-4 text-base font-medium text-accent"
         >
           Pause + Return timer
           <ArrowRight size={16} />
         </Link>
         <Link
           href="/protocols/60-second-reset"
-          className="flex min-h-12 items-center justify-between rounded-xl border border-rule/[0.1] bg-white px-4 text-[15px] font-medium text-accent"
+          className="flex min-h-12 items-center justify-between rounded-xl border border-rule/[0.1] bg-white px-4 text-base font-medium text-accent"
         >
           60-Second Alliance Reset
           <ArrowRight size={16} />

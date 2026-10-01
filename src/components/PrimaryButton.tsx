@@ -24,7 +24,7 @@ export function PrimaryButton({
   return (
     <button
       type="button"
-      className={`inline-flex min-h-12 ${fullWidth ? "w-full" : ""} items-center justify-center gap-2 rounded-xl px-4 text-[15px] font-semibold transition active:scale-[0.99] disabled:pointer-events-none disabled:opacity-40 ${variants[variant]} ${className}`}
+      className={`inline-flex min-h-12 ${fullWidth ? "w-full" : ""} items-center justify-center gap-2 rounded-xl px-4 text-base font-semibold transition active:scale-[0.99] disabled:pointer-events-none disabled:opacity-40 ${variants[variant]} ${className}`}
       {...rest}
     >
       {children}

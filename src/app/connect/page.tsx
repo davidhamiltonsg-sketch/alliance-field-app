@@ -19,7 +19,7 @@ export default function ConnectPage() {
       <ConnectionCards />
       <Link
         href="/"
-        className="inline-flex min-h-12 items-center gap-1.5 text-[15px] font-medium text-accent"
+        className="inline-flex min-h-12 items-center gap-1.5 text-base font-medium text-accent"
       >
         <ArrowLeft size={16} />
         Situation Map

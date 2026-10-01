@@ -33,7 +33,7 @@ export default function PrivacyPage() {
         <SectionLabel>
           <span id="who-heading">Who &ldquo;we&rdquo; are</span>
         </SectionLabel>
-        <div className="card space-y-3 px-4 py-4 text-[15px] leading-normal text-ink">
+        <div className="card space-y-3 px-4 py-4 text-base leading-normal text-ink">
           <p>
             Alliance Protocols and this Field App are made by David Hamilton
             and Dr Zhongming Shi, in Singapore. We handle personal data in line
@@ -54,7 +54,7 @@ export default function PrivacyPage() {
         <SectionLabel>
           <span id="device-heading">What stays on your device</span>
         </SectionLabel>
-        <div className="card space-y-3 px-4 py-4 text-[15px] leading-normal text-ink">
+        <div className="card space-y-3 px-4 py-4 text-base leading-normal text-ink">
           <p>
             The app has no account and no server database. What you enter is
             saved in your browser&apos;s own storage on this device, and is
@@ -87,7 +87,7 @@ export default function PrivacyPage() {
         <SectionLabel>
           <span id="email-heading">The only data that leaves your device</span>
         </SectionLabel>
-        <div className="card space-y-3 px-4 py-4 text-[15px] leading-normal text-ink">
+        <div className="card space-y-3 px-4 py-4 text-base leading-normal text-ink">
           <p>
             <strong className="font-medium">Your email address</strong>, if you
             choose to submit it in the &ldquo;Get updates by email&rdquo; form.
@@ -123,7 +123,7 @@ export default function PrivacyPage() {
         <SectionLabel>
           <span id="tracking-heading">No analytics or trackers</span>
         </SectionLabel>
-        <div className="card space-y-3 px-4 py-4 text-[15px] leading-normal text-ink">
+        <div className="card space-y-3 px-4 py-4 text-base leading-normal text-ink">
           <p>
             The app has no analytics, no advertising and no tracking pixels. It
             loads no third-party scripts; fonts are served from the app itself.
@@ -131,7 +131,7 @@ export default function PrivacyPage() {
           <p>
             <strong className="font-medium">One cookie, only before launch.</strong>{" "}
             While the app is in early access, entering the access code sets a
-            single cookie (<code className="text-[14px]">ap_access</code>) so
+            single cookie (<code className="text-sm">ap_access</code>) so
             you don&apos;t have to type the code again. It holds a signed token,
             not the code and nothing about you; page scripts can&apos;t read it
             (httpOnly); it expires after 30 days; and it isn&apos;t used for
@@ -152,7 +152,7 @@ export default function PrivacyPage() {
         <SectionLabel>
           <span id="children-heading">Children</span>
         </SectionLabel>
-        <p className="px-1 text-[15px] leading-normal text-ink">
+        <p className="px-1 text-base leading-normal text-ink">
           Alliance Protocols is for adult couples. It is not directed at anyone
           under 18, and we don&apos;t knowingly collect email addresses from
           under-18s. If you think we have one, email us and we&apos;ll delete it.
@@ -163,17 +163,17 @@ export default function PrivacyPage() {
         <SectionLabel>
           <span id="changes-heading">Changes to this notice</span>
         </SectionLabel>
-        <p className="px-1 text-[15px] leading-normal text-ink">
+        <p className="px-1 text-base leading-normal text-ink">
           If what the app stores or sends ever changes, we&apos;ll update this
           page first and change the date below. If you&apos;re on the mailing
           list and the change affects your email address, we&apos;ll tell you.
         </p>
-        <p className="px-1 text-[13px] leading-normal text-ink-muted">
+        <p className="px-1 text-sm leading-normal text-ink-muted">
           Last updated {PRIVACY_LAST_UPDATED}
         </p>
       </section>
 
-      <Link href="/about" className="inline-flex min-h-12 items-center gap-1.5 text-[15px] font-medium text-accent">
+      <Link href="/about" className="inline-flex min-h-12 items-center gap-1.5 text-base font-medium text-accent">
         <ArrowLeft size={16} />
         About
       </Link>

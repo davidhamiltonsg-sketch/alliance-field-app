@@ -41,7 +41,7 @@ export function PracticeTabs({
             role="tab"
             aria-selected={tab === t.key}
             onClick={() => setTab(t.key)}
-            className={`min-h-9 flex-1 rounded-full border px-2 text-[12.5px] font-medium transition-colors ${
+            className={`min-h-9 flex-1 rounded-full border px-2 text-xs font-medium transition-colors ${
               tab === t.key ? t.tone : "border-rule/15 bg-white text-ink-muted"
             }`}
           >
@@ -51,7 +51,7 @@ export function PracticeTabs({
       </div>
       <section className={`rounded-2xl border px-4 py-3.5 ${cardTone[tab]}`}>
         <Marker kind={kind} />
-        <p className="mt-2 text-[15px] leading-normal text-ink">{text}</p>
+        <p className="mt-2 text-base leading-normal text-ink">{text}</p>
       </section>
     </div>
   );

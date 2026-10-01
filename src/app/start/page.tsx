@@ -25,21 +25,21 @@ export default function StartPage() {
           return (
             <li key={d.day} className="card px-4 py-3.5">
               <div className="flex items-center gap-3">
-                <span className="tabular flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent text-[13px] font-medium text-paper">
+                <span className="tabular flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent text-sm font-medium text-paper">
                   {d.day}
                 </span>
-                <h2 className="display min-w-0 flex-1 text-[17px] leading-snug">
+                <h2 className="display min-w-0 flex-1 text-lg leading-snug">
                   <span className="sr-only">Day {d.day}: </span>
                   {d.title}
                 </h2>
-                <span className="tabular shrink-0 text-[13px] text-ink-muted">~{d.minutes} min</span>
+                <span className="tabular shrink-0 text-sm text-ink-muted">~{d.minutes} min</span>
               </div>
-              <p className="mt-2 pl-11 text-[15px] leading-normal text-ink-muted">{d.task}</p>
+              <p className="mt-2 pl-11 text-base leading-normal text-ink-muted">{d.task}</p>
               <div className="mt-1 flex flex-wrap gap-x-5 pl-11">
                 {card && (
                   <Link
                     href={`/protocols/${d.slug}`}
-                    className="inline-flex min-h-11 items-center gap-1.5 text-[15px] font-medium text-accent"
+                    className="inline-flex min-h-11 items-center gap-1.5 text-base font-medium text-accent"
                   >
                     {card.title}
                     <ArrowRight size={16} />
@@ -48,7 +48,7 @@ export default function StartPage() {
                 {d.tool && (
                   <Link
                     href={d.tool.href}
-                    className="inline-flex min-h-11 items-center gap-1.5 text-[15px] font-medium text-accent"
+                    className="inline-flex min-h-11 items-center gap-1.5 text-base font-medium text-accent"
                   >
                     {d.tool.label}
                     <ArrowRight size={16} />
@@ -72,7 +72,7 @@ export default function StartPage() {
         flooding — these tools are not for this. Get outside help.
       </WarnBanner>
 
-      <p className="text-[13px] leading-normal text-ink-muted">
+      <p className="text-sm leading-normal text-ink-muted">
         Want the longer, Kit-based version? See the{" "}
         <Link href="/install" className="font-medium text-accent underline underline-offset-4">
           7-Day Install
@@ -80,7 +80,7 @@ export default function StartPage() {
         .
       </p>
 
-      <Link href="/" className="inline-flex min-h-12 items-center gap-1.5 text-[15px] font-medium text-accent">
+      <Link href="/" className="inline-flex min-h-12 items-center gap-1.5 text-base font-medium text-accent">
         <ArrowLeft size={16} />
         Situation Map
       </Link>

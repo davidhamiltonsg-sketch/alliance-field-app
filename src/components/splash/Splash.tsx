@@ -167,16 +167,16 @@ export function Splash() {
             <path className="sp-over" pathLength={1} d={WAVE} stroke="#A8895A" strokeWidth="8.5" />
           </g>
         </svg>
-        <p className="splash-word mt-7 text-[17px] font-medium tracking-[0.14em] text-ink">
+        <p className="splash-word mt-7 text-base font-medium tracking-[0.14em] text-ink">
           ALLIANCE PROTOCOLS
         </p>
         {splashMode === "full" ? (
-          <p className="splash-tag phrase mt-2 text-[17px] leading-snug text-ink-muted">
+          <p className="splash-tag phrase mt-2 text-base leading-snug text-ink-muted">
             {ALLIANCE_LINE}
           </p>
         ) : null}
         <p
-          className={`splash-tag phrase text-[17px] leading-snug text-ink-muted ${
+          className={`splash-tag phrase text-base leading-snug text-ink-muted ${
             splashMode === "full" ? "mt-0.5" : "mt-2"
           }`}
         >

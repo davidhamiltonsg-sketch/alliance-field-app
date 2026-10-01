@@ -12,9 +12,9 @@ export function PageHeader({
   return (
     <header className="space-y-2 pt-1">
       {eyebrow ? <div>{eyebrow}</div> : null}
-      <h1 className="display text-[28px] leading-[1.1]">{title}</h1>
+      <h1 className="display text-xl leading-[1.1]">{title}</h1>
       {children ? (
-        <p className="text-[15px] leading-normal text-ink-muted">{children}</p>
+        <p className="text-base leading-normal text-ink-muted">{children}</p>
       ) : null}
     </header>
   );

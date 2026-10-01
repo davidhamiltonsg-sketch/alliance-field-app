@@ -45,7 +45,7 @@ export function AppNav() {
                   {iconFor[item.href]}
                 </span>
                 <span
-                  className={`text-[11px] leading-none ${
+                  className={`text-xs leading-none ${
                     active ? "font-semibold text-accent" : "font-medium text-ink-muted"
                   }`}
                 >

@@ -33,11 +33,11 @@ export function KeepItGoing({ lead }: { lead?: string }) {
         <span id={`${id}-heading`}>Keep it going</span>
       </SectionLabel>
       <div className="card space-y-3 px-4 py-4">
-        <p className="text-[15px] leading-normal text-ink">
+        <p className="text-base leading-normal text-ink">
           {lead ?? "The system works when it's on the calendar."} One file adds
           two repeating reminders:
         </p>
-        <ul className="space-y-1.5 pl-4 text-[13px] leading-snug text-ink-muted">
+        <ul className="space-y-1.5 pl-4 text-sm leading-snug text-ink-muted">
           <li className="list-disc">
             <strong className="font-medium text-ink">Weekly Reset</strong> —
             every Sunday, about 40 minutes.
@@ -49,7 +49,7 @@ export function KeepItGoing({ lead }: { lead?: string }) {
           </li>
         </ul>
         <div className="flex items-end gap-2">
-          <label htmlFor={id} className="flex flex-col gap-1 text-[13px] font-medium text-ink">
+          <label htmlFor={id} className="flex flex-col gap-1 text-sm font-medium text-ink">
             Sunday at
             <input
               id={id}
@@ -63,11 +63,11 @@ export function KeepItGoing({ lead }: { lead?: string }) {
             Add to calendar (.ics)
           </PrimaryButton>
         </div>
-        <p className="text-[13px] leading-snug text-ink-muted">
+        <p className="text-sm leading-snug text-ink-muted">
           The file is made on this device. Prefer another day? Move the events
           in your calendar after adding them.
         </p>
-        <p role="status" className="text-[13px] font-medium text-safety-text empty:hidden">
+        <p role="status" className="text-sm font-medium text-safety-text empty:hidden">
           {added ? "Calendar file downloaded — open it to add both reminders." : ""}
         </p>
       </div>

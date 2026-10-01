@@ -68,10 +68,10 @@ export function ProtocolSearch({ protocols }: { protocols: Protocol[] }) {
               <span className={`v2-edge v2-edge--${tone}`} aria-hidden />
               <IconTablet slug={p.slug} tone={tone} size="md" />
               <span className="min-w-0 flex-1">
-                <span className="display block text-[17px] leading-snug">
+                <span className="display block text-lg leading-snug">
                   {p.title}
                 </span>
-                <span className="mt-0.5 line-clamp-2 block text-[13px] leading-snug text-ink-muted">
+                <span className="mt-0.5 line-clamp-2 block text-sm leading-snug text-ink-muted">
                   {p.concept}
                 </span>
               </span>
@@ -107,7 +107,7 @@ export function ProtocolSearch({ protocols }: { protocols: Protocol[] }) {
           type="button"
           onClick={() => setFavoritesOnly((v) => !v)}
           aria-pressed={favoritesOnly}
-          className={`inline-flex min-h-9 items-center gap-1.5 rounded-full px-3.5 text-[13px] font-medium transition-colors ${
+          className={`inline-flex min-h-9 items-center gap-1.5 rounded-full px-3.5 text-sm font-medium transition-colors ${
             favoritesOnly
               ? "bg-pause text-ink"
               : "border border-rule/15 bg-white text-ink-muted"
@@ -119,7 +119,7 @@ export function ProtocolSearch({ protocols }: { protocols: Protocol[] }) {
       )}
 
       {filtered.length === 0 ? (
-        <p className="py-8 text-center text-[15px] text-ink-muted">
+        <p className="py-8 text-center text-base text-ink-muted">
           {favoritesOnly
             ? "No favorites yet. Tap the star on any card to save it here."
             : <>No cards match &ldquo;{query}&rdquo;. Try a different word, or browse the full list from the Situation Map.</>}

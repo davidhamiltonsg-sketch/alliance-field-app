@@ -16,19 +16,19 @@ export default function InstallPage() {
         {installDays.map((d) => (
           <li key={d.day} className="card px-4 py-3.5">
             <div className="flex items-center gap-3">
-              <span className="tabular flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent text-[13px] font-medium text-paper">
+              <span className="tabular flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent text-sm font-medium text-paper">
                 {d.day}
               </span>
-              <p className="display text-[17px] leading-snug">{d.title}</p>
+              <p className="display text-lg leading-snug">{d.title}</p>
             </div>
-            <ul className="mt-2.5 space-y-1 pl-11 text-[15px] leading-normal text-ink-muted">
+            <ul className="mt-2.5 space-y-1 pl-11 text-base leading-normal text-ink-muted">
               {d.bullets.map((b) => (
                 <li key={b} className="relative before:absolute before:-left-3 before:top-[0.7em] before:h-1 before:w-1 before:rounded-full before:bg-accent/40">
                   {b}
                 </li>
               ))}
             </ul>
-            <div className="mt-3 flex flex-wrap items-center gap-2 rounded-xl bg-safety/[0.06] px-3 py-2 text-[13px] text-ink">
+            <div className="mt-3 flex flex-wrap items-center gap-2 rounded-xl bg-safety/[0.06] px-3 py-2 text-sm text-ink">
               <Marker kind="OK" label="Proof" />
               <span>{d.proof}</span>
             </div>
@@ -37,7 +37,7 @@ export default function InstallPage() {
       </ol>
       <Link
         href="/"
-        className="inline-flex min-h-12 items-center gap-1.5 text-[15px] font-medium text-accent"
+        className="inline-flex min-h-12 items-center gap-1.5 text-base font-medium text-accent"
       >
         <ArrowLeft size={16} />
         Situation Map

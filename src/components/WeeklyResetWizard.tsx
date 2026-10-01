@@ -30,7 +30,7 @@ export function WeeklyResetWizard() {
     () => false
   );
   if (!mounted) {
-    return <p className="py-6 text-center text-[15px] text-ink-muted">Loading…</p>;
+    return <p className="py-6 text-center text-base text-ink-muted">Loading…</p>;
   }
   return <WeeklyResetWizardClient />;
 }
@@ -104,11 +104,11 @@ function WeeklyResetWizardClient() {
     return (
       <div className="space-y-4">
         <Marker kind="OK" label="Complete" />
-        <h2 className="display text-[28px] leading-tight">Reset locked</h2>
-        <p className="text-[14px] leading-normal text-ink-muted">
+        <h2 className="display text-xl leading-tight">Reset locked</h2>
+        <p className="text-sm leading-normal text-ink-muted">
           Forty minutes, five parts, zero group text required.
         </p>
-        <div className="card space-y-2 px-4 py-3.5 text-[15px] leading-normal">
+        <div className="card space-y-2 px-4 py-3.5 text-base leading-normal">
           <p>
             <strong>Next step:</strong> {draft.nextStep || "—"}
           </p>
@@ -120,7 +120,7 @@ function WeeklyResetWizardClient() {
           {calendarAdded ? "Reminder downloaded ✓" : "Add weekly reminder to calendar"}
         </PrimaryButton>
         {recent.length > 0 && (
-          <div className="card space-y-2 px-4 py-3.5 text-[13px] leading-normal">
+          <div className="card space-y-2 px-4 py-3.5 text-sm leading-normal">
             <p className="font-medium text-ink-muted">Recent resets</p>
             <ul className="space-y-1.5">
               {recent.map((r, i) => (
@@ -139,13 +139,13 @@ function WeeklyResetWizardClient() {
         <button
           type="button"
           onClick={clear}
-          className="w-full min-h-12 rounded-xl border border-rule/15 text-[15px] font-medium text-ink"
+          className="w-full min-h-12 rounded-xl border border-rule/15 text-base font-medium text-ink"
         >
           Start a new reset
         </button>
         <Link
           href="/"
-          className="flex min-h-12 items-center justify-center gap-1.5 text-[15px] font-medium text-accent"
+          className="flex min-h-12 items-center justify-center gap-1.5 text-base font-medium text-accent"
         >
           <ArrowLeft size={16} />
           Situation Map
@@ -193,7 +193,7 @@ function WeeklyResetWizardClient() {
           onBack={() => setStep(1)}
           onNext={() => setStep(3)}
         >
-          <p className="text-[13px] leading-normal text-ink-muted">
+          <p className="text-sm leading-normal text-ink-muted">
             Once a month, run the Care Check-in here: go through each area
             below.
           </p>
@@ -203,7 +203,7 @@ function WeeklyResetWizardClient() {
                 key={row.domain}
                 className="rounded-xl border border-rule/[0.08] bg-surface-activity px-3 py-3"
               >
-                <p className="text-[15px] font-medium">{row.domain}</p>
+                <p className="text-base font-medium">{row.domain}</p>
                 <div className="mt-2 flex flex-wrap gap-2">
                   {(["balanced", "skewed"] as const).map((b) => (
                     <button
@@ -211,7 +211,7 @@ function WeeklyResetWizardClient() {
                       type="button"
                       onClick={() => updateCare(i, { balance: b })}
                       aria-pressed={row.balance === b}
-                      className={`min-h-11 rounded-full px-3.5 text-[13px] font-medium capitalize transition-colors ${
+                      className={`min-h-11 rounded-full px-3.5 text-sm font-medium capitalize transition-colors ${
                         row.balance === b
                           ? "bg-accent text-paper"
                           : "border border-rule/15 bg-white text-ink"
@@ -226,7 +226,7 @@ function WeeklyResetWizardClient() {
                       type="button"
                       onClick={() => updateCare(i, { rebalance: r })}
                       aria-pressed={row.rebalance === r}
-                      className={`min-h-11 rounded-full px-3.5 text-[13px] font-medium transition-colors ${
+                      className={`min-h-11 rounded-full px-3.5 text-sm font-medium transition-colors ${
                         row.rebalance === r
                           ? "bg-repair text-paper"
                           : "border border-rule/15 bg-white text-ink"
@@ -295,7 +295,7 @@ function WeeklyResetWizardClient() {
           onBack={() => setStep(3)}
           onNext={() => setStep(5)}
         >
-          <p className="text-[15px] leading-normal text-ink-muted">
+          <p className="text-base leading-normal text-ink-muted">
             Confirm one specific ask each for next week (from friction). Edit
             below if needed. Requests and next steps share the last 5
             minutes.
@@ -346,20 +346,20 @@ function WeeklyResetWizardClient() {
 
       {confirmClear ? (
         <div role="group" aria-label="Clear Weekly Reset data" className="space-y-2 rounded-xl border border-rule/15 bg-white px-3.5 py-3">
-          <p className="text-[13px] leading-normal text-ink-muted">
+          <p className="text-sm leading-normal text-ink-muted">
             What should be cleared from this device?
           </p>
           <button
             type="button"
             onClick={clear}
-            className="w-full min-h-11 rounded-xl border border-rule/15 text-[14px] font-medium text-ink"
+            className="w-full min-h-11 rounded-xl border border-rule/15 text-sm font-medium text-ink"
           >
             This week&apos;s answers only
           </button>
           <button
             type="button"
             onClick={clearAll}
-            className="w-full min-h-11 rounded-xl border border-failure/40 text-[14px] font-medium text-failure"
+            className="w-full min-h-11 rounded-xl border border-failure/40 text-sm font-medium text-failure"
           >
             This week and all history
             {history.length > 0 ? ` (${history.length} past ${history.length === 1 ? "reset" : "resets"})` : ""}
@@ -367,7 +367,7 @@ function WeeklyResetWizardClient() {
           <button
             type="button"
             onClick={() => setConfirmClear(false)}
-            className="w-full min-h-11 rounded-xl text-[13px] font-medium text-ink-muted"
+            className="w-full min-h-11 rounded-xl text-sm font-medium text-ink-muted"
           >
             Cancel
           </button>
@@ -376,7 +376,7 @@ function WeeklyResetWizardClient() {
         <button
           type="button"
           onClick={() => setConfirmClear(true)}
-          className="w-full min-h-12 rounded-xl text-[13px] font-medium text-ink-muted hover:bg-ink/[0.04]"
+          className="w-full min-h-12 rounded-xl text-sm font-medium text-ink-muted hover:bg-ink/[0.04]"
         >
           Clear entries…
         </button>

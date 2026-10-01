@@ -18,7 +18,7 @@ const noopSubscribe = () => () => {};
 export function CalibrationReport() {
   const mounted = useSyncExternalStore(noopSubscribe, () => true, () => false);
   if (!mounted) {
-    return <p className="py-6 text-center text-[15px] text-ink-muted">Loading…</p>;
+    return <p className="py-6 text-center text-base text-ink-muted">Loading…</p>;
   }
   return <CalibrationReportClient />;
 }
@@ -71,7 +71,7 @@ function CalibrationReportClient() {
       </PageHeader>
 
       {state.aPrivate && (
-        <p className="rounded-2xl border border-accent/20 bg-surface-tool px-4 py-3 text-[13px] leading-normal text-ink-muted">
+        <p className="rounded-2xl border border-accent/20 bg-surface-tool px-4 py-3 text-sm leading-normal text-ink-muted">
           {state.personA.name} kept their individual profile private, so this shows only the couple report.
         </p>
       )}
@@ -82,8 +82,8 @@ function CalibrationReportClient() {
           {LAYER_ORDER.map((layer) => (
             <div key={layer} className="space-y-1.5">
               <div className="flex items-baseline justify-between">
-                <span className="text-[14px] font-medium text-ink">{layer}</span>
-                <span className="tabular text-[13px] text-ink-muted">{report.layerHealth[layer]}</span>
+                <span className="text-sm font-medium text-ink">{layer}</span>
+                <span className="tabular text-sm text-ink-muted">{report.layerHealth[layer]}</span>
               </div>
               <div className="h-2 w-full overflow-hidden rounded-full bg-accent/10">
                 <div
@@ -94,14 +94,14 @@ function CalibrationReportClient() {
             </div>
           ))}
         </div>
-        <p className="px-1 text-[13px] leading-normal text-ink-muted">
+        <p className="px-1 text-sm leading-normal text-ink-muted">
           Lower means the two of you diverge more in that layer — worth stabilizing first, not a verdict on the relationship.
         </p>
       </section>
 
       <section className="space-y-2.5">
         <SectionLabel>Conflict pattern</SectionLabel>
-        <p className="card px-4 py-3.5 text-[15px] leading-normal text-ink">{report.conflictPattern}</p>
+        <p className="card px-4 py-3.5 text-base leading-normal text-ink">{report.conflictPattern}</p>
       </section>
 
       {report.coreMismatch.length > 0 && (
@@ -109,7 +109,7 @@ function CalibrationReportClient() {
           <SectionLabel>Where you diverge</SectionLabel>
           <ul className="card divide-y divide-rule/[0.07] px-4">
             {report.coreMismatch.map((line) => (
-              <li key={line} className="py-3 text-[15px] leading-normal text-ink">
+              <li key={line} className="py-3 text-base leading-normal text-ink">
                 {line}
               </li>
             ))}
@@ -121,7 +121,7 @@ function CalibrationReportClient() {
         <SectionLabel>Likely misreads</SectionLabel>
         <ul className="card divide-y divide-rule/[0.07] px-4">
           {report.misreadRisks.map((line) => (
-            <li key={line} className="py-3 text-[15px] leading-normal text-ink">
+            <li key={line} className="py-3 text-base leading-normal text-ink">
               {line}
             </li>
           ))}
@@ -132,7 +132,7 @@ function CalibrationReportClient() {
         <SectionLabel>Strengths</SectionLabel>
         <ul className="card divide-y divide-rule/[0.07] px-4">
           {report.strengths.map((line) => (
-            <li key={line} className="py-3 text-[15px] leading-normal text-ink">
+            <li key={line} className="py-3 text-base leading-normal text-ink">
               {line}
             </li>
           ))}
@@ -150,8 +150,8 @@ function CalibrationReportClient() {
                   className="v2-card card-interactive flex items-start justify-between gap-3 px-4 py-3.5"
                 >
                   <span className="min-w-0">
-                    <span className="display block text-[16px] leading-snug">{t.title}</span>
-                    <span className="mt-0.5 block text-[13px] leading-snug text-ink-muted">{t.reason}</span>
+                    <span className="display block text-base leading-snug">{t.title}</span>
+                    <span className="mt-0.5 block text-sm leading-snug text-ink-muted">{t.reason}</span>
                   </span>
                   <ArrowRight size={18} className="mt-1 shrink-0 text-ink-muted/50" />
                 </Link>
@@ -168,7 +168,7 @@ function CalibrationReportClient() {
       <section className="space-y-2">
         <SectionLabel>Evidence limitations</SectionLabel>
         {report.evidenceLimitations.map((line) => (
-          <p key={line} className="text-[13px] leading-normal text-ink-muted">
+          <p key={line} className="text-sm leading-normal text-ink-muted">
             {line}
           </p>
         ))}
@@ -177,7 +177,7 @@ function CalibrationReportClient() {
       <button
         type="button"
         onClick={() => router.push("/calibrate")}
-        className="w-full min-h-12 rounded-xl border border-rule/15 text-[15px] font-medium text-ink"
+        className="w-full min-h-12 rounded-xl border border-rule/15 text-base font-medium text-ink"
       >
         Recalibrate
       </button>
@@ -200,22 +200,22 @@ export function SoloProfile({ profile, otherName, preview = false }: { profile: 
 
       <section className="space-y-2.5">
         <SectionLabel>How safety builds</SectionLabel>
-        <p className="card px-4 py-3.5 text-[15px] leading-normal text-ink">{profile.safetyLogic}</p>
+        <p className="card px-4 py-3.5 text-base leading-normal text-ink">{profile.safetyLogic}</p>
       </section>
 
       <section className="space-y-2.5">
         <SectionLabel>How care lands</SectionLabel>
-        <p className="card px-4 py-3.5 text-[15px] leading-normal text-ink">{profile.careStyle}</p>
+        <p className="card px-4 py-3.5 text-base leading-normal text-ink">{profile.careStyle}</p>
       </section>
 
       <section className="space-y-2.5">
         <SectionLabel>Under stress</SectionLabel>
-        <p className="card px-4 py-3.5 text-[15px] leading-normal text-ink">{profile.conflictResponse}</p>
+        <p className="card px-4 py-3.5 text-base leading-normal text-ink">{profile.conflictResponse}</p>
       </section>
 
       <section className="space-y-2.5">
         <SectionLabel>Privacy &amp; autonomy</SectionLabel>
-        <p className="card px-4 py-3.5 text-[15px] leading-normal text-ink">{profile.privacyAutonomy}</p>
+        <p className="card px-4 py-3.5 text-base leading-normal text-ink">{profile.privacyAutonomy}</p>
       </section>
 
       {profile.patterns.length > 0 && (
@@ -223,7 +223,7 @@ export function SoloProfile({ profile, otherName, preview = false }: { profile: 
           <SectionLabel>Patterns</SectionLabel>
           <ul className="card divide-y divide-rule/[0.07] px-4">
             {profile.patterns.map((line) => (
-              <li key={line} className="py-3 text-[15px] leading-normal text-ink">
+              <li key={line} className="py-3 text-base leading-normal text-ink">
                 {line}
               </li>
             ))}
@@ -235,7 +235,7 @@ export function SoloProfile({ profile, otherName, preview = false }: { profile: 
         <SectionLabel>Likely misreads</SectionLabel>
         <ul className="card divide-y divide-rule/[0.07] px-4">
           {profile.likelyMisreads.map((line) => (
-            <li key={line} className="py-3 text-[15px] leading-normal text-ink">
+            <li key={line} className="py-3 text-base leading-normal text-ink">
               {line}
             </li>
           ))}
@@ -244,7 +244,7 @@ export function SoloProfile({ profile, otherName, preview = false }: { profile: 
 
       {!preview && (
         <>
-          <div className="rounded-2xl border border-accent/20 bg-surface-tool px-4 py-3.5 text-[14px] leading-normal text-ink-muted">
+          <div className="rounded-2xl border border-accent/20 bg-surface-tool px-4 py-3.5 text-sm leading-normal text-ink-muted">
             The couple report — Layer Scan, conflict pattern, and recommended tools — unlocks once {otherName} finishes their 44 questions.
           </div>
 

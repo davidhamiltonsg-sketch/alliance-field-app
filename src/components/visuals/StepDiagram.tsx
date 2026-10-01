@@ -127,12 +127,12 @@ function Swatch({ kind }: { kind: StepKind }) {
 export function WhenStrip({ text, label = "When to use" }: { text: string; label?: string }) {
   return (
     <div className="v2-when px-3.5 pb-3 pt-3">
-      <p className="flex items-center gap-2 text-[13px] font-semibold tracking-[0.03em] text-accent">
+      <p className="flex items-center gap-2 text-sm font-semibold tracking-[0.03em] text-accent">
         <GlyphIcon kind="when" size={17} sw={1.2} className="shrink-0" />
         {label}
         <span className="h-px w-[22px] bg-[#A8895A]" aria-hidden />
       </p>
-      <p className="phrase mt-1.5 text-[16px] leading-[1.45] text-ink">{text}</p>
+      <p className="phrase mt-1.5 text-base leading-[1.45] text-ink">{text}</p>
     </div>
   );
 }
@@ -149,8 +149,8 @@ export function OutcomeBand({ text }: { text: string }) {
         </g>
       </svg>
       <div className="min-w-0">
-        <p className="text-[11px] font-medium uppercase tracking-[0.1em] text-[#D8C69F]">Outcome</p>
-        <p className="font-display mt-1 text-[17px] leading-snug text-white">{text}</p>
+        <p className="text-xs font-medium uppercase tracking-[0.1em] text-[#D8C69F]">Outcome</p>
+        <p className="font-display mt-1 text-lg leading-snug text-white">{text}</p>
       </div>
     </div>
   );
@@ -187,14 +187,14 @@ export function StepDiagram({
               </div>
               <div className={`v2-panel v2-${s.kind} min-w-0 flex-1 px-3.5 pb-3 pt-2.5`}>
                 <div className="flex flex-wrap items-start justify-between gap-x-2 gap-y-0.5">
-                  <p className="min-w-0 break-words font-display text-[17px] font-semibold leading-snug text-ink">
+                  <p className="min-w-0 break-words font-display text-lg font-semibold leading-snug text-ink">
                     <span className="sr-only">Step {i + 1}: </span>
                     {s.title}
                   </p>
                   {(s.badge || g) && (
                     <span className="mt-[3px] flex shrink-0 items-center gap-2">
                       {s.badge && (
-                        <span className="tabular flex items-center gap-1.5 text-[13px] font-medium leading-4 text-accent">
+                        <span className="tabular flex items-center gap-1.5 text-sm font-medium leading-4 text-accent">
                           <span className="h-px w-3 bg-[#A8895A]" aria-hidden />
                           {s.badge}
                         </span>
@@ -203,7 +203,7 @@ export function StepDiagram({
                     </span>
                   )}
                 </div>
-                <p className="mt-1 text-[15px] leading-normal text-ink-muted">
+                <p className="mt-1 text-base leading-normal text-ink-muted">
                   <MarkedText text={detailFor(s, cardSteps[i])} serifQuotes />
                 </p>
               </div>
@@ -213,7 +213,7 @@ export function StepDiagram({
       </ol>
       <OutcomeBand text={diagram.outcome} />
       {kinds.length > 1 && (
-        <p className="flex flex-wrap items-center gap-x-4 gap-y-1.5 pt-0.5 text-[13px] text-ink-muted">
+        <p className="flex flex-wrap items-center gap-x-4 gap-y-1.5 pt-0.5 text-sm text-ink-muted">
           <span className="h-px w-[22px] bg-[#A8895A]" aria-hidden />
           {kinds.map((k) => (
             <span key={k} className="inline-flex items-center gap-1.5">
