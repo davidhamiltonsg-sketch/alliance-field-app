@@ -157,8 +157,7 @@ function WeeklyResetWizardClient() {
   return (
     <div className="space-y-4">
       <WarnBanner pauseLink>
-        If either partner is flooded — Pause + Return; reschedule. This is
-        maintenance, not a fight forum.
+        If either of you is flooded, take a Pause + Return and reschedule.
       </WarnBanner>
 
       {step === 1 && (
@@ -194,8 +193,9 @@ function WeeklyResetWizardClient() {
           onNext={() => setStep(3)}
         >
           <p className="text-sm leading-normal text-ink-muted">
-            Once a month, this is the monthly Care Check-in (inside the Weekly
-            Reset): go through each area below.
+            Each week, talk through who’s carrying what. In the first Reset of
+            the month, this step is the monthly Care Check-in (inside the Weekly
+            Reset): mark each area below.
           </p>
           <ul className="space-y-3">
             {draft.careAudit.map((row, i) => (
@@ -204,7 +204,8 @@ function WeeklyResetWizardClient() {
                 className="rounded-xl border border-rule/35 bg-surface-activity px-3 py-3"
               >
                 <p className="text-base font-medium">{row.domain}</p>
-                <div className="mt-2 flex flex-wrap gap-2">
+                <div className="mt-2 flex flex-wrap items-center gap-2" role="group" aria-label={`${row.domain}: load`}>
+                  <span className="w-20 text-sm text-ink-muted" aria-hidden>Load</span>
                   {(["balanced", "skewed"] as const).map((b) => (
                     <button
                       key={b}
@@ -220,19 +221,22 @@ function WeeklyResetWizardClient() {
                       {b}
                     </button>
                   ))}
+                </div>
+                <div className="mt-2 flex flex-wrap items-center gap-2" role="group" aria-label={`${row.domain}: rebalance?`}>
+                  <span className="w-20 text-sm text-ink-muted" aria-hidden>Rebalance?</span>
                   {(["yes", "no"] as const).map((r) => (
                     <button
                       key={r}
                       type="button"
                       onClick={() => updateCare(i, { rebalance: r })}
                       aria-pressed={row.rebalance === r}
-                      className={`min-h-11 rounded-full px-3.5 text-sm font-medium transition-colors ${
+                      className={`min-h-11 rounded-full px-3.5 text-sm font-medium capitalize transition-colors ${
                         row.rebalance === r
                           ? "bg-repair text-paper"
                           : "border border-rule/60 bg-white text-ink"
                       }`}
                     >
-                      Rebalance? {r}
+                      {r}
                     </button>
                   ))}
                 </div>
