@@ -34,9 +34,12 @@ function TestimonialRow({ items }: { items: Testimonial[] }) {
   );
 }
 
+/** Shown with the testimonials, always (CANON round 6). */
+export const TESTIMONIALS_DISCLAIMER = "Shared with permission. Individual experiences; results vary.";
+
 export function Testimonials() {
   return (
-    <section className="space-y-5">
+    <section className="space-y-5" aria-describedby="testimonials-disclaimer">
       <div className="space-y-3">
         <SectionLabel>What couples are saying</SectionLabel>
         <TestimonialRow items={coupleTestimonials} />
@@ -45,6 +48,9 @@ export function Testimonials() {
         <SectionLabel>Individual reviews</SectionLabel>
         <TestimonialRow items={individualTestimonials} />
       </div>
+      <p id="testimonials-disclaimer" className="px-1 text-sm leading-snug text-ink-muted">
+        {TESTIMONIALS_DISCLAIMER}
+      </p>
     </section>
   );
 }
