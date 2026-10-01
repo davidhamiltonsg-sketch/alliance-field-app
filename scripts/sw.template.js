@@ -80,9 +80,23 @@ function cacheable(requestUrl, response) {
   );
 }
 
+// "Delete all my data" (wipeAll in src/lib/storage.ts) tells the worker to
+// stop before it unregisters it and deletes the caches. An unregistered
+// worker keeps serving the open page until it is closed or reloaded, so
+// without this it would quietly rebuild the offline copy on the next
+// client-side navigation.
+let wiped = false;
+self.addEventListener("message", (event) => {
+  if (event.data && event.data.type === "alliance:wipe") wiped = true;
+});
+
+/** Adds to the cache only while it exists: never re-creates one that was deleted. */
 function store(request, response) {
+  if (wiped) return;
   const copy = response.clone();
-  caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
+  caches
+    .has(CACHE_NAME)
+    .then((exists) => (exists && !wiped ? caches.open(CACHE_NAME).then((cache) => cache.put(request, copy)) : undefined));
 }
 
 self.addEventListener("fetch", (event) => {
@@ -93,6 +107,8 @@ self.addEventListener("fetch", (event) => {
   if (url.origin !== self.location.origin) return;
   // The lock screen always goes to the network and is never stored.
   if (isUnlock(request.url)) return;
+  // After "Delete all my data": stay out of the way until the page reloads.
+  if (wiped) return;
 
   // Navigations: try the network first (fresh content), fall back to cache,
   // then to the cached home page so the app shell always loads offline.

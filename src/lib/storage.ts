@@ -120,6 +120,9 @@ export async function wipeAll(): Promise<number> {
   keys.forEach(clearKey);
   try {
     if ("serviceWorker" in navigator) {
+      // The worker keeps serving this open page after it is unregistered:
+      // tell it to stop caching first (see scripts/sw.template.js).
+      navigator.serviceWorker.controller?.postMessage({ type: "alliance:wipe" });
       const registrations = await navigator.serviceWorker.getRegistrations();
       await Promise.all(registrations.map((r) => r.unregister()));
     }

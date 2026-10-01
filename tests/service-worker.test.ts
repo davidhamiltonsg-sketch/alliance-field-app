@@ -94,8 +94,10 @@ function runWorker(responses: Record<string, Partial<Response> & { redirected?: 
   const stored = new Map<string, unknown>();
   const abs = (u: string | { url: string }) => new URL(typeof u === "string" ? u : u.url, ORIGIN).href;
   const cache = { put: async (k: string | { url: string }, v: unknown) => void stored.set(abs(k), v) };
+  const state = { cacheExists: true };
   const caches = {
     open: async () => cache,
+    has: async () => state.cacheExists,
     keys: async () => [],
     delete: async () => true,
     match: async (k: string | { url: string }) => stored.get(abs(k)),
@@ -113,7 +115,7 @@ function runWorker(responses: Record<string, Partial<Response> & { redirected?: 
   };
   const sw = renderServiceWorker(readTemplate(), "test", Object.keys(responses));
   new Function("self", "caches", "fetch", sw)(self, caches, fetch);
-  return { handlers, stored, ORIGIN };
+  return { handlers, stored, ORIGIN, state };
 }
 
 describe("service worker behaviour (L1)", () => {
@@ -155,5 +157,30 @@ describe("service worker behaviour (L1)", () => {
     handlers.fetch({ request: { method: "GET", url: `${ORIGIN}/protocols/not-cached`, mode: "navigate" }, respondWith: (p: Promise<unknown>) => (pending = p) });
     // Offline (the fake fetch has no entry): falls back to the cached home page.
     expect(await pending).toMatchObject({ url: `${ORIGIN}/` });
+  });
+});
+
+describe("service worker after Delete all data (L12)", () => {
+  const ORIGIN = "https://app.test";
+  const navigate = (handlers: Record<string, (e: unknown) => void>, path: string) => {
+    let pending: Promise<unknown> | null = null;
+    handlers.fetch({ request: { method: "GET", url: `${ORIGIN}${path}`, mode: "navigate" }, respondWith: (p: Promise<unknown>) => (pending = p) });
+    return pending;
+  };
+
+  it("never re-creates a deleted cache", async () => {
+    const { handlers, stored, state } = runWorker({ "/about": {} });
+    state.cacheExists = false;
+    await navigate(handlers, "/about");
+    await new Promise((r) => setTimeout(r, 0));
+    expect(stored.size).toBe(0);
+  });
+
+  it("stops handling requests once told the data was wiped", async () => {
+    const { handlers, stored } = runWorker({ "/about": {} });
+    handlers.message({ data: { type: "alliance:wipe" } });
+    expect(navigate(handlers, "/about")).toBeNull();
+    await new Promise((r) => setTimeout(r, 0));
+    expect(stored.size).toBe(0);
   });
 });
