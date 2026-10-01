@@ -81,6 +81,6 @@ export async function proxy(request: NextRequest) {
 export const config = {
   // Everything except build assets and static brand files.
   matcher: [
-    "/((?!_next/static|_next/image|favicon.ico|icon|apple-touch-icon|manifest.json|splash/|alliance-mark.svg).*)",
+    "/((?!_next/static|_next/image|favicon.ico|icon|apple-touch-icon|manifest.json|splash/|alliance-mark.svg|og-image.png).*)",
   ],
 };
