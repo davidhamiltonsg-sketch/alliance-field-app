@@ -48,7 +48,7 @@ export const situations: Situation[] = [
     id: "daily-drift",
     label: "We feel like roommates",
     description: "Conversations are just logistics; the connection feels thin.",
-    firstMove: "Morning Reset + Evening Check-in",
+    firstMove: "Morning + Evening Rhythm",
     primaryHref: "/protocols/morning-evening-rhythm",
   },
   {
@@ -95,7 +95,7 @@ export const situations: Situation[] = [
   {
     id: "outside-pressure",
     label: "Outside pressure, disapproval or jealousy about others",
-    description: "Family disapproval, discrimination, judgment from others — or jealousy about people outside the relationship — is landing on the two of you.",
+    description: "Family disapproval, discrimination, judgement from others — or jealousy about people outside the relationship — is landing on the two of you.",
     firstMove: "Name it as external, then run the Unity Anchor",
     primaryHref: "/protocols/unity-anchor",
     secondaryHrefs: [
@@ -105,7 +105,7 @@ export const situations: Situation[] = [
   {
     id: "attachment-clash",
     label: "We keep clashing the same way",
-    description: "One of you chases, one pulls back — or you're just out of sync on timing.",
+    description: "Reach–Recoil (one reaches, the other pulls back) — or you're just out of sync on timing.",
     firstMove: "System Overlay, then translate what's underneath",
     primaryHref: "/protocols/system-overlay",
   },

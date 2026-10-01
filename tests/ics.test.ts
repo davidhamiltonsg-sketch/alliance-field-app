@@ -142,7 +142,7 @@ describe("keep it going (weekly Reset + monthly Care Check-in)", () => {
     const text = keepGoingIcsText("19:00", new Date(2026, 8, 30, 12, 0));
     const [weekly, monthly] = events(text);
     expect(field(weekly, "SUMMARY")).toBe("Weekly Reset (Alliance Protocols)");
-    expect(field(monthly, "SUMMARY")).toBe("Care Check-in inside your Weekly Reset");
+    expect(field(monthly, "SUMMARY")).toBe("Monthly Care Check-in (inside the Weekly Reset)");
     expect(field(monthly, "DESCRIPTION")).toContain("not an extra meeting");
     expect(field(weekly, "DESCRIPTION")).toContain("Pause + Return");
     expect(text).not.toMatch(/care audit/i);

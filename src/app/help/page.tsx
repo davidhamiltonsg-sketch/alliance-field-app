@@ -92,7 +92,7 @@ export default function HelpPage() {
             contact with friends, family, money, phone or movement.
           </p>
           <p className="text-ink-muted">
-            These protocols assume two people acting in good faith toward each
+            These protocols assume two people acting in good faith towards each
             other. They are not designed for, and should not be used to manage,
             an unsafe relationship.
           </p>

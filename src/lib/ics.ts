@@ -212,8 +212,8 @@ export function keepGoingIcsText(time = "19:00", fromDate = new Date()): string 
       "alliance-keep-going-care-checkin",
       monthly,
       CARE_CHECKIN_RRULE,
-      "Care Check-in inside your Weekly Reset",
-      "First Weekly Reset of the month: during Check the load, run the Care Check-in — go through each area of care and ask if the load feels fair. Same 40 minutes, not an extra meeting. Open the Field App at /weekly-reset."
+      "Monthly Care Check-in (inside the Weekly Reset)",
+      "First Weekly Reset of the month: during Check the load, run the monthly Care Check-in (inside the Weekly Reset) — go through each area of care and ask if the load feels fair. Same 40 minutes, not an extra meeting. Open the Field App at /weekly-reset."
     ),
   ]);
 }

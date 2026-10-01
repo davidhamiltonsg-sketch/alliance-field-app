@@ -118,7 +118,7 @@ export function generateProfile(person: PersonKey, input: PersonInput): Profile 
       : high(scores.withdrawalUnderStress)
         ? `Under stress, ${name} is likely to go quiet or ask for space to regulate.`
         : high(scores.conflictActivation)
-          ? `Under stress, ${name} is likely to move toward the issue quickly and want clarity.`
+          ? `Under stress, ${name} is likely to move towards the issue quickly and want clarity.`
           : `Under stress, ${name} tends to stay workable as long as warmth is still in the room.`;
 
   const privacyAutonomy = high(scores.privacyNeed)
@@ -178,7 +178,7 @@ function buildConflictPattern(a: Profile, b: Profile): string {
     return `${b.name} tends to pursue clarity while ${a.name} de-intensifies. Left alone that's a demand–withdraw loop — Pause + Return with an explicit return time breaks it.`;
   if (aPursues && bPursues)
     return "Both of you tend to escalate to get a reaction. The first move is slowing the urgency down before reassurance itself becomes the fight.";
-  return "Both of you tend to de-intensify. Low conflict can hide low contact — keep Morning/Evening Rhythm and Weekly Reset running so distance doesn't build quietly.";
+  return "Both of you tend to de-intensify. Low conflict can hide low contact — keep Morning + Evening Rhythm and Weekly Reset running so distance doesn't build quietly.";
 }
 
 // Maps a recommendation's concept to a real Field Kit protocol slug.
@@ -198,7 +198,7 @@ const TOOL_SLUG: Record<string, string> = {
   "Intimacy Pact": "intimacy-pact",
   "Proof Protocol": "proof-protocol",
   "System Overlay": "system-overlay",
-  "Morning / Evening Rhythm": "morning-evening-rhythm",
+  "Morning + Evening Rhythm": "morning-evening-rhythm",
   "Green Rule": "green-rule",
 };
 
@@ -208,7 +208,7 @@ function routeTools(a: Profile, b: Profile, health: Record<LayerKey, number>) {
     if (!routes.some((r) => r.tool === tool)) routes.push({ tool, reason });
   };
 
-  if (health.Atmosphere < 62) add("Morning / Evening Rhythm", "Atmosphere is running low — restore warmth before asking for change.");
+  if (health.Atmosphere < 62) add("Morning + Evening Rhythm", "Atmosphere is running low — restore warmth before asking for change.");
   if (health.Structure < 62) add("Weekly Reset", "Structure is running low — install a predictable maintenance rhythm.");
   if (health.Repair < 62) add("Micro-Repair", "Repair capacity is running low — use smaller repair units, more often.");
   if (health.Protection < 62) add("Pause + Return", "Protection is running low — you need clearer guardrails under stress.");
@@ -232,7 +232,7 @@ function routeTools(a: Profile, b: Profile, health: Record<LayerKey, number>) {
     add("Uninvestment Check", "Withdrawal is elevated and being closely watched. Confirm whether this is needing space or quietly pulling away before assuming either.");
   }
   if (!routes.length) {
-    add("Morning / Evening Rhythm", "Keep daily contact predictable.");
+    add("Morning + Evening Rhythm", "Keep daily contact predictable.");
     add("Weekly Reset", "Maintain the operating rhythm before drift appears.");
   }
 
@@ -280,7 +280,7 @@ export function generateCoupleReport(profileA: Profile, profileB: Profile): Coup
     {
       domain: "Proof / trust",
       diverges: diff(a.proofOrientation, b.proofOrientation) > 24,
-      risk: "One of you may trust warmth while the other needs trackable evidence.",
+      risk: "One of you may trust warmth while the other needs evidence they can see.",
     },
     {
       domain: "Heat tolerance",
@@ -307,7 +307,7 @@ export function generateCoupleReport(profileA: Profile, profileB: Profile): Coup
   const recommendedTools = toRecommendedTools(routes);
 
   return {
-    executiveSummary: `This relationship is operating around ${mismatch[0]?.split(":")[0].toLowerCase() || "a workable, still-calibrating pattern"}. The strongest next step is turning the pattern into a low-threat agreement, then tracking proof instead of relitigating intent.`,
+    executiveSummary: `This relationship is operating around ${mismatch[0]?.split(":")[0].toLowerCase() || "a workable, still-calibrating pattern"}. The strongest next step is turning the pattern into a low-threat agreement, then reviewing Proof at the agreed check-in instead of relitigating intent.`,
     strengths,
     coreMismatch: mismatch.length ? mismatch.slice(0, 4) : ["No single mismatch dominates yet — keep using the tools and revisit this in a few weeks."],
     conflictPattern: buildConflictPattern(profileA, profileB),

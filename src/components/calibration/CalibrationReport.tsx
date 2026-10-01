@@ -78,6 +78,7 @@ function CalibrationReportClient() {
 
       <section className="space-y-3">
         <SectionLabel>Layer Scan</SectionLabel>
+        <p className="px-1 text-sm text-ink-muted">Where each of you sits on the profile.</p>
         <div className="card space-y-3.5 px-4 py-4">
           {LAYER_ORDER.map((layer) => (
             <div key={layer} className="space-y-1.5">
@@ -95,7 +96,7 @@ function CalibrationReportClient() {
           ))}
         </div>
         <p className="px-1 text-sm leading-normal text-ink-muted">
-          Lower means the two of you diverge more in that layer — worth stabilizing first, not a verdict on the relationship.
+          Lower means the two of you diverge more in that layer — worth stabilising first, not a verdict on the relationship.
         </p>
       </section>
 

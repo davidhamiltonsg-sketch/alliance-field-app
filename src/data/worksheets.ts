@@ -9,6 +9,8 @@ export interface Worksheet {
   protocols: string[];
   /** Named parts inside the worksheet, if it has more than one. */
   parts?: string[];
+  /** One plain-English line on what's inside, shown after the name. */
+  detail?: string;
 }
 
 export const worksheets: Worksheet[] = [
@@ -21,12 +23,14 @@ export const worksheets: Worksheet[] = [
     name: "Pacts Worksheet",
     protocols: ["intimacy-pact", "consistency-pact"],
     parts: ["Intimacy Pact", "Consistency Pact"],
+    detail: "one section for each pact",
   },
   {
     id: "failure-mode-diagnostic",
     name: "Failure Mode Diagnostic",
     protocols: ["system-overlay"],
     parts: ["Failure Mode Diagnostic", "Circuit Spotter"],
+    detail: "with the Circuit Spotter: a circuit is a repeating loop between you",
   },
   { id: "uninvestment-check-worksheet", name: "Uninvestment Check Worksheet", protocols: ["uninvestment-check"] },
 ];

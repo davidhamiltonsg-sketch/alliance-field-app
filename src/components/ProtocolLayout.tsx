@@ -69,7 +69,11 @@ export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
 
       {protocol.note && (
         <aside className="card space-y-2 px-4 py-3.5" aria-label="Note">
-          <Marker kind="NOTE" />
+          {protocol.note.startsWith("Sun Memory") ? (
+            <Marker kind="NOTE" label="Sun Memory" icon="sun-memory" />
+          ) : (
+            <Marker kind="NOTE" />
+          )}
           <p className="text-base leading-normal text-ink">{protocol.note}</p>
         </aside>
       )}
@@ -122,6 +126,7 @@ export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
               {sheets.length > 0 ? (
                 <>
                   {" "}and the <span className="text-ink">{sheets.map((w) => w.name).join(" and ")}</span>
+                  {sheets.length === 1 && sheets[0].detail ? ` (${sheets[0].detail})` : ""}
                 </>
               ) : null}
               , to keep on the fridge.

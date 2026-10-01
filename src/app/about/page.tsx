@@ -277,7 +277,7 @@ export default function AboutPage() {
               <span className="flex flex-col py-2.5">
                 Profile Calibration
                 <span className="text-sm font-normal text-ink-muted">
-                  44 questions each — a Layer Scan and a couple report
+                  44 questions each — a Layer Scan (where each of you sits on the profile) and a couple report
                 </span>
               </span>
               <ChevronRight size={18} className="text-ink-muted/50" />

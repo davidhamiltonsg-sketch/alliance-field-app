@@ -178,7 +178,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Check the load",
-        "detail": "Where supported, where alone? Is the load fair? Monthly: Care Check-in.",
+        "detail": "Where supported, where alone? Is the load fair? Once a month, this is the monthly Care Check-in (inside the Weekly Reset).",
         "kind": "step",
         "badge": "15 min"
       },
@@ -347,8 +347,8 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
         "kind": "step"
       },
       {
-        "title": "Track",
-        "detail": "Y/N for 7 days; adjust timing, not intensity.",
+        "title": "Note it",
+        "detail": "Yes or no for 7 days, where you both see it; adjust timing, not intensity.",
         "kind": "step",
         "badge": "7 days"
       }
@@ -546,7 +546,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "outcome": "You know which repair to reach for, instead of hoping."
   },
   "unity-anchor": {
-    "when": "Family disapproval, discrimination, or outside judgment is landing on the two of you.",
+    "when": "Family disapproval, discrimination, or outside judgement is landing on the two of you.",
     "steps": [
       {
         "title": "Name it as external",

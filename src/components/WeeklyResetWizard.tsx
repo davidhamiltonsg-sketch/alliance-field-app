@@ -194,8 +194,8 @@ function WeeklyResetWizardClient() {
           onNext={() => setStep(3)}
         >
           <p className="text-sm leading-normal text-ink-muted">
-            Once a month, run the Care Check-in here: go through each area
-            below.
+            Once a month, this is the monthly Care Check-in (inside the Weekly
+            Reset): go through each area below.
           </p>
           <ul className="space-y-3">
             {draft.careAudit.map((row, i) => (

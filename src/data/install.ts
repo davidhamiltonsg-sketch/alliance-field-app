@@ -17,16 +17,16 @@ export const installDays: InstallDay[] = [
     day: 2,
     title: "Daily check-ins",
     bullets: [
-      "Card: Morning / Evening Rhythm.",
+      "Card: Morning + Evening Rhythm.",
       "Run a morning check-in (5 min or less) and evening check-in (10 min).",
       "Check in, acknowledge, and appreciate each other daily.",
     ],
-    proof: "Both check-ins done, tracked on a shared note.",
+    proof: "Both check-ins done, noted where you both see it.",
     cardSlugs: ["morning-evening-rhythm"],
   },
   {
     day: 3,
-    title: "Practice the full sequence",
+    title: "Practise the full sequence",
     bullets: [
       "Card: System Overlay.",
       "A 12-minute practice run on something low-stakes, using all five steps.",
@@ -63,7 +63,7 @@ export const installDays: InstallDay[] = [
       "Write one shared proof item together.",
       "Each of you starts your own private Consistency Pact for week one.",
     ],
-    proof: "Behavior, evidence, time window, and check-in date all filled in.",
+    proof: "Behaviour, evidence, time window, and check-in date all filled in.",
     cardSlugs: ["proof-protocol", "consistency-pact"],
   },
   {
