@@ -233,16 +233,12 @@ b {
 
 .dg-rise,
 .dg-pop,
-.dg-pulse,
 .dg-move {
   transform-box: fill-box;
   transform-origin: center;
 }
 .dg-dim {
   opacity: var(--dim, 0.28);
-}
-.dg-pulse {
-  opacity: 0.35;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -258,9 +254,6 @@ b {
   }
   .dg-armed .dg-dim {
     opacity: 1;
-  }
-  .dg-armed .dg-pulse {
-    opacity: 0;
   }
 
   /* Active panel: play */
@@ -279,14 +272,8 @@ b {
   .dg-armed .is-active .dg-dim {
     animation: dg-dim var(--dur, 600ms) var(--ease-out) var(--d, 0ms) forwards;
   }
-  .dg-armed .is-active .dg-pulse {
-    animation: dg-pulse 1.8s var(--ease-out) var(--d, 0ms) infinite;
-  }
   .dg-armed .is-active .dg-move {
-    animation: var(--move) var(--dur, 4s) var(--ease-inout) var(--d, 0ms) var(--iter, 1) both;
-  }
-  .dg-armed .is-active .dg-flow {
-    animation: dg-flow 1.2s linear infinite;
+    animation: var(--move) var(--dur, 4s) var(--ease-inout) var(--d, 0ms) 1 both;
   }
 }
 
@@ -326,22 +313,6 @@ b {
   }
   to {
     opacity: var(--dim, 0.28);
-  }
-}
-@keyframes dg-pulse {
-  0% {
-    opacity: 0.55;
-    transform: scale(1);
-  }
-  70%,
-  100% {
-    opacity: 0;
-    transform: scale(var(--pulse, 1.9));
-  }
-}
-@keyframes dg-flow {
-  to {
-    stroke-dashoffset: -12;
   }
 }
 
@@ -428,22 +399,6 @@ html[data-splash="off"] .splash {
 }
 
 /* Travelling markers used by the intro diagrams */
-@keyframes dg-sys-travel {
-  0% {
-    opacity: 0;
-    transform: translateX(-280px);
-  }
-  12% {
-    opacity: 1;
-  }
-  88% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-    transform: translateX(0);
-  }
-}
 @keyframes dg-pr-travel {
   0%,
   8% {
@@ -480,13 +435,12 @@ html[data-splash="off"] .splash {
 /* ------------------------------------------------------------------ */
 /* v2 visual language (visuals library, premium v2)                    */
 /* Arch-topped panels, status rule treatments, When strip, outcome     */
-/* band, arch icon tablets, arch tabs. Brass (#A8895A / #D8C69F) is    */
-/* used for hairlines, rims, numerals and ornament only.               */
+/* band, arch tabs. Brass is reserved for connection (logo bridge,     */
+/* Connection Cards, icon accents); ornament uses a neutral hairline.  */
 /* ------------------------------------------------------------------ */
 :root {
   --forest: #2c3e2d;
-  --brass: #a8895a;
-  --brass-l: #d8c69f;
+  --hairline: #9fb2a6;
   --warm: #f3f0e8;
   --arch: 15px 15px 3px 3px;
   --arch-in: 12px 12px 1.5px 1.5px;
@@ -550,16 +504,15 @@ html[data-splash="off"] .splash {
   inset: 1.5px;
 }
 
-/* "When" strip: warm paper, brass double rule above, hairline below */
+/* "When" strip: warm paper, hairline above and below */
 .v2-when {
   background:
-    linear-gradient(var(--brass), var(--brass)) 0 0 / 100% 1px no-repeat,
-    linear-gradient(rgb(168 137 90 / 0.8), rgb(168 137 90 / 0.8)) 0 3.5px / 100% 0.75px no-repeat,
-    linear-gradient(rgb(168 137 90 / 0.8), rgb(168 137 90 / 0.8)) 0 100% / 100% 0.75px no-repeat,
+    linear-gradient(var(--hairline), var(--hairline)) 0 0 / 100% 1px no-repeat,
+    linear-gradient(var(--hairline), var(--hairline)) 0 100% / 100% 1px no-repeat,
     var(--warm);
 }
 
-/* Outcome band: deep forest, fine engraved hatching, brass double frame */
+/* Outcome band: deep forest, fine engraved hatching, hairline double frame */
 .v2-outcome {
   position: relative;
   isolation: isolate;
@@ -576,21 +529,11 @@ html[data-splash="off"] .splash {
 }
 .v2-outcome::before {
   inset: 4px;
-  border: 0.75px solid var(--brass);
+  border: 0.75px solid rgb(159 178 166 / 0.7);
 }
 .v2-outcome::after {
   inset: 6.5px;
-  border: 0.5px solid rgb(168 137 90 / 0.8);
-}
-
-/* Icon tablet: icon seated in an arch with a brass rim and paper gap */
-.v2-tablet {
-  border-radius: 999px 999px 3px 3px;
-  background: #fff;
-  border: 1px solid currentColor;
-  box-shadow:
-    0 0 0 2px var(--color-paper),
-    0 0 0 2.8px var(--brass);
+  border: 0.5px solid rgb(159 178 166 / 0.5);
 }
 
 /* Arch-topped card (Situation Map rows, protocol list) */
@@ -670,14 +613,8 @@ html[data-splash="off"] .splash {
 /* Arch tab (tags, secondary links): no capsules */
 .v2-tab {
   border-radius: 10px 10px 3px 3px;
-  border: 0.75px solid rgb(168 137 90 / 0.8);
+  border: 0.75px solid rgb(44 62 45 / 0.25);
   background: #fff;
 }
 
-/* Brass lead rule under section heads */
-.v2-lead {
-  display: inline-block;
-  width: 22px;
-  height: 1px;
-  background: var(--brass);
-}
+

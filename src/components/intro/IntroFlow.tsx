@@ -5,8 +5,8 @@ import { useCallback, useEffect, useRef, useState, useSyncExternalStore, type Re
 import { SPLASH_EVENT, splashCleared } from "../splash/Splash";
 import { INTRO_SEEN_KEY } from "../splash/boot";
 import { AllianceMark } from "../AllianceMark";
-import { ArrowLeft, ArrowRight, PauseIcon } from "../icons";
-import { ProtocolIcon } from "../visuals/ProtocolIcon";
+import { ArrowLeft, ArrowRight } from "../icons";
+import { ApIcon, type IconId } from "../ApIcon";
 import {
   ConnectionCardsDiagram,
   CoreFiveDiagram,
@@ -19,7 +19,7 @@ import {
 type Panel = {
   id: string;
   eyebrow: string;
-  icon: string;
+  icon: IconId;
   title: string;
   body: string;
   aside?: string;
@@ -43,7 +43,7 @@ const panels: Panel[] = [
   {
     id: "situation-map",
     eyebrow: "Situation Map",
-    icon: "section-when-to-use",
+    icon: "situation-map",
     title: "Not sure what to do? Follow the first match.",
     body: "Safety comes first: if you’re afraid, threatened, or not free to say no, stop and get outside help. Otherwise, read top to bottom and take the first row that fits.",
     diagram: <SituationMapDiagram />,
@@ -51,7 +51,7 @@ const panels: Panel[] = [
   {
     id: "core-5",
     eyebrow: "The Core 5",
-    icon: "section-concept",
+    icon: "tier-core",
     title: "Start with five tools.",
     body: "They cover most hard moments. Learn these first; the rest can wait. The 7-day start plan takes about 10 minutes a day.",
     diagram: <CoreFiveDiagram />,
@@ -76,7 +76,7 @@ const panels: Panel[] = [
   {
     id: "system",
     eyebrow: "Optional",
-    icon: "section-concept",
+    icon: "manual",
     title: "Want the full system?",
     body: "This app is free, and works on its own. If it helps, the Operating Manual and Field Kit go deeper — full protocols, printable cards, worksheets.",
     diagram: <SystemDiagram />,
@@ -187,13 +187,13 @@ export function IntroFlow() {
               aria-hidden={i !== index ? true : undefined}
             >
               <div className="mx-auto my-auto w-full max-w-[420px] pb-2">
-                <div className="rounded-[26px_26px_6px_6px] border border-[#A8895A]/45 bg-white/90 p-2 shadow-[var(--shadow-card)]">
+                <div className="rounded-[26px_26px_6px_6px] border border-rule/15 bg-white/90 p-2 shadow-[var(--shadow-card)]">
                   {/* equal-height stage so headlines line up across panels */}
                   <div className="flex aspect-[340/336] w-full items-center">{i <= reached ? p.diagram : null}</div>
                 </div>
                 <div className="mt-5">
                   <p className="eyebrow flex items-center gap-1.5 text-accent">
-                    <ProtocolIcon slug={p.icon} size={15} strokeWidth={2} />
+                    <ApIcon id={p.icon} size={18} />
                     {p.eyebrow}
                   </p>
                   <h2 className="display mt-2.5 text-xl leading-[1.12]">{p.title}</h2>
@@ -284,7 +284,7 @@ export function IntroFlow() {
                   href="/pause"
                   className="flex h-12 items-center justify-center gap-1.5 rounded-2xl border border-pause/35 bg-surface-activity text-sm font-semibold text-pause-text transition active:scale-[0.99]"
                 >
-                  <PauseIcon size={17} />
+                  <ApIcon id="pause-and-return" size={18} />
                   Pause + Return
                 </Link>
               </div>

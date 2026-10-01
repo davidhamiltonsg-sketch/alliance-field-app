@@ -11,7 +11,7 @@ export const metadata = { title: "Help & safety" };
 export default function HelpPage() {
   return (
     <div className="space-y-6">
-      <PageHeader eyebrow={<Marker kind="FAIL" label="Safety first" />} title="Help & safety">
+      <PageHeader eyebrow={<Marker kind="HELP" label="Safety first" />} title="Help & safety">
         Afraid of your partner, being threatened, or not free to say no? Stop.
         These tools are not for this. Get outside help.
       </PageHeader>

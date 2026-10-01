@@ -29,7 +29,7 @@ export default function InstallPage() {
               ))}
             </ul>
             <div className="mt-3 flex flex-wrap items-center gap-2 rounded-xl bg-safety/[0.06] px-3 py-2 text-sm text-ink">
-              <Marker kind="OK" label="Proof" />
+              <Marker kind="OK" label="Proof" icon="proof-protocol" />
               <span>{d.proof}</span>
             </div>
           </li>

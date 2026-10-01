@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { AllianceMark } from "./AllianceMark";
-import { TimerIcon } from "./icons";
+import { ApIcon } from "./ApIcon";
 
 export function AppHeader() {
   return (
-    <header className="sticky top-0 z-40 border-b border-rule/[0.08] bg-paper/80 backdrop-blur-md supports-[backdrop-filter]:bg-paper/70">
+    <header data-chrome className="sticky top-0 z-40 border-b border-rule/[0.08] bg-paper/80 backdrop-blur-md supports-[backdrop-filter]:bg-paper/70">
       <div className="flex h-14 items-center justify-between gap-2 pl-4 pr-2">
         <Link
           href="/"
@@ -29,10 +29,11 @@ export function AppHeader() {
           </Link>
           <Link
             href="/pause"
-            className="inline-flex h-12 w-12 items-center justify-center rounded-full text-pause transition-colors hover:bg-pause/10"
-            aria-label="Open Pause + Return timer"
+            className="inline-flex h-12 items-center gap-1 rounded-full px-2.5 text-sm font-semibold text-pause-text transition-colors hover:bg-pause/10"
+            aria-label="Pause + Return timer"
           >
-            <TimerIcon size={22} />
+            <ApIcon id="pause-and-return" size={20} className="text-pause" />
+            Pause
           </Link>
         </div>
       </div>

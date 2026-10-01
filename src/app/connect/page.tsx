@@ -10,7 +10,7 @@ export default function ConnectPage() {
   return (
     <div className="space-y-5">
       <PageHeader
-        eyebrow={<Marker kind="TOOL" label="Reconnect" />}
+        eyebrow={<Marker kind="TOOL" label="Connection Cards" icon="connection-cards" />}
         title="Connection Cards"
       >
         Five stages, one flip at a time — Warmth, Curiosity, Care, Repair,

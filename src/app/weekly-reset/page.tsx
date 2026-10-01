@@ -10,7 +10,7 @@ export const metadata = { title: "Weekly Reset" };
 export default function WeeklyResetPage() {
   return (
     <div className="space-y-5">
-      <PageHeader eyebrow={<Marker kind="DO" label="Weekly" />} title="Weekly Reset">
+      <PageHeader eyebrow={<Marker kind="DO" label="Weekly" icon="weekly-reset" />} title="Weekly Reset">
         Five parts, about 40 minutes. A maintenance meeting, not a trial. Your answers save on this device.
       </PageHeader>
       <WeeklyResetWizard />

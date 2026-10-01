@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { getProtocol } from "@/data/protocols";
 import { readFavorites, readRecent } from "@/lib/storage";
-import { IconTablet } from "./visuals/IconTablet";
+import { IconChip, isIconId } from "./ApIcon";
+import { TierBadge } from "./TierBadge";
 import { SectionLabel } from "./SectionLabel";
 import { StarIcon, ClockIcon } from "./icons";
 
@@ -37,10 +38,11 @@ function Strip({
               href={`/protocols/${p.slug}`}
               className="v2-card flex w-[152px] shrink-0 flex-col items-start gap-2 px-3.5 py-3"
             >
-              <IconTablet slug={p.slug} tone={tone} size="sm" />
-              <span className="display line-clamp-2 text-sm leading-snug">
+              {isIconId(p.slug) && <IconChip id={p.slug} tone={tone} size="sm" />}
+              <span className="display line-clamp-2 text-base leading-snug">
                 {p.title}
               </span>
+              <TierBadge tier={p.tier} />
             </Link>
           );
         })}
@@ -50,7 +52,7 @@ function Strip({
 }
 
 /**
- * Home-screen quick access: favorited protocols and recently viewed ones.
+ * Home-screen quick access: favourite protocols and recently viewed ones.
  * Renders nothing until there's something to show (fresh installs, or SSR).
  */
 export function QuickAccess() {
@@ -65,21 +67,14 @@ export function QuickAccess() {
     setRecent(readRecent());
   }, []);
 
-  if (favorites.length === 0 && recent.length === 0) {
-    return (
-      <p className="px-1 text-sm leading-normal text-ink-muted">
-        Nothing pinned yet. Star a protocol below and it&apos;ll wait for you
-        here.
-      </p>
-    );
-  }
+  if (favorites.length === 0 && recent.length === 0) return null;
 
   return (
     <section className="space-y-4">
-      <Strip label="Favorites" icon={<StarIcon size={15} filled />} slugs={favorites} />
+      <Strip label="Favourites" icon={<StarIcon size={16} filled />} slugs={favorites} />
       <Strip
         label="Recently used"
-        icon={<ClockIcon size={15} />}
+        icon={<ClockIcon size={16} />}
         slugs={recent.filter((s) => !favorites.includes(s))}
       />
     </section>

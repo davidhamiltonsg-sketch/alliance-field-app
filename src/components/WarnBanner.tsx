@@ -12,12 +12,17 @@ export function WarnBanner({
   /** Adds the "Afraid, not just flooded?" route to Help & safety. */
   safetyLink?: boolean;
 }) {
+  // Safety content (anything that routes to Help) is safety-toned with the
+  // safety glyph; a plain caution stays amber, with no glyph.
+  const safety = safetyLink;
   return (
     <div
       role="alert"
-      className="v2-card v2-card--pause relative bg-surface-warn px-4 py-3.5 text-base leading-normal shadow-none"
+      className={`v2-card relative px-4 py-3.5 text-base leading-normal shadow-none ${
+        safety ? "v2-card--safety bg-surface-tool" : "v2-card--pause bg-surface-warn"
+      }`}
     >
-      <Marker kind="WARN" />
+      {safety ? <Marker kind="SAFETY" /> : <Marker kind="WARN" />}
       <p className="mt-2 text-ink">{children}</p>
       {(pauseLink || safetyLink) && (
         <div className="-mb-1.5 mt-1 flex flex-wrap gap-x-5">

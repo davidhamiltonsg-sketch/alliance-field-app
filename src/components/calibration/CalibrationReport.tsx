@@ -66,7 +66,7 @@ function CalibrationReportClient() {
 
   return (
     <div className="space-y-6">
-      <PageHeader eyebrow={<Marker kind="TOOL" label="Layer Scan" />} title="Your operating profile">
+      <PageHeader eyebrow={<Marker kind="TOOL" label="Layer Scan" icon="profile-calibration" />} title="Your operating profile">
         Both of you finished — no trophy, just the report. {report.executiveSummary}
       </PageHeader>
 
@@ -194,7 +194,7 @@ export function SoloProfile({ profile, otherName, preview = false }: { profile: 
   const router = useRouter();
   return (
     <div className="space-y-6">
-      <PageHeader eyebrow={<Marker kind="TOOL" label="Solo profile" />} title={`${profile.name}'s operating profile`}>
+      <PageHeader eyebrow={<Marker kind="TOOL" label="Solo profile" icon="profile-calibration" />} title={`${profile.name}'s operating profile`}>
         {profile.primaryPattern}
       </PageHeader>
 

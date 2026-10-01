@@ -302,7 +302,7 @@ function PauseTimerClient() {
           not just flooded, don’t return — get help.
         </WarnBanner>
         <section className="card space-y-3 px-4 py-4">
-          <Marker kind="OK" label="Restart cue" />
+          <Marker kind="DO" label="Restart cue" />
           <ol className="space-y-2 text-base leading-normal">
             <li className="flex gap-3">
               <span className="tabular flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent text-sm font-medium text-paper">1</span>

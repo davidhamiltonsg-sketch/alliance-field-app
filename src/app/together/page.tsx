@@ -28,7 +28,7 @@ export default function TogetherPage() {
 
   return (
     <div className="space-y-6">
-      <PageHeader eyebrow={<Marker kind="TOOL" label="Outside pressure" />} title="When the pressure comes from outside, face it from the same side.">
+      <PageHeader eyebrow={<Marker kind="TOOL" label="Outside pressure" icon="unity-anchor" />} title="When the pressure comes from outside, face it from the same side.">
         For couples who deal with disapproval, stares, comments and &ldquo;just
         asking&rdquo; questions from outside the relationship, and who
         don&apos;t want that pressure to turn into fights between the two of

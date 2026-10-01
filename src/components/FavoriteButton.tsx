@@ -45,7 +45,7 @@ export function FavoriteButton({
         onChange?.(next);
       }}
       aria-pressed={favorite}
-      aria-label={favorite ? "Remove from favorites" : "Add to favorites"}
+      aria-label={favorite ? "Remove from favourites" : "Add to favourites"}
       className={`flex shrink-0 items-center justify-center rounded-full transition-colors ${
         compact
           ? "h-9 w-9"

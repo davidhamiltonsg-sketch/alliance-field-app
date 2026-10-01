@@ -4,14 +4,15 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import { navItems } from "@/data/nav";
-import { InfoIcon, LayersIcon, MapIcon, ResetIcon, TimerIcon } from "./icons";
+import { ApIcon } from "./ApIcon";
+import { InfoIcon } from "./icons";
 
 const iconFor: Record<string, ReactNode> = {
-  "/": <MapIcon size={20} />,
-  "/protocols": <LayersIcon size={20} />,
-  "/pause": <TimerIcon size={20} />,
-  "/weekly-reset": <ResetIcon size={20} />,
-  "/about": <InfoIcon size={20} />,
+  "/": <ApIcon id="situation-map" size={22} mono />,
+  "/protocols": <ApIcon id="field-kit" size={22} mono />,
+  "/pause": <ApIcon id="pause-and-return" size={22} mono />,
+  "/weekly-reset": <ApIcon id="weekly-reset" size={22} mono />,
+  "/about": <InfoIcon size={22} />,
 };
 
 export function AppNav() {
@@ -19,6 +20,7 @@ export function AppNav() {
 
   return (
     <nav
+      data-chrome
       className="fixed inset-x-0 bottom-0 z-40 mx-auto w-full max-w-lg border-t border-rule/[0.08] bg-paper/85 pb-[env(safe-area-inset-bottom)] backdrop-blur-md"
       aria-label="Primary"
     >

@@ -12,9 +12,13 @@ export interface Phrase {
   text: string;
 }
 
+export type Tier = "core" | "situational" | "build";
+
 export interface Protocol {
   slug: string;
   title: string;
+  /** CANON round 4: Core (learn first), Situational (pulled by the Situation Map), Build (ongoing). */
+  tier: Tier;
   concept: string;
   whenToUse: string;
   steps: string[];

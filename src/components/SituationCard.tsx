@@ -3,13 +3,12 @@ import type { Situation } from "@/data/types";
 import { getProtocol } from "@/data/protocols";
 import { MarkedText } from "./MarkedText";
 import { ChevronRight } from "./icons";
-import { protocolIconSlugs } from "./visuals/ProtocolIcon";
-import { IconTablet } from "./visuals/IconTablet";
+import { ApIcon, isIconId, type IconId } from "./ApIcon";
 import { V, lancetD, lensD } from "./visuals/v2";
 
-function iconSlugFor(href: string): string | null {
+function iconSlugFor(href: string): IconId | null {
   const slug = href.replace(/^\/protocols\//, "").replace(/^\//, "");
-  return protocolIconSlugs.includes(slug) ? slug : null;
+  return isIconId(slug) ? slug : null;
 }
 
 type Tone = "failure" | "pause" | "repair" | "accent";
@@ -52,7 +51,7 @@ function LensNumber({ n }: { n: string }) {
   return (
     <svg viewBox="0 0 38 22" width="38" height="22" className="shrink-0" aria-hidden focusable="false">
       <path d={lensD(19, 11, 36, 20)} fill={V.white} stroke={V.accent} strokeWidth={0.9} />
-      <path d={lensD(19, 11, 28, 14)} fill="none" stroke={V.brass} strokeWidth={0.6} />
+      <path d={lensD(19, 11, 28, 14)} fill="none" stroke={V.rim} strokeWidth={0.6} />
       <text x={19} y={15.4} textAnchor="middle" className="font-display" fontStyle="italic" fontSize={12.5} fill={V.accent}>
         {n}
       </text>
@@ -79,7 +78,8 @@ export function SituationCard({
   index?: number;
 }) {
   const tone = toneFor(situation);
-  const iconSlug = situation.warn || situation.danger ? null : iconSlugFor(situation.primaryHref);
+  // Safety row: the safety glyph (safety content only). Otherwise the glyph of the protocol it routes to.
+  const iconSlug: IconId | null = situation.danger ? "help-safety" : iconSlugFor(situation.primaryHref);
   return (
     <li>
       <div className={`v2-card ${card[tone]} overflow-hidden`}>
@@ -101,13 +101,7 @@ export function SituationCard({
               className={`mt-2.5 flex items-center gap-2 text-sm font-medium leading-snug ${moveText[tone]}`}
             >
               <RouteThread color={threadColor[tone]} />
-              {iconSlug && (
-                <IconTablet
-                  slug={iconSlug}
-                  size="xs"
-                  tone={tone === "pause" ? "pause" : tone === "repair" ? "repair" : "accent"}
-                />
-              )}
+              {iconSlug && <ApIcon id={iconSlug} size={20} mono={tone === "failure"} />}
               <span className="min-w-0">
                 <MarkedText text={situation.firstMove} />
               </span>
@@ -116,7 +110,7 @@ export function SituationCard({
           <ChevronRight size={20} className="shrink-0 text-ink-muted/50" />
         </Link>
         {situation.secondaryHrefs && situation.secondaryHrefs.length > 0 && (
-          <div className="relative z-[1] mx-3 flex flex-wrap gap-x-2 border-t border-[#A8895A]/35 pl-1">
+          <div className="relative z-[1] mx-3 flex flex-wrap gap-x-2 border-t border-rule/15 pl-1">
             {situation.secondaryHrefs.map((s) => (
               <Link
                 key={s.href}
