@@ -203,7 +203,7 @@ function CalibrationFlowClient() {
           </p>
           <p className="tabular text-sm font-medium text-ink-muted">{pct}%</p>
         </div>
-        <div className="h-1.5 w-full overflow-hidden rounded-full bg-accent/12" role="progressbar" aria-valuemin={1} aria-valuemax={questions.length} aria-valuenow={index + 1}>
+        <div className="h-1.5 w-full overflow-hidden rounded-full bg-accent/12" role="progressbar" aria-label="Calibration progress" aria-valuemin={1} aria-valuemax={questions.length} aria-valuenow={index + 1}>
           <div className="h-full rounded-full bg-accent transition-[width]" style={{ width: `${pct}%` }} />
         </div>
       </div>

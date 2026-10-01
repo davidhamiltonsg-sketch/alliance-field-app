@@ -4,7 +4,7 @@ import { ApIcon } from "./ApIcon";
 
 export function AppHeader() {
   return (
-    <header data-chrome className="sticky top-0 z-40 border-b border-rule/[0.08] bg-paper/80 backdrop-blur-md supports-[backdrop-filter]:bg-paper/70">
+    <header data-chrome className="sticky top-0 z-40 border-b border-rule/[0.08] bg-paper/95 backdrop-blur-md supports-[backdrop-filter]:bg-paper/90">
       <div className="flex h-14 items-center justify-between gap-2 pl-4 pr-2">
         <Link
           href="/"

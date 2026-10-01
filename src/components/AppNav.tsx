@@ -21,7 +21,7 @@ export function AppNav() {
   return (
     <nav
       data-chrome
-      className="fixed inset-x-0 bottom-0 z-40 mx-auto w-full max-w-lg border-t border-rule/[0.08] bg-paper/85 pb-[env(safe-area-inset-bottom)] backdrop-blur-md"
+      className="fixed inset-x-0 bottom-0 z-40 mx-auto w-full max-w-lg border-t border-rule/[0.08] bg-paper/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-md"
       aria-label="Primary"
     >
       <ul className="flex items-stretch justify-between px-1.5">
