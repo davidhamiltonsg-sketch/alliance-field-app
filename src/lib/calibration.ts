@@ -229,7 +229,7 @@ function routeTools(a: Profile, b: Profile, health: Record<LayerKey, number>) {
     average([a.scores.withdrawalUnderStress, b.scores.withdrawalUnderStress]) > 60 &&
     average([a.scores.reassuranceNeed, b.scores.reassuranceNeed, a.scores.signalSensitivity, b.scores.signalSensitivity]) > 55
   ) {
-    add("Uninvestment Check", "Withdrawal is elevated and being closely watched. Confirm whether this is needing space or quietly pulling away before assuming either.");
+    add("Uninvestment Check", "Withdrawal under stress is high, and so is sensitivity to it. Run the check together to tell needing space from pulling away, rather than assuming either.");
   }
   if (!routes.length) {
     add("Morning + Evening Rhythm", "Keep daily contact predictable.");

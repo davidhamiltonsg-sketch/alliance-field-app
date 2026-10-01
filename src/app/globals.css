@@ -184,7 +184,7 @@ b {
   .accent-wash {
     background:
       radial-gradient(120% 90% at 100% 0%, rgb(44 62 45 / 0.16), transparent 55%),
-      linear-gradient(180deg, #eef2ef 0%, #f6f7f3 100%);
+      linear-gradient(180deg, #eef2ef 0%, #fafaf8 100%);
   }
 
   .field-input {

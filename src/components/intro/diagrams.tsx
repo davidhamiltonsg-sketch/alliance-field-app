@@ -220,7 +220,7 @@ export function SituationMapDiagram() {
   return (
     <Frame
       viewBox="0 0 340 336"
-      label="Situation Map: answer yes or no from the top. Afraid, threatened, or not free to say no: stop and get outside help. Flooded or shut down but safe: Pause + Return. Trust breach: Trust Recovery plus Proof. Pulling away: Uninvestment Check. Outside pressure, disapproval or jealousy about others: Unity Anchor."
+      label="Situation Map: answer yes or no from the top. Afraid, threatened, or not free to say no: stop and get outside help. Flooded or shut down but safe: Pause + Return. Outside pressure, disapproval or jealousy about others: Unity Anchor. Trust breach: Trust Recovery plus Proof. Pulling away: Uninvestment Check."
     >
       <text x={2} y={13} fontSize={13.5} fill={V.muted} {...a("dg-fade", 0)}>
         Follow the first match, top to bottom.
