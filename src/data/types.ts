@@ -42,7 +42,6 @@ export interface Situation {
   firstMove: string;
   primaryHref: string;
   secondaryHrefs?: { label: string; href: string }[];
-  warn?: boolean;
   /** Safety row: always first, routes to Help & safety, never to Pause. */
   danger?: boolean;
 }

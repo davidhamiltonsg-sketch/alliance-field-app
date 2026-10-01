@@ -14,11 +14,10 @@ function iconSlugFor(href: string): IconId | null {
 type Tone = "failure" | "pause" | "repair" | "accent";
 
 function toneFor(situation: Situation): Tone {
+  // Colour follows meaning: red for the stop row, and otherwise the tone of
+  // the protocol the row routes to (amber only for Pause + Return).
   if (situation.danger) return "failure";
-  if (situation.warn) return "pause";
-  const slug = situation.primaryHref.startsWith("/protocols/")
-    ? situation.primaryHref.replace("/protocols/", "")
-    : "";
+  const slug = situation.primaryHref.replace(/^\/protocols\//, "").replace(/^\//, "");
   const hint = slug ? getProtocol(slug)?.accentHint : undefined;
   if (hint === "pause") return "pause";
   if (hint === "repair") return "repair";
@@ -117,7 +116,7 @@ export function SituationCard({
                 href={s.href}
                 className="group inline-flex min-h-12 items-center"
               >
-                <span className="v2-tab inline-flex h-8 items-center gap-1 px-3 text-sm font-medium text-repair transition-colors group-hover:bg-repair/[0.06]">
+                <span className="v2-tab inline-flex h-8 items-center gap-1 px-3 text-sm font-medium text-accent transition-colors group-hover:bg-accent/[0.06]">
                   {s.label}
                   <ChevronRight size={14} strokeWidth={2.25} />
                 </span>

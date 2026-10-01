@@ -174,6 +174,30 @@ describe("CANON round 3", () => {
     expect(diagrams).toContain('a: ["Unity Anchor"]');
     expect(diagrams).not.toContain("Trust breach or");
   });
+
+  it("Situation Map rows follow the Field Kit laminate order (first match wins)", () => {
+    expect(situations.map((s) => s.id)).toEqual([
+      "unsafe",
+      "flooded",
+      "trust-breach",
+      "detachment",
+      "outside-pressure",
+      "conflict-starting",
+      "after-fight",
+      "attachment-clash",
+      "intimacy-stall",
+      "say-do-gap",
+      "daily-drift",
+      "weekly-maintenance",
+    ]);
+    const byId = Object.fromEntries(situations.map((s) => [s.id, s]));
+    expect(byId["say-do-gap"].primaryHref).toBe("/protocols/consistency-pact");
+    expect(byId["after-fight"].firstMove).toContain("start within minutes if you can; complete within 24 hours");
+    expect(byId["intimacy-stall"].firstMove).toMatch(/Help Lines/);
+    expect(byId["weekly-maintenance"].firstMove).toContain("the monthly Care Check-in (inside the Weekly Reset)");
+    // Amber is for pause only: no row routes to an amber tone except Pause + Return.
+    for (const s of situations) expect(s).not.toHaveProperty("warn");
+  });
 });
 
 describe("safety routing", () => {
