@@ -4,14 +4,15 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import { navItems } from "@/data/nav";
-import { InfoIcon, LayersIcon, MapIcon, ResetIcon, TimerIcon } from "./icons";
+import { ApIcon } from "./ApIcon";
+import { InfoIcon } from "./icons";
 
 const iconFor: Record<string, ReactNode> = {
-  "/": <MapIcon size={20} />,
-  "/protocols": <LayersIcon size={20} />,
-  "/pause": <TimerIcon size={20} />,
-  "/weekly-reset": <ResetIcon size={20} />,
-  "/about": <InfoIcon size={20} />,
+  "/": <ApIcon id="situation-map" size={22} mono />,
+  "/protocols": <ApIcon id="field-kit" size={22} mono />,
+  "/pause": <ApIcon id="pause-and-return" size={22} mono />,
+  "/weekly-reset": <ApIcon id="weekly-reset" size={22} mono />,
+  "/about": <InfoIcon size={22} />,
 };
 
 export function AppNav() {
@@ -19,7 +20,8 @@ export function AppNav() {
 
   return (
     <nav
-      className="fixed inset-x-0 bottom-0 z-40 mx-auto w-full max-w-lg border-t border-rule/[0.08] bg-paper/85 pb-[env(safe-area-inset-bottom)] backdrop-blur-md"
+      data-chrome
+      className="fixed inset-x-0 bottom-0 z-40 mx-auto w-full max-w-lg border-t border-rule/35 bg-paper/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-md"
       aria-label="Primary"
     >
       <ul className="flex items-stretch justify-between px-1.5">
@@ -29,23 +31,23 @@ export function AppNav() {
               ? pathname === "/"
               : pathname.startsWith(item.href);
           return (
-            <li key={item.href} className="flex-1">
+            <li key={item.href} className="min-w-0 flex-1">
               <Link
                 href={item.href}
                 aria-current={active ? "page" : undefined}
                 className="group flex min-h-16 flex-col items-center justify-center gap-1 px-1"
               >
                 <span
-                  className={`flex h-8 w-14 items-center justify-center rounded-full transition-colors ${
+                  className={`flex h-8 w-full max-w-14 items-center justify-center rounded-full transition-colors ${
                     active
-                      ? "bg-accent text-paper shadow-[0_4px_12px_-4px_rgb(61_90_76/0.6)]"
+                      ? "bg-accent text-paper shadow-[0_4px_12px_-4px_rgb(44_62_45/0.6)]"
                       : "text-ink-muted group-hover:bg-accent/[0.07] group-hover:text-accent"
                   }`}
                 >
                   {iconFor[item.href]}
                 </span>
                 <span
-                  className={`text-[11px] leading-none ${
+                  className={`text-xs leading-none ${
                     active ? "font-semibold text-accent" : "font-medium text-ink-muted"
                   }`}
                 >

@@ -78,13 +78,13 @@ export function TimerDisplay({
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
           <p
             className={`tabular font-medium leading-none tracking-[-0.03em] ${
-              long ? "text-[44px]" : "text-[56px]"
+              long ? "text-2xl" : "text-2xl"
             } ${expired ? "text-failure" : idle ? "text-ink/80" : "text-ink"}`}
           >
             {label}
           </p>
           <p
-            className={`mt-2 text-[11px] font-medium uppercase tracking-[0.08em] ${
+            className={`mt-2 text-xs font-medium uppercase tracking-[0.08em] ${
               expired ? "text-failure" : "text-pause-text"
             }`}
           >
@@ -93,7 +93,7 @@ export function TimerDisplay({
         </div>
       </div>
       {expired && !idle && (
-        <p className="mt-2 text-[15px] font-medium text-failure">
+        <p className="mt-2 text-base font-medium text-failure">
           Return time passed — reconnect now
         </p>
       )}

@@ -13,23 +13,23 @@ export const TOGETHER_CITATION = {
 
 /** Places outside pressure shows up. Examples only — not a checklist of what any couple faces. */
 export const outsideExamples = [
-  "a parent who won't say your partner's name",
-  "a relative's “joke” at a holiday dinner",
+  "a parent who won’t say your partner’s name",
+  "a relative’s “joke” at a holiday dinner",
   "the bill handed to the “obvious” person",
   "a stranger asking where your partner is really from",
-  "forms and customs that assume you're a different kind of couple",
+  "forms and customs that assume you’re a different kind of couple",
 ];
 
 export const whoFor = [
   "Interracial, intercultural and interfaith couples.",
   "Couples facing disapproval because of age gap, class, nationality, migration status, or sexual or gender identity.",
-  "Couples where one partner is new to a country, a language or a family's customs.",
-  "Couples where only one of you is ready to start. The Unity Anchor works best together, but one person can begin by saying: “That's coming from them, not from us.”",
+  "Couples where one partner is new to a country, a language or a family’s customs.",
+  "Couples where only one of you is ready to start. The Unity Anchor works best together, but one person can begin by saying: “That’s coming from them, not from us.”",
 ];
 
 export const notFor = [
-  "Relationships with fear, intimidation, coercion or control. If you're afraid of your partner, couples exercises aren't the right tool.",
-  "Immediate danger, including harassment or threats from other people. Contact local emergency services where it's safe to do so.",
+  "Relationships with fear, intimidation, coercion or control. If you’re afraid of your partner, couples exercises aren’t the right tool.",
+  "Immediate danger, including harassment or threats from other people. Contact local emergency services where it’s safe to do so.",
 ];
 
 export interface CommonMove {
@@ -70,7 +70,7 @@ export const togetherTools = [
   {
     label: "Situation Map",
     href: "/",
-    note: "Pick “We're getting pressure from outside” — it goes straight to the first move.",
+    note: "Pick “We’re getting pressure from outside” — it goes straight to the first move.",
   },
   {
     label: "Weekly Reset",
@@ -95,11 +95,11 @@ export const togetherFaq = [
     a: "No. Every protocol is for any couple. This page gathers the parts that deal with outside pressure, which interracial and other minority-stress couples often meet more of.",
   },
   {
-    q: "Does it tell me how to handle my partner's family?",
-    a: "It helps the two of you agree how you'll respond. It won't tell either of you to cut anyone off, and no protocol is ever used to limit a partner's contact with their family.",
+    q: "Does it tell me how to handle my partner’s family?",
+    a: "It helps the two of you agree how you’ll respond. It won’t tell either of you to cut anyone off, and no protocol is ever used to limit a partner’s contact with their family.",
   },
   {
-    q: "What if one of us doesn't see what the other sees?",
-    a: "That's common. The Unity Anchor starts by treating the strain as real and external, so you don't have to win an argument about each incident before you can support each other.",
+    q: "What if one of us doesn’t see what the other sees?",
+    a: "That’s common. The Unity Anchor starts by treating the strain as real and external, so you don’t have to win an argument about each incident before you can support each other.",
   },
 ];

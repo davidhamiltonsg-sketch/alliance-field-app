@@ -9,10 +9,10 @@ export function SectionLabel({
 }) {
   return (
     <Tag
-      className={`flex items-center gap-3 text-[11px] font-medium uppercase tracking-[0.08em] text-accent ${className}`}
+      className={`flex items-center gap-3 text-xs font-medium uppercase tracking-[0.08em] text-accent ${className}`}
     >
       <span className="shrink-0">{children}</span>
-      <span className="h-px flex-1 bg-rule/10" aria-hidden />
+      <span className="h-px flex-1 bg-rule/40" aria-hidden />
     </Tag>
   );
 }

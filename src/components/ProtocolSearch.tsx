@@ -3,10 +3,13 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { ChevronRight, StarIcon } from "./icons";
-import { IconTablet } from "./visuals/IconTablet";
+import { IconChip, isIconId } from "./ApIcon";
 import { FavoriteButton } from "./FavoriteButton";
 import { SectionLabel } from "./SectionLabel";
+import { TierBadge } from "./TierBadge";
 import { coreFiveSlugs } from "@/data/core5";
+import { protocolSubtitle } from "@/data/glossary";
+import { groupByTier, tierInfo } from "@/data/tiers";
 import { readFavorites } from "@/lib/storage";
 import type { Protocol } from "@/data/types";
 
@@ -44,21 +47,22 @@ export function ProtocolSearch({ protocols }: { protocols: Protocol[] }) {
     return list;
   }, [protocols, query, favoritesOnly, favorites]);
 
-  // No search or filter: show the Core 5 first, then everything else as "Advanced".
+  // No search or filter: group by tier (Core first, in Core 5 order).
   const grouped =
     !query.trim() && !favoritesOnly
-      ? {
-          core: coreFiveSlugs
+      ? groupByTier([
+          ...coreFiveSlugs
             .map((slug) => protocols.find((p) => p.slug === slug))
             .filter((p): p is Protocol => Boolean(p)),
-          advanced: protocols.filter((p) => !coreFiveSlugs.includes(p.slug)),
-        }
+          ...protocols.filter((p) => !coreFiveSlugs.includes(p.slug)),
+        ])
       : null;
 
   const renderList = (list: Protocol[]) => (
     <ul className="space-y-2.5">
       {list.map((p) => {
         const tone = p.accentHint ?? "accent";
+        const subtitle = protocolSubtitle(p.slug);
         return (
           <li key={p.slug}>
             <Link
@@ -66,12 +70,14 @@ export function ProtocolSearch({ protocols }: { protocols: Protocol[] }) {
               className="v2-card relative flex min-h-14 items-center gap-3 py-3.5 pl-6 pr-3"
             >
               <span className={`v2-edge v2-edge--${tone}`} aria-hidden />
-              <IconTablet slug={p.slug} tone={tone} size="md" />
+              {isIconId(p.slug) && <IconChip id={p.slug} tone={tone} size="md" />}
               <span className="min-w-0 flex-1">
-                <span className="display block text-[17px] leading-snug">
+                <TierBadge tier={p.tier} />
+                <span className="display mt-1 block text-lg leading-snug">
                   {p.title}
                 </span>
-                <span className="mt-0.5 line-clamp-2 block text-[13px] leading-snug text-ink-muted">
+                <span className="mt-0.5 line-clamp-2 text-sm leading-snug text-ink-muted">
+                  {subtitle ? `${subtitle.charAt(0).toUpperCase()}${subtitle.slice(1)}. ` : ""}
                   {p.concept}
                 </span>
               </span>
@@ -107,37 +113,36 @@ export function ProtocolSearch({ protocols }: { protocols: Protocol[] }) {
           type="button"
           onClick={() => setFavoritesOnly((v) => !v)}
           aria-pressed={favoritesOnly}
-          className={`inline-flex min-h-9 items-center gap-1.5 rounded-full px-3.5 text-[13px] font-medium transition-colors ${
+          className={`inline-flex min-h-11 items-center gap-1.5 rounded-full px-3.5 text-sm font-medium transition-colors ${
             favoritesOnly
-              ? "bg-pause text-ink"
-              : "border border-rule/15 bg-white text-ink-muted"
+              ? "bg-accent text-paper"
+              : "border border-rule/60 bg-white text-ink-muted"
           }`}
         >
           <StarIcon size={14} filled={favoritesOnly} />
-          Favorites only
+          Favourites only
         </button>
       )}
 
       {filtered.length === 0 ? (
-        <p className="py-8 text-center text-[15px] text-ink-muted">
+        <p className="py-8 text-center text-base text-ink-muted">
           {favoritesOnly
-            ? "No favorites yet. Tap the star on any card to save it here."
+            ? "No favourites yet. Tap the star on any card to save it here."
             : <>No cards match &ldquo;{query}&rdquo;. Try a different word, or browse the full list from the Situation Map.</>}
         </p>
       ) : grouped ? (
-        <div className="space-y-5">
-          <section className="space-y-2.5" aria-labelledby="group-core">
-            <SectionLabel>
-              <span id="group-core">Core 5 — start here</span>
-            </SectionLabel>
-            {renderList(grouped.core)}
-          </section>
-          <section className="space-y-2.5" aria-labelledby="group-advanced">
-            <SectionLabel>
-              <span id="group-advanced">Advanced</span>
-            </SectionLabel>
-            {renderList(grouped.advanced)}
-          </section>
+        <div className="space-y-6">
+          {grouped.map((g) => (
+            <section key={g.tier} className="space-y-2.5" aria-labelledby={`group-${g.tier}`}>
+              <SectionLabel>
+                <span id={`group-${g.tier}`}>
+                  {tierInfo[g.tier].label} · {g.protocols.length}
+                </span>
+              </SectionLabel>
+              <p className="px-1 text-sm text-ink-muted">{tierInfo[g.tier].meaning}</p>
+              {renderList(g.protocols)}
+            </section>
+          ))}
         </div>
       ) : (
         renderList(filtered)

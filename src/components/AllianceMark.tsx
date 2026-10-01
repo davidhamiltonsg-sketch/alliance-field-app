@@ -56,9 +56,9 @@ export function AllianceLockup({
   className?: string;
 }) {
   const s = {
-    sm: { mark: 28, name: "text-[13px] tracking-[0.14em]", sub: "text-[11px]" },
-    md: { mark: 40, name: "text-[17px] tracking-[0.14em]", sub: "text-[11px]" },
-    lg: { mark: 72, name: "text-[20px] tracking-[0.14em]", sub: "text-[11px]" },
+    sm: { mark: 28, name: "text-sm tracking-[0.14em]", sub: "text-xs" },
+    md: { mark: 40, name: "text-base tracking-[0.14em]", sub: "text-xs" },
+    lg: { mark: 72, name: "text-lg tracking-[0.14em]", sub: "text-xs" },
   }[size];
   return (
     <span className={`inline-flex items-center gap-3 ${className}`}>

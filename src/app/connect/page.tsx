@@ -10,7 +10,7 @@ export default function ConnectPage() {
   return (
     <div className="space-y-5">
       <PageHeader
-        eyebrow={<Marker kind="TOOL" label="Reconnect" />}
+        eyebrow={<Marker kind="TOOL" label="Connection Cards" icon="connection-cards" />}
         title="Connection Cards"
       >
         Five stages, one flip at a time — Warmth, Curiosity, Care, Repair,
@@ -19,7 +19,7 @@ export default function ConnectPage() {
       <ConnectionCards />
       <Link
         href="/"
-        className="inline-flex min-h-12 items-center gap-1.5 text-[15px] font-medium text-accent"
+        className="inline-flex min-h-12 items-center gap-1.5 text-base font-medium text-accent"
       >
         <ArrowLeft size={16} />
         Situation Map

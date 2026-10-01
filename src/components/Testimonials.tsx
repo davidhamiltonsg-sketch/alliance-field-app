@@ -6,7 +6,7 @@ import {
   type Testimonial,
 } from "@/data/testimonials";
 
-const chipTone = ["bg-accent/10 text-accent", "bg-repair/10 text-repair", "bg-pause/12 text-pause-text"];
+const chipTone = ["bg-accent/10 text-accent", "bg-repair/10 text-repair", "bg-ink/[0.06] text-ink"];
 
 function TestimonialCard({ t, i }: { t: Testimonial; i: number }) {
   return (
@@ -14,8 +14,8 @@ function TestimonialCard({ t, i }: { t: Testimonial; i: number }) {
       <span className={`inline-flex h-7 w-7 items-center justify-center rounded-full ${chipTone[i % chipTone.length]}`}>
         <QuoteIcon size={14} />
       </span>
-      <p className="text-[14px] leading-normal text-ink">{t.quote}</p>
-      <p className="text-[12.5px] font-medium text-ink-muted">— {t.names}</p>
+      <p className="text-sm leading-normal text-ink">{t.quote}</p>
+      <p className="text-xs font-medium text-ink-muted">— {t.names}</p>
     </li>
   );
 }

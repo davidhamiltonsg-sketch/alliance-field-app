@@ -35,9 +35,10 @@ export function DeleteAllData() {
 
   return (
     <div className="card space-y-3 px-4 py-4">
-      <p className="text-[15px] leading-normal text-ink">
+      <p className="text-base leading-normal text-ink">
         Everything you enter — pause return times, Weekly Reset answers and
-        history, calibration answers, favourites — stays on this device. The
+        history, calibration answers, favourites, 7-day plan ticks — stays on
+        this device. The
         app has no account. The only time any data leaves your device is if
         you choose to submit your email for updates. (While early access is
         on, one sign-in cookie remembers the access code; it holds nothing
@@ -52,7 +53,7 @@ export function DeleteAllData() {
           ref={openRef}
           type="button"
           onClick={() => go("confirm")}
-          className="w-full min-h-12 rounded-xl border border-failure/40 text-[15px] font-semibold text-failure hover:bg-failure/[0.06]"
+          className="w-full min-h-12 rounded-xl border border-failure/40 text-base font-semibold text-failure hover:bg-failure/[0.06]"
         >
           Delete all my data
         </button>
@@ -69,15 +70,15 @@ export function DeleteAllData() {
           }}
           className="space-y-3 rounded-xl bg-surface-warn px-3.5 py-3 outline-none focus-visible:ring-2 focus-visible:ring-accent"
         >
-          <p id="wipe-q" className="text-[15px] font-medium leading-normal text-ink">
+          <p id="wipe-q" className="text-base font-medium leading-normal text-ink">
             Delete everything this app has saved in this browser, including
-            the offline copy? This can&apos;t be undone.
+            the offline copy? This can’t be undone.
           </p>
           <div className="flex gap-2">
             <button
               type="button"
               onClick={() => go("idle")}
-              className="min-h-12 flex-1 rounded-xl border border-rule/15 bg-white text-[15px] font-medium text-ink"
+              className="min-h-12 flex-1 rounded-xl border border-rule/60 bg-white text-base font-medium text-ink"
             >
               Cancel
             </button>
@@ -85,7 +86,7 @@ export function DeleteAllData() {
               type="button"
               onClick={wipe}
               disabled={status === "working"}
-              className="min-h-12 flex-1 rounded-xl bg-failure text-[15px] font-semibold text-white disabled:opacity-60"
+              className="min-h-12 flex-1 rounded-xl bg-failure text-base font-semibold text-white disabled:opacity-60"
             >
               Delete everything
             </button>
@@ -96,7 +97,7 @@ export function DeleteAllData() {
         ref={statusRef}
         role="status"
         tabIndex={-1}
-        className="text-[15px] font-medium text-safety-text outline-none empty:hidden"
+        className="text-base font-medium text-accent outline-none empty:hidden"
       >
         {status === "done"
           ? "Deleted. Your saved answers and the offline copy are gone from this browser. If you open the app again, it starts fresh."

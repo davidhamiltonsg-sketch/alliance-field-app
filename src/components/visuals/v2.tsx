@@ -1,4 +1,6 @@
 import type { CSSProperties, ReactNode } from "react";
+import { ApIconG } from "../ApIcon";
+import type { IconId } from "@/data/icons";
 
 /**
  * ALLIANCE PROTOCOLS visual language v2, ported from the visuals library
@@ -20,8 +22,12 @@ export const V = {
   accent: "#2C3E2D",
   thread: "#6F8177",
   hair: "#9FB2A6",
+  /** Connection only (logo bridge, Connection Cards, icon accents). */
   brass: "#A8895A",
-  brassL: "#D8C69F",
+  /** Neutral hairline for rims, plies and ornament (brass is reserved for connection). */
+  rim: "#9FB2A6",
+  /** Numerals on forest grounds. */
+  rimL: "#FFFFFF",
   safety: "#2E7D4F",
   pause: "#C47A1A",
   pauseInk: "#8F5610",
@@ -254,12 +260,12 @@ export function twistPaths(x: number, y0: number, y1: number, amp = 4.2, startOv
     over: polyD(over),
     underA: polyD(under.slice(0, g0 + 1)),
     underB: polyD(under.slice(g1)),
-    overColor: startOver % 2 === 0 ? V.brass : V.accent,
-    underColor: startOver % 2 === 0 ? V.accent : V.brass,
+    overColor: startOver % 2 === 0 ? V.rim : V.accent,
+    underColor: startOver % 2 === 0 ? V.accent : V.rim,
   };
 }
 
-/** Woven spine segment (two plies, forest and brass, crossing over/under). */
+/** Woven spine segment (two plies, forest and a neutral hairline, crossing over/under). */
 export function Twist({
   x,
   y0,
@@ -293,16 +299,16 @@ export function Twist({
   };
   return (
     <g>
-      <path d={t.underA} stroke={t.underColor} strokeWidth={t.underColor === V.brass ? 1 : 1.1} {...common} />
-      <path d={t.underB} stroke={t.underColor} strokeWidth={t.underColor === V.brass ? 1 : 1.1} {...common} />
-      <path d={t.over} stroke={t.overColor} strokeWidth={t.overColor === V.brass ? 1 : 1.1} {...common} />
+      <path d={t.underA} stroke={t.underColor} strokeWidth={t.underColor === V.rim ? 1 : 1.1} {...common} />
+      <path d={t.underB} stroke={t.underColor} strokeWidth={t.underColor === V.rim ? 1 : 1.1} {...common} />
+      <path d={t.over} stroke={t.overColor} strokeWidth={t.overColor === V.rim ? 1 : 1.1} {...common} />
     </g>
   );
 }
 
 /* ---------------------------------------------------------------- medallions */
 
-/** Forest arch medallion, brass hairline rim set off by a paper gap, serif italic numeral. */
+/** Forest arch medallion, neutral hairline rim set off by a paper gap, serif italic numeral. */
 export function Medallion({
   cx,
   cy,
@@ -311,8 +317,8 @@ export function Medallion({
   h = 26,
   size = 15,
   ground = V.forest,
-  numColor = V.brassL,
-  rim = V.brass,
+  numColor = V.rimL,
+  rim = V.rim,
   gap = V.paper,
   className,
   style,
@@ -352,66 +358,23 @@ export function Medallion({
 
 /* ---------------------------------------------------------------- glyphs */
 
-/** Status glyphs drawn from the mark geometry, on a 16 grid. */
-const GLYPHS: Record<string, ReactNode> = {
-  // safety: shield-arch with the mark's leaf
-  safety: (
-    <>
-      <path d="M3 5.6A5 5 0 0 1 13 5.6V8.4C13 11.6 10.7 13.9 8 15.2 5.3 13.9 3 11.6 3 8.4Z" />
-      <path d="M8 5.2C9.4 6.6 9.9 7.9 9.9 9 9.9 10.3 9 11.2 8 11.9 7 11.2 6.1 10.3 6.1 9 6.1 7.9 6.6 6.6 8 5.2Z" fill="currentColor" stroke="none" />
-    </>
-  ),
-  // pause: hourglass-arch
-  pause: (
-    <>
-      <path d="M3.2 1.6H12.8M3.2 14.4H12.8" />
-      <path d="M4.6 1.6V3.8A3.4 3.4 0 0 0 11.4 3.8V1.6" />
-      <path d="M4.6 14.4V12.2A3.4 3.4 0 0 1 11.4 12.2V14.4" />
-      <path d="M8 7.2V8.8" />
-      <path d="M8 11.1C8.9 11.9 9.2 12.6 9.2 13.2H6.8C6.8 12.6 7.1 11.9 8 11.1Z" fill="currentColor" stroke="none" />
-    </>
-  ),
-  // repair: joined arches with an over/under pass
-  repair: (
-    <>
-      <path d="M1.8 13.8V6.4A3.6 3.6 0 0 1 9 6.4V8.6" />
-      <path d="M9 11.4V13.8" />
-      <path d="M14.2 2.2V9.6A3.6 3.6 0 0 1 7 9.6V2.2" />
-    </>
-  ),
-  // stop: broken arch
-  failure: (
-    <>
-      <path d="M2.8 14.6V7.4A5.2 5.2 0 0 1 6.6 2.4" />
-      <path d="M9.6 3.4A5.2 5.2 0 0 1 13.2 8.4V14.6" />
-      <path d="M7.2 5.6L8.4 7.6L7.4 9.4" strokeWidth={1} />
-    </>
-  ),
-  // when: keystone arch doorway on a threshold
-  when: (
-    <>
-      <path d="M1.8 14.6H14.2" />
-      <path d="M3.6 14.6V7.6A4.4 4.4 0 0 1 12.4 7.6V14.6" />
-      <path d="M6.9 1.4H9.1L8.6 3.4H7.4Z" fill="currentColor" />
-      <path d="M8 8.2C9 9.2 9.4 10.2 9.4 11 9.4 12 8.7 12.6 8 13 7.3 12.6 6.6 12 6.6 11 6.6 10.2 7 9.2 8 8.2Z" fill="currentColor" stroke="none" />
-    </>
-  ),
-  // note: open arch tablet
-  note: (
-    <>
-      <path d="M3.4 14.6V6.4A4.6 4.6 0 0 1 12.6 6.4V14.6Z" />
-      <path d="M6 9.4H10M6 11.9H9" />
-    </>
-  ),
-  outcome: (
-    <>
-      <path d="M2.8 14.8V7.2A5.2 5.2 0 0 1 13.2 7.2V14.8Z" />
-      <path d="M8 6.2C9.5 7.7 10 9 10 10.1 10 11.4 9.1 12.3 8 13 6.9 12.3 6 11.4 6 10.1 6 9 6.5 7.7 8 6.2Z" fill="currentColor" stroke="none" />
-    </>
-  ),
-};
+/**
+ * Status glyphs come from the shared icon set (one glyph per concept). Kinds
+ * without a concept glyph (repair, note) carry their meaning through colour,
+ * rule treatment and a text label instead.
+ */
+export type GlyphKind = "safety" | "pause" | "repair" | "failure" | "when" | "say" | "note" | "outcome";
 
-export type GlyphKind = "safety" | "pause" | "repair" | "failure" | "when" | "note" | "outcome";
+export const glyphIcon: Record<GlyphKind, IconId | null> = {
+  safety: "section-safety",
+  pause: "pause-and-return",
+  failure: "section-not-working",
+  when: "section-when",
+  say: "section-say",
+  outcome: "section-working",
+  repair: null,
+  note: null,
+};
 
 /** Status glyph inside an SVG at (x, y), s units square. */
 export function Glyph({
@@ -420,7 +383,6 @@ export function Glyph({
   y,
   s = 15,
   color,
-  sw = 1.25,
   className,
   style,
 }: {
@@ -429,58 +391,13 @@ export function Glyph({
   y: number;
   s?: number;
   color?: string;
-  sw?: number;
   className?: string;
   style?: CSSProperties;
 }) {
-  const sc = s / 16;
+  const id = glyphIcon[kind];
+  if (!id) return null;
   const c = color ?? (kind in kindColor ? kindColor[kind as Kind] : V.accent);
-  return (
-    <g className={className} style={style}>
-      <g
-        transform={`translate(${n(x)} ${n(y)}) scale(${n(sc)})`}
-        fill="none"
-        stroke={c}
-        color={c}
-        strokeWidth={sw / sc}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        {GLYPHS[kind]}
-      </g>
-    </g>
-  );
-}
-
-/** Standalone glyph as an inline <svg> for HTML contexts. */
-export function GlyphIcon({
-  kind,
-  size = 16,
-  className = "",
-  sw = 1.3,
-}: {
-  kind: GlyphKind;
-  size?: number;
-  className?: string;
-  sw?: number;
-}) {
-  return (
-    <svg
-      viewBox="0 0 16 16"
-      width={size}
-      height={size}
-      className={className}
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={sw}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden
-      focusable="false"
-    >
-      {GLYPHS[kind]}
-    </svg>
-  );
+  return <ApIconG id={id} x={x} y={y} size={s} color={c} mono className={className} style={style} />;
 }
 
 /* ---------------------------------------------------------------- outlines */
@@ -582,7 +499,7 @@ export function ArchPanel({
   );
 }
 
-/** Decision lens with a brass inner hairline. */
+/** Decision lens with a fine inner hairline. */
 export function Lens({
   cx,
   cy,
@@ -603,17 +520,23 @@ export function Lens({
   return (
     <g className={className} style={style}>
       <path d={lensD(cx, cy, w, h)} fill={V.white} stroke={stroke} strokeWidth={0.95} />
-      <path d={lensD(cx, cy, w - 12, h - 9)} fill="none" stroke={V.brass} strokeWidth={0.6} />
+      <path d={lensD(cx, cy, w - 12, h - 9)} fill="none" stroke={V.rim} strokeWidth={0.6} />
     </g>
   );
 }
 
-/** Pause advisory strip: warm paper, amber dashed double hairlines, hourglass-arch. */
+/**
+ * Advisory strip across a diagram, styled by what it is about: pause (warm
+ * paper, amber dashed double hairlines, Pause + Return glyph), safety (tint,
+ * safety-green rules, safety glyph) or connection (warm paper, brass rules,
+ * Connection Cards glyph).
+ */
 export function AdvisoryStrip({
   x,
   y,
   w,
   h,
+  kind = "pause",
   children,
   className,
   style,
@@ -622,21 +545,27 @@ export function AdvisoryStrip({
   y: number;
   w: number;
   h: number;
+  kind?: "pause" | "safety" | "connection";
   children: ReactNode;
   className?: string;
   style?: CSSProperties;
 }) {
+  const look = {
+    pause: { fill: V.warm, rule: V.pause, dash: "4 2.4", icon: "pause-and-return" as IconId, color: V.pause },
+    safety: { fill: V.tint, rule: V.safety, dash: undefined, icon: "section-safety" as IconId, color: V.safety },
+    connection: { fill: V.warm, rule: V.brass, dash: undefined, icon: "connection-cards" as IconId, color: V.accent },
+  }[kind];
   return (
     <g className={className} style={style}>
-      <rect x={x} y={y} width={w} height={h} fill={V.warm} />
+      <rect x={x} y={y} width={w} height={h} fill={look.fill} />
       {[0.5, 3.2].map((o, i) => (
-        <g key={o} stroke={V.pause} strokeWidth={i ? 0.6 : 0.9} strokeDasharray="4 2.4">
+        <g key={o} stroke={look.rule} strokeWidth={i ? 0.6 : 0.9} strokeDasharray={look.dash}>
           <path d={`M${x} ${y + o}H${x + w}`} />
           <path d={`M${x} ${y + h - o}H${x + w}`} />
         </g>
       ))}
-      <Glyph kind="pause" x={x + 9} y={y + h / 2 - 8} s={16} />
-      <path d={`M${x + 33} ${y + 8}V${y + h - 8}`} stroke={V.brass} strokeWidth={0.6} />
+      <ApIconG id={look.icon} x={x + 9} y={y + h / 2 - 8} size={16} color={look.color} mono={kind === "safety"} />
+      <path d={`M${x + 33} ${y + 8}V${y + h - 8}`} stroke={V.rim} strokeWidth={0.6} />
       {children}
     </g>
   );

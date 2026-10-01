@@ -7,13 +7,16 @@ import {
   useRef,
   useState,
   useSyncExternalStore,
+  type ReactNode,
 } from "react";
 import Link from "next/link";
 import { PrimaryButton } from "./PrimaryButton";
 import { TimerDisplay } from "./TimerDisplay";
 import { WarnBanner } from "./WarnBanner";
 import { Marker } from "./Marker";
-import { ArrowRight } from "./icons";
+import { ArrowLeft, ArrowRight } from "./icons";
+import { ApIcon } from "./ApIcon";
+import { formatRemaining } from "./TimerDisplay";
 import { clearKey, PAUSE_KEY, readPause, writePause } from "@/lib/storage";
 import { timerAnnouncement } from "@/lib/timer";
 import { buildPauseReturnIcs } from "@/lib/ics";
@@ -159,6 +162,31 @@ function PauseTimerClient() {
   const [clockTimeError, setClockTimeError] = useState<string | null>(null);
   const [customError, setCustomError] = useState<string | null>(null);
   const alarmFiredForRef = useRef<string | null>(null);
+  // Full-screen calm view while a pause runs; "Exit full screen" drops back
+  // to the regular page (the pause keeps running either way).
+  const [calm, setCalm] = useState(true);
+  const calmActive = calm && !!returnAt && !backMode;
+  // Where focus should land after the view changes (the calm view, "I'm
+  // back" and Cancel/Clear all unmount the control that had focus).
+  const focusNextRef = useRef<string | null>(null);
+  const exitCalm = useCallback(() => {
+    focusNextRef.current = "calm-reopen";
+    setCalm(false);
+  }, []);
+  useEffect(() => {
+    const id = focusNextRef.current;
+    if (!id) return;
+    focusNextRef.current = null;
+    document.getElementById(id)?.focus();
+  });
+
+  // Hide the app header and bottom nav while the calm view is up.
+  useEffect(() => {
+    if (!calmActive) return;
+    const html = document.documentElement;
+    html.setAttribute("data-calm", "");
+    return () => html.removeAttribute("data-calm");
+  }, [calmActive]);
 
   useEffect(() => {
     if (!returnAt || backMode) return;
@@ -200,6 +228,7 @@ function PauseTimerClient() {
     setReturnAt(at);
     setStartedAt(startedAt);
     setBackMode(false);
+    setCalm(true);
     setNow(Date.now());
     requestNotifyPermission();
   }, []);
@@ -214,11 +243,11 @@ function PauseTimerClient() {
     }
     const delta = target.getTime() - Date.now();
     if (delta < MIN_MINUTES * 60 * 1000) {
-      setClockTimeError("That's less than 20 minutes away — pick a later time.");
+      setClockTimeError("That’s less than 20 minutes away — pick a later time.");
       return;
     }
     if (delta > MAX_MINUTES * 60 * 1000) {
-      setClockTimeError("That's more than 24 hours away — pick a sooner time.");
+      setClockTimeError("That’s more than 24 hours away — pick a sooner time.");
       return;
     }
     setClockTimeError(null);
@@ -231,13 +260,14 @@ function PauseTimerClient() {
     setReturnAt(target.toISOString());
     setStartedAt(started);
     setBackMode(false);
+    setCalm(true);
     setNow(Date.now());
     requestNotifyPermission();
   }, [clockTime]);
 
   const shareReturnTime = async () => {
     if (!returnAt) return;
-    const text = `I'll be ready at ${formatClock(new Date(returnAt))}.`;
+    const text = `I’ll be ready at ${formatClock(new Date(returnAt))}.`;
     try {
       if (navigator.share) {
         await navigator.share({ text });
@@ -256,6 +286,7 @@ function PauseTimerClient() {
   };
 
   const cancel = () => {
+    focusNextRef.current = "pause-duration";
     clearKey(PAUSE_KEY);
     setReturnAt(null);
     setStartedAt(null);
@@ -270,6 +301,7 @@ function PauseTimerClient() {
   };
 
   const imBack = () => {
+    focusNextRef.current = "restart-cue";
     setBackMode(true);
   };
 
@@ -291,7 +323,7 @@ function PauseTimerClient() {
   );
 
   const chip =
-    "min-h-12 rounded-xl border border-rule/[0.12] bg-white text-[15px] font-medium text-ink shadow-[0_1px_2px_rgb(26_26_26/0.04)] transition hover:border-pause/40 hover:bg-surface-warn active:scale-[0.98]";
+    "min-h-12 rounded-xl border border-rule/50 bg-white text-base font-medium text-ink shadow-[0_1px_2px_rgb(26_26_26/0.04)] transition hover:border-pause/40 hover:bg-surface-warn active:scale-[0.98]";
 
   if (backMode) {
     return (
@@ -301,30 +333,35 @@ function PauseTimerClient() {
           You’re back. Do not restart “where you left off.” If you’re afraid,
           not just flooded, don’t return — get help.
         </WarnBanner>
-        <section className="card space-y-3 px-4 py-4">
-          <Marker kind="OK" label="Restart cue" />
-          <ol className="space-y-2 text-[15px] leading-normal">
+        <section
+          id="restart-cue"
+          tabIndex={-1}
+          aria-label="Restart cue"
+          className="card space-y-3 px-4 py-4 focus:outline-none"
+        >
+          <Marker kind="DO" label="Restart cue" />
+          <ol className="space-y-2 text-base leading-normal">
             <li className="flex gap-3">
-              <span className="tabular flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent text-[13px] font-medium text-paper">1</span>
+              <span className="tabular flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent text-sm font-medium text-paper">1</span>
               <span><strong>Warmth</strong> — one warm true sentence.</span>
             </li>
             <li className="flex gap-3">
-              <span className="tabular flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent text-[13px] font-medium text-paper">2</span>
+              <span className="tabular flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent text-sm font-medium text-paper">2</span>
               <span><strong>Safety</strong> — Alliance not threatened this moment.</span>
             </li>
             <li className="flex gap-3">
-              <span className="tabular flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent text-[13px] font-medium text-paper">3</span>
+              <span className="tabular flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent text-sm font-medium text-paper">3</span>
               <span>Only then: Expression → Request → Alignment.</span>
             </li>
           </ol>
           <ul className="space-y-2 pt-1">
-            <li className="phrase-block phrase text-[17px] leading-snug">I’m back. I’m on your team.</li>
-            <li className="phrase-block phrase text-[17px] leading-snug">This isn’t a breakup conversation.</li>
+            <li className="phrase-block phrase text-base leading-snug">I’m back. I’m on your team.</li>
+            <li className="phrase-block phrase text-base leading-snug">This isn’t a breakup conversation.</li>
           </ul>
         </section>
         <Link
           href="/protocols/system-overlay"
-          className="flex min-h-12 items-center justify-center gap-1.5 text-[15px] font-medium text-repair"
+          className="flex min-h-12 items-center justify-center gap-1.5 text-base font-medium text-repair"
         >
           Open System Overlay
           <ArrowRight size={16} />
@@ -332,6 +369,21 @@ function PauseTimerClient() {
         <PrimaryButton variant="secondary" onClick={cancel}>
           Clear pause
         </PrimaryButton>
+      </div>
+    );
+  }
+
+  if (returnAt && calm) {
+    return (
+      <div className="space-y-4">
+        <CalmPause
+          live={live}
+          returnLabel={formatClock(new Date(returnAt))}
+          remainingMs={remainingMs}
+          expired={expired}
+          onBack={imBack}
+          onExit={exitCalm}
+        />
       </div>
     );
   }
@@ -344,9 +396,12 @@ function PauseTimerClient() {
     return (
       <div className="space-y-4">
         {live}
+        <PrimaryButton id="calm-reopen" variant="secondary" onClick={() => setCalm(true)}>
+          Full-screen calm view
+        </PrimaryButton>
         <div className="card flex flex-col items-center px-4 pb-5 pt-6">
           <TimerDisplay remainingMs={remainingMs} totalMs={totalMs} expired={expired} />
-          <p className="mt-4 text-[15px] text-ink-muted">
+          <p className="mt-4 text-base text-ink-muted">
             Ready at{" "}
             <strong className="tabular font-medium text-ink">{formatClock(at)}</strong>
           </p>
@@ -360,10 +415,10 @@ function PauseTimerClient() {
         <PrimaryButton variant="secondary" onClick={addToCalendar}>
           Add return time to calendar (.ics)
         </PrimaryButton>
-        <p role="status" className="text-center text-[13px] font-medium text-safety-text empty:hidden">
+        <p role="status" className="text-center text-sm font-medium text-accent empty:hidden">
           {calendarAdded ? "Calendar file downloaded — open it to add the alarm." : ""}
         </p>
-        <p className="rounded-xl bg-surface-warn px-3.5 py-2.5 text-[13px] leading-snug text-ink">
+        <p className="rounded-xl bg-surface-warn px-3.5 py-2.5 text-sm leading-snug text-ink">
           <strong className="font-medium">Keep this screen open</strong> —
           phones may silence alarms in the background. For a backup, add the
           return time to your calendar.
@@ -371,7 +426,7 @@ function PauseTimerClient() {
         <PrimaryButton variant="ghost" onClick={cancel}>
           Cancel pause
         </PrimaryButton>
-        <p className="text-center text-[13px] text-ink-muted">
+        <p className="text-center text-sm text-ink-muted">
           Separate · calm down · don’t rehearse the argument.
         </p>
       </div>
@@ -388,14 +443,16 @@ function PauseTimerClient() {
           idleLabel="00:00"
           caption="Choose a return time"
         />
-        <p className="mt-3 text-center text-[15px] leading-normal text-ink-muted">
+        <p className="mt-3 text-center text-base leading-normal text-ink-muted">
           Exact phrase:{" "}
-          <span className="phrase text-[15px] text-ink">“I’ll be ready at ___.”</span>
+          <span className="phrase text-base text-ink">“I’ll be ready at ___.”</span>
         </p>
       </div>
 
       <section className="space-y-2">
-        <p className="text-[13px] font-medium text-ink">Duration</p>
+        <p id="pause-duration" tabIndex={-1} className="text-sm font-medium text-ink focus:outline-none">
+          Duration
+        </p>
         <div className="grid grid-cols-12 gap-2">
           {DURATIONS.map((d, i) => (
             <button
@@ -410,9 +467,9 @@ function PauseTimerClient() {
         </div>
       </section>
 
-      <section className="grid grid-cols-1 gap-3 min-[400px]:grid-cols-2">
+      <section className="grid grid-cols-1 gap-3">
         <div className="space-y-2">
-          <label htmlFor="custom-minutes" className="block text-[13px] font-medium text-ink">
+          <label htmlFor="custom-minutes" className="block text-sm font-medium text-ink">
             Custom minutes
           </label>
           <div className="flex gap-2">
@@ -456,18 +513,18 @@ function PauseTimerClient() {
             </PrimaryButton>
           </div>
           {customError ? (
-            <p id="custom-minutes-hint" role="alert" className="text-[13px] text-failure">
+            <p id="custom-minutes-hint" role="alert" className="text-sm text-failure">
               {customError}
             </p>
           ) : (
-            <p id="custom-minutes-hint" className="text-[13px] text-ink-muted">
+            <p id="custom-minutes-hint" className="text-sm text-ink-muted">
               Min 20 · Max 1440 (24h)
             </p>
           )}
         </div>
 
         <div className="space-y-2">
-          <label htmlFor="clock-time" className="block text-[13px] font-medium text-ink">
+          <label htmlFor="clock-time" className="block text-sm font-medium text-ink">
             Or return at a clock time
           </label>
           <div className="flex gap-2">
@@ -494,16 +551,144 @@ function PauseTimerClient() {
             </PrimaryButton>
           </div>
           {clockTimeError ? (
-            <p id="clock-time-hint" role="alert" className="text-[13px] text-failure">
+            <p id="clock-time-hint" role="alert" className="text-sm text-failure">
               {clockTimeError}
             </p>
           ) : (
-            <p id="clock-time-hint" className="text-[13px] text-ink-muted">
+            <p id="clock-time-hint" className="text-sm text-ink-muted">
               Min 20 min · Max 24h away
             </p>
           )}
         </div>
       </section>
     </div>
+  );
+}
+
+/**
+ * Full-screen calm view for a running pause: the return time large, a slow
+ * breathing ring (still under reduced motion), the keep-open note, a clear
+ * way back to the regular page, and Help always visible.
+ */
+function CalmPause({
+  returnLabel,
+  remainingMs,
+  expired,
+  onBack,
+  onExit,
+  live,
+}: {
+  live: ReactNode;
+  returnLabel: string;
+  remainingMs: number;
+  expired: boolean;
+  onBack: () => void;
+  onExit: () => void;
+}) {
+  const rootRef = useRef<HTMLElement>(null);
+  useEffect(() => {
+    rootRef.current?.focus();
+  }, []);
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onExit();
+        return;
+      }
+      // Keep keyboard focus inside the full-screen view (it is modal).
+      const root = rootRef.current;
+      if (e.key !== "Tab" || !root) return;
+      const items = [...root.querySelectorAll<HTMLElement>("a[href], button:not([disabled])")];
+      if (items.length === 0) return;
+      const first = items[0];
+      const lastItem = items[items.length - 1];
+      const active = document.activeElement;
+      if (e.shiftKey && (active === first || active === root || !root.contains(active))) {
+        e.preventDefault();
+        lastItem.focus();
+      } else if (!e.shiftKey && (active === lastItem || !root.contains(active))) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onExit]);
+
+  return (
+    <section
+      ref={rootRef}
+      tabIndex={-1}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="calm-heading"
+      className="fixed inset-0 z-[60] flex flex-col overflow-y-auto bg-surface-activity focus:outline-none"
+    >
+      {/* The timer's live region sits inside the modal so it is still announced. */}
+      {live}
+      <div className="mx-auto flex w-full max-w-lg flex-1 flex-col px-5 pb-[calc(env(safe-area-inset-bottom)+20px)] pt-[calc(env(safe-area-inset-top)+8px)]">
+        <div className="flex items-center justify-between">
+          <button
+            type="button"
+            onClick={onExit}
+            className="-ml-2 inline-flex min-h-12 items-center gap-1.5 rounded-full px-2 text-sm font-medium text-ink-muted hover:text-accent"
+          >
+            <ArrowLeft size={18} />
+            Exit full screen
+          </button>
+          <Link
+            href="/help"
+            className="inline-flex min-h-12 items-center gap-1.5 rounded-full px-3 text-sm font-semibold text-failure hover:bg-failure/10"
+          >
+            <ApIcon id="help-safety" size={18} className="text-safety" />
+            Help
+          </Link>
+        </div>
+
+        <div className="flex flex-1 flex-col items-center justify-center py-4 text-center">
+          <h2 id="calm-heading" className="flex items-center gap-1.5 text-sm font-medium text-pause-text">
+            <ApIcon id="pause-and-return" size={18} />
+            {expired ? "Return time" : "Pause + Return · ready at"}
+          </h2>
+          <div className="relative mt-4 flex h-[min(15rem,66vw,34dvh)] w-[min(15rem,66vw,34dvh)] items-center justify-center">
+            <span className="calm-breath absolute inset-0 rounded-full bg-pause/[0.13]" aria-hidden />
+            <span className="absolute inset-6 rounded-full border border-pause/40 bg-paper/70" aria-hidden />
+            <div className="relative">
+              <p className={`tabular text-2xl font-semibold ${expired ? "text-pause-text" : "text-ink"}`}>
+                {/* A 12-hour clock's "AM"/"PM" is set smaller so the time fits inside the ring. */}
+                {returnLabel.replace(/\s*([AaPp]\.?\s?[Mm]\.?)$/, "")}
+                {/[AaPp]\.?\s?[Mm]\.?$/.test(returnLabel) && (
+                  <span className="ml-1 text-lg">{returnLabel.match(/[AaPp]\.?\s?[Mm]\.?$/)?.[0]}</span>
+                )}
+              </p>
+              <p className="tabular mt-2 text-sm text-ink-muted">
+                {expired ? "Time to reconnect" : `${formatRemaining(remainingMs)} to go`}
+              </p>
+            </div>
+          </div>
+          <p className="phrase mt-5 text-lg text-ink">
+            {expired ? "Come back, even briefly. Warmth first." : "Breathe in as it grows, out as it settles."}
+          </p>
+          <p className="mt-1.5 text-sm text-ink-muted">Separate · calm down · don’t rehearse the argument.</p>
+        </div>
+
+        <div className="space-y-3">
+          <p className="rounded-xl bg-paper px-3.5 py-2.5 text-sm leading-snug text-ink">
+            <strong className="font-medium">Keep this screen open</strong> — phones may silence alarms in
+            the background.
+          </p>
+          <PrimaryButton variant="warn" onClick={onBack}>
+            I’m back
+          </PrimaryButton>
+          <p className="text-center text-sm text-ink-muted">
+            Afraid, not just flooded? Don’t return at the set time —{" "}
+            <Link href="/help" className="font-medium text-failure underline underline-offset-4">
+              get help
+            </Link>
+            .
+          </p>
+        </div>
+      </div>
+    </section>
   );
 }

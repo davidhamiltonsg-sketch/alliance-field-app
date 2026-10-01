@@ -68,3 +68,13 @@ describe("launch lock", () => {
     expect(precacheUrls()).not.toContain("/unlock");
   });
 });
+
+describe("service worker registration", () => {
+  it("skips the lock screen, where /sw.js is withheld", async () => {
+    const { readFileSync } = await import("node:fs");
+    const { UNLOCK_PATH } = await import("../src/lib/launch-lock");
+    const src = readFileSync(new URL("../src/components/ServiceWorkerRegister.tsx", import.meta.url), "utf8");
+    expect(src).toContain(`const UNLOCK_PATH = "${UNLOCK_PATH}"`);
+    expect(src).toContain("if (pathname === UNLOCK_PATH) return;");
+  });
+});

@@ -18,12 +18,8 @@ function shuffle<T>(arr: T[]): T[] {
   return next;
 }
 
-const accentClasses: Record<string, { bg: string; text: string; ring: string }> = {
-  accent: { bg: "bg-accent", text: "text-accent", ring: "ring-accent/25" },
-  pause: { bg: "bg-pause-text", text: "text-pause-text", ring: "ring-pause/25" },
-  repair: { bg: "bg-repair", text: "text-repair", ring: "ring-repair/25" },
-  safety: { bg: "bg-safety", text: "text-safety-text", ring: "ring-safety/25" },
-};
+// Connection Cards are connection content: every stage uses the brass
+// family (brass rules on forest and white), never pause, safety or repair.
 
 type Filter = "all" | ConnectionStage;
 
@@ -62,7 +58,6 @@ function ConnectionDeck({ shuffled }: { shuffled: boolean }) {
   const currentId = deck[index];
   const current = currentId ? cardsById[currentId] : undefined;
   const meta = current ? STAGE_META[current.stage] : undefined;
-  const accent = meta ? accentClasses[meta.accentHint] : accentClasses.accent;
 
   const changeFilter = (next: Filter) => {
     setFilter(next);
@@ -95,10 +90,10 @@ function ConnectionDeck({ shuffled }: { shuffled: boolean }) {
       key={value}
       type="button"
       onClick={() => changeFilter(value)}
-      className={`min-h-11 shrink-0 rounded-full px-3.5 text-[13px] font-medium transition-colors ${
+      className={`min-h-11 shrink-0 rounded-full px-3.5 text-sm font-medium transition-colors ${
         filter === value
           ? "bg-accent text-paper"
-          : "border border-rule/15 bg-white text-ink-muted"
+          : "border border-rule/60 bg-white text-ink-muted"
       }`}
     >
       {label}
@@ -133,36 +128,37 @@ function ConnectionDeck({ shuffled }: { shuffled: boolean }) {
             >
               {/* Front — stage */}
               <div
-                className={`absolute inset-0 flex flex-col items-center justify-center gap-3 rounded-3xl px-6 text-center shadow-[var(--shadow-lift)] [backface-visibility:hidden] ${accent.bg} text-paper`}
+                className={`absolute inset-0 flex flex-col items-center justify-center gap-3 rounded-3xl px-6 text-center shadow-[var(--shadow-lift)] ring-2 ring-inset ring-brass/70 [backface-visibility:hidden] bg-accent text-paper`}
               >
-                <span className="text-[11px] font-medium uppercase tracking-[0.14em] text-paper/70">
+                <span className="text-xs font-medium uppercase tracking-[0.14em] text-paper/70">
                   Connection Cards
                 </span>
-                <span className="display text-[30px] leading-tight">{meta.label}</span>
-                <span className="max-w-[220px] text-[13px] leading-snug text-paper/85">
+                <span className="display text-xl leading-tight !text-paper">{meta.label}</span>
+                <span className="h-px w-12 bg-brass" aria-hidden />
+                <span className="max-w-[220px] text-sm leading-snug text-paper/85">
                   {meta.caption}
                 </span>
-                <span className="mt-2 text-[13px] font-medium text-paper/70">
+                <span className="mt-2 text-sm font-medium text-paper/70">
                   Tap to flip
                 </span>
               </div>
 
               {/* Back — question */}
               <div
-                className="absolute inset-0 flex flex-col items-center justify-center gap-4 rounded-3xl border border-rule/[0.08] bg-white px-6 text-center shadow-[var(--shadow-lift)] [backface-visibility:hidden]"
+                className="absolute inset-0 flex flex-col items-center justify-center gap-4 rounded-3xl border-t-4 border-brass bg-white px-6 text-center shadow-[var(--shadow-lift)] [backface-visibility:hidden]"
                 style={{ transform: "rotateY(180deg)" }}
               >
-                <span className={`text-[11px] font-medium uppercase tracking-[0.14em] ${accent.text}`}>
+                <span className="text-xs font-medium uppercase tracking-[0.14em] text-ink-muted">
                   {meta.label}
                 </span>
-                <p className="phrase text-[19px] leading-snug text-ink">
+                <p className="phrase text-lg leading-snug text-ink">
                   {current.question}
                 </p>
               </div>
             </div>
           </div>
 
-          <p className="text-center text-[13px] text-ink-muted">
+          <p className="text-center text-sm text-ink-muted">
             Card {index + 1} of {deck.length}
             {round > 1 ? ` · round ${round}` : ""}
           </p>
@@ -175,7 +171,7 @@ function ConnectionDeck({ shuffled }: { shuffled: boolean }) {
           </div>
         </>
       ) : (
-        <p className="py-10 text-center text-[15px] text-ink-muted">
+        <p className="py-10 text-center text-base text-ink-muted">
           No cards in this stage yet.
         </p>
       )}

@@ -34,7 +34,7 @@ const ALLIANCE_LINE = "We are an alliance.";
 const RETURN_TAGLINES = [
   "Still precise. Still here.",
   "On time, as promised.",
-  "Back again. That's the whole point.",
+  "Back again. That’s the whole point.",
 ];
 
 // Picked once per page load on the client; the server never needs it.
@@ -149,7 +149,7 @@ export function Splash() {
       aria-label="Skip opening"
     >
       <div
-        className="splash-glow pointer-events-none absolute inset-0 bg-[radial-gradient(60%_40%_at_50%_42%,rgb(61_90_76/0.10),transparent_70%)]"
+        className="splash-glow pointer-events-none absolute inset-0 bg-[radial-gradient(60%_40%_at_50%_42%,rgb(44_62_45/0.10),transparent_70%)]"
         aria-hidden
       />
       <div className="relative flex flex-col items-center px-8 text-center">
@@ -167,16 +167,16 @@ export function Splash() {
             <path className="sp-over" pathLength={1} d={WAVE} stroke="#A8895A" strokeWidth="8.5" />
           </g>
         </svg>
-        <p className="splash-word mt-7 text-[17px] font-medium tracking-[0.14em] text-ink">
+        <p className="splash-word mt-7 text-base font-medium tracking-[0.14em] text-ink">
           ALLIANCE PROTOCOLS
         </p>
         {splashMode === "full" ? (
-          <p className="splash-tag phrase mt-2 text-[17px] leading-snug text-ink-muted">
+          <p className="splash-tag phrase mt-2 text-base leading-snug text-ink-muted">
             {ALLIANCE_LINE}
           </p>
         ) : null}
         <p
-          className={`splash-tag phrase text-[17px] leading-snug text-ink-muted ${
+          className={`splash-tag phrase text-base leading-snug text-ink-muted ${
             splashMode === "full" ? "mt-0.5" : "mt-2"
           }`}
         >

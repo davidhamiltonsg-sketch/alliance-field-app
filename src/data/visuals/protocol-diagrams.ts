@@ -28,31 +28,31 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "when": "Either partner is flooded or shut down: racing heart, tunnel vision, contempt, urge to flee or win.",
     "steps": [
       {
-        "title": "Signal",
+        "title": "Say it",
         "detail": "“I need a pause.” No justification required.",
         "kind": "pause"
       },
       {
-        "title": "Time",
+        "title": "Set a time",
         "detail": "Set a return time: “I’ll be ready at ___.”",
         "kind": "pause",
         "badge": "20 min – 24 h"
       },
       {
-        "title": "Separate",
+        "title": "Step away",
         "detail": "Down-regulate: walk, shower, breathe, music. Avoid rehearsing arguments.",
         "kind": "pause"
       },
       {
-        "title": "Return",
+        "title": "Come back",
         "detail": "Reconnect at the agreed time, even briefly, to prove pause, not disappearance.",
-        "kind": "repair",
+        "kind": "step",
         "badge": "at the agreed time"
       },
       {
-        "title": "Restart",
+        "title": "Restart warm",
         "detail": "Warmth → Safety (not “where we left off”).",
-        "kind": "repair"
+        "kind": "step"
       }
     ],
     "note": {
@@ -70,13 +70,13 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
         "kind": "pause"
       },
       {
-        "title": "Name",
+        "title": "Say it",
         "detail": "“I want to connect, not fight.”",
         "kind": "step"
       },
       {
-        "title": "Contact",
-        "detail": "Brief touch, if welcome.",
+        "title": "Touch (only if welcome)",
+        "detail": "A brief touch is enough.",
         "kind": "step"
       },
       {
@@ -101,12 +101,12 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "when": "Always, especially when honesty feels costly, or ultimatums, stonewalling, or retaliation appear.",
     "steps": [
       {
-        "title": "Name the risk",
+        "title": "Say what feels unsafe",
         "detail": "One sentence: “This doesn’t feel safe right now.”",
-        "kind": "safety"
+        "kind": "step"
       },
       {
-        "title": "Stop content",
+        "title": "Stop the topic",
         "detail": "Immediately. No proving.",
         "kind": "failure"
       },
@@ -116,18 +116,18 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
         "kind": "pause"
       },
       {
-        "title": "Restart",
+        "title": "Warm up again",
         "detail": "On return, Warmth → Safety before the original topic.",
         "kind": "repair"
       },
       {
-        "title": "Repair the fault",
+        "title": "Repair the break",
         "detail": "Repair safety faults with an agreed phrase.",
         "kind": "repair"
       }
     ],
     "note": {
-      "kind": "safety",
+      "kind": "note",
       "text": "Priority over all content tools. If safety fails, content stops."
     },
     "outcome": "Honesty stays speakable without punishment."
@@ -136,27 +136,27 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "when": "Any sensitive discussion, change request, rupture repair, or joint decision. Also a diagnostic when stuck.",
     "steps": [
       {
-        "title": "Warmth",
+        "title": "Warm up",
         "detail": "Warmest true sentence; same team. “I love us, and I’m not trying to fight.”",
         "kind": "step"
       },
       {
-        "title": "Safety",
+        "title": "Make it safe",
         "detail": "Green Rule: the relationship is not threatened in this moment.",
-        "kind": "safety"
+        "kind": "step"
       },
       {
-        "title": "Expression",
+        "title": "Say what happened",
         "detail": "Impact with ownership: “When X happened, I felt Y; the impact was Z.”",
         "kind": "step"
       },
       {
-        "title": "Request",
+        "title": "Ask for one thing",
         "detail": "One specific, actionable, time-bound ask.",
         "kind": "step"
       },
       {
-        "title": "Alignment",
+        "title": "Agree on next steps",
         "detail": "Who does what by when, plus a review.",
         "kind": "step"
       }
@@ -178,7 +178,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Check the load",
-        "detail": "Where supported, where alone? Is the load fair? Monthly: Care Check-in.",
+        "detail": "Where supported, where alone? Is the load fair? Once a month, this is the monthly Care Check-in (inside the Weekly Reset).",
         "kind": "step",
         "badge": "15 min"
       },
@@ -211,42 +211,42 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "when": "Active conflict or recurring loops, when Warmth is still possible, or after a pause returns you to regulation.",
     "steps": [
       {
-        "title": "Check regulation",
+        "title": "Check if you’re calm",
         "detail": "Flooded or shut down? Pause + Return first.",
         "kind": "pause"
       },
       {
-        "title": "Warmth",
+        "title": "Warm up",
         "detail": "One warm true sentence: “I’m on your team, even though I’m frustrated.”",
         "kind": "step"
       },
       {
-        "title": "Safety",
+        "title": "Make it safe",
         "detail": "The Alliance is not threatened this moment.",
-        "kind": "safety"
+        "kind": "step"
       },
       {
-        "title": "Expression",
+        "title": "Say what happened",
         "detail": "When X, I felt Y; impact Z.",
         "kind": "step"
       },
       {
-        "title": "Request",
+        "title": "Ask for one thing",
         "detail": "One specific ask.",
         "kind": "step"
       },
       {
-        "title": "Accountability order",
+        "title": "Listen in the right order",
         "detail": "Impact → What would help → Perspective last.",
         "kind": "repair"
       },
       {
-        "title": "Proof, if needed",
+        "title": "Get proof if you need it",
         "detail": "Behaviour + evidence + window.",
         "kind": "repair"
       },
       {
-        "title": "Alignment",
+        "title": "Line up next steps",
         "detail": "Next step + check-back.",
         "kind": "step"
       }
@@ -258,27 +258,27 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "when": "Tone sharpens, small hurts, residue starting. Full repair feels impossible, but waiting will worsen the Tone Spiral.",
     "steps": [
       {
-        "title": "Soften",
+        "title": "Soften your tone",
         "detail": "Soften tone deliberately (Reciprocal Softness): “Soft reset, my tone.”",
         "kind": "repair"
       },
       {
-        "title": "2% move",
+        "title": "Do one small thing",
         "detail": "2% behavioural and/or 2% ownership: “2%: I can own ___.”",
         "kind": "repair"
       },
       {
-        "title": "Side-by-side",
+        "title": "Side by side",
         "detail": "Shift side-by-side if face-to-face is too hot: “Can we walk and talk?”",
         "kind": "step"
       },
       {
-        "title": "Acknowledge impact",
+        "title": "Say you noticed the impact",
         "detail": "One sentence, no “but”.",
         "kind": "repair"
       },
       {
-        "title": "Tiny next step",
+        "title": "Take one tiny next step",
         "detail": "Or Pause + Return.",
         "kind": "step"
       }
@@ -293,32 +293,32 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "when": "After any meaningful change request; when “I promise” appears without a plan; ending Hope Fog.",
     "steps": [
       {
-        "title": "Behaviour",
+        "title": "Name the change",
         "detail": "Name the change: specific, observable.",
         "kind": "step"
       },
       {
-        "title": "Evidence",
+        "title": "Decide what counts",
         "detail": "Define what counts as met / partial / missed.",
         "kind": "step"
       },
       {
-        "title": "Window",
+        "title": "Set a time window",
         "detail": "Set start, end, and review ritual.",
         "kind": "step"
       },
       {
-        "title": "Record",
+        "title": "Record it simply",
         "detail": "Tally or table; facts first at review.",
         "kind": "step"
       },
       {
-        "title": "Review",
+        "title": "Check in",
         "detail": "Extend, adjust, or close; Team Frame on.",
         "kind": "repair"
       },
       {
-        "title": "Escalate",
+        "title": "If it keeps getting missed",
         "detail": "If misses dominate without ownership.",
         "kind": "failure"
       }
@@ -330,25 +330,25 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "when": "Every day. Reinstate first after travel, illness, or stress.",
     "steps": [
       {
-        "title": "Morning Reset",
+        "title": "Morning check-in",
         "detail": "Devices down → touch (if welcome) or eye contact → “How are you feeling about today?” → one intention.",
         "kind": "step",
         "badge": "≤ 5 min"
       },
       {
-        "title": "Evening Check-in",
+        "title": "Evening check-in",
         "detail": "Decompress side-by-side → no logistics → “How did today actually go?” → one specific appreciation.",
         "kind": "step",
         "badge": "first 10 min"
       },
       {
-        "title": "Protect the windows",
+        "title": "Keep the same times",
         "detail": "Phone bowl, or charger elsewhere, during both windows.",
         "kind": "step"
       },
       {
-        "title": "Track",
-        "detail": "Y/N for 7 days; adjust timing, not intensity.",
+        "title": "Note it",
+        "detail": "Yes or no for 7 days, where you both see it; adjust timing, not intensity.",
         "kind": "step",
         "badge": "7 days"
       }
@@ -360,33 +360,33 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "when": "Initiating or declining feels tense; intimacy stall; after a trust dent; preventive Structure.",
     "steps": [
       {
-        "title": "Partner-First",
+        "title": "Picture their side",
         "detail": "Invest in your partner’s experience before only your own.",
         "kind": "step"
       },
       {
         "title": "No penalty",
         "detail": "Agree: a decline carries no cost — no punishing, sulking, or guilt-tripping.",
-        "kind": "safety"
+        "kind": "step"
       },
       {
-        "title": "Warm Decline",
+        "title": "Warm no",
         "detail": "Optional warm-no wording. A no needs no script, reason, or substitute.",
         "kind": "step"
       },
       {
-        "title": "Initiation",
+        "title": "Say what you enjoy",
         "detail": "Name initiation preferences: verbal / nonverbal; timing.",
         "kind": "step"
       },
       {
-        "title": "Review",
+        "title": "Revisit every 30 days",
         "detail": "Set a 30-day review, without mid-stream scorekeeping.",
         "kind": "step",
         "badge": "30 days"
       },
       {
-        "title": "Safety check",
+        "title": "Pressure? Stop here",
         "detail": "Pressure after a no: Green Rule or Trust Recovery first. Again, or unable to say no: Help Lines.",
         "kind": "failure"
       }
@@ -398,33 +398,33 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "when": "After betrayal, deception, repeated broken agreements, or any before/after in safety.",
     "steps": [
       {
-        "title": "Name the breach",
+        "title": "Name what happened",
         "detail": "The partner who broke trust names it, without deflection. The hurt partner never confesses in return.",
         "kind": "step"
       },
       {
-        "title": "Define the change",
+        "title": "One specific change",
         "detail": "One specific, observable change. Transparency is offered, time-limited, never monitoring.",
         "kind": "step"
       },
       {
-        "title": "Set the window",
+        "title": "Set a time window",
         "detail": "A meaningful window with review dates.",
         "kind": "step"
       },
       {
-        "title": "Record",
+        "title": "Keep a simple table",
         "detail": "Behaviour Window table: facts, seen and reviewed at the agreed check-in.",
         "kind": "step",
         "badge": "weekly"
       },
       {
-        "title": "Review",
+        "title": "Check in",
         "detail": "Record first, then feelings; extend, adjust, or close.",
         "kind": "repair"
       },
       {
-        "title": "Safety",
+        "title": "If it’s not safe",
         "detail": "If safety is absent, stop and seek appropriate support.",
         "kind": "failure"
       }
@@ -436,22 +436,22 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "when": "Weekly personal integrity practice; after emotional promising; alongside shared Proof during rebuild.",
     "steps": [
       {
-        "title": "Words",
+        "title": "What you say",
         "detail": "What do I say I value? Write it.",
         "kind": "step"
       },
       {
-        "title": "Intent",
+        "title": "What you meant to do",
         "detail": "What did I intend this week?",
         "kind": "step"
       },
       {
-        "title": "Proof",
+        "title": "What actually happened",
         "detail": "What did I actually do? Where was the gap?",
         "kind": "step"
       },
       {
-        "title": "Change",
+        "title": "One change",
         "detail": "One observable behaviour next week.",
         "kind": "repair"
       },
@@ -470,20 +470,20 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "outcome": "The integrity gap shrinks."
   },
   "full-recovery": {
-    "when": "A repeated fight or a clear before/after dent in trust that a Weekly Reset can't hold. Calm, agreed, scheduled — never mid-fight.",
+    "when": "A repeated fight or a clear before/after dent in trust that a Weekly Reset can’t hold. Calm, agreed, scheduled — never mid-fight.",
     "steps": [
       {
-        "title": "Warmth",
+        "title": "Warm up first",
         "detail": "Soften the mood before anything else. Don’t skip it.",
         "kind": "step"
       },
       {
-        "title": "What happened",
+        "title": "Say what happened",
         "detail": "Both sides, no interrupting.",
         "kind": "step"
       },
       {
-        "title": "Impact",
+        "title": "Acknowledge the impact",
         "detail": "Acknowledge the impact before either of you explains. One-sided breach: only the partner who caused it acknowledges.",
         "kind": "repair"
       },
@@ -493,7 +493,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
         "kind": "step"
       },
       {
-        "title": "One change",
+        "title": "Ask for one change",
         "detail": "Name it and agree by when: “visible by ___.”",
         "kind": "repair",
         "badge": "proof window"
@@ -514,7 +514,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "when": "Warmth missing in ordinary moments, routine repairs, no future plans, or contempt replacing frustration.",
     "steps": [
       {
-        "title": "Score alone",
+        "title": "Mark the signs alone",
         "detail": "Each marks the 8 signs separately, then share. Behaviour, not intent.",
         "kind": "step",
         "badge": "8 signs"
@@ -537,7 +537,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
         "badge": "3 or more · within a week"
       },
       {
-        "title": "Review",
+        "title": "Set a time window",
         "detail": "Set a window to check whether things are reinvesting.",
         "kind": "step"
       }
@@ -546,41 +546,26 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "outcome": "You know which repair to reach for, instead of hoping."
   },
   "unity-anchor": {
-    "when": "Family disapproval, discrimination, or outside judgment is landing on the two of you.",
+    "when": "Family disapproval, discrimination, or outside judgement is landing on the two of you.",
     "steps": [
       {
-        "title": "Name it as external",
-        "detail": "“That’s coming from them, not from us.”",
-        "kind": "safety"
-      },
-      {
-        "title": "Ask what’s needed",
-        "detail": "Reassurance, a plan, or just to vent?",
+        "title": "Pause before reacting",
+        "detail": "Don’t react to the pressure itself yet. What’s needed: reassurance, a plan, or just to vent?",
         "kind": "step"
       },
       {
-        "title": "Decide as a team",
-        "detail": "The response is joint, not solo.",
+        "title": "Trace the source",
+        "detail": "Is this about us, or their disapproval landing on us? “That’s coming from them, not from us.”",
         "kind": "step"
       },
       {
-        "title": "Pause first",
-        "detail": "Don’t react to the pressure itself yet.",
-        "kind": "pause"
-      },
-      {
-        "title": "Us, or them?",
-        "detail": "Is this about us, or their disapproval landing on us?",
-        "kind": "step"
-      },
-      {
-        "title": "State the unit",
+        "title": "Name the unit",
         "detail": "“We’re on the same side of this.”",
-        "kind": "repair"
+        "kind": "step"
       },
       {
-        "title": "Recurring source",
-        "detail": "Agree how the couple responds; log it at the Weekly Reset.",
+        "title": "Agree your response",
+        "detail": "Decide together how the couple responds; log it at the Weekly Reset.",
         "kind": "step",
         "badge": "Weekly Reset"
       }

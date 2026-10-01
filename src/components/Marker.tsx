@@ -1,5 +1,4 @@
-import type { ReactNode } from "react";
-import { ProtocolIcon } from "./visuals/ProtocolIcon";
+import { ApIcon, type IconId } from "./ApIcon";
 
 export type MarkerKind =
   | "TOOL"
@@ -10,18 +9,22 @@ export type MarkerKind =
   | "PHRASE"
   | "OK"
   | "FAIL"
-  | "PAUSE";
+  | "PAUSE"
+  | "SAFETY"
+  | "HELP";
 
 const styles: Record<MarkerKind, string> = {
   TOOL: "bg-accent/10 text-accent",
-  RULE: "bg-rule/10 text-rule",
-  WARN: "bg-pause/12 text-pause-text",
+  RULE: "bg-accent/10 text-accent",
+  WARN: "bg-ink/[0.07] text-ink",
   PAUSE: "bg-pause/12 text-pause-text",
   DO: "bg-accent text-paper",
   NOTE: "bg-ink/[0.06] text-ink-muted",
   PHRASE: "bg-accent/10 text-accent",
-  OK: "bg-safety/12 text-safety-text",
+  OK: "bg-accent/10 text-accent",
   FAIL: "bg-failure/10 text-failure",
+  SAFETY: "bg-safety/12 text-safety-text",
+  HELP: "bg-failure/10 text-failure",
 };
 
 const labels: Record<MarkerKind, string> = {
@@ -34,41 +37,50 @@ const labels: Record<MarkerKind, string> = {
   PHRASE: "Say This",
   OK: "Working",
   FAIL: "Not Working",
+  SAFETY: "Safety",
+  HELP: "Get help",
 };
 
-/** v2 library section icons (24-grid, arch-built). */
-const iconSlug: Record<MarkerKind, string> = {
-  TOOL: "section-tool",
-  RULE: "section-concept",
-  WARN: "section-caution",
+/**
+ * Shared-set glyph for each marker (one glyph per concept). Kinds without a
+ * concept of their own carry no glyph; pass `icon` to name the concept. The
+ * safety glyph appears only on safety content (SAFETY and HELP).
+ */
+const iconFor: Partial<Record<MarkerKind, IconId>> = {
   PAUSE: "pause-and-return",
-  DO: "section-activity",
-  NOTE: "section-concept",
-  PHRASE: "section-say-this",
+  DO: "section-steps",
+  PHRASE: "section-say",
   OK: "section-working",
   FAIL: "section-not-working",
+  SAFETY: "section-safety",
+  HELP: "help-safety",
 };
 
-const icons = Object.fromEntries(
-  Object.entries(iconSlug).map(([k, slug]) => [
-    k,
-    <ProtocolIcon key={k} slug={slug} size={14} strokeWidth={2} className="-my-0.5 shrink-0" />,
-  ]),
-) as Record<MarkerKind, ReactNode>;
-
-/** Styled label pill replacing print-style bracket markers. */
+/** Styled label pill: a text label, with its concept glyph beside it. */
 export function Marker({
   kind,
   label,
+  icon,
   className = "",
 }: {
   kind: MarkerKind;
   label?: string;
+  /** Concept glyph to show instead of the kind's default (null for none). */
+  icon?: IconId | null;
   className?: string;
 }) {
+  const id = icon === undefined ? iconFor[kind] : icon;
   return (
     <span className={`marker-pill ${styles[kind]} ${className}`}>
-      {icons[kind]}
+      {id && (
+        <ApIcon
+          id={id}
+          size={16}
+          mono
+          // The safety glyph is safety green on light backgrounds (CANON round 5).
+          className={`-my-1 ${id === "help-safety" || id === "section-safety" ? "text-safety" : ""}`}
+        />
+      )}
       {label ?? labels[kind]}
     </span>
   );

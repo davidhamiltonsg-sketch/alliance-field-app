@@ -12,9 +12,13 @@ export interface Phrase {
   text: string;
 }
 
+export type Tier = "core" | "situational" | "build";
+
 export interface Protocol {
   slug: string;
   title: string;
+  /** CANON round 4: Core (learn first), Situational (pulled by the Situation Map), Build (ongoing). */
+  tier: Tier;
   concept: string;
   whenToUse: string;
   steps: string[];
@@ -38,7 +42,8 @@ export interface Situation {
   firstMove: string;
   primaryHref: string;
   secondaryHrefs?: { label: string; href: string }[];
-  warn?: boolean;
+  /** Glyph for the row when its primary link isn't a protocol page. */
+  icon?: string;
   /** Safety row: always first, routes to Help & safety, never to Pause. */
   danger?: boolean;
 }
@@ -67,14 +72,6 @@ export interface WorksheetDraft {
 export interface PauseState {
   returnAt: string | null;
   startedAt: string | null;
-}
-
-export interface InstallDay {
-  day: number;
-  title: string;
-  bullets: string[];
-  proof: string;
-  cardSlugs?: string[];
 }
 
 export interface NavItem {

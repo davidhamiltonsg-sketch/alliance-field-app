@@ -18,7 +18,7 @@ const noopSubscribe = () => () => {};
 export function CalibrationFlow() {
   const mounted = useSyncExternalStore(noopSubscribe, () => true, () => false);
   if (!mounted) {
-    return <p className="py-6 text-center text-[15px] text-ink-muted">Loading…</p>;
+    return <p className="py-6 text-center text-base text-ink-muted">Loading…</p>;
   }
   return <CalibrationFlowClient />;
 }
@@ -93,36 +93,36 @@ function CalibrationFlowClient() {
       <div className="space-y-4">
         <div className="card space-y-4 px-4 py-4">
           <div className="space-y-1.5">
-            <label htmlFor="partner-a-name" className="block text-[13px] font-medium text-ink">
+            <label htmlFor="partner-a-name" className="block text-sm font-medium text-ink">
               Partner A
             </label>
             <input
               id="partner-a-name"
               autoComplete="off"
-              className="field-input text-[15px]"
+              className="field-input text-base"
               value={state.personA.name === "Partner A" ? "" : state.personA.name}
               placeholder="Partner A"
               onChange={(e) => commit({ ...state, personA: { ...state.personA, name: e.target.value || "Partner A" } })}
             />
           </div>
           <div className="space-y-1.5">
-            <label htmlFor="partner-b-name" className="block text-[13px] font-medium text-ink">
+            <label htmlFor="partner-b-name" className="block text-sm font-medium text-ink">
               Partner B
             </label>
             <input
               id="partner-b-name"
               autoComplete="off"
-              className="field-input text-[15px]"
+              className="field-input text-base"
               value={state.personB.name === "Partner B" ? "" : state.personB.name}
               placeholder="Partner B"
               onChange={(e) => commit({ ...state, personB: { ...state.personB, name: e.target.value || "Partner B" } })}
             />
           </div>
         </div>
-        <p className="text-[13px] leading-normal text-ink-muted">
-          44 questions each, one at a time. Answer for yourself — hand the device over when it&apos;s the other partner&apos;s turn.
+        <p className="text-sm leading-normal text-ink-muted">
+          One question at a time. Answer for yourself, then hand the device over for your partner’s turn.
         </p>
-        <PrimaryButton onClick={() => setPhase("quiz")}>Begin — {state.personA.name}&apos;s turn</PrimaryButton>
+        <PrimaryButton onClick={() => setPhase("quiz")}>Begin — {state.personA.name}’s turn</PrimaryButton>
       </div>
     );
   }
@@ -131,17 +131,17 @@ function CalibrationFlowClient() {
     return (
       <div className="space-y-4 text-center">
         <div className="card space-y-2 px-4 py-6">
-          <p className="display text-[22px] leading-tight">{state.personA.name}&apos;s profile is calibrated.</p>
-          <p className="text-[15px] leading-normal text-ink-muted">
+          <p className="display text-lg leading-tight">{state.personA.name}’s profile is calibrated.</p>
+          <p className="text-base leading-normal text-ink-muted">
             Hand the device to {state.personB.name}. Same 44 questions, answered for themself.
           </p>
         </div>
         <fieldset className="card space-y-2.5 px-4 py-4 text-left">
           <legend className="sr-only">Before you hand over</legend>
-          <p className="text-[15px] font-medium leading-normal text-ink" aria-hidden>
+          <p className="text-base font-medium leading-normal text-ink" aria-hidden>
             Before you hand over
           </p>
-          <p className="text-[13px] leading-normal text-ink-muted">
+          <p className="text-sm leading-normal text-ink-muted">
             Your answers are saved on this shared device. Choose what {state.personB.name} can see.
           </p>
           {([
@@ -150,8 +150,8 @@ function CalibrationFlowClient() {
           ] as const).map(([value, text]) => (
             <label
               key={String(value)}
-              className={`flex min-h-12 cursor-pointer items-start gap-3 rounded-xl border px-3.5 py-3 text-[15px] leading-snug ${
-                state.aPrivate === value ? "border-accent bg-accent/[0.06] text-ink" : "border-rule/15 bg-white text-ink"
+              className={`flex min-h-12 cursor-pointer items-start gap-3 rounded-xl border px-3.5 py-3 text-base leading-snug ${
+                state.aPrivate === value ? "border-accent bg-accent/[0.06] text-ink" : "border-rule/60 bg-white text-ink"
               }`}
             >
               <input
@@ -173,13 +173,13 @@ function CalibrationFlowClient() {
             setPhase("quiz");
           }}
         >
-          Begin — {state.personB.name}&apos;s turn
+          Begin — {state.personB.name}’s turn
         </PrimaryButton>
         <button
           type="button"
           onClick={() => setPreviewA((v) => !v)}
           aria-expanded={previewA}
-          className="inline-flex min-h-11 items-center justify-center text-[14px] font-medium text-accent hover:underline"
+          className="inline-flex min-h-11 items-center justify-center text-sm font-medium text-accent hover:underline"
         >
           {previewA ? "Hide my profile" : `View ${state.personA.name}’s profile first`}
         </button>
@@ -198,19 +198,19 @@ function CalibrationFlowClient() {
     <div className="space-y-4">
       <div className="space-y-2">
         <div className="flex items-baseline justify-between">
-          <p className="text-[11px] font-medium uppercase tracking-[0.08em] text-accent">
+          <p className="text-xs font-medium uppercase tracking-[0.08em] text-accent">
             {personInput.name} · Question {index + 1} of {questions.length}
           </p>
-          <p className="tabular text-[13px] font-medium text-ink-muted">{pct}%</p>
+          <p className="tabular text-sm font-medium text-ink-muted">{pct}%</p>
         </div>
-        <div className="h-1.5 w-full overflow-hidden rounded-full bg-accent/12" role="progressbar" aria-valuemin={1} aria-valuemax={questions.length} aria-valuenow={index + 1}>
+        <div className="h-1.5 w-full overflow-hidden rounded-full bg-accent/12" role="progressbar" aria-label="Calibration progress" aria-valuemin={1} aria-valuemax={questions.length} aria-valuenow={index + 1}>
           <div className="h-full rounded-full bg-accent transition-[width]" style={{ width: `${pct}%` }} />
         </div>
       </div>
 
       <section className="card space-y-4 px-4 py-4">
-        <p className="text-[11px] font-medium uppercase tracking-[0.08em] text-ink-muted">{question.domain}</p>
-        <h2 ref={questionHeading} tabIndex={-1} className="display text-[21px] leading-tight focus:outline-none">
+        <p className="text-xs font-medium uppercase tracking-[0.08em] text-ink-muted">{question.domain}</p>
+        <h2 ref={questionHeading} tabIndex={-1} className="display text-lg leading-tight focus:outline-none">
           <span className="sr-only">
             {personInput.name}, question {index + 1} of {questions.length}:{" "}
           </span>
@@ -226,8 +226,8 @@ function CalibrationFlowClient() {
                 type="button"
                 onClick={() => choose(key)}
                 aria-pressed={selected}
-                className={`w-full rounded-xl border px-4 py-3.5 text-left text-[15px] leading-snug transition-colors ${
-                  selected ? "border-accent bg-accent/10 font-medium text-accent" : "border-rule/15 bg-white text-ink hover:border-accent/30"
+                className={`w-full rounded-xl border px-4 py-3.5 text-left text-base leading-snug transition-colors ${
+                  selected ? "border-accent bg-accent/10 font-medium text-accent" : "border-rule/60 bg-white text-ink hover:border-accent/30"
                 }`}
               >
                 {text}
@@ -242,15 +242,15 @@ function CalibrationFlowClient() {
           type="button"
           onClick={back}
           disabled={index === 0}
-          className="inline-flex min-h-11 items-center gap-1.5 text-[15px] font-medium text-accent disabled:pointer-events-none disabled:opacity-30"
+          className="inline-flex min-h-11 items-center gap-1.5 text-base font-medium text-accent disabled:pointer-events-none disabled:opacity-30"
         >
           <ArrowLeft size={16} />
           Back
         </button>
-        <p className="tabular text-[13px] text-ink-muted">{answeredHere}/{questions.length} answered</p>
+        <p className="tabular text-sm text-ink-muted">{answeredHere}/{questions.length} answered</p>
       </div>
 
-      <button type="button" onClick={startOver} className="w-full min-h-11 rounded-xl text-[13px] font-medium text-ink-muted hover:bg-ink/[0.04]">
+      <button type="button" onClick={startOver} className="w-full min-h-11 rounded-xl text-sm font-medium text-ink-muted hover:bg-ink/[0.04]">
         Start over
       </button>
     </div>

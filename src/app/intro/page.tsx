@@ -4,7 +4,7 @@ import { IntroFlow } from "@/components/intro/IntroFlow";
 export const metadata: Metadata = {
   title: "Intro",
   description:
-    "How the Alliance Protocols Field App works: the Situation Map, Pause + Return, breaking the circuit, and the Weekly Reset.",
+    "How the Alliance Protocols Field App works: the 60-Second Alliance Reset, the Situation Map, the Core 5, Pause + Return and Connection Cards.",
 };
 
 export default function IntroPage() {

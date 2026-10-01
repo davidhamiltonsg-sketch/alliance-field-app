@@ -7,6 +7,7 @@ import { KIT } from "@/data/kit";
 import { emergencyNumbers, helpRegions } from "@/data/help";
 import { getProtocol, protocolSlugs, protocols } from "@/data/protocols";
 import { situations } from "@/data/situations";
+import registry from "@/data/registry.json";
 import { START_PLAN_DAYS, startDays } from "@/data/start";
 import { TOGETHER_CITATION, commonMoves, togetherFaq, togetherTools, whoFor } from "@/data/together";
 import { protocolDiagrams } from "@/data/visuals/protocol-diagrams";
@@ -53,7 +54,7 @@ describe("protocol cards", () => {
 
 describe("CANON numbers and wording", () => {
   it("Pause + Return is 20 minutes to 24 hours", () => {
-    const badge = protocolDiagrams["pause-and-return"].steps.find((s) => s.title === "Time")?.badge;
+    const badge = protocolDiagrams["pause-and-return"].steps.find((s) => s.title === "Set a time")?.badge;
     expect(badge).toBe("20 min – 24 h");
     expect(getProtocol("pause-and-return")!.steps.join(" ")).toContain("20 minutes minimum, 24 hours max");
     expect(KIT.pauseMinMinutes).toBe(20);
@@ -132,7 +133,7 @@ describe("CANON round 3", () => {
   it("Full Recovery and Trust Recovery handle one-sided breaches", () => {
     const full = getProtocol("full-recovery")!.steps.join(" ");
     expect(full).toContain("only that partner acknowledges impact; the hurt partner is never asked to confess in return");
-    expect(full).toContain("only if it's true for both of you");
+    expect(full).toContain("only if it’s true for both of you");
     expect(getProtocol("trust-recovery")!.steps[0]).toContain("never asked to confess in return");
   });
 
@@ -173,6 +174,22 @@ describe("CANON round 3", () => {
     expect(diagrams).toContain('q: ["Pulling away?"]');
     expect(diagrams).toContain('a: ["Unity Anchor"]');
     expect(diagrams).not.toContain("Trust breach or");
+    // Same order as the app list: outside pressure (row 3) before trust breach and pulling away.
+    expect(diagrams.indexOf('q: ["Outside pressure"')).toBeLessThan(diagrams.indexOf('q: ["Trust breach?"]'));
+    expect(diagrams.indexOf('q: ["Trust breach?"]')).toBeLessThan(diagrams.indexOf('q: ["Pulling away?"]'));
+  });
+
+  it("Situation Map rows are the registry's 12 canonical rows, in order (first match wins)", () => {
+    const rows = registry.concepts["situation-map"].rowsCanonical;
+    expect(situations.map((s) => s.id)).toEqual(rows.map((r) => r.id));
+    expect(situations.map((s) => s.label)).toEqual(rows.map((r) => r.label));
+    const byId = Object.fromEntries(situations.map((s) => [s.id, s]));
+    expect(byId["say-do-gap"].primaryHref).toBe("/protocols/consistency-pact");
+    expect(byId["after-fight"].firstMove).toContain("start within minutes if you can; complete within 24 hours");
+    expect(byId["intimacy-stall"].firstMove).toMatch(/Help Lines/);
+    expect(byId["weekly-maintenance"].firstMove).toContain("the monthly Care Check-in (inside the Weekly Reset)");
+    // Amber is for pause only: no row routes to an amber tone except Pause + Return.
+    for (const s of situations) expect(s).not.toHaveProperty("warn");
   });
 });
 
@@ -195,6 +212,13 @@ describe("safety routing", () => {
     for (const line of [...emergencyNumbers, ...helpRegions.flatMap((r) => r.lines)]) {
       expect(line.href).toMatch(/^(tel|sms):\d/);
     }
+  });
+
+  it("adds the canonical LGBTQ+-affirming line (CANON round 5)", async () => {
+    const { LGBTQ_LINE, lgbtqLines } = await import("@/data/help");
+    expect(LGBTQ_LINE).toBe(registry.helpLinesExtra);
+    for (const l of lgbtqLines) expect(LGBTQ_LINE).toContain(l.display);
+    for (const l of lgbtqLines.filter((l) => l.href.startsWith("tel:"))) expect(l.href.slice(4)).toBe(l.display.replace(/\D/g, ""));
   });
 
   it("Green Rule and Pause + Return link to Help", () => {
@@ -221,7 +245,7 @@ describe("Core 5 and the 7-day start plan", () => {
     for (const d of startDays) {
       expect(getProtocol(d.slug), `day ${d.day} → ${d.slug}`).toBeDefined();
       expect(routes).toContain(`/protocols/${d.slug}`);
-      if (d.tool) expect(routes, `day ${d.day} → ${d.tool.href}`).toContain(d.tool.href);
+      if (d.tool) expect(routes, `day ${d.day} → ${d.tool.href}`).toContain(d.tool.href.replace(/#.*$/, "") || "/");
     }
   });
 
@@ -231,21 +255,40 @@ describe("Core 5 and the 7-day start plan", () => {
     expect(last.slug).toBe("weekly-reset");
     expect(last.task).toContain("40-minute timer");
     for (const slug of coreFiveSlugs) expect(startDays.map((d) => d.slug)).toContain(slug);
-    for (const d of startDays.slice(0, -1)) expect(d.minutes).toBeLessThanOrEqual(10);
+    // About 10 minutes a day; the Pause + Return drill includes 20 minutes apart,
+    // and Daily anchors is the Manual's two check-ins (≤5 + about 10) across the day.
+    for (const d of startDays.slice(0, -1).filter((d) => d.slug !== "pause-and-return" && d.slug !== "morning-evening-rhythm")) expect(d.minutes).toBeLessThanOrEqual(10);
+    expect(startDays.find((d) => d.day === 5)!.task).toMatch(/morning check-in \(5 minutes or less\) and an evening check-in \(about 10 minutes\)/);
+  });
+
+  it("is the Field Kit's “The First Week”, day for day (CANON round 5: one plan)", () => {
+    expect(startDays.map((d) => d.title)).toEqual([
+      "Safety + Pause defaults",
+      "60-Second Reset drill",
+      "Micro-repair muscle",
+      "Pause + Return drill",
+      "Daily anchors",
+      "Set up the Reset",
+      "Weekly Reset #1",
+    ]);
+    for (const d of startDays) expect(d.proof, `day ${d.day}`).toMatch(/\S/);
   });
 
   it("never offers a pause shorter than 20 minutes", () => {
     for (const d of startDays) expect(d.task).not.toMatch(/\b(10|15|ten|fifteen)[- ]?min(ute)? (pause|break)/i);
-    expect(startDays.find((d) => d.slug === "pause-and-return")!.task).toContain("20 minutes minimum, 24 hours max");
+    expect(startDays[0].task).toContain("a 20-minute minimum");
+    expect(startDays.find((d) => d.slug === "pause-and-return")!.task).toContain("Take 20 minutes apart");
   });
 });
 
 describe("About the authors", () => {
   it("credits both authors in one combined bio, with no placeholders", () => {
-    expect(authorNames).toEqual(["David Hamilton", "Dr Zhongming Shi (Dami)"]);
+    expect(authorNames).toEqual(["David Hamilton", "Dr Zhongming Shi"]);
+    expect(aboutAuthors).toContain("Dr Zhongming Shi (known to everyone as Dami)");
     expect(aboutAuthors).toContain("David");
     expect(aboutAuthors).toContain("Dami");
     expect(aboutAuthors).not.toMatch(/\[\[/);
+    expect(aboutAuthors).toContain("a regional Chief Administrative Officer and Chief Operating Officer (CAO/COO) in banking");
   });
 });
 
@@ -268,7 +311,7 @@ describe("/privacy", () => {
   const src = pageSource("privacy");
 
   it("is dated, names both authors and Singapore's PDPA, and points to data deletion", () => {
-    expect(src).toContain("30 September 2026");
+    expect(src).toContain("1 October 2026");
     expect(src).toContain("David Hamilton");
     expect(src).toContain("Dr Zhongming Shi");
     expect(src).toContain("PDPA");

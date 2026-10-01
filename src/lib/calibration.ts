@@ -84,7 +84,7 @@ function detectPatterns(scores: Scores): string[] {
   if (high(scores.structureNeed) && high(scores.warmthNeed)) patterns.push("Needs both warmth and structure to feel safe");
   if (high(scores.accountabilityOrientation) && scores.repairSpeed <= 42) patterns.push("Wants a proof window, not a quick fix");
   if (high(scores.privacyNeed) && high(scores.careVisibility)) patterns.push("Private care style — shows care quietly");
-  if (high(scores.signalSensitivity) && scores.transparency <= 42) patterns.push("Reads small signals but doesn't always name them");
+  if (high(scores.signalSensitivity) && scores.transparency <= 42) patterns.push("Reads small signals but doesn’t always name them");
   if (high(scores.deflectionRisk)) patterns.push("Deflects under exposure — humour, logic, or a topic change");
   if (high(scores.proofOrientation)) patterns.push("Trusts evidence over words");
   if (high(scores.privacyNeed) && high(scores.autonomyProtection)) patterns.push("Protects autonomy — space reads as necessary, not distant");
@@ -118,7 +118,7 @@ export function generateProfile(person: PersonKey, input: PersonInput): Profile 
       : high(scores.withdrawalUnderStress)
         ? `Under stress, ${name} is likely to go quiet or ask for space to regulate.`
         : high(scores.conflictActivation)
-          ? `Under stress, ${name} is likely to move toward the issue quickly and want clarity.`
+          ? `Under stress, ${name} is likely to move towards the issue quickly and want clarity.`
           : `Under stress, ${name} tends to stay workable as long as warmth is still in the room.`;
 
   const privacyAutonomy = high(scores.privacyNeed)
@@ -128,13 +128,13 @@ export function generateProfile(person: PersonKey, input: PersonInput): Profile 
   const likelyMisreads = [
     high(scores.signalSensitivity)
       ? `${name} may read silence, delay, or a cooler tone as disconnection.`
-      : `${name} may miss small cues until they're named directly.`,
+      : `${name} may miss small cues until they’re named directly.`,
     high(scores.structureNeed)
       ? `${name} may hear vagueness as unreliability.`
       : `${name} may hear too much structure as pressure.`,
     high(scores.privacyNeed)
       ? `${name} may experience questions as intrusive when intensity is already high.`
-      : `${name} may experience space as rejection if it isn't paired with reassurance.`,
+      : `${name} may experience space as rejection if it isn’t paired with reassurance.`,
   ];
 
   return {
@@ -173,12 +173,12 @@ function buildConflictPattern(a: Profile, b: Profile): string {
   const aPursues = a.scores.conflictActivation > a.scores.withdrawalUnderStress;
   const bPursues = b.scores.conflictActivation > b.scores.withdrawalUnderStress;
   if (aPursues && !bPursues)
-    return `${a.name} tends to pursue clarity while ${b.name} de-intensifies. Left alone that's a demand–withdraw loop — Pause + Return with an explicit return time breaks it.`;
+    return `${a.name} tends to pursue clarity while ${b.name} de-intensifies. Left alone that’s a demand–withdraw loop — Pause + Return with an explicit return time breaks it.`;
   if (!aPursues && bPursues)
-    return `${b.name} tends to pursue clarity while ${a.name} de-intensifies. Left alone that's a demand–withdraw loop — Pause + Return with an explicit return time breaks it.`;
+    return `${b.name} tends to pursue clarity while ${a.name} de-intensifies. Left alone that’s a demand–withdraw loop — Pause + Return with an explicit return time breaks it.`;
   if (aPursues && bPursues)
     return "Both of you tend to escalate to get a reaction. The first move is slowing the urgency down before reassurance itself becomes the fight.";
-  return "Both of you tend to de-intensify. Low conflict can hide low contact — keep Morning/Evening Rhythm and Weekly Reset running so distance doesn't build quietly.";
+  return "Both of you tend to de-intensify. Low conflict can hide low contact — keep Morning + Evening Rhythm and Weekly Reset running so distance doesn’t build quietly.";
 }
 
 // Maps a recommendation's concept to a real Field Kit protocol slug.
@@ -198,7 +198,7 @@ const TOOL_SLUG: Record<string, string> = {
   "Intimacy Pact": "intimacy-pact",
   "Proof Protocol": "proof-protocol",
   "System Overlay": "system-overlay",
-  "Morning / Evening Rhythm": "morning-evening-rhythm",
+  "Morning + Evening Rhythm": "morning-evening-rhythm",
   "Green Rule": "green-rule",
 };
 
@@ -208,7 +208,7 @@ function routeTools(a: Profile, b: Profile, health: Record<LayerKey, number>) {
     if (!routes.some((r) => r.tool === tool)) routes.push({ tool, reason });
   };
 
-  if (health.Atmosphere < 62) add("Morning / Evening Rhythm", "Atmosphere is running low — restore warmth before asking for change.");
+  if (health.Atmosphere < 62) add("Morning + Evening Rhythm", "Atmosphere is running low — restore warmth before asking for change.");
   if (health.Structure < 62) add("Weekly Reset", "Structure is running low — install a predictable maintenance rhythm.");
   if (health.Repair < 62) add("Micro-Repair", "Repair capacity is running low — use smaller repair units, more often.");
   if (health.Protection < 62) add("Pause + Return", "Protection is running low — you need clearer guardrails under stress.");
@@ -217,7 +217,7 @@ function routeTools(a: Profile, b: Profile, health: Record<LayerKey, number>) {
     add("Pause + Return", "Privacy and closeness needs are far enough apart to be misread as rejection or pressure.");
   }
   if (diff(a.scores.careVisibility, b.scores.careVisibility) > 14 || diff(a.scores.warmthNeed, b.scores.structureNeed) > 18 || diff(b.scores.warmthNeed, a.scores.structureNeed) > 18) {
-    add("Care Check-in", "Care grammar mismatch — one of you may be caring in a language the other can't feel.");
+    add("Care Check-in", "Care grammar mismatch — one of you may be caring in a language the other can’t feel.");
   }
   if (average([a.scores.proofOrientation, b.scores.proofOrientation]) > 64) {
     add("Consistency Pact", "Trust needs behaviour, evidence, and a review window here, not just words.");
@@ -229,10 +229,10 @@ function routeTools(a: Profile, b: Profile, health: Record<LayerKey, number>) {
     average([a.scores.withdrawalUnderStress, b.scores.withdrawalUnderStress]) > 60 &&
     average([a.scores.reassuranceNeed, b.scores.reassuranceNeed, a.scores.signalSensitivity, b.scores.signalSensitivity]) > 55
   ) {
-    add("Uninvestment Check", "Withdrawal is elevated and being closely watched. Confirm whether this is needing space or quietly pulling away before assuming either.");
+    add("Uninvestment Check", "Withdrawal under stress is high, and so is sensitivity to it. Run the check together to tell needing space from pulling away, rather than assuming either.");
   }
   if (!routes.length) {
-    add("Morning / Evening Rhythm", "Keep daily contact predictable.");
+    add("Morning + Evening Rhythm", "Keep daily contact predictable.");
     add("Weekly Reset", "Maintain the operating rhythm before drift appears.");
   }
 
@@ -270,7 +270,7 @@ export function generateCoupleReport(profileA: Profile, profileB: Profile): Coup
     {
       domain: "Care grammar",
       diverges: (a.structureNeed > a.warmthNeed) !== (b.structureNeed > b.warmthNeed),
-      risk: "One of you may be caring in a language the other doesn't feel as care.",
+      risk: "One of you may be caring in a language the other doesn’t feel as care.",
     },
     {
       domain: "Repair speed",
@@ -280,7 +280,7 @@ export function generateCoupleReport(profileA: Profile, profileB: Profile): Coup
     {
       domain: "Proof / trust",
       diverges: diff(a.proofOrientation, b.proofOrientation) > 24,
-      risk: "One of you may trust warmth while the other needs trackable evidence.",
+      risk: "One of you may trust warmth while the other needs evidence they can see.",
     },
     {
       domain: "Heat tolerance",
@@ -290,16 +290,16 @@ export function generateCoupleReport(profileA: Profile, profileB: Profile): Coup
     {
       domain: "Transparency",
       diverges: diff(a.transparency, b.transparency) > 24,
-      risk: "What goes unsaid on one side can become the other side's projection.",
+      risk: "What goes unsaid on one side can become the other side’s projection.",
     },
   ];
 
   const mismatch = rows.filter((r) => r.diverges).map((r) => `${r.domain}: ${r.risk}`);
 
   const strengths = [
-    "Both profiles can be turned into shared operating language instead of verdicts about who's right.",
+    "Both profiles can be turned into shared operating language instead of verdicts about who’s right.",
     average([a.proofOrientation, b.proofOrientation]) > 60
-      ? "There's real potential for proof-based trust repair here — you both respond to evidence."
+      ? "There’s real potential for proof-based trust repair here — you both respond to evidence."
       : "Warmth-first repair and a daily rhythm will do more work here than proof windows will.",
   ];
 
@@ -307,7 +307,7 @@ export function generateCoupleReport(profileA: Profile, profileB: Profile): Coup
   const recommendedTools = toRecommendedTools(routes);
 
   return {
-    executiveSummary: `This relationship is operating around ${mismatch[0]?.split(":")[0].toLowerCase() || "a workable, still-calibrating pattern"}. The strongest next step is turning the pattern into a low-threat agreement, then tracking proof instead of relitigating intent.`,
+    executiveSummary: `This relationship is operating around ${mismatch[0]?.split(":")[0].toLowerCase() || "a workable, still-calibrating pattern"}. The strongest next step is turning the pattern into a low-threat agreement, then reviewing Proof at the agreed check-in instead of relitigating intent.`,
     strengths,
     coreMismatch: mismatch.length ? mismatch.slice(0, 4) : ["No single mismatch dominates yet — keep using the tools and revisit this in a few weeks."],
     conflictPattern: buildConflictPattern(profileA, profileB),
@@ -316,14 +316,14 @@ export function generateCoupleReport(profileA: Profile, profileB: Profile): Coup
     recommendedTools,
     recommendedSequence: buildSequence(recommendedTools),
     scriptPack: [
-      "Warmth: “I'm on your team, even though this is hard.”",
-      "Safety: “The relationship isn't on trial in this conversation.”",
+      "Warmth: “I’m on your team, even though this is hard.”",
+      "Safety: “The relationship isn’t on trial in this conversation.”",
       "Expression: “When this happens, I read it as distance. I know that might not be what you mean.”",
       "Request: “Can we use a clear signal and a return time when space is needed?”",
-      "Alignment: “Let's try this for one week and check in on Sunday.”",
+      "Alignment: “Let’s try this for one week and check in on Sunday.”",
     ],
     evidenceLimitations: [
-      "This calibration is a starting map, not a diagnosis — it's built from how you each answered 44 questions, not from observed behaviour over time.",
+      "This calibration is a starting map, not a diagnosis — it’s built from how you each answered 44 questions, not from observed behaviour over time.",
       "The scoring model draws on research that skews heterosexual and Western; same-sex, interracial, and intercultural couple research is folded into the Manual, but treat any single recommendation here as a starting point, not a verdict.",
     ],
   };

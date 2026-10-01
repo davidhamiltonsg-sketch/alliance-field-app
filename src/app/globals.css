@@ -4,7 +4,8 @@
   --color-ink: #1A1A1A;
   --color-ink-muted: #4A4A4A;
   --color-paper: #FAFAF8;
-  --color-rule: #2C3E2D;
+  /* Neutral rules and borders (tokens.json "rule"); forest is --color-accent. */
+  --color-rule: #C9D1CB;
   --color-accent: #2C3E2D;
   --color-safety: #2E7D4F;
   /* Safety-green for text: >= 5:1 on paper and on safety/10–12 tinted pills. */
@@ -13,10 +14,34 @@
   /* Pause-amber for text: >= 4.6:1 on paper, surface-warn and pause/12 pills. */
   --color-pause-text: #8F5610;
   --color-repair: #2F5F8A;
+  /* Stop / get help / "Not working" only. */
   --color-failure: #A33B2B;
+  --color-stop: #A33B2B;
+  /* Connection only: the logo bridge, Connection Cards, icon accent strokes. Never text. */
+  --color-brass: #A8895A;
   --color-surface-tool: #EEF2EF;
   --color-surface-activity: #F3F0E8;
   --color-surface-warn: #F7EDE6;
+  /* Product covers only (CANON round 5). */
+  --color-cover-manual: #2C3E2D;
+  --color-cover-kit: #6E4210;
+  --color-cover-companion: #1A1A1A;
+
+  /* Type scale (design/tokens.json): 12 / 14 / 16 / 20 / 28 / 40. The
+     Tailwind defaults are cleared so only these six sizes exist. */
+  --text-*: initial;
+  --text-xs: 12px;
+  --text-xs--line-height: 1.4;
+  --text-sm: 14px;
+  --text-sm--line-height: 1.45;
+  --text-base: 16px;
+  --text-base--line-height: 1.5;
+  --text-lg: 20px;
+  --text-lg--line-height: 1.35;
+  --text-xl: 28px;
+  --text-xl--line-height: 1.2;
+  --text-2xl: 40px;
+  --text-2xl--line-height: 1.1;
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui,
     "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -37,12 +62,12 @@ body {
   color: var(--color-ink);
   font-family: var(--font-sans);
   min-height: 100dvh;
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.5;
   text-rendering: optimizeLegibility;
   /* Soft, intentional canvas on wide screens; the app column sits on top. */
   background:
-    radial-gradient(1200px 600px at 50% -10%, rgb(61 90 76 / 0.10), transparent 60%),
+    radial-gradient(1200px 600px at 50% -10%, rgb(44 62 45 / 0.10), transparent 60%),
     radial-gradient(900px 500px at 100% 100%, rgb(196 122 26 / 0.05), transparent 60%),
     #f1f3ef;
   background-attachment: fixed;
@@ -59,7 +84,7 @@ b {
 }
 
 ::selection {
-  background: rgb(61 90 76 / 0.18);
+  background: rgb(44 62 45 / 0.18);
 }
 
 /* Accessible, on-brand focus */
@@ -92,7 +117,7 @@ b {
 
   /* Small tracked label (the only all-caps in the UI) */
   .eyebrow {
-    font-size: 11px;
+    font-size: 12px;
     line-height: 1;
     font-weight: 500;
     letter-spacing: 0.08em;
@@ -127,7 +152,7 @@ b {
     height: 1.5rem;
     padding: 0 0.625rem;
     border-radius: 999px;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -139,7 +164,7 @@ b {
   .phrase-block {
     position: relative;
     background: #fff;
-    border: 1px solid rgb(61 90 76 / 0.14);
+    border: 1px solid rgb(44 62 45 / 0.14);
     border-radius: 0.875rem;
     padding: 0.875rem 1rem 0.875rem 2.5rem;
     box-shadow: 0 1px 2px rgb(26 26 26 / 0.03);
@@ -153,14 +178,14 @@ b {
     font-size: 2rem;
     font-style: normal;
     line-height: 1;
-    color: rgb(61 90 76 / 0.4);
+    color: rgb(44 62 45 / 0.4);
   }
 
   /* Soft brand wash for hero surfaces */
   .accent-wash {
     background:
-      radial-gradient(120% 90% at 100% 0%, rgb(61 90 76 / 0.16), transparent 55%),
-      linear-gradient(180deg, #eef2ef 0%, #f6f7f3 100%);
+      radial-gradient(120% 90% at 100% 0%, rgb(44 62 45 / 0.16), transparent 55%),
+      linear-gradient(180deg, #eef2ef 0%, #fafaf8 100%);
   }
 
   .field-input {
@@ -171,6 +196,8 @@ b {
     background: #fff;
     padding: 0.625rem 0.875rem;
     color: var(--color-ink);
+    /* Never below 16px: iOS zooms into smaller inputs. */
+    font-size: 16px;
     line-height: 1.5;
     transition: border-color 140ms ease, box-shadow 140ms ease;
   }
@@ -179,7 +206,7 @@ b {
   }
   .field-input:focus {
     border-color: var(--color-accent);
-    box-shadow: 0 0 0 3px rgb(61 90 76 / 0.14);
+    box-shadow: 0 0 0 3px rgb(44 62 45 / 0.14);
     outline: none;
   }
 }
@@ -211,16 +238,12 @@ b {
 
 .dg-rise,
 .dg-pop,
-.dg-pulse,
 .dg-move {
   transform-box: fill-box;
   transform-origin: center;
 }
 .dg-dim {
   opacity: var(--dim, 0.28);
-}
-.dg-pulse {
-  opacity: 0.35;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -236,9 +259,6 @@ b {
   }
   .dg-armed .dg-dim {
     opacity: 1;
-  }
-  .dg-armed .dg-pulse {
-    opacity: 0;
   }
 
   /* Active panel: play */
@@ -257,14 +277,8 @@ b {
   .dg-armed .is-active .dg-dim {
     animation: dg-dim var(--dur, 600ms) var(--ease-out) var(--d, 0ms) forwards;
   }
-  .dg-armed .is-active .dg-pulse {
-    animation: dg-pulse 1.8s var(--ease-out) var(--d, 0ms) infinite;
-  }
   .dg-armed .is-active .dg-move {
-    animation: var(--move) var(--dur, 4s) var(--ease-inout) var(--d, 0ms) var(--iter, 1) both;
-  }
-  .dg-armed .is-active .dg-flow {
-    animation: dg-flow 1.2s linear infinite;
+    animation: var(--move) var(--dur, 4s) var(--ease-inout) var(--d, 0ms) 1 both;
   }
 }
 
@@ -304,22 +318,6 @@ b {
   }
   to {
     opacity: var(--dim, 0.28);
-  }
-}
-@keyframes dg-pulse {
-  0% {
-    opacity: 0.55;
-    transform: scale(1);
-  }
-  70%,
-  100% {
-    opacity: 0;
-    transform: scale(var(--pulse, 1.9));
-  }
-}
-@keyframes dg-flow {
-  to {
-    stroke-dashoffset: -12;
   }
 }
 
@@ -406,22 +404,6 @@ html[data-splash="off"] .splash {
 }
 
 /* Travelling markers used by the intro diagrams */
-@keyframes dg-sys-travel {
-  0% {
-    opacity: 0;
-    transform: translateX(-280px);
-  }
-  12% {
-    opacity: 1;
-  }
-  88% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-    transform: translateX(0);
-  }
-}
 @keyframes dg-pr-travel {
   0%,
   8% {
@@ -458,13 +440,12 @@ html[data-splash="off"] .splash {
 /* ------------------------------------------------------------------ */
 /* v2 visual language (visuals library, premium v2)                    */
 /* Arch-topped panels, status rule treatments, When strip, outcome     */
-/* band, arch icon tablets, arch tabs. Brass (#A8895A / #D8C69F) is    */
-/* used for hairlines, rims, numerals and ornament only.               */
+/* band, arch tabs. Brass is reserved for connection (logo bridge,     */
+/* Connection Cards, icon accents); ornament uses a neutral hairline.  */
 /* ------------------------------------------------------------------ */
 :root {
   --forest: #2c3e2d;
-  --brass: #a8895a;
-  --brass-l: #d8c69f;
+  --hairline: #9fb2a6;
   --warm: #f3f0e8;
   --arch: 15px 15px 3px 3px;
   --arch-in: 12px 12px 1.5px 1.5px;
@@ -475,7 +456,7 @@ html[data-splash="off"] .splash {
   position: relative;
   border-radius: var(--arch);
   background: #fff;
-  border: 1px solid rgb(61 90 76 / 0.8);
+  border: 1px solid rgb(44 62 45 / 0.8);
 }
 .v2-panel::after {
   content: none;
@@ -486,7 +467,7 @@ html[data-splash="off"] .splash {
 }
 /* standard step: single forest hairline */
 .v2-step {
-  border-color: rgb(61 90 76 / 0.75);
+  border-color: rgb(44 62 45 / 0.75);
 }
 /* pause: fine dashed double hairline, warm paper */
 .v2-pause {
@@ -528,16 +509,15 @@ html[data-splash="off"] .splash {
   inset: 1.5px;
 }
 
-/* "When" strip: warm paper, brass double rule above, hairline below */
+/* "When" strip: warm paper, hairline above and below */
 .v2-when {
   background:
-    linear-gradient(var(--brass), var(--brass)) 0 0 / 100% 1px no-repeat,
-    linear-gradient(rgb(168 137 90 / 0.8), rgb(168 137 90 / 0.8)) 0 3.5px / 100% 0.75px no-repeat,
-    linear-gradient(rgb(168 137 90 / 0.8), rgb(168 137 90 / 0.8)) 0 100% / 100% 0.75px no-repeat,
+    linear-gradient(var(--hairline), var(--hairline)) 0 0 / 100% 1px no-repeat,
+    linear-gradient(var(--hairline), var(--hairline)) 0 100% / 100% 1px no-repeat,
     var(--warm);
 }
 
-/* Outcome band: deep forest, fine engraved hatching, brass double frame */
+/* Outcome band: deep forest, fine engraved hatching, hairline double frame */
 .v2-outcome {
   position: relative;
   isolation: isolate;
@@ -554,21 +534,11 @@ html[data-splash="off"] .splash {
 }
 .v2-outcome::before {
   inset: 4px;
-  border: 0.75px solid var(--brass);
+  border: 0.75px solid rgb(159 178 166 / 0.7);
 }
 .v2-outcome::after {
   inset: 6.5px;
-  border: 0.5px solid rgb(168 137 90 / 0.8);
-}
-
-/* Icon tablet: icon seated in an arch with a brass rim and paper gap */
-.v2-tablet {
-  border-radius: 999px 999px 3px 3px;
-  background: #fff;
-  border: 1px solid currentColor;
-  box-shadow:
-    0 0 0 2px var(--color-paper),
-    0 0 0 2.8px var(--brass);
+  border: 0.5px solid rgb(159 178 166 / 0.5);
 }
 
 /* Arch-topped card (Situation Map rows, protocol list) */
@@ -576,7 +546,7 @@ html[data-splash="off"] .splash {
   position: relative;
   background: #fff;
   border-radius: 20px 20px 5px 5px;
-  border: 1px solid rgb(61 90 76 / 0.28);
+  border: 1px solid rgb(44 62 45 / 0.28);
   box-shadow: var(--shadow-card);
   transition: box-shadow 160ms ease, transform 160ms ease;
 }
@@ -648,14 +618,35 @@ html[data-splash="off"] .splash {
 /* Arch tab (tags, secondary links): no capsules */
 .v2-tab {
   border-radius: 10px 10px 3px 3px;
-  border: 0.75px solid rgb(168 137 90 / 0.8);
+  border: 0.75px solid rgb(44 62 45 / 0.25);
   background: #fff;
 }
 
-/* Brass lead rule under section heads */
-.v2-lead {
-  display: inline-block;
-  width: 22px;
-  height: 1px;
-  background: var(--brass);
+
+
+/* ---- Pause: full-screen calm view ---------------------------------- */
+/* While it is up, the app header and bottom nav step aside. */
+html[data-calm] [data-chrome],
+html[data-calm] [data-calm-hide] {
+  display: none;
+}
+html[data-calm] body {
+  overflow: hidden;
+}
+/* A slow breathing guide (about 4s in, 6s out). Static under reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+  .calm-breath {
+    animation: calm-breath 10s var(--ease-inout) infinite;
+  }
+}
+@keyframes calm-breath {
+  0%,
+  100% {
+    transform: scale(0.82);
+    opacity: 0.55;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }

@@ -55,8 +55,8 @@ export function SignupForm() {
     } catch {
       setError(
         navigator.onLine
-          ? "That didn't go through. Check your connection and the address, then try again."
-          : "You're offline. Try again when you have a connection."
+          ? "That didn’t go through. Check your connection and the address, then try again."
+          : "You’re offline. Try again when you have a connection."
       );
       setStatus("error");
     }
@@ -64,15 +64,15 @@ export function SignupForm() {
 
   return (
     <div>
-      <label htmlFor={id} className="text-[13px] font-medium text-ink">
+      <label htmlFor={id} className="text-sm font-medium text-ink">
         Not ready yet? Get updates by email
       </label>
-      <p className="mt-0.5 text-[13px] leading-snug text-ink-muted">
+      <p className="mt-0.5 text-sm leading-snug text-ink-muted">
         Occasional updates and the link to the full system. This is the only
         time the app sends anything off your device.
       </p>
       {status === "done" ? (
-        <p role="status" className="mt-2 text-[15px] font-medium text-safety-text">
+        <p role="status" className="mt-2 text-base font-medium text-accent">
           {SIGNUP_ENDPOINT
             ? "Sent — check your inbox to confirm."
             : "Your email app should open with a message ready to send."}
@@ -103,8 +103,8 @@ export function SignupForm() {
           </PrimaryButton>
         </form>
       )}
-      <p className="mt-2 text-[13px] leading-snug text-ink-muted">
-        We&apos;ll only use your email for Alliance Protocols updates.
+      <p className="mt-2 text-sm leading-snug text-ink-muted">
+        We’ll only use your email for Alliance Protocols updates.
         Unsubscribe any time.{" "}
         <Link href="/privacy" className="font-medium text-accent underline underline-offset-4">
           Privacy notice
@@ -112,7 +112,7 @@ export function SignupForm() {
         .
       </p>
       {status === "error" && (
-        <p id={`${id}-error`} role="alert" className="mt-2 text-[13px] font-medium text-failure">
+        <p id={`${id}-error`} role="alert" className="mt-2 text-sm font-medium text-failure">
           {error}{" "}
           <a href={mailtoHref(email.trim())} className="underline underline-offset-4">
             Or email us instead

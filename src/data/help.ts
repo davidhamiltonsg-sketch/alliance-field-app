@@ -58,4 +58,17 @@ export const helpRegions: HelpRegion[] = [
   },
 ];
 
+/** CANON round 5: the LGBTQ+-affirming line, printed after the regional lines. */
+export const LGBTQ_LINE =
+  "LGBTQ+-affirming: US: Trevor Project 1-866-488-7386 (under 25) · LGBT National Hotline 1-888-843-4564 · UK: Switchboard LGBT+ 0800 0119 100 · Australia: QLife 1800 184 527 · Singapore: Oogachaga (oogachaga.com)";
+
+/** The same line as tappable links (the Singapore service is web-based). */
+export const lgbtqLines: (HelpNumber & { region: string })[] = [
+  { region: "US", label: "Trevor Project (under 25)", display: "1-866-488-7386", href: "tel:18664887386" },
+  { region: "US", label: "LGBT National Hotline", display: "1-888-843-4564", href: "tel:18888434564" },
+  { region: "UK", label: "Switchboard LGBT+", display: "0800 0119 100", href: "tel:08000119100" },
+  { region: "Australia", label: "QLife", display: "1800 184 527", href: "tel:1800184527" },
+  { region: "Singapore", label: "Oogachaga", display: "oogachaga.com", href: "https://oogachaga.com" },
+];
+
 export const ELSEWHERE_LINE = "Elsewhere: your local emergency number or national helpline.";

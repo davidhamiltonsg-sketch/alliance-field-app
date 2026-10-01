@@ -10,6 +10,8 @@ export const MAX_WEEKLY_HISTORY = 26;
 export const FAVORITES_KEY = "alliance.field.favorites";
 export const RECENT_KEY = "alliance.field.recentProtocols";
 export const MAX_RECENT = 6;
+/** 7-day start plan: the day numbers ticked as done (no dates, no streaks). */
+export const START_PROGRESS_KEY = "alliance.field.startPlanDone";
 
 export const CARE_DOMAINS = [
   "Emotional attunement & check-ins",
@@ -189,5 +191,21 @@ export function recordRecent(slug: string): string[] {
   const current = readRecent().filter((s) => s !== slug);
   const next = [slug, ...current].slice(0, MAX_RECENT);
   writeJson(RECENT_KEY, next);
+  return next;
+}
+
+/** Days of the 7-day start plan ticked as done, ascending. Ignores anything that isn't a day 1–7. */
+export function readStartProgress(): number[] {
+  const raw = readJson<unknown>(START_PROGRESS_KEY);
+  if (!Array.isArray(raw)) return [];
+  const days = raw.filter((d): d is number => Number.isInteger(d) && d >= 1 && d <= 7);
+  return Array.from(new Set(days)).sort((a, b) => a - b);
+}
+
+/** Ticks or unticks a day of the start plan and returns the updated list. */
+export function toggleStartDay(day: number): number[] {
+  const current = readStartProgress();
+  const next = current.includes(day) ? current.filter((d) => d !== day) : [...current, day].sort((a, b) => a - b);
+  writeJson(START_PROGRESS_KEY, next);
   return next;
 }

@@ -34,10 +34,10 @@ export function WizardStep({
     <div className="space-y-4">
       <div className="space-y-2">
         <div className="flex items-baseline justify-between">
-          <p className="tabular text-[11px] font-medium uppercase tracking-[0.08em] text-accent">
+          <p className="tabular text-xs font-medium uppercase tracking-[0.08em] text-accent">
             Step {step} of {total}
           </p>
-          <p className="tabular text-[13px] font-medium text-ink-muted">{pct}%</p>
+          <p className="tabular text-sm font-medium text-ink-muted">{pct}%</p>
         </div>
         <div
           className="flex gap-1"
@@ -58,7 +58,7 @@ export function WizardStep({
         </div>
       </div>
       <section className="card space-y-4 px-4 pb-4 pt-4">
-        <h2 ref={headingRef} tabIndex={-1} className="display text-[20px] leading-tight focus:outline-none">
+        <h2 ref={headingRef} tabIndex={-1} className="display text-lg leading-tight focus:outline-none">
           <span className="sr-only">Step {step} of {total}: </span>
           {title}
         </h2>
@@ -104,13 +104,13 @@ export function Field({
 }) {
   return (
     <label className="block space-y-1.5">
-      <span className="text-[13px] font-medium text-ink">{label}</span>
+      <span className="text-sm font-medium text-ink">{label}</span>
       <textarea
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         rows={rows}
-        className="field-input resize-none text-[15px]"
+        className="field-input resize-none text-base"
       />
     </label>
   );

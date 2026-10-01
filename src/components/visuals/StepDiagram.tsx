@@ -1,16 +1,17 @@
 import type { DiagramStep, ProtocolDiagram, StepKind } from "@/data/visuals/protocol-diagrams";
 import { MarkedText } from "../MarkedText";
 import { SectionLabel } from "../SectionLabel";
-import { GlyphIcon, V, tombD, twistPaths, type GlyphKind } from "./v2";
+import { ApIcon } from "../ApIcon";
+import { V, glyphIcon, tombD, twistPaths, type GlyphKind } from "./v2";
 
 /**
  * Protocol step diagram in the v2 visual language (visuals library
  * `protocol-*.svg`): a warm-paper "When" strip, steps hung on a two-ply
- * woven spine (forest and brass, crossing over and under between stations),
- * forest arch medallions with a brass rim and serif italic numerals,
+ * woven spine (forest and a neutral hairline, crossing between stations),
+ * forest arch medallions with a fine rim and serif italic numerals,
  * arch-topped panels whose rule treatment carries the status (pause dashed
  * double amber, repair double blue, safety heavy green, stop dotted red),
- * and a deep-forest outcome band with hatching, a brass double frame and
+ * and a deep-forest outcome band with hatching, a fine double frame and
  * the mark seal. Step titles and timings come from the library; step
  * wording, the trigger and the outcome come from the card and library as
  * before.
@@ -19,9 +20,13 @@ import { GlyphIcon, V, tombD, twistPaths, type GlyphKind } from "./v2";
 const glyphFor: Partial<Record<StepKind, GlyphKind>> = {
   safety: "safety",
   pause: "pause",
-  repair: "repair",
   failure: "failure",
 };
+
+function StepGlyph({ kind, size, className = "" }: { kind: GlyphKind; size: number; className?: string }) {
+  const id = glyphIcon[kind];
+  return id ? <ApIcon id={id} size={size} mono className={className} /> : null;
+}
 
 const glyphTone: Record<StepKind, string> = {
   step: "text-accent",
@@ -56,11 +61,11 @@ function detailFor(step: DiagramStep, cardText: string | undefined) {
   return rest.charAt(0).toUpperCase() + rest.slice(1);
 }
 
-/** Forest arch medallion with brass rim and serif italic numeral. */
+/** Forest arch medallion with a fine rim and serif italic numeral. */
 function StepMedallion({ n }: { n: number }) {
   return (
     <svg viewBox="0 0 34 40" width="34" height="40" className="relative z-10 block" aria-hidden focusable="false">
-      <path d={tombD(17, 2.6, 30.8, 35.8)} fill={V.paper} stroke={V.brass} strokeWidth={0.8} />
+      <path d={tombD(17, 2.6, 30.8, 35.8)} fill={V.paper} stroke={V.rim} strokeWidth={0.8} />
       <path d={tombD(17, 5, 26, 31)} fill={V.forest} />
       <text
         x={17}
@@ -69,7 +74,7 @@ function StepMedallion({ n }: { n: number }) {
         className="font-display"
         fontStyle="italic"
         fontSize={17}
-        fill={V.brassL}
+        fill={V.rimL}
       >
         {n}
       </text>
@@ -84,7 +89,7 @@ function Plies({ flip = false }: { flip?: boolean }) {
   return (
     <svg viewBox="0 0 20 10" preserveAspectRatio="none" overflow="visible" className="block min-h-0 w-5 flex-1" aria-hidden focusable="false">
       <path d={`M${a} -0.6V10.6`} stroke={V.accent} strokeWidth={1.1} vectorEffect="non-scaling-stroke" />
-      <path d={`M${b} -0.6V10.6`} stroke={V.brass} strokeWidth={1} vectorEffect="non-scaling-stroke" />
+      <path d={`M${b} -0.6V10.6`} stroke={V.rim} strokeWidth={1} vectorEffect="non-scaling-stroke" />
     </svg>
   );
 }
@@ -95,11 +100,11 @@ function Crossing({ i }: { i: number }) {
   return (
     <svg viewBox="0 0 20 44" width="20" height="44" overflow="visible" className="block shrink-0" aria-hidden focusable="false">
       <path d="M15.2 -1V0.5M4.8 43.5V45" stroke={V.accent} strokeWidth={1.1} />
-      <path d="M4.8 -1V0.5M15.2 43.5V45" stroke={V.brass} strokeWidth={1} />
+      <path d="M4.8 -1V0.5M15.2 43.5V45" stroke={V.rim} strokeWidth={1} />
       {[t.underA, t.underB].map((d) => (
-        <path key={d} d={d} fill="none" stroke={t.underColor} strokeWidth={t.underColor === V.brass ? 1 : 1.1} strokeLinecap="round" />
+        <path key={d} d={d} fill="none" stroke={t.underColor} strokeWidth={t.underColor === V.rim ? 1 : 1.1} strokeLinecap="round" />
       ))}
-      <path d={t.over} fill="none" stroke={t.overColor} strokeWidth={t.overColor === V.brass ? 1 : 1.1} strokeLinecap="round" />
+      <path d={t.over} fill="none" stroke={t.overColor} strokeWidth={t.overColor === V.rim ? 1 : 1.1} strokeLinecap="round" />
     </svg>
   );
 }
@@ -119,7 +124,7 @@ function Swatch({ kind }: { kind: StepKind }) {
   const g = glyphFor[kind];
   return (
     <span className={`v2-panel v2-${kind} v2-swatch inline-flex h-[19px] w-7 items-center justify-center ${glyphTone[kind]}`} aria-hidden>
-      {g && <GlyphIcon kind={g} size={11} sw={1.4} />}
+      {g && <StepGlyph kind={g} size={12} />}
     </span>
   );
 }
@@ -127,12 +132,12 @@ function Swatch({ kind }: { kind: StepKind }) {
 export function WhenStrip({ text, label = "When to use" }: { text: string; label?: string }) {
   return (
     <div className="v2-when px-3.5 pb-3 pt-3">
-      <p className="flex items-center gap-2 text-[13px] font-semibold tracking-[0.03em] text-accent">
-        <GlyphIcon kind="when" size={17} sw={1.2} className="shrink-0" />
+      <p className="flex items-center gap-2 text-sm font-semibold tracking-[0.03em] text-accent">
+        <StepGlyph kind="when" size={18} />
         {label}
-        <span className="h-px w-[22px] bg-[#A8895A]" aria-hidden />
+        <span className="h-px w-[22px] bg-rule" aria-hidden />
       </p>
-      <p className="phrase mt-1.5 text-[16px] leading-[1.45] text-ink">{text}</p>
+      <p className="phrase mt-1.5 text-base leading-[1.45] text-ink">{text}</p>
     </div>
   );
 }
@@ -141,16 +146,16 @@ export function OutcomeBand({ text }: { text: string }) {
   return (
     <div className="v2-outcome flex items-center gap-3 px-4 py-4">
       <svg viewBox="0 0 34 38" width="34" height="38" className="shrink-0" aria-hidden focusable="false">
-        <path d={tombD(17, 1.5, 30, 35)} fill={V.forest} stroke={V.brassL} strokeWidth={0.8} />
-        <g transform="translate(5.5 12) scale(0.19)" fill="none" stroke={V.brassL} strokeLinecap="round">
+        <path d={tombD(17, 1.5, 30, 35)} fill={V.forest} stroke={V.rimL} strokeWidth={0.8} />
+        <g transform="translate(5.5 12) scale(0.19)" fill="none" stroke={V.rimL} strokeLinecap="round">
           <path d="M60 14L26 106" strokeWidth={10} />
           <path d="M60 14L94 106" strokeWidth={10} />
           <path d="M40 74Q50 63 60 74Q70 63 80 74" strokeWidth={8.5} />
         </g>
       </svg>
       <div className="min-w-0">
-        <p className="text-[11px] font-medium uppercase tracking-[0.1em] text-[#D8C69F]">Outcome</p>
-        <p className="font-display mt-1 text-[17px] leading-snug text-white">{text}</p>
+        <p className="text-xs font-medium uppercase tracking-[0.1em] text-white/75">Outcome</p>
+        <p className="font-display mt-1 text-lg leading-snug text-white">{text}</p>
       </div>
     </div>
   );
@@ -187,23 +192,23 @@ export function StepDiagram({
               </div>
               <div className={`v2-panel v2-${s.kind} min-w-0 flex-1 px-3.5 pb-3 pt-2.5`}>
                 <div className="flex flex-wrap items-start justify-between gap-x-2 gap-y-0.5">
-                  <p className="min-w-0 break-words font-display text-[17px] font-semibold leading-snug text-ink">
+                  <p className="min-w-0 break-words font-display text-lg font-semibold leading-snug text-ink">
                     <span className="sr-only">Step {i + 1}: </span>
                     {s.title}
                   </p>
                   {(s.badge || g) && (
                     <span className="mt-[3px] flex shrink-0 items-center gap-2">
                       {s.badge && (
-                        <span className="tabular flex items-center gap-1.5 text-[13px] font-medium leading-4 text-accent">
-                          <span className="h-px w-3 bg-[#A8895A]" aria-hidden />
+                        <span className="tabular flex items-center gap-1.5 text-sm font-medium leading-4 text-accent">
+                          <span className="h-px w-3 bg-rule" aria-hidden />
                           {s.badge}
                         </span>
                       )}
-                      {g && <GlyphIcon kind={g} size={16} className={glyphTone[s.kind]} />}
+                      {g && <StepGlyph kind={g} size={18} className={glyphTone[s.kind]} />}
                     </span>
                   )}
                 </div>
-                <p className="mt-1 text-[15px] leading-normal text-ink-muted">
+                <p className="mt-1 text-base leading-normal text-ink-muted">
                   <MarkedText text={detailFor(s, cardSteps[i])} serifQuotes />
                 </p>
               </div>
@@ -213,8 +218,8 @@ export function StepDiagram({
       </ol>
       <OutcomeBand text={diagram.outcome} />
       {kinds.length > 1 && (
-        <p className="flex flex-wrap items-center gap-x-4 gap-y-1.5 pt-0.5 text-[13px] text-ink-muted">
-          <span className="h-px w-[22px] bg-[#A8895A]" aria-hidden />
+        <p className="flex flex-wrap items-center gap-x-4 gap-y-1.5 pt-0.5 text-sm text-ink-muted">
+          <span className="h-px w-[22px] bg-rule" aria-hidden />
           {kinds.map((k) => (
             <span key={k} className="inline-flex items-center gap-1.5">
               <Swatch kind={k} />

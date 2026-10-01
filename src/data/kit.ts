@@ -5,7 +5,8 @@
 export const KIT = {
   /** Field Kit: 16 cards = Read This First + 15 protocol cards. */
   protocolCards: 15,
-  worksheets: 9,
+  /** Field Kit worksheets (see src/data/worksheets.ts). */
+  worksheets: 7,
   manualChapters: 26,
   calibrationQuestions: 44,
   /** Pause + Return window, in minutes. */

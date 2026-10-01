@@ -79,7 +79,7 @@ export const WEEKLY_RESET_MINUTES = KIT.weeklyResetMinutes;
 export function buildWeeklyResetIcs(fromDate = new Date()): { url: string; filename: string } {
   const start = new Date(fromDate.getTime() + 7 * 24 * 60 * 60 * 1000);
   const end = new Date(start.getTime() + WEEKLY_RESET_MINUTES * 60 * 1000);
-  const uid = `alliance-weekly-reset-${start.getTime()}@alliance-field-app`;
+  const uid = `alliance-weekly-reset-${start.getTime()}@allianceprotocols.com`;
   const stamp = toIcsDate(new Date());
 
   const ics = calendar([
@@ -113,7 +113,7 @@ export function buildStartPlanIcs(
   start.setDate(start.getDate() + 1);
   start.setHours(Number.isFinite(h) ? h : 20, Number.isFinite(m) ? m : 0, 0, 0);
   const end = new Date(start.getTime() + 10 * 60 * 1000);
-  const uid = `alliance-start-plan-${start.getTime()}@alliance-field-app`;
+  const uid = `alliance-start-plan-${start.getTime()}@allianceprotocols.com`;
 
   const ics = calendar([
     "BEGIN:VEVENT",
@@ -125,7 +125,7 @@ export function buildStartPlanIcs(
     text("SUMMARY", "Alliance start plan (10 min)"),
     text(
       "DESCRIPTION",
-      "Today's step of the 7-day start plan — open the Field App at /start. Day 7 is your first Weekly Reset (about 40 minutes). If either of you is flooded, Pause + Return first."
+      "Today’s step of the 7-day plan — open the Field App at /start. Day 7 is your first Weekly Reset (about 40 minutes). If either of you is flooded, Pause + Return first."
     ),
     "END:VEVENT",
   ]);
@@ -190,7 +190,7 @@ export function keepGoingIcsText(time = "19:00", fromDate = new Date()): string 
 
   const event = (uid: string, start: Date, rrule: string, summary: string, description: string) => [
     "BEGIN:VEVENT",
-    `UID:${uid}-${start.getTime()}@alliance-field-app`,
+    `UID:${uid}-${start.getTime()}@allianceprotocols.com`,
     `DTSTAMP:${stamp}`,
     `DTSTART:${toFloatingDate(start)}`,
     `DTEND:${toFloatingDate(new Date(start.getTime() + minutes))}`,
@@ -212,8 +212,8 @@ export function keepGoingIcsText(time = "19:00", fromDate = new Date()): string 
       "alliance-keep-going-care-checkin",
       monthly,
       CARE_CHECKIN_RRULE,
-      "Care Check-in inside your Weekly Reset",
-      "First Weekly Reset of the month: during Check the load, run the Care Check-in — go through each area of care and ask if the load feels fair. Same 40 minutes, not an extra meeting. Open the Field App at /weekly-reset."
+      "Monthly Care Check-in (inside the Weekly Reset)",
+      "First Weekly Reset of the month: during Check the load, run the monthly Care Check-in (inside the Weekly Reset) — go through each area of care and ask if the load feels fair. Same 40 minutes, not an extra meeting. Open the Field App at /weekly-reset."
     ),
   ]);
 }
@@ -231,14 +231,14 @@ export function pauseReturnIcsText(returnAt: Date, now = new Date()): string {
   const end = new Date(returnAt.getTime() + 5 * 60 * 1000);
   return calendar([
     "BEGIN:VEVENT",
-    `UID:alliance-pause-return-${returnAt.getTime()}@alliance-field-app`,
+    `UID:alliance-pause-return-${returnAt.getTime()}@allianceprotocols.com`,
     `DTSTAMP:${toIcsDate(now)}`,
     `DTSTART:${toIcsDate(returnAt)}`,
     `DTEND:${toIcsDate(end)}`,
     text("SUMMARY", "Return time (Pause + Return)"),
     text(
       "DESCRIPTION",
-      "Time to come back, as promised. Restart with warmth, then safety; don't restart where you left off. If you're afraid, not just flooded, don't return — get outside help."
+      "Time to come back, as promised. Restart with warmth, then safety; don’t restart where you left off. If you’re afraid, not just flooded, don’t return — get outside help."
     ),
     "BEGIN:VALARM",
     "ACTION:DISPLAY",

@@ -45,16 +45,16 @@ export function FavoriteButton({
         onChange?.(next);
       }}
       aria-pressed={favorite}
-      aria-label={favorite ? "Remove from favorites" : "Add to favorites"}
+      aria-label="Favourite"
       className={`flex shrink-0 items-center justify-center rounded-full transition-colors ${
         compact
-          ? "h-9 w-9"
-          : `h-10 w-10 border ${
+          ? "h-11 w-11"
+          : `h-11 w-11 border ${
               favorite
-                ? "border-pause/30 bg-pause/10"
-                : "border-rule/15 bg-white"
+                ? "border-accent/30 bg-accent/10"
+                : "border-rule/60 bg-white"
             }`
-      } ${favorite ? "text-pause" : "text-ink-muted"}`}
+      } ${favorite ? "text-accent" : "text-ink-muted"}`}
     >
       <StarIcon size={size} filled={favorite} />
     </button>
