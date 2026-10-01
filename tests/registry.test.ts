@@ -123,6 +123,7 @@ describe("registry: icons", () => {
       "src/components/SituationCard.tsx", // the safety (danger) row
       "src/components/intro/diagrams.tsx", // the safety row of the intro map
       "src/app/page.tsx", // "I'm afraid or not safe" → Help
+      "src/components/PauseTimer.tsx", // the Help link in the calm pause view
     ]);
     const users = walk(src)
       .filter((f) => /\.tsx?$/.test(f) && !f.endsWith("icons.ts"))

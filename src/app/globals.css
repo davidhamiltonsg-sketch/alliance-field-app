@@ -618,3 +618,30 @@ html[data-splash="off"] .splash {
 }
 
 
+
+/* ---- Pause: full-screen calm view ---------------------------------- */
+/* While it is up, the app header and bottom nav step aside. */
+html[data-calm] [data-chrome],
+html[data-calm] [data-calm-hide] {
+  display: none;
+}
+html[data-calm] body {
+  overflow: hidden;
+}
+/* A slow breathing guide (about 4s in, 6s out). Static under reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+  .calm-breath {
+    animation: calm-breath 10s var(--ease-inout) infinite;
+  }
+}
+@keyframes calm-breath {
+  0%,
+  100% {
+    transform: scale(0.82);
+    opacity: 0.55;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

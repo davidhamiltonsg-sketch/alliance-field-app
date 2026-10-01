@@ -13,7 +13,9 @@ import { PrimaryButton } from "./PrimaryButton";
 import { TimerDisplay } from "./TimerDisplay";
 import { WarnBanner } from "./WarnBanner";
 import { Marker } from "./Marker";
-import { ArrowRight } from "./icons";
+import { ArrowLeft, ArrowRight } from "./icons";
+import { ApIcon } from "./ApIcon";
+import { formatRemaining } from "./TimerDisplay";
 import { clearKey, PAUSE_KEY, readPause, writePause } from "@/lib/storage";
 import { timerAnnouncement } from "@/lib/timer";
 import { buildPauseReturnIcs } from "@/lib/ics";
@@ -159,6 +161,19 @@ function PauseTimerClient() {
   const [clockTimeError, setClockTimeError] = useState<string | null>(null);
   const [customError, setCustomError] = useState<string | null>(null);
   const alarmFiredForRef = useRef<string | null>(null);
+  // Full-screen calm view while a pause runs; "Exit full screen" drops back
+  // to the regular page (the pause keeps running either way).
+  const [calm, setCalm] = useState(true);
+  const calmActive = calm && !!returnAt && !backMode;
+  const exitCalm = useCallback(() => setCalm(false), []);
+
+  // Hide the app header and bottom nav while the calm view is up.
+  useEffect(() => {
+    if (!calmActive) return;
+    const html = document.documentElement;
+    html.setAttribute("data-calm", "");
+    return () => html.removeAttribute("data-calm");
+  }, [calmActive]);
 
   useEffect(() => {
     if (!returnAt || backMode) return;
@@ -200,6 +215,7 @@ function PauseTimerClient() {
     setReturnAt(at);
     setStartedAt(startedAt);
     setBackMode(false);
+    setCalm(true);
     setNow(Date.now());
     requestNotifyPermission();
   }, []);
@@ -231,6 +247,7 @@ function PauseTimerClient() {
     setReturnAt(target.toISOString());
     setStartedAt(started);
     setBackMode(false);
+    setCalm(true);
     setNow(Date.now());
     requestNotifyPermission();
   }, [clockTime]);
@@ -336,6 +353,21 @@ function PauseTimerClient() {
     );
   }
 
+  if (returnAt && calm) {
+    return (
+      <div className="space-y-4">
+        {live}
+        <CalmPause
+          returnLabel={formatClock(new Date(returnAt))}
+          remainingMs={remainingMs}
+          expired={expired}
+          onBack={imBack}
+          onExit={exitCalm}
+        />
+      </div>
+    );
+  }
+
   if (returnAt) {
     const at = new Date(returnAt);
     const totalMs = startedAt
@@ -344,6 +376,9 @@ function PauseTimerClient() {
     return (
       <div className="space-y-4">
         {live}
+        <PrimaryButton variant="secondary" onClick={() => setCalm(true)}>
+          Full-screen calm view
+        </PrimaryButton>
         <div className="card flex flex-col items-center px-4 pb-5 pt-6">
           <TimerDisplay remainingMs={remainingMs} totalMs={totalMs} expired={expired} />
           <p className="mt-4 text-base text-ink-muted">
@@ -505,5 +540,103 @@ function PauseTimerClient() {
         </div>
       </section>
     </div>
+  );
+}
+
+/**
+ * Full-screen calm view for a running pause: the return time large, a slow
+ * breathing ring (still under reduced motion), the keep-open note, a clear
+ * way back to the regular page, and Help always visible.
+ */
+function CalmPause({
+  returnLabel,
+  remainingMs,
+  expired,
+  onBack,
+  onExit,
+}: {
+  returnLabel: string;
+  remainingMs: number;
+  expired: boolean;
+  onBack: () => void;
+  onExit: () => void;
+}) {
+  const rootRef = useRef<HTMLElement>(null);
+  useEffect(() => {
+    rootRef.current?.focus();
+  }, []);
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onExit();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onExit]);
+
+  return (
+    <section
+      ref={rootRef}
+      tabIndex={-1}
+      aria-labelledby="calm-heading"
+      className="fixed inset-0 z-[60] flex flex-col overflow-y-auto bg-surface-activity focus:outline-none"
+    >
+      <div className="mx-auto flex w-full max-w-lg flex-1 flex-col px-5 pb-[calc(env(safe-area-inset-bottom)+20px)] pt-[calc(env(safe-area-inset-top)+8px)]">
+        <div className="flex items-center justify-between">
+          <button
+            type="button"
+            onClick={onExit}
+            className="-ml-2 inline-flex min-h-12 items-center gap-1.5 rounded-full px-2 text-sm font-medium text-ink-muted hover:text-accent"
+          >
+            <ArrowLeft size={18} />
+            Exit full screen
+          </button>
+          <Link
+            href="/help"
+            className="inline-flex min-h-12 items-center gap-1.5 rounded-full px-3 text-sm font-semibold text-failure hover:bg-failure/10"
+          >
+            <ApIcon id="help-safety" size={18} mono />
+            Help
+          </Link>
+        </div>
+
+        <div className="flex flex-1 flex-col items-center justify-center py-6 text-center">
+          <h2 id="calm-heading" className="flex items-center gap-1.5 text-sm font-medium text-pause-text">
+            <ApIcon id="pause-and-return" size={18} />
+            {expired ? "Return time" : "Pause + Return · ready at"}
+          </h2>
+          <div className="relative mt-5 flex h-64 w-64 items-center justify-center">
+            <span className="calm-breath absolute inset-0 rounded-full bg-pause/[0.13]" aria-hidden />
+            <span className="absolute inset-6 rounded-full border border-pause/40 bg-paper/70" aria-hidden />
+            <div className="relative">
+              <p className={`tabular text-2xl font-semibold ${expired ? "text-failure" : "text-ink"}`}>{returnLabel}</p>
+              <p className="tabular mt-2 text-sm text-ink-muted">
+                {expired ? "Time to reconnect" : `${formatRemaining(remainingMs)} to go`}
+              </p>
+            </div>
+          </div>
+          <p className="phrase mt-6 text-lg text-ink">
+            {expired ? "Come back, even briefly. Warmth first." : "Breathe in as it grows, out as it settles."}
+          </p>
+          <p className="mt-1.5 text-sm text-ink-muted">Separate · calm down · don’t rehearse the argument.</p>
+        </div>
+
+        <div className="space-y-3">
+          <p className="rounded-xl bg-paper px-3.5 py-2.5 text-sm leading-snug text-ink">
+            <strong className="font-medium">Keep this screen open</strong> — phones may silence alarms in
+            the background.
+          </p>
+          <PrimaryButton variant="warn" onClick={onBack}>
+            I’m back
+          </PrimaryButton>
+          <p className="text-center text-sm text-ink-muted">
+            Afraid, not just flooded? Don’t return at the set time —{" "}
+            <Link href="/help" className="font-medium text-failure underline underline-offset-4">
+              get help
+            </Link>
+            .
+          </p>
+        </div>
+      </div>
+    </section>
   );
 }
