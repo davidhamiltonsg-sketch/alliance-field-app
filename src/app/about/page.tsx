@@ -10,26 +10,44 @@ import { aboutAuthors, authorNames } from "@/data/authors";
 
 export const metadata = { title: "About" };
 
-const products = [
+type Cover = "manual" | "kit" | "companion" | "app";
+
+const products: { name: string; body: string; cover: Cover }[] = [
   {
     name: "Operating Manual",
-    body: "Depth, theory, Full Recovery, decks.",
+    body: "The reference: every protocol in full, with the reasoning and edge cases.",
+    cover: "manual",
   },
   {
     name: "Field Kit",
-    body: "Cards, worksheets, Situation Map — the source for this app.",
+    body: "To keep on the fridge: 15 protocol cards (plus Read This First), 7 worksheets and the two-sided Situation Map.",
+    cover: "kit",
+  },
+  {
+    name: "Companion Book",
+    body: "Why it works: the stories and thinking behind the tools, with “The Third Voice” narrated by David.",
+    cover: "companion",
   },
   {
     name: "Complete Bundle",
-    body: "Manual and Kit together, with the Alliance Protocols Field App as the pocket companion.",
+    body: "Manual + Field Kit + Companion Book together. The Field App stays free.",
+    cover: "manual",
   },
 ];
 
-/** Miniature of the store covers: accent field and mark (the name sits beside it). */
-function CoverThumb() {
+/** Product cover colours (CANON round 5: covers only). */
+const coverBg: Record<Cover, string> = {
+  manual: "bg-cover-manual",
+  kit: "bg-cover-kit",
+  companion: "bg-cover-companion",
+  app: "bg-accent",
+};
+
+/** Miniature of the store covers: cover colour and mark (the name sits beside it). */
+function CoverThumb({ cover }: { cover: Cover }) {
   return (
     <span
-      className="relative flex h-[79px] w-14 shrink-0 flex-col items-center justify-center gap-1.5 overflow-hidden rounded-md bg-accent text-paper shadow-[0_2px_6px_rgb(26_26_26/0.18)]"
+      className={`relative flex h-[79px] w-14 shrink-0 flex-col items-center justify-center gap-1.5 overflow-hidden rounded-md ${coverBg[cover]} text-paper shadow-[0_2px_6px_rgb(26_26_26/0.18)]`}
       aria-hidden
     >
       <span className="absolute inset-0 bg-[radial-gradient(80%_60%_at_50%_0%,rgb(255_255_255/0.16),transparent_70%)]" />
@@ -91,8 +109,8 @@ export default function AboutPage() {
         <p className="text-base leading-normal text-ink">
           Dami and I built it from our own relationship — how we come back to
           each other, what we say when things go sideways, what we promise
-          not to do. This app, the Manual, and the Field Kit are that same
-          system, written down so other couples can use it.
+          not to do. This app, the Manual, the Field Kit and the Companion
+          Book are that same system, written down so other couples can use it.
         </p>
       </section>
 
@@ -147,7 +165,7 @@ export default function AboutPage() {
         <ul className="space-y-2.5">
           {products.map((p) => (
             <li key={p.name} className="card flex items-center gap-3.5 p-2.5 pr-4">
-              <CoverThumb />
+              <CoverThumb cover={p.cover} />
               <div className="min-w-0">
                 <p className="display text-lg leading-snug">{p.name}</p>
                 <p className="mt-0.5 text-sm leading-snug text-ink-muted">{p.body}</p>
@@ -155,12 +173,12 @@ export default function AboutPage() {
             </li>
           ))}
           <li className="card flex items-center gap-3.5 border-accent/20 bg-surface-tool p-2.5 pr-4">
-            <CoverThumb />
+            <CoverThumb cover="app" />
             <div className="min-w-0">
               <p className="display text-lg leading-snug">Field App</p>
               <p className="mt-0.5 text-sm leading-snug text-ink-muted">
-                This pocket companion: route under stress, exact phrases, Pause
-                timer, Weekly Reset, Profile Calibration.
+                Free, to act in the moment: the Situation Map, exact phrases,
+                the Pause timer, Weekly Reset and Profile Calibration.
               </p>
             </div>
           </li>
@@ -169,9 +187,9 @@ export default function AboutPage() {
 
       <section
         id="detachment"
-        className="relative scroll-mt-20 overflow-hidden rounded-2xl border border-pause/25 bg-surface-warn px-4 py-3.5"
+        className="relative scroll-mt-20 overflow-hidden rounded-2xl border border-repair/25 bg-surface-tool px-4 py-3.5"
       >
-        <span className="absolute inset-y-0 left-0 w-1 bg-pause" aria-hidden />
+        <span className="absolute inset-y-0 left-0 w-1 bg-repair" aria-hidden />
         <Marker kind="NOTE" label="Feeling checked out?" />
         <p className="mt-2 text-base leading-normal">
           <strong>Not sure if it’s space or withdrawal?</strong> Run the

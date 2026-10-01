@@ -21,6 +21,10 @@
   --color-surface-tool: #EEF2EF;
   --color-surface-activity: #F3F0E8;
   --color-surface-warn: #F7EDE6;
+  /* Product covers only (CANON round 5). */
+  --color-cover-manual: #2C3E2D;
+  --color-cover-kit: #6E4210;
+  --color-cover-companion: #1A1A1A;
 
   /* Type scale (design/tokens.json): 12 / 14 / 16 / 20 / 28 / 40. The
      Tailwind defaults are cleared so only these six sizes exist. */

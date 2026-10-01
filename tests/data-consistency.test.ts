@@ -278,6 +278,7 @@ describe("About the authors", () => {
     expect(aboutAuthors).toContain("David");
     expect(aboutAuthors).toContain("Dami");
     expect(aboutAuthors).not.toMatch(/\[\[/);
+    expect(aboutAuthors).toContain("a regional Chief Administrative Officer and Chief Operating Officer (CAO/COO) in banking");
   });
 });
 
