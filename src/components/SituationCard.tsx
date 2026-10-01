@@ -104,7 +104,14 @@ export function SituationCard({
               className={`mt-2.5 flex items-center gap-2 text-sm font-medium leading-snug ${moveText[tone]}`}
             >
               <RouteThread color={threadColor[tone]} />
-              {iconSlug && <ApIcon id={iconSlug} size={20} mono={tone === "failure"} />}
+              {iconSlug && (
+                <ApIcon
+                  id={iconSlug}
+                  size={20}
+                  // The safety glyph is safety green on light backgrounds (CANON round 5).
+                  className={situation.danger ? "text-safety" : ""}
+                />
+              )}
               <span className="min-w-0">
                 <MarkedText text={situation.firstMove} />
               </span>

@@ -640,17 +640,17 @@ function CalmPause({
             href="/help"
             className="inline-flex min-h-12 items-center gap-1.5 rounded-full px-3 text-sm font-semibold text-failure hover:bg-failure/10"
           >
-            <ApIcon id="help-safety" size={18} mono />
+            <ApIcon id="help-safety" size={18} className="text-safety" />
             Help
           </Link>
         </div>
 
-        <div className="flex flex-1 flex-col items-center justify-center py-6 text-center">
+        <div className="flex flex-1 flex-col items-center justify-center py-4 text-center">
           <h2 id="calm-heading" className="flex items-center gap-1.5 text-sm font-medium text-pause-text">
             <ApIcon id="pause-and-return" size={18} />
             {expired ? "Return time" : "Pause + Return · ready at"}
           </h2>
-          <div className="relative mt-5 flex h-[min(18rem,78vw)] w-[min(18rem,78vw)] items-center justify-center">
+          <div className="relative mt-4 flex h-[min(15rem,66vw,34dvh)] w-[min(15rem,66vw,34dvh)] items-center justify-center">
             <span className="calm-breath absolute inset-0 rounded-full bg-pause/[0.13]" aria-hidden />
             <span className="absolute inset-6 rounded-full border border-pause/40 bg-paper/70" aria-hidden />
             <div className="relative">
@@ -660,7 +660,7 @@ function CalmPause({
               </p>
             </div>
           </div>
-          <p className="phrase mt-6 text-lg text-ink">
+          <p className="phrase mt-5 text-lg text-ink">
             {expired ? "Come back, even briefly. Warmth first." : "Breathe in as it grows, out as it settles."}
           </p>
           <p className="mt-1.5 text-sm text-ink-muted">Separate · calm down · don’t rehearse the argument.</p>
