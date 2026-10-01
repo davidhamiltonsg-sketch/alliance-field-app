@@ -51,7 +51,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Restart warm",
-        "detail": "Warmth → Safety (not “where we left off”).",
+        "detail": "Warm up → make it safe (not “where we left off”).",
         "kind": "step"
       }
     ],
@@ -117,7 +117,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Warm up again",
-        "detail": "On return, Warmth → Safety before the original topic.",
+        "detail": "On return, warm up and make it safe before the original topic.",
         "kind": "repair"
       },
       {

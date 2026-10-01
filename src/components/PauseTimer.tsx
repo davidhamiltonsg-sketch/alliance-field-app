@@ -18,10 +18,9 @@ import { ArrowLeft, ArrowRight } from "./icons";
 import { ApIcon } from "./ApIcon";
 import { formatRemaining } from "./TimerDisplay";
 import { clearKey, PAUSE_KEY, readPause, writePause } from "@/lib/storage";
-import { timerAnnouncement } from "@/lib/timer";
+import { checkSavedPause, clockReturnTarget, parseCustomMinutes, timerAnnouncement } from "@/lib/timer";
 import { buildPauseReturnIcs } from "@/lib/ics";
 import { downloadObjectUrl } from "@/lib/download";
-import { KIT } from "@/data/kit";
 
 const DURATIONS = [
   { label: "20m", ms: 20 * 60 * 1000 },
@@ -126,8 +125,20 @@ function downloadReturnTime(returnAt: string) {
 
 const noopSubscribe = () => () => {};
 
-const MIN_MINUTES = KIT.pauseMinMinutes;
-const MAX_MINUTES = KIT.pauseMaxMinutes;
+/** Reads the saved pause once; a stale (ended > 24 h ago) or unreadable one is cleared quietly, with no alarm. */
+function initialPause(): { returnAt: string | null; startedAt: string | null } {
+  const checked = checkSavedPause(readPause(), Date.now());
+  if (checked.state === "active") return { returnAt: checked.returnAt, startedAt: checked.startedAt };
+  if (checked.state !== "none") clearKey(PAUSE_KEY);
+  return { returnAt: null, startedAt: null };
+}
+
+function subscribeReducedMotion(cb: () => void) {
+  const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+  mq.addEventListener("change", cb);
+  return () => mq.removeEventListener("change", cb);
+}
+const reducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 /** Renders the timer only on the client, where the saved pause is readable. */
 export function PauseTimer() {
@@ -147,8 +158,9 @@ export function PauseTimer() {
 }
 
 function PauseTimerClient() {
-  const [returnAt, setReturnAt] = useState<string | null>(() => readPause().returnAt);
-  const [startedAt, setStartedAt] = useState<string | null>(() => readPause().startedAt);
+  const [saved] = useState(initialPause);
+  const [returnAt, setReturnAt] = useState<string | null>(saved.returnAt);
+  const [startedAt, setStartedAt] = useState<string | null>(saved.startedAt);
   const [now, setNow] = useState(() => Date.now());
   const [customMinutes, setCustomMinutes] = useState("45");
   const [clockTime, setClockTime] = useState("");
@@ -229,22 +241,12 @@ function PauseTimerClient() {
   }, []);
 
   const startWithClock = useCallback(() => {
-    if (!clockTime) return;
-    const [hh, mm] = clockTime.split(":").map(Number);
-    const target = new Date();
-    target.setHours(hh, mm, 0, 0);
-    if (target.getTime() <= Date.now()) {
-      target.setDate(target.getDate() + 1);
-    }
-    const delta = target.getTime() - Date.now();
-    if (delta < MIN_MINUTES * 60 * 1000) {
-      setClockTimeError("That’s less than 20 minutes away — pick a later time.");
+    const checked = clockReturnTarget(clockTime, new Date());
+    if (!checked.ok) {
+      setClockTimeError(checked.error);
       return;
     }
-    if (delta > MAX_MINUTES * 60 * 1000) {
-      setClockTimeError("That’s more than 24 hours away — pick a sooner time.");
-      return;
-    }
+    const { target } = checked;
     setClockTimeError(null);
     primeAudio();
     const started = new Date().toISOString();
@@ -338,15 +340,15 @@ function PauseTimerClient() {
           <ol className="space-y-2 text-base leading-normal">
             <li className="flex gap-3">
               <span className="tabular flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent text-sm font-medium text-paper">1</span>
-              <span><strong>Warmth</strong> — one warm true sentence.</span>
+              <span><strong>Warm up</strong> — one warm, true sentence.</span>
             </li>
             <li className="flex gap-3">
               <span className="tabular flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent text-sm font-medium text-paper">2</span>
-              <span><strong>Safety</strong> — Alliance not threatened this moment.</span>
+              <span><strong>Make it safe</strong> — the relationship isn’t at risk in this moment.</span>
             </li>
             <li className="flex gap-3">
               <span className="tabular flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent text-sm font-medium text-paper">3</span>
-              <span>Only then: Expression → Request → Alignment.</span>
+              <span>Only then: Say what happened → Ask for one thing → Agree on next steps.</span>
             </li>
           </ol>
           <ul className="space-y-2 pt-1">
@@ -472,8 +474,9 @@ function PauseTimerClient() {
               id="custom-minutes"
               type="number"
               inputMode="numeric"
-              min={MIN_MINUTES}
-              max={MAX_MINUTES}
+              step={1}
+              min={20}
+              max={1440}
               value={customMinutes}
               onChange={(e) => {
                 setCustomMinutes(e.target.value);
@@ -487,21 +490,13 @@ function PauseTimerClient() {
               fullWidth={false}
               className="shrink-0 px-5"
               onClick={() => {
-                const n = Number(customMinutes);
-                if (!customMinutes.trim() || !Number.isFinite(n)) {
-                  setCustomError("Enter a number of minutes, 20 to 1440.");
-                  return;
-                }
-                if (n < MIN_MINUTES) {
-                  setCustomError("A pause needs at least 20 minutes to calm down. Pick 20 or more.");
-                  return;
-                }
-                if (n > MAX_MINUTES) {
-                  setCustomError("24 hours (1440 minutes) is the maximum. Pick a shorter pause.");
+                const checked = parseCustomMinutes(customMinutes);
+                if (!checked.ok) {
+                  setCustomError(checked.error);
                   return;
                 }
                 setCustomError(null);
-                startWithMs(n * 60 * 1000);
+                startWithMs(checked.minutes * 60 * 1000);
               }}
             >
               Start
@@ -513,7 +508,7 @@ function PauseTimerClient() {
             </p>
           ) : (
             <p id="custom-minutes-hint" className="text-sm text-ink-muted">
-              Min 20 · Max 1440 (24h)
+              Whole minutes · Min 20 · Max 1440 (24h)
             </p>
           )}
         </div>
@@ -581,6 +576,8 @@ function CalmPause({
   onExit: () => void;
 }) {
   const rootRef = useRef<HTMLElement>(null);
+  // The breathing ring is still under reduced motion, so the cue can't say "as it grows".
+  const still = useSyncExternalStore(subscribeReducedMotion, reducedMotion, () => false);
   useEffect(() => {
     rootRef.current?.focus();
   }, []);
@@ -662,7 +659,11 @@ function CalmPause({
             </div>
           </div>
           <p className="phrase mt-5 text-lg text-ink">
-            {expired ? "Come back, even briefly. Warmth first." : "Breathe in as it grows, out as it settles."}
+            {expired
+              ? "Come back, even briefly. Warm up first."
+              : still
+                ? "Breathe slowly: in for a count of four, out for six."
+                : "Breathe in as it grows, out as it settles."}
           </p>
           <p className="mt-1.5 text-sm text-ink-muted">Separate · calm down · don’t rehearse the argument.</p>
         </div>

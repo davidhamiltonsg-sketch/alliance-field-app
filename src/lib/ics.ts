@@ -256,7 +256,7 @@ export function pauseReturnIcsText(returnAt: Date, now = new Date()): string {
     text("SUMMARY", "Return time (Pause + Return)"),
     text(
       "DESCRIPTION",
-      "Time to come back, as promised. Restart with warmth, then safety; don’t restart where you left off. If you’re afraid, not just flooded, don’t return — get outside help."
+      "Time to come back, as promised. Warm up, then make it safe; don’t restart where you left off. If you’re afraid, not just flooded, don’t return — get outside help."
     ),
     "BEGIN:VALARM",
     "ACTION:DISPLAY",
