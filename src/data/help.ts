@@ -68,8 +68,8 @@ export const helpRegions: HelpRegion[] = [
 ];
 
 /**
- * CANON round 6: for anyone worried about their own behaviour. Numbers as
- * verified by the authors on each service's own site (1 October 2026); PAVE
+ * CANON round 6: for anyone worried about their own behaviour. Numbers
+ * checked against each service's own site (1 October 2026); PAVE
  * answers in office hours only.
  */
 export const ownBehaviourLines: (HelpNumber & { region: string })[] = [
