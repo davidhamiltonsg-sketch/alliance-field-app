@@ -216,3 +216,32 @@ describe("registry: worksheets", () => {
     expect(worksheets.map((w) => w.id)).toEqual(registry.worksheets.map((w) => w.id));
   });
 });
+
+describe("Go deeper pointers", () => {
+  // Kit card names as printed on the Field Kit cards (CANON round 4).
+  const KIT_CARDS = [
+    "Green Rule", "Pause + Return", "60-Second Reset", "Micro-Repair", "Weekly Reset", "System Overlay",
+    "Conflict Protocol", "Proof Protocol", "Trust Recovery", "Full Recovery", "Uninvestment Check",
+    "Unity Anchor", "Morning + Evening Rhythm", "Intimacy Pact", "Consistency Pact",
+  ];
+  // Chapter numbers and titles from the Operating Manual's table of contents.
+  const MANUAL = new Map<string, string>([
+    ["I", "Executive Summary"], ["II", "Fast Start Guide"], ["III", "Introduction"],
+    ["IV", "Nervous System Orientation"], ["V-A", "Attachment Styles in Partnership"],
+    ["V-B", "Deflection and Impact Erasure"], ["VI", "Alliance Lifecycle"], ["VII", "Alliance Failure Modes"],
+    ["VIII", "Attachment Translation"], ["IX", "Core Foundation: Team Over Self"],
+    ["X", "Profiles: Strategic & Atmospheric"], ["XI", "Daily Rhythm"], ["XI-A", "Sensory Baseline"],
+    ["XII", "Weekly Reset"], ["XIII", "Response & Conflict Protocol"], ["XIII-A", "Micro-Repairs"],
+    ["XIII-B", "Full Recovery"], ["XIII-C", "The Psychology Behind the Tools"],
+    ["XIII-D", "Detachment, Uninvestment, and Emotional Withdrawal"], ["XIV", "The Intimacy Pact"],
+    ["XV", "Proof Over Promises"], ["XVI", "Trust Recovery Protocol"], ["XVII", "Consistency Pact"],
+    ["XVIII", "Alliance Enrichment"], ["XVIII-A", "The Sun Memory Protocol"], ["XIX", "Alliance Governance"],
+  ]);
+
+  it("names a real Manual chapter and Kit card for every protocol", async () => {
+    const { goDeeper, manualChapters } = await import("@/data/go-deeper");
+    expect(Object.keys(goDeeper).sort()).toEqual(protocols.map((p) => p.slug).sort());
+    for (const c of Object.values(manualChapters)) expect(MANUAL.get(c.num)).toBe(c.title);
+    expect(Object.values(goDeeper).map((g) => g.kitCard).sort()).toEqual([...KIT_CARDS].sort());
+  });
+});

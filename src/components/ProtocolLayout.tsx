@@ -10,6 +10,7 @@ import { ApIcon, IconChip, isIconId } from "./ApIcon";
 import { TierBadge } from "./TierBadge";
 import { protocolSubtitle } from "@/data/glossary";
 import { worksheetsFor } from "@/data/worksheets";
+import { chapterLabel, goDeeper } from "@/data/go-deeper";
 import { protocolDiagrams } from "@/data/visuals/protocol-diagrams";
 import { WarnBanner } from "./WarnBanner";
 import { FavoriteButton } from "./FavoriteButton";
@@ -27,6 +28,7 @@ export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
   const tone = protocol.accentHint ?? "accent";
   const subtitle = protocolSubtitle(protocol.slug);
   const sheets = worksheetsFor(protocol.slug);
+  const deeper = goDeeper[protocol.slug];
   return (
     <article className="space-y-6">
       <header className={`-mx-4 space-y-3 border-b px-4 pb-4 sm:mx-0 sm:rounded-2xl sm:border ${headerWash[tone]}`}>
@@ -113,16 +115,18 @@ export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
           <span id="go-deeper">Go deeper</span>
         </SectionLabel>
         <ul className="space-y-1.5 text-sm leading-snug text-ink-muted">
-          <li className="flex items-center gap-2">
-            <ApIcon id="manual" size={20} className="text-accent" />
-            <span>
-              Operating Manual: the <span className="text-ink">{protocol.title}</span> chapter, for the reasoning and edge cases.
-            </span>
-          </li>
+          {deeper && (
+            <li className="flex items-center gap-2">
+              <ApIcon id="manual" size={20} className="text-accent" />
+              <span>
+                Operating Manual: <span className="text-ink">{chapterLabel(deeper.chapter)}</span>, for the reasoning and edge cases.
+              </span>
+            </li>
+          )}
           <li className="flex items-center gap-2">
             <ApIcon id="field-kit" size={20} className="text-accent" />
             <span>
-              Field Kit: the <span className="text-ink">{protocol.title}</span> card
+              Field Kit: the <span className="text-ink">{deeper?.kitCard ?? protocol.title}</span> card
               {sheets.length > 0 ? (
                 <>
                   {" "}and the <span className="text-ink">{sheets.map((w) => w.name).join(" and ")}</span>
