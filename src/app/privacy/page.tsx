@@ -38,7 +38,7 @@ export default function PrivacyPage() {
           <p>
             Alliance Protocols and this Field App are made by David Hamilton
             and Dr Zhongming Shi, in Singapore. We handle personal data in line
-            with Singapore&apos;s Personal Data Protection Act (PDPA).
+            with Singapore’s Personal Data Protection Act (PDPA).
           </p>
           <p>
             Questions, or a request to see, correct or delete data we hold
@@ -58,7 +58,7 @@ export default function PrivacyPage() {
         <div className="card space-y-3 px-4 py-4 text-base leading-normal text-ink">
           <p>
             The app has no account and no server database. What you enter is
-            saved in your browser&apos;s own storage on this device, and is
+            saved in your browser’s own storage on this device, and is
             never sent to us or anyone else:
           </p>
           <ul className="space-y-1.5 pl-4 text-ink-muted">
@@ -69,16 +69,16 @@ export default function PrivacyPage() {
             ))}
           </ul>
           <p>
-            We can&apos;t see any of it, so we can&apos;t recover it either. You
+            We can’t see any of it, so we can’t recover it either. You
             can delete all of it at any time from{" "}
             <Link href="/help#your-data" className="font-medium text-accent underline underline-offset-4">
               Help &rarr; Your data
             </Link>
-            , or by clearing this site&apos;s data in your browser.
+            , or by clearing this site’s data in your browser.
           </p>
           <p className="text-ink-muted">
             Calendar reminders (.ics files) are made on your device, too. Once
-            you add one to your calendar, your calendar provider&apos;s own
+            you add one to your calendar, your calendar provider’s own
             privacy terms apply.
           </p>
         </div>
@@ -98,12 +98,12 @@ export default function PrivacyPage() {
             <li className="list-disc">
               <strong className="font-medium text-ink">Why:</strong> Alliance
               Protocols product updates and the occasional note from us. We
-              don&apos;t sell it or share it for anyone else&apos;s marketing.
+              don’t sell it or share it for anyone else’s marketing.
             </li>
             <li className="list-disc">
               <strong className="font-medium text-ink">Who handles it:</strong>{" "}
               the email service the site uses to run the mailing list, which
-              stores it on our behalf. If that form isn&apos;t set up, your own
+              stores it on our behalf. If that form isn’t set up, your own
               email app opens instead and the message comes straight to{" "}
               {CONTACT_EMAIL}.
             </li>
@@ -133,17 +133,17 @@ export default function PrivacyPage() {
             <strong className="font-medium">One cookie, only before launch.</strong>{" "}
             While the app is in early access, entering the access code sets a
             single cookie (<code className="text-sm">ap_access</code>) so
-            you don&apos;t have to type the code again. It holds a signed token,
-            not the code and nothing about you; page scripts can&apos;t read it
-            (httpOnly); it expires after 30 days; and it isn&apos;t used for
+            you don’t have to type the code again. It holds a signed token,
+            not the code and nothing about you; page scripts can’t read it
+            (httpOnly); it expires after 30 days; and it isn’t used for
             tracking. Once early access ends, it is no longer set. Otherwise
             the app sets no cookies.
           </p>
           <p>
             <strong className="font-medium">Hosting.</strong> The app is hosted
-            by Vercel. As part of normal hosting, Vercel&apos;s servers keep
+            by Vercel. As part of normal hosting, Vercel’s servers keep
             request logs, which may include your IP address, browser type and
-            the page requested. We don&apos;t use these logs to identify or
+            the page requested. We don’t use these logs to identify or
             profile anyone.
           </p>
         </div>
@@ -155,8 +155,8 @@ export default function PrivacyPage() {
         </SectionLabel>
         <p className="px-1 text-base leading-normal text-ink">
           Alliance Protocols is for adult couples. It is not directed at anyone
-          under 18, and we don&apos;t knowingly collect email addresses from
-          under-18s. If you think we have one, email us and we&apos;ll delete it.
+          under 18, and we don’t knowingly collect email addresses from
+          under-18s. If you think we have one, email us and we’ll delete it.
         </p>
       </section>
 
@@ -165,9 +165,9 @@ export default function PrivacyPage() {
           <span id="changes-heading">Changes to this notice</span>
         </SectionLabel>
         <p className="px-1 text-base leading-normal text-ink">
-          If what the app stores or sends ever changes, we&apos;ll update this
-          page first and change the date below. If you&apos;re on the mailing
-          list and the change affects your email address, we&apos;ll tell you.
+          If what the app stores or sends ever changes, we’ll update this
+          page first and change the date below. If you’re on the mailing
+          list and the change affects your email address, we’ll tell you.
         </p>
         <p className="px-1 text-sm leading-normal text-ink-muted">
           Last updated {PRIVACY_LAST_UPDATED}

@@ -88,7 +88,7 @@ export default function HelpPage() {
           <p>
             A &ldquo;no&rdquo; needs no script, reason, or substitute offer. No
             pact or agreement creates an obligation to sex, touch, or
-            disclosure. No tool here is ever used to limit a partner&apos;s
+            disclosure. No tool here is ever used to limit a partner’s
             contact with friends, family, money, phone or movement.
           </p>
           <p className="text-ink-muted">

@@ -34,7 +34,7 @@ const ALLIANCE_LINE = "We are an alliance.";
 const RETURN_TAGLINES = [
   "Still precise. Still here.",
   "On time, as promised.",
-  "Back again. That's the whole point.",
+  "Back again. That’s the whole point.",
 ];
 
 // Picked once per page load on the client; the server never needs it.

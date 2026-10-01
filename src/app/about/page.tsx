@@ -174,10 +174,10 @@ export default function AboutPage() {
         <span className="absolute inset-y-0 left-0 w-1 bg-pause" aria-hidden />
         <Marker kind="NOTE" label="Feeling checked out?" />
         <p className="mt-2 text-base leading-normal">
-          <strong>Not sure if it&apos;s space or withdrawal?</strong> Run the
+          <strong>Not sure if it’s space or withdrawal?</strong> Run the
           Uninvestment Check. 0–2 signs: likely needs space. 3 or more: may
           be pulling away — book a Full Recovery within a week. Hope
-          isn&apos;t a plan.
+          isn’t a plan.
         </p>
         <Link
           href="/protocols/uninvestment-check"

@@ -354,7 +354,7 @@ function WeeklyResetWizardClient() {
             onClick={clear}
             className="w-full min-h-11 rounded-xl border border-rule/15 text-sm font-medium text-ink"
           >
-            This week&apos;s answers only
+            This week’s answers only
           </button>
           <button
             type="button"

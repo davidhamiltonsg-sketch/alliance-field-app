@@ -31,7 +31,7 @@ export default function TogetherPage() {
       <PageHeader eyebrow={<Marker kind="TOOL" label="Outside pressure" icon="unity-anchor" />} title="When the pressure comes from outside, face it from the same side.">
         For couples who deal with disapproval, stares, comments and &ldquo;just
         asking&rdquo; questions from outside the relationship, and who
-        don&apos;t want that pressure to turn into fights between the two of
+        don’t want that pressure to turn into fights between the two of
         you.
       </PageHeader>
 
@@ -57,8 +57,8 @@ export default function TogetherPage() {
             Researchers call the second kind <strong className="font-medium">minority stress</strong>:
             extra strain that comes from how others treat a relationship, not
             from the relationship itself. A recent review looks at how that
-            outside strain can reach into couples&apos; lives. The protocols
-            draw on that literature; they don&apos;t claim to settle it.
+            outside strain can reach into couples’ lives. The protocols
+            draw on that literature; they don’t claim to settle it.
           </p>
           <p className="text-sm leading-normal text-ink-muted">
             {TOGETHER_CITATION.text}{" "}
@@ -73,10 +73,10 @@ export default function TogetherPage() {
           </p>
           <div className="rounded-2xl border border-accent/20 bg-surface-tool px-4 py-3.5">
             <p className="text-base leading-normal text-ink">
-              The hard part is rarely the comment itself. It&apos;s what comes
+              The hard part is rarely the comment itself. It’s what comes
               after: one of you wants to confront it, the other wants to keep
-              the peace. One of you felt it, the other didn&apos;t see it.
-              Before long you&apos;re arguing about whose family is worse, or
+              the peace. One of you felt it, the other didn’t see it.
+              Before long you’re arguing about whose family is worse, or
               whether someone is &ldquo;overreacting&rdquo; — and the outside
               pressure has become an inside fight.
             </p>
@@ -104,7 +104,7 @@ export default function TogetherPage() {
             <strong className="font-medium">Built-in safeguard.</strong> The
             Unity Anchor decides how the two of you respond to outside
             pressure — never how much access a relative gets to your partner.
-            No tool is ever used to limit a partner&apos;s contact with
+            No tool is ever used to limit a partner’s contact with
             friends, family, money, phone or movement.
           </p>
         </div>
@@ -152,7 +152,7 @@ export default function TogetherPage() {
 
       <section aria-labelledby="who-heading" className="space-y-3">
         <SectionLabel>
-          <span id="who-heading">Who it&apos;s for</span>
+          <span id="who-heading">Who it’s for</span>
         </SectionLabel>
         <ul className="space-y-1.5 pl-5 text-base leading-normal text-ink">
           {whoFor.map((w) => (
@@ -165,7 +165,7 @@ export default function TogetherPage() {
 
       <section id="not-for" aria-labelledby="notfor-heading" className="scroll-mt-20 space-y-3">
         <SectionLabel>
-          <span id="notfor-heading">Who it&apos;s not for</span>
+          <span id="notfor-heading">Who it’s not for</span>
         </SectionLabel>
         <ul className="space-y-1.5 pl-5 text-base leading-normal text-ink">
           {notFor.map((w) => (
@@ -190,11 +190,11 @@ export default function TogetherPage() {
           <p>
             Alliance Protocols is informed by research and clinical frameworks,
             including the minority-stress literature, adapted by the authors.
-            It isn&apos;t therapy and hasn&apos;t been tested in a controlled
+            It isn’t therapy and hasn’t been tested in a controlled
             study.
           </p>
           <p className="text-ink-muted">
-            If you&apos;d like professional support, look for a couples
+            If you’d like professional support, look for a couples
             therapist with experience of intercultural or interracial couples,
             and ask them about that experience when you first get in touch.
           </p>

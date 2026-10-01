@@ -35,7 +35,7 @@ function CalibrationReportClient() {
     return (
       <div className="space-y-4">
         <PageHeader eyebrow={<Marker kind="NOTE" label="Not ready yet" />} title="Finish calibration first">
-          Answer at least one partner&apos;s 44 questions to see a profile.
+          Answer at least one partner’s 44 questions to see a profile.
         </PageHeader>
         <PrimaryButton onClick={() => router.push("/calibrate")}>Start calibration</PrimaryButton>
       </div>

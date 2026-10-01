@@ -32,7 +32,7 @@ export function SoloStart() {
           — own your small piece, without waiting for theirs.
         </li>
         <li className="list-disc">
-          <strong className="font-medium text-ink">Invite, don&apos;t assign</strong>{" "}
+          <strong className="font-medium text-ink">Invite, don’t assign</strong>{" "}
           — “I found something I’d like us to try” works better than homework.
         </li>
       </ul>

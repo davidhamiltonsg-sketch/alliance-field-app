@@ -191,7 +191,12 @@ describe("registry: banned wording", () => {
 
 describe("registry: plain-English subtitles", () => {
   it("match the registry", () => {
-    const subs = Object.fromEntries(Object.entries(registry.plainEnglishSubtitles).filter(([k]) => k !== "rule"));
+    // The app sets apostrophes typographically (’); the registry uses plain ones.
+    const subs = Object.fromEntries(
+      Object.entries(registry.plainEnglishSubtitles)
+        .filter(([k]) => k !== "rule")
+        .map(([k, v]) => [k, String(v).replace(/'/g, "’")]),
+    );
     expect(plainEnglish).toEqual(subs);
   });
 
@@ -243,5 +248,12 @@ describe("Go deeper pointers", () => {
     expect(Object.keys(goDeeper).sort()).toEqual(protocols.map((p) => p.slug).sort());
     for (const c of Object.values(manualChapters)) expect(MANUAL.get(c.num)).toBe(c.title);
     expect(Object.values(goDeeper).map((g) => g.kitCard).sort()).toEqual([...KIT_CARDS].sort());
+  });
+});
+
+describe("typography", () => {
+  it("uses curly apostrophes and quotes in user-facing copy", () => {
+    const straight = texts.filter((t) => /[A-Za-z]'[A-Za-z]|&apos;|\\"[A-Za-z]/.test(t.text));
+    expect(straight.map((t) => `${t.file}: ${t.text}`)).toEqual([]);
   });
 });

@@ -4,7 +4,7 @@
  * registry.json `plainEnglishSubtitles` (checked by tests/registry.test.ts).
  */
 export const plainEnglish: Record<string, string> = {
-  "System Overlay": "spotting the pattern you're both stuck in",
+  "System Overlay": "spotting the pattern you’re both stuck in",
   Circuit: "a repeating loop between you",
   "Layer Scan": "where each of you sits on the profile",
   "Reach–Recoil": "one reaches, the other pulls back",

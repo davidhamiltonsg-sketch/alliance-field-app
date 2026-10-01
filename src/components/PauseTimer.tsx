@@ -243,11 +243,11 @@ function PauseTimerClient() {
     }
     const delta = target.getTime() - Date.now();
     if (delta < MIN_MINUTES * 60 * 1000) {
-      setClockTimeError("That's less than 20 minutes away — pick a later time.");
+      setClockTimeError("That’s less than 20 minutes away — pick a later time.");
       return;
     }
     if (delta > MAX_MINUTES * 60 * 1000) {
-      setClockTimeError("That's more than 24 hours away — pick a sooner time.");
+      setClockTimeError("That’s more than 24 hours away — pick a sooner time.");
       return;
     }
     setClockTimeError(null);
@@ -267,7 +267,7 @@ function PauseTimerClient() {
 
   const shareReturnTime = async () => {
     if (!returnAt) return;
-    const text = `I'll be ready at ${formatClock(new Date(returnAt))}.`;
+    const text = `I’ll be ready at ${formatClock(new Date(returnAt))}.`;
     try {
       if (navigator.share) {
         await navigator.share({ text });

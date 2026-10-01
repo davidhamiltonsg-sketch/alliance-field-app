@@ -470,7 +470,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "outcome": "The integrity gap shrinks."
   },
   "full-recovery": {
-    "when": "A repeated fight or a clear before/after dent in trust that a Weekly Reset can't hold. Calm, agreed, scheduled — never mid-fight.",
+    "when": "A repeated fight or a clear before/after dent in trust that a Weekly Reset can’t hold. Calm, agreed, scheduled — never mid-fight.",
     "steps": [
       {
         "title": "Warmth",

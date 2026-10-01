@@ -55,8 +55,8 @@ export function SignupForm() {
     } catch {
       setError(
         navigator.onLine
-          ? "That didn't go through. Check your connection and the address, then try again."
-          : "You're offline. Try again when you have a connection."
+          ? "That didn’t go through. Check your connection and the address, then try again."
+          : "You’re offline. Try again when you have a connection."
       );
       setStatus("error");
     }
@@ -104,7 +104,7 @@ export function SignupForm() {
         </form>
       )}
       <p className="mt-2 text-sm leading-snug text-ink-muted">
-        We&apos;ll only use your email for Alliance Protocols updates.
+        We’ll only use your email for Alliance Protocols updates.
         Unsubscribe any time.{" "}
         <Link href="/privacy" className="font-medium text-accent underline underline-offset-4">
           Privacy notice

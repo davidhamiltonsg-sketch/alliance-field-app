@@ -109,7 +109,7 @@ export default function HomePage() {
         </ul>
         <WarnBanner pauseLink={false} safetyLink>
           Pause + Return is for flooding, never for fear. If threats, fear,
-          coercion or violence appear, don&apos;t return at the set time —
+          coercion or violence appear, don’t return at the set time —
           leave safely and use the help lines.
         </WarnBanner>
       </section>

@@ -40,7 +40,7 @@ export const installDays: InstallDay[] = [
     bullets: [
       "Card: Micro-Repair.",
       "Clear one thing from the last two days with a soft tone and owning your part.",
-      "Get familiar with the 60-Second Reset while you're calm.",
+      "Get familiar with the 60-Second Reset while you’re calm.",
     ],
     proof: "One micro-repair done.",
     cardSlugs: ["micro-repair", "60-second-reset"],
@@ -70,7 +70,7 @@ export const installDays: InstallDay[] = [
     day: 7,
     title: "Apply it to your real life",
     bullets: [
-      "Re-read the Situation Map with this week's actual stress in mind.",
+      "Re-read the Situation Map with this week’s actual stress in mind.",
       "Pick one card to focus on next week.",
       "One specific appreciation, each.",
     ],

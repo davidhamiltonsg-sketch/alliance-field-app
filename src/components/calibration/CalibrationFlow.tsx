@@ -120,9 +120,9 @@ function CalibrationFlowClient() {
           </div>
         </div>
         <p className="text-sm leading-normal text-ink-muted">
-          44 questions each, one at a time. Answer for yourself — hand the device over when it&apos;s the other partner&apos;s turn.
+          44 questions each, one at a time. Answer for yourself — hand the device over when it’s the other partner’s turn.
         </p>
-        <PrimaryButton onClick={() => setPhase("quiz")}>Begin — {state.personA.name}&apos;s turn</PrimaryButton>
+        <PrimaryButton onClick={() => setPhase("quiz")}>Begin — {state.personA.name}’s turn</PrimaryButton>
       </div>
     );
   }
@@ -173,7 +173,7 @@ function CalibrationFlowClient() {
             setPhase("quiz");
           }}
         >
-          Begin — {state.personB.name}&apos;s turn
+          Begin — {state.personB.name}’s turn
         </PrimaryButton>
         <button
           type="button"

@@ -403,8 +403,8 @@ export function ConnectionCardsDiagram() {
     r = 60;
   const steps = [
     { title: "Warmth", sub: "Reconnect, low stakes" },
-    { title: "Curiosity", sub: "What's changed lately" },
-    { title: "Care", sub: "What they're carrying" },
+    { title: "Curiosity", sub: "What’s changed lately" },
+    { title: "Care", sub: "What they’re carrying" },
     { title: "Repair", sub: "No relitigating it" },
     { title: "Alliance", sub: "On purpose, together" },
   ];

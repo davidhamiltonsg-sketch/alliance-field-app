@@ -70,7 +70,7 @@ const panels: Panel[] = [
     icon: "connection-cards",
     title: "For when things are fine, too.",
     body: "Flip through 35 questions across five stages — Warmth, Curiosity, Care, Repair, Alliance. No protocol needed, just five minutes together.",
-    aside: "Yes, even the couple who's already \"fine\" is allowed to use this.",
+    aside: "Yes, even the couple who’s already “fine” is allowed to use this.",
     diagram: <ConnectionCardsDiagram />,
   },
   {

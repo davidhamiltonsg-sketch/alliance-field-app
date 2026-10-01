@@ -72,7 +72,7 @@ export function DeleteAllData() {
         >
           <p id="wipe-q" className="text-base font-medium leading-normal text-ink">
             Delete everything this app has saved in this browser, including
-            the offline copy? This can&apos;t be undone.
+            the offline copy? This can’t be undone.
           </p>
           <div className="flex gap-2">
             <button

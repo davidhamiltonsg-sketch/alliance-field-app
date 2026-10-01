@@ -6,12 +6,12 @@ export interface Testimonial {
 export const coupleTestimonials: Testimonial[] = [
   {
     quote:
-      "Switching to the “Team Frame” mindset changed how we fight. Instead of treating each other like the enemy during a disagreement, we actually feel like we're on the same side of the problem now.",
+      "Switching to the “Team Frame” mindset changed how we fight. Instead of treating each other like the enemy during a disagreement, we actually feel like we’re on the same side of the problem now.",
     names: "Chloe & Ben",
   },
   {
     quote:
-      "My partner and I used to get trapped in this exhausting pursuer-withdrawer loop whenever we argued, but learning to use a timed Pause + Return completely changed our dynamic. Knowing there’s a set time to come back means taking space doesn't trigger abandonment fears anymore.",
+      "My partner and I used to get trapped in this exhausting pursuer-withdrawer loop whenever we argued, but learning to use a timed Pause + Return completely changed our dynamic. Knowing there’s a set time to come back means taking space doesn’t trigger abandonment fears anymore.",
     names: "Mateo & Leo",
   },
   {
@@ -26,7 +26,7 @@ export const coupleTestimonials: Testimonial[] = [
   },
   {
     quote:
-      "Hard talks used to derail our entire evening because we'd jump straight into complaints. Following the proper sequence — starting with warmth and safety before bringing up an issue — stops defences from going up immediately.",
+      "Hard talks used to derail our entire evening because we’d jump straight into complaints. Following the proper sequence — starting with warmth and safety before bringing up an issue — stops defences from going up immediately.",
     names: "Liam & Jess",
   },
   {
@@ -49,7 +49,7 @@ export const individualTestimonials: Testimonial[] = [
   },
   {
     quote:
-      "Doing the Consistency Pact on my own each week has been an eye-opener for checking my own blind spots. It lets me look at where my words and actions didn't match up under stress without feeling like I'm putting my partner on trial.",
+      "Doing the Consistency Pact on my own each week has been an eye-opener for checking my own blind spots. It lets me look at where my words and actions didn’t match up under stress without feeling like I’m putting my partner on trial.",
     names: "Julian",
   },
   {

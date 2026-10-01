@@ -28,7 +28,7 @@ export default function StartPage() {
 
       <WarnBanner pauseLink safetyLink>
         If either of you gets flooded during a practice day, stop and use
-        Pause + Return. If it&apos;s fear, threats or coercion — not just
+        Pause + Return. If it’s fear, threats or coercion — not just
         flooding — these tools are not for this. Get outside help.
       </WarnBanner>
 

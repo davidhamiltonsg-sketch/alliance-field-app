@@ -44,7 +44,7 @@ export default async function UnlockPage({
           />
           {wrong && (
             <p id="code-error" role="alert" className="text-sm font-medium text-failure">
-              That code didn&apos;t work. Check it and try again.
+              That code didn’t work. Check it and try again.
             </p>
           )}
         </div>

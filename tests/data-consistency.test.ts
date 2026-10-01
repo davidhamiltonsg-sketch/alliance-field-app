@@ -132,7 +132,7 @@ describe("CANON round 3", () => {
   it("Full Recovery and Trust Recovery handle one-sided breaches", () => {
     const full = getProtocol("full-recovery")!.steps.join(" ");
     expect(full).toContain("only that partner acknowledges impact; the hurt partner is never asked to confess in return");
-    expect(full).toContain("only if it's true for both of you");
+    expect(full).toContain("only if it’s true for both of you");
     expect(getProtocol("trust-recovery")!.steps[0]).toContain("never asked to confess in return");
   });
 
