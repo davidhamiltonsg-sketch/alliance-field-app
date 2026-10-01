@@ -354,9 +354,9 @@
       "tier": "situational",
       "tierDots": 2,
       "icon": "unity-anchor",
-      "tone": "accent",
-      "appAccentHint": "safety",
-      "stepCount": 7,
+      "tone": "forest",
+      "appAccentHint": "accent",
+      "stepCount": 4,
       "hasSafetyLink": true,
       "appRoute": "/protocols/unity-anchor",
       "numbers": {
@@ -372,6 +372,12 @@
       ],
       "guardrails": [
         "no-limiting-contact"
+      ],
+      "steps": [
+        "Pause before reacting",
+        "Trace the source",
+        "Name the unit",
+        "Agree your response"
       ]
     },
     {
@@ -486,11 +492,66 @@
       "icon": "situation-map",
       "sides": 2,
       "rowsCanonical": [
-        "Afraid of your partner, being threatened, or not free to say no? → Stop. These tools are not for this. Get outside help (see Help Lines).",
-        "Flooded or shut down (but safe)? → Pause + Return / 60-Second Reset.",
-        "Outside pressure, disapproval or jealousy about others? → Unity Anchor",
-        "Trust breach → Trust Recovery + Proof",
-        "Pulling away / uninvestment → Uninvestment Check"
+        {
+          "id": "unsafe",
+          "label": "I’m afraid, being threatened, or not free to say no",
+          "route": "Help Lines"
+        },
+        {
+          "id": "flooded",
+          "label": "I’m flooded or shut down (but safe)",
+          "route": "Pause + Return · 60-Second Alliance Reset"
+        },
+        {
+          "id": "outside-pressure",
+          "label": "Outside pressure, disapproval or jealousy about others",
+          "route": "Unity Anchor"
+        },
+        {
+          "id": "trust-breach",
+          "label": "Trust breach",
+          "route": "Trust Recovery (+ Proof Protocol)"
+        },
+        {
+          "id": "detachment",
+          "label": "Pulling away / uninvestment",
+          "route": "Uninvestment Check (+ Full Recovery)"
+        },
+        {
+          "id": "conflict-starting",
+          "label": "A fight is starting",
+          "route": "System Overlay · Conflict Protocol"
+        },
+        {
+          "id": "after-fight",
+          "label": "After a fight, or something small stung",
+          "route": "Micro-Repair (bigger: Full Recovery; changes: Proof Protocol)"
+        },
+        {
+          "id": "attachment-clash",
+          "label": "We keep clashing the same way",
+          "route": "Circuit Library / Failure Mode Diagnostic (+ Profile Calibration)"
+        },
+        {
+          "id": "intimacy-stall",
+          "label": "Intimacy feels stuck",
+          "route": "Intimacy Pact"
+        },
+        {
+          "id": "say-do-gap",
+          "label": "Saying one thing, doing another",
+          "route": "Consistency Pact (+ Proof Protocol)"
+        },
+        {
+          "id": "daily-drift",
+          "label": "We feel like roommates",
+          "route": "Morning + Evening Rhythm"
+        },
+        {
+          "id": "weekly-maintenance",
+          "label": "Time for our weekly check-in",
+          "route": "Weekly Reset"
+        }
       ],
       "rule": "Safety row is always FIRST (step 0). Never route 'unsafe' to Pause + Return."
     },
@@ -781,5 +842,6 @@
       "\\bfavor",
       "penalized"
     ]
-  }
+  },
+  "helpLinesExtra": "LGBTQ+-affirming: US: Trevor Project 1-866-488-7386 (under 25) · LGBT National Hotline 1-888-843-4564 · UK: Switchboard LGBT+ 0800 0119 100 · Australia: QLife 1800 184 527 · Singapore: Oogachaga (oogachaga.com)"
 }

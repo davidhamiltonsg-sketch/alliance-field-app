@@ -1,7 +1,8 @@
 import type { Situation } from "./types";
 
 /**
- * The Situation Map, in the same order as the Field Kit laminate (CANON):
+ * The Situation Map: the one 12-row list, in the exact order every map uses
+ * (CANON round 5; registry concepts.situation-map.rowsCanonical):
  * follow the first match, top to bottom. Safety routing always comes first;
  * never route "unsafe" to Pause + Return.
  */
@@ -22,8 +23,16 @@ export const situations: Situation[] = [
     primaryHref: "/protocols/pause-and-return",
     secondaryHrefs: [
       { label: "Start timer", href: "/pause" },
-      { label: "60-Second Reset", href: "/protocols/60-second-reset" },
+      { label: "60-Second Alliance Reset", href: "/protocols/60-second-reset" },
     ],
+  },
+  {
+    id: "outside-pressure",
+    label: "Outside pressure, disapproval or jealousy about others",
+    description: "Family disapproval, discrimination, judgement from others — or jealousy about people outside the relationship — is landing on the two of you.",
+    firstMove: "Unity Anchor: decide together how the couple responds. Never limit a partner’s contact with anyone.",
+    primaryHref: "/protocols/unity-anchor",
+    secondaryHrefs: [{ label: "Together under pressure", href: "/together" }],
   },
   {
     id: "trust-breach",
@@ -37,34 +46,26 @@ export const situations: Situation[] = [
     id: "detachment",
     label: "Pulling away / uninvestment",
     description: "Warmth missing, repairs on autopilot: several signs of pulling away, not just needing space.",
-    firstMove: "Uninvestment Check: 0–2 signs → Pause + Return and small repairs; 3 or more → Full Recovery within a week. Contempt → outside support first.",
+    firstMove: "Uninvestment Check: 0–2 signs → Pause + Return and small repairs; 3 or more: may be pulling away → book a Full Recovery within a week. Contempt → outside support first.",
     primaryHref: "/protocols/uninvestment-check",
     secondaryHrefs: [{ label: "Full Recovery", href: "/protocols/full-recovery" }],
-  },
-  {
-    id: "outside-pressure",
-    label: "Outside pressure, disapproval or jealousy about others",
-    description: "Family disapproval, discrimination, judgement from others — or jealousy about people outside the relationship — is landing on the two of you.",
-    firstMove: "Unity Anchor: decide together how the couple responds. Never limit a partner’s contact with anyone.",
-    primaryHref: "/protocols/unity-anchor",
-    secondaryHrefs: [{ label: "Together under pressure", href: "/together" }],
   },
   {
     id: "conflict-starting",
     label: "A fight is starting",
     description: "Tone is rising; it’s starting to feel like a courtroom, not a conversation.",
-    firstMove: "Green Rule → System Overlay or Conflict Protocol. Flooded midway → Pause + Return.",
-    primaryHref: "/protocols/green-rule",
+    firstMove: "System Overlay · Conflict Protocol. Flooded midway → Pause + Return.",
+    primaryHref: "/protocols/system-overlay",
     secondaryHrefs: [
-      { label: "System Overlay", href: "/protocols/system-overlay" },
       { label: "Conflict Protocol", href: "/protocols/conflict-protocol" },
+      { label: "Green Rule (Safety Gate)", href: "/protocols/green-rule" },
     ],
   },
   {
     id: "after-fight",
     label: "After a fight, or something small stung",
     description: "Still feeling the sting, or leftover friction from a sharp tone or a broken small agreement.",
-    firstMove: "Micro-Repair: start within minutes if you can; complete within 24 hours. Keeps repeating or dented trust → Full Recovery.",
+    firstMove: "Micro-Repair: start within minutes if you can; complete within 24 hours. Bigger: Full Recovery; changes: Proof Protocol.",
     primaryHref: "/protocols/micro-repair",
     secondaryHrefs: [
       { label: "Full Recovery", href: "/protocols/full-recovery" },
@@ -75,9 +76,10 @@ export const situations: Situation[] = [
     id: "attachment-clash",
     label: "We keep clashing the same way",
     description: "Reach–Recoil (one reaches, the other pulls back), the same ask on repeat, or out of sync on timing (Pace Mismatch).",
-    firstMove: "System Overlay (spotting the pattern you’re both stuck in)",
-    primaryHref: "/protocols/system-overlay",
-    secondaryHrefs: [{ label: "Profile Calibration", href: "/calibrate" }],
+    firstMove: "Circuit Library / Failure Mode Diagnostic (in the Manual and Field Kit), plus Profile Calibration here.",
+    primaryHref: "/calibrate",
+    icon: "profile-calibration",
+    secondaryHrefs: [{ label: "System Overlay", href: "/protocols/system-overlay" }],
   },
   {
     id: "intimacy-stall",
@@ -93,6 +95,7 @@ export const situations: Situation[] = [
     description: "Your own follow-through: promises that don’t match what happens.",
     firstMove: "Consistency Pact: a private weekly check. After a breach, add a shared Proof item.",
     primaryHref: "/protocols/consistency-pact",
+    secondaryHrefs: [{ label: "Proof Protocol", href: "/protocols/proof-protocol" }],
   },
   {
     id: "daily-drift",

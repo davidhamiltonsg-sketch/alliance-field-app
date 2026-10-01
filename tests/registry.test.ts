@@ -257,3 +257,42 @@ describe("typography", () => {
     expect(straight.map((t) => `${t.file}: ${t.text}`)).toEqual([]);
   });
 });
+
+describe("registry: protocol shape (CANON round 5)", () => {
+  it("each card has the registry step count, tone and canonical phrases", () => {
+    for (const r of registry.protocols) {
+      const card = getProtocol(r.slug)!;
+      expect(card.steps.length, r.slug).toBe(r.stepCount);
+      expect(card.accentHint ?? "accent", r.slug).toBe(r.appAccentHint);
+      const raw = JSON.stringify(card);
+      for (const phrase of (r as { canonicalPhrases?: string[] }).canonicalPhrases ?? []) {
+        expect(raw, `${r.slug}: ${phrase}`).toContain(phrase.replace(/'/g, "’"));
+      }
+    }
+  });
+
+  it("Unity Anchor uses the four canonical step names", () => {
+    const r = registry.protocols.find((p) => p.slug === "unity-anchor") as { steps: string[] };
+    const card = getProtocol("unity-anchor")!;
+    expect(card.steps.map((s) => s.split(" — ")[0])).toEqual(r.steps);
+  });
+});
+
+describe("step diagrams use plain step names (CANON round 5)", () => {
+  it("diagram titles equal the card's own step names where the card names them", async () => {
+    const { protocolDiagrams } = await import("@/data/visuals/protocol-diagrams");
+    for (const card of protocols) {
+      const d = protocolDiagrams[card.slug];
+      if (!d) continue;
+      expect(d.steps.length, card.slug).toBe(card.steps.length);
+      card.steps.forEach((step, i) => {
+        const m = step.match(/^([^—:]+?)(?: \([^)]*\))? — /);
+        if (m && m[1].split(" ").length <= 6) expect(d.steps[i].title, `${card.slug} step ${i + 1}`).toBe(m[1]);
+      });
+    }
+    const all = Object.values(protocolDiagrams).flatMap((d) => d.steps.map((s) => s.title));
+    for (const retired of ["Signal", "Time", "Separate", "Name", "Contact", "Warmth", "Safety", "Expression", "Request", "Alignment", "Words", "Intent", "Morning Reset", "Evening Check-in", "Evening Landing"]) {
+      expect(all, retired).not.toContain(retired);
+    }
+  });
+});

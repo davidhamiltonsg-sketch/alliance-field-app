@@ -42,6 +42,8 @@ export interface Situation {
   firstMove: string;
   primaryHref: string;
   secondaryHrefs?: { label: string; href: string }[];
+  /** Glyph for the row when its primary link isn't a protocol page. */
+  icon?: string;
   /** Safety row: always first, routes to Help & safety, never to Pause. */
   danger?: boolean;
 }

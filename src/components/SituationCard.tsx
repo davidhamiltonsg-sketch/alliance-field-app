@@ -78,7 +78,11 @@ export function SituationCard({
 }) {
   const tone = toneFor(situation);
   // Safety row: the safety glyph (safety content only). Otherwise the glyph of the protocol it routes to.
-  const iconSlug: IconId | null = situation.danger ? "help-safety" : iconSlugFor(situation.primaryHref);
+  const iconSlug: IconId | null = situation.danger
+    ? "help-safety"
+    : situation.icon && isIconId(situation.icon)
+      ? situation.icon
+      : iconSlugFor(situation.primaryHref);
   return (
     <li>
       <div className={`v2-card ${card[tone]} overflow-hidden`}>

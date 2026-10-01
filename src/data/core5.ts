@@ -1,6 +1,7 @@
 /**
  * The Core 5: the smallest set of Field Kit tools worth learning first.
- * Everything else on /protocols is grouped as "Advanced".
+ * Order follows the registry (Green Rule first). Everything else on
+ * /protocols is grouped by tier: Situational, then Build.
  */
 export interface CoreTool {
   slug: string;
@@ -22,12 +23,12 @@ export const coreFive: CoreTool[] = [
     why: "One minute to stop a fight to win, then book a time to talk.",
   },
   {
-    slug: "weekly-reset",
-    why: "Five parts, about 40 minutes, once a week. Maintenance, not a trial.",
-  },
-  {
     slug: "micro-repair",
     why: "Small repairs, early — before residue hardens.",
+  },
+  {
+    slug: "weekly-reset",
+    why: "Five parts, about 40 minutes, once a week. Maintenance, not a trial.",
   },
 ];
 

@@ -7,6 +7,7 @@ import { KIT } from "@/data/kit";
 import { emergencyNumbers, helpRegions } from "@/data/help";
 import { getProtocol, protocolSlugs, protocols } from "@/data/protocols";
 import { situations } from "@/data/situations";
+import registry from "@/data/registry.json";
 import { START_PLAN_DAYS, startDays } from "@/data/start";
 import { TOGETHER_CITATION, commonMoves, togetherFaq, togetherTools, whoFor } from "@/data/together";
 import { protocolDiagrams } from "@/data/visuals/protocol-diagrams";
@@ -53,7 +54,7 @@ describe("protocol cards", () => {
 
 describe("CANON numbers and wording", () => {
   it("Pause + Return is 20 minutes to 24 hours", () => {
-    const badge = protocolDiagrams["pause-and-return"].steps.find((s) => s.title === "Time")?.badge;
+    const badge = protocolDiagrams["pause-and-return"].steps.find((s) => s.title === "Set a time")?.badge;
     expect(badge).toBe("20 min – 24 h");
     expect(getProtocol("pause-and-return")!.steps.join(" ")).toContain("20 minutes minimum, 24 hours max");
     expect(KIT.pauseMinMinutes).toBe(20);
@@ -173,23 +174,15 @@ describe("CANON round 3", () => {
     expect(diagrams).toContain('q: ["Pulling away?"]');
     expect(diagrams).toContain('a: ["Unity Anchor"]');
     expect(diagrams).not.toContain("Trust breach or");
+    // Same order as the app list: outside pressure (row 3) before trust breach and pulling away.
+    expect(diagrams.indexOf('q: ["Outside pressure"')).toBeLessThan(diagrams.indexOf('q: ["Trust breach?"]'));
+    expect(diagrams.indexOf('q: ["Trust breach?"]')).toBeLessThan(diagrams.indexOf('q: ["Pulling away?"]'));
   });
 
-  it("Situation Map rows follow the Field Kit laminate order (first match wins)", () => {
-    expect(situations.map((s) => s.id)).toEqual([
-      "unsafe",
-      "flooded",
-      "trust-breach",
-      "detachment",
-      "outside-pressure",
-      "conflict-starting",
-      "after-fight",
-      "attachment-clash",
-      "intimacy-stall",
-      "say-do-gap",
-      "daily-drift",
-      "weekly-maintenance",
-    ]);
+  it("Situation Map rows are the registry's 12 canonical rows, in order (first match wins)", () => {
+    const rows = registry.concepts["situation-map"].rowsCanonical;
+    expect(situations.map((s) => s.id)).toEqual(rows.map((r) => r.id));
+    expect(situations.map((s) => s.label)).toEqual(rows.map((r) => r.label));
     const byId = Object.fromEntries(situations.map((s) => [s.id, s]));
     expect(byId["say-do-gap"].primaryHref).toBe("/protocols/consistency-pact");
     expect(byId["after-fight"].firstMove).toContain("start within minutes if you can; complete within 24 hours");

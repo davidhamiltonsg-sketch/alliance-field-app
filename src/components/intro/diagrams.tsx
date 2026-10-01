@@ -106,7 +106,7 @@ export function SystemDiagram() {
     {
       x: 232,
       title: "Field App",
-      sub: ["Companion", "router"],
+      sub: ["Act in the", "moment"],
       fill: V.white,
       icon: (
         <>
@@ -203,9 +203,9 @@ export function SituationMapDiagram() {
   const rows: { q: string[]; a: string[]; icon: IconId; kind: Kind }[] = [
     { q: ["Afraid, threatened,", "not free to say no?"], a: ["Stop. Get", "outside help"], icon: "help-safety", kind: "failure" },
     { q: ["Flooded or shut", "down (but safe)?"], a: ["Pause + Return"], icon: "pause-and-return", kind: "step" },
+    { q: ["Outside pressure", "or jealousy?"], a: ["Unity Anchor"], icon: "unity-anchor", kind: "step" },
     { q: ["Trust breach?"], a: ["Trust Recovery", "+ Proof"], icon: "trust-recovery", kind: "repair" },
     { q: ["Pulling away?"], a: ["Uninvestment", "Check"], icon: "uninvestment-check", kind: "repair" },
-    { q: ["Outside pressure", "or jealousy?"], a: ["Unity Anchor"], icon: "unity-anchor", kind: "step" },
   ];
   const top = 24,
     pitch = 58,
@@ -318,10 +318,10 @@ export function PauseTimelineDiagram() {
   const s = 0.82; // time scale for delays
   const stops = [
     { y: 22, title: "Flooded or shut down", detail: "Racing heart, tunnel vision.", at: 250 },
-    { y: 82, title: "“I need a pause.”", detail: "“I’ll be ready at ___.”", at: 1300 },
-    { y: 146, title: "Separate and down-regulate", detail: "Walk, shower, breathe, music.", at: 2200 },
-    { y: 250, title: "“See you at ___.”", detail: "At the agreed time, even briefly.", at: 3850 },
-    { y: 306, title: "Warmth → Safety", detail: "Not “where we left off”.", at: 4700 },
+    { y: 82, title: "Say it, set a time", detail: "“I need a pause. I’ll be ready at ___.”", at: 1300 },
+    { y: 146, title: "Step away", detail: "Walk, shower, breathe, music.", at: 2200 },
+    { y: 250, title: "Come back", detail: "At the agreed time, even briefly.", at: 3850 },
+    { y: 306, title: "Restart warm", detail: "Warm up, check it’s safe. Not “where we left off”.", at: 4700 },
   ];
   // woven spine between stations (window occupies 140–226)
   const spans: [number, number, number, number][] = [
@@ -525,15 +525,15 @@ export function CoreFiveDiagram() {
     { slug: "green-rule", title: "Green Rule (Safety Gate)", sub: "Honesty is never punished.", color: V.safety },
     { slug: "pause-and-return", title: "Pause + Return", sub: "20 min – 24 h, exact return time.", color: V.pause },
     { slug: "60-second-reset", title: "60-Second Alliance Reset", sub: "Stop a fight to win.", color: V.pause },
-    { slug: "weekly-reset", title: "Weekly Reset", sub: "Five parts, about 40 minutes.", color: V.accent },
     { slug: "micro-repair", title: "Micro-Repair", sub: "Small repairs, early.", color: V.repair },
+    { slug: "weekly-reset", title: "Weekly Reset", sub: "Five parts, about 40 minutes.", color: V.accent },
   ];
   const pitch = 64,
     h = 56;
   return (
     <Frame
       viewBox="0 0 340 336"
-      label="The Core 5, all in the Core tier: Green Rule (Safety Gate), Pause + Return, 60-Second Alliance Reset, Weekly Reset, Micro-Repair."
+      label="The Core 5, all in the Core tier: Green Rule (Safety Gate), Pause + Return, 60-Second Alliance Reset, Micro-Repair, Weekly Reset."
     >
       {tools.map((tl, i) => {
         const y = 8 + i * pitch;
