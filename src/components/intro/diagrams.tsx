@@ -442,11 +442,11 @@ export function ConnectionCardsDiagram() {
         const y = 22 + i * 46;
         return (
           <g key={s.title}>
-            <path {...a("dg-draw", at + 120, 420)} pathLength={1} d={arcD(cx, cy, r, a0, a1 - 3.5)} fill="none" stroke={V.repair} strokeWidth={1.6} strokeLinecap="round" />
-            <path {...a("dg-pop", at + 480, 200)} d={lancetD(ex, ey, ang, 8)} fill={V.repair} />
-            <Medallion cx={mx} cy={my} n={i + 1} w={19} h={23} size={14} ground={V.repair} numColor={V.white} {...a("dg-pop", at)} />
+            <path {...a("dg-draw", at + 120, 420)} pathLength={1} d={arcD(cx, cy, r, a0, a1 - 3.5)} fill="none" stroke={V.brass} strokeWidth={1.6} strokeLinecap="round" />
+            <path {...a("dg-pop", at + 480, 200)} d={lancetD(ex, ey, ang, 8)} fill={V.brass} />
+            <Medallion cx={mx} cy={my} n={i + 1} w={19} h={23} size={14} ground={V.accent} numColor={V.white} {...a("dg-pop", at)} />
             <g {...a("dg-rise", at + 120)}>
-              <Medallion cx={172} cy={y + 8} n={i + 1} w={17} h={20} size={13.5} ground={V.repair} numColor={V.white} />
+              <Medallion cx={172} cy={y + 8} n={i + 1} w={17} h={20} size={13.5} ground={V.accent} numColor={V.white} />
               <text x={190} y={y + 9} fontFamily={SERIF} fontSize={14.5} fontWeight={600} fill={V.ink}>
                 {s.title}
               </text>
@@ -458,7 +458,7 @@ export function ConnectionCardsDiagram() {
         );
       })}
       <g {...a("dg-fade", 200)}>
-        <text x={cx} y={cy + 5} textAnchor="middle" fontFamily={SERIF} fontSize={32} fontWeight={600} fill={V.repair} className="tabular">
+        <text x={cx} y={cy + 5} textAnchor="middle" fontFamily={SERIF} fontSize={32} fontWeight={600} fill={V.accent} className="tabular">
           35
         </text>
         <text x={cx} y={cy + 24} textAnchor="middle" fontSize={13.5} fill={V.muted}>

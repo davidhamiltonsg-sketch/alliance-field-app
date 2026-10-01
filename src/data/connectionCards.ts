@@ -8,32 +8,27 @@ export interface ConnectionCard {
 
 export const STAGE_META: Record<
   ConnectionStage,
-  { label: string; caption: string; accentHint: "accent" | "pause" | "repair" | "safety" }
+  { label: string; caption: string }
 > = {
   warmth: {
     label: "Warmth",
     caption: "Low-stakes. Use when you’re distant or just back from a pause.",
-    accentHint: "pause",
   },
   curiosity: {
     label: "Curiosity",
     caption: "Get re-acquainted. What’s changed lately, in them or in you.",
-    accentHint: "accent",
   },
   care: {
     label: "Care",
     caption: "Notice and name what the other person is carrying.",
-    accentHint: "safety",
   },
   repair: {
     label: "Repair",
     caption: "For after friction — process it without relitigating it.",
-    accentHint: "repair",
   },
   alliance: {
     label: "Alliance",
     caption: "Future-facing. What you’re building together, on purpose.",
-    accentHint: "accent",
   },
 };
 
