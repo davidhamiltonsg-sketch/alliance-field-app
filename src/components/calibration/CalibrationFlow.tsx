@@ -120,7 +120,7 @@ function CalibrationFlowClient() {
           </div>
         </div>
         <p className="text-sm leading-normal text-ink-muted">
-          44 questions each, one at a time. Answer for yourself — hand the device over when it’s the other partner’s turn.
+          One question at a time. Answer for yourself, then hand the device over for your partner’s turn.
         </p>
         <PrimaryButton onClick={() => setPhase("quiz")}>Begin — {state.personA.name}’s turn</PrimaryButton>
       </div>

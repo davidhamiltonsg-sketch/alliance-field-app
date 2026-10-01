@@ -46,7 +46,7 @@ export const situations: Situation[] = [
     id: "detachment",
     label: "Pulling away / uninvestment",
     description: "Warmth missing, repairs on autopilot: several signs of pulling away, not just needing space.",
-    firstMove: "Uninvestment Check: 0–2 signs → Pause + Return and small repairs; 3 or more: may be pulling away → book a Full Recovery within a week. Contempt → outside support first.",
+    firstMove: "Uninvestment Check. 0–2 signs: Pause + Return and small repairs. 3 or more: may be pulling away — book a Full Recovery within a week. Contempt: outside support first.",
     primaryHref: "/protocols/uninvestment-check",
     secondaryHrefs: [{ label: "Full Recovery", href: "/protocols/full-recovery" }],
   },
