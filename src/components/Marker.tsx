@@ -15,7 +15,7 @@ export type MarkerKind =
 
 const styles: Record<MarkerKind, string> = {
   TOOL: "bg-accent/10 text-accent",
-  RULE: "bg-rule/10 text-rule",
+  RULE: "bg-accent/10 text-accent",
   WARN: "bg-ink/[0.07] text-ink",
   PAUSE: "bg-pause/12 text-pause-text",
   DO: "bg-accent text-paper",

@@ -14,7 +14,7 @@ const TABS: { key: Tab; label: string; tone: string }[] = [
 const cardTone: Record<Tab, string> = {
   working: "border-accent/15 bg-accent/[0.04]",
   notWorking: "border-failure/15 bg-failure/[0.04]",
-  activity: "border-rule/10 bg-surface-activity",
+  activity: "border-rule/40 bg-surface-activity",
 };
 
 /** One paragraph at a time instead of three stacked cards — same content, less wall of text. */
@@ -44,7 +44,7 @@ export function PracticeTabs({
             aria-selected={tab === t.key}
             onClick={() => setTab(t.key)}
             className={`min-h-11 flex-1 rounded-full border px-2 text-sm font-medium transition-colors ${
-              tab === t.key ? t.tone : "border-rule/15 bg-white text-ink-muted"
+              tab === t.key ? t.tone : "border-rule/60 bg-white text-ink-muted"
             }`}
           >
             {t.label}

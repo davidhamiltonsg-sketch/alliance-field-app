@@ -93,7 +93,7 @@ function ConnectionDeck({ shuffled }: { shuffled: boolean }) {
       className={`min-h-11 shrink-0 rounded-full px-3.5 text-sm font-medium transition-colors ${
         filter === value
           ? "bg-accent text-paper"
-          : "border border-rule/15 bg-white text-ink-muted"
+          : "border border-rule/60 bg-white text-ink-muted"
       }`}
     >
       {label}

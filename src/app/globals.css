@@ -4,7 +4,8 @@
   --color-ink: #1A1A1A;
   --color-ink-muted: #4A4A4A;
   --color-paper: #FAFAF8;
-  --color-rule: #2C3E2D;
+  /* Neutral rules and borders (tokens.json "rule"); forest is --color-accent. */
+  --color-rule: #C9D1CB;
   --color-accent: #2C3E2D;
   --color-safety: #2E7D4F;
   /* Safety-green for text: >= 5:1 on paper and on safety/10–12 tinted pills. */

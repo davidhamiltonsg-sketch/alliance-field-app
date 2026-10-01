@@ -120,7 +120,7 @@ export function SituationCard({
           <ChevronRight size={20} className="shrink-0 text-ink-muted/50" />
         </Link>
         {situation.secondaryHrefs && situation.secondaryHrefs.length > 0 && (
-          <div className="relative z-[1] mx-3 flex flex-wrap gap-x-2 border-t border-rule/15 pl-1">
+          <div className="relative z-[1] mx-3 flex flex-wrap gap-x-2 border-t border-rule/60 pl-1">
             {situation.secondaryHrefs.map((s) => (
               <Link
                 key={s.href}

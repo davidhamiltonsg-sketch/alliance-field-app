@@ -91,7 +91,7 @@ export function StartPlan() {
                   aria-pressed={isDone}
                   onClick={() => setDone(toggleStartDay(d.day))}
                   className={`inline-flex min-h-11 items-center gap-2 rounded-full border px-3.5 text-sm font-medium transition-colors ${
-                    isDone ? "border-accent bg-accent/10 text-accent" : "border-rule/15 bg-white text-ink-muted"
+                    isDone ? "border-accent bg-accent/10 text-accent" : "border-rule/60 bg-white text-ink-muted"
                   }`}
                 >
                   <CheckIcon size={16} className={isDone ? "" : "opacity-40"} />

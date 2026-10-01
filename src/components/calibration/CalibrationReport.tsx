@@ -108,7 +108,7 @@ function CalibrationReportClient() {
       {report.coreMismatch.length > 0 && (
         <section className="space-y-2.5">
           <SectionLabel>Where you diverge</SectionLabel>
-          <ul className="card divide-y divide-rule/[0.07] px-4">
+          <ul className="card divide-y divide-rule/30 px-4">
             {report.coreMismatch.map((line) => (
               <li key={line} className="py-3 text-base leading-normal text-ink">
                 {line}
@@ -120,7 +120,7 @@ function CalibrationReportClient() {
 
       <section className="space-y-2.5">
         <SectionLabel>Likely misreads</SectionLabel>
-        <ul className="card divide-y divide-rule/[0.07] px-4">
+        <ul className="card divide-y divide-rule/30 px-4">
           {report.misreadRisks.map((line) => (
             <li key={line} className="py-3 text-base leading-normal text-ink">
               {line}
@@ -131,7 +131,7 @@ function CalibrationReportClient() {
 
       <section className="space-y-2.5">
         <SectionLabel>Strengths</SectionLabel>
-        <ul className="card divide-y divide-rule/[0.07] px-4">
+        <ul className="card divide-y divide-rule/30 px-4">
           {report.strengths.map((line) => (
             <li key={line} className="py-3 text-base leading-normal text-ink">
               {line}
@@ -178,7 +178,7 @@ function CalibrationReportClient() {
       <button
         type="button"
         onClick={() => router.push("/calibrate")}
-        className="w-full min-h-12 rounded-xl border border-rule/15 text-base font-medium text-ink"
+        className="w-full min-h-12 rounded-xl border border-rule/60 text-base font-medium text-ink"
       >
         Recalibrate
       </button>
@@ -222,7 +222,7 @@ export function SoloProfile({ profile, otherName, preview = false }: { profile: 
       {profile.patterns.length > 0 && (
         <section className="space-y-2.5">
           <SectionLabel>Patterns</SectionLabel>
-          <ul className="card divide-y divide-rule/[0.07] px-4">
+          <ul className="card divide-y divide-rule/30 px-4">
             {profile.patterns.map((line) => (
               <li key={line} className="py-3 text-base leading-normal text-ink">
                 {line}
@@ -234,7 +234,7 @@ export function SoloProfile({ profile, otherName, preview = false }: { profile: 
 
       <section className="space-y-2.5">
         <SectionLabel>Likely misreads</SectionLabel>
-        <ul className="card divide-y divide-rule/[0.07] px-4">
+        <ul className="card divide-y divide-rule/30 px-4">
           {profile.likelyMisreads.map((line) => (
             <li key={line} className="py-3 text-base leading-normal text-ink">
               {line}

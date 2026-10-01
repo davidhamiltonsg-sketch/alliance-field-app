@@ -135,7 +135,7 @@ export function WhenStrip({ text, label = "When to use" }: { text: string; label
       <p className="flex items-center gap-2 text-sm font-semibold tracking-[0.03em] text-accent">
         <StepGlyph kind="when" size={18} />
         {label}
-        <span className="h-px w-[22px] bg-rule/25" aria-hidden />
+        <span className="h-px w-[22px] bg-rule" aria-hidden />
       </p>
       <p className="phrase mt-1.5 text-base leading-[1.45] text-ink">{text}</p>
     </div>
@@ -200,7 +200,7 @@ export function StepDiagram({
                     <span className="mt-[3px] flex shrink-0 items-center gap-2">
                       {s.badge && (
                         <span className="tabular flex items-center gap-1.5 text-sm font-medium leading-4 text-accent">
-                          <span className="h-px w-3 bg-rule/25" aria-hidden />
+                          <span className="h-px w-3 bg-rule" aria-hidden />
                           {s.badge}
                         </span>
                       )}
@@ -219,7 +219,7 @@ export function StepDiagram({
       <OutcomeBand text={diagram.outcome} />
       {kinds.length > 1 && (
         <p className="flex flex-wrap items-center gap-x-4 gap-y-1.5 pt-0.5 text-sm text-ink-muted">
-          <span className="h-px w-[22px] bg-rule/25" aria-hidden />
+          <span className="h-px w-[22px] bg-rule" aria-hidden />
           {kinds.map((k) => (
             <span key={k} className="inline-flex items-center gap-1.5">
               <Swatch kind={k} />

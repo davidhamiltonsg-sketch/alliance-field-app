@@ -35,11 +35,11 @@ export function GetFullSystem() {
           </p>
         )}
 
-        <div className="border-t border-rule/[0.08] pt-3">
+        <div className="border-t border-rule/35 pt-3">
           <SituationMapDownload />
         </div>
 
-        <div className="border-t border-rule/[0.08] pt-3">
+        <div className="border-t border-rule/35 pt-3">
           <SignupForm />
         </div>
       </div>

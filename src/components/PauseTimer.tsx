@@ -323,7 +323,7 @@ function PauseTimerClient() {
   );
 
   const chip =
-    "min-h-12 rounded-xl border border-rule/[0.12] bg-white text-base font-medium text-ink shadow-[0_1px_2px_rgb(26_26_26/0.04)] transition hover:border-pause/40 hover:bg-surface-warn active:scale-[0.98]";
+    "min-h-12 rounded-xl border border-rule/50 bg-white text-base font-medium text-ink shadow-[0_1px_2px_rgb(26_26_26/0.04)] transition hover:border-pause/40 hover:bg-surface-warn active:scale-[0.98]";
 
   if (backMode) {
     return (

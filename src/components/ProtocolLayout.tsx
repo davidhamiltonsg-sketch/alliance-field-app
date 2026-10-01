@@ -92,7 +92,7 @@ export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
       {protocol.crossLinks.length > 0 && (
         <section className="space-y-3">
           <SectionLabel>Related</SectionLabel>
-          <ul className="card divide-y divide-rule/[0.07] overflow-hidden">
+          <ul className="card divide-y divide-rule/30 overflow-hidden">
             {protocol.crossLinks.map((c) => (
               <li key={c.label}>
                 {c.href ? (
@@ -151,10 +151,10 @@ export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
         </ul>
       </section>
 
-      <nav className="flex flex-wrap items-center gap-2 border-t border-rule/[0.08] pt-4">
+      <nav className="flex flex-wrap items-center gap-2 border-t border-rule/35 pt-4">
         <Link
           href="/"
-          className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-rule/15 bg-white px-4 text-sm font-medium text-accent"
+          className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-rule/60 bg-white px-4 text-sm font-medium text-accent"
         >
           <ApIcon id="situation-map" size={18} />
           Situation Map

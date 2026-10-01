@@ -5,7 +5,7 @@ export function StepList({ steps }: { steps: string[] }) {
   return (
     <section className="space-y-3">
       <SectionLabel>Steps</SectionLabel>
-      <ol className="card divide-y divide-rule/[0.07] px-4">
+      <ol className="card divide-y divide-rule/30 px-4">
         {steps.map((step, i) => (
           <li key={i} className="flex gap-3 py-3">
             <span

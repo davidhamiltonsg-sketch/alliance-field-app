@@ -132,7 +132,7 @@ export default function TogetherPage() {
         <SectionLabel>
           <span id="tools-heading">In this app</span>
         </SectionLabel>
-        <ul className="card divide-y divide-rule/[0.07] overflow-hidden">
+        <ul className="card divide-y divide-rule/30 overflow-hidden">
           {togetherTools.map((t) => (
             <li key={t.href}>
               <Link

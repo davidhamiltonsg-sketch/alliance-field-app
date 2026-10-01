@@ -86,7 +86,7 @@ export default function RootLayout({
       <body className="min-h-full text-ink">
         <ServiceWorkerRegister />
         <Splash />
-        <div className="relative mx-auto flex min-h-dvh w-full max-w-lg flex-col bg-paper sm:border-x sm:border-rule/[0.07] sm:shadow-[0_0_60px_-20px_rgb(44_62_45/0.25)]">
+        <div className="relative mx-auto flex min-h-dvh w-full max-w-lg flex-col bg-paper sm:border-x sm:border-rule/30 sm:shadow-[0_0_60px_-20px_rgb(44_62_45/0.25)]">
           <AppHeader />
           <main className="flex-1 px-4 pb-28 pt-4">{children}</main>
           <AppNav />

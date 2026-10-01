@@ -139,7 +139,7 @@ function WeeklyResetWizardClient() {
         <button
           type="button"
           onClick={clear}
-          className="w-full min-h-12 rounded-xl border border-rule/15 text-base font-medium text-ink"
+          className="w-full min-h-12 rounded-xl border border-rule/60 text-base font-medium text-ink"
         >
           Start a new reset
         </button>
@@ -201,7 +201,7 @@ function WeeklyResetWizardClient() {
             {draft.careAudit.map((row, i) => (
               <li
                 key={row.domain}
-                className="rounded-xl border border-rule/[0.08] bg-surface-activity px-3 py-3"
+                className="rounded-xl border border-rule/35 bg-surface-activity px-3 py-3"
               >
                 <p className="text-base font-medium">{row.domain}</p>
                 <div className="mt-2 flex flex-wrap gap-2">
@@ -214,7 +214,7 @@ function WeeklyResetWizardClient() {
                       className={`min-h-11 rounded-full px-3.5 text-sm font-medium capitalize transition-colors ${
                         row.balance === b
                           ? "bg-accent text-paper"
-                          : "border border-rule/15 bg-white text-ink"
+                          : "border border-rule/60 bg-white text-ink"
                       }`}
                     >
                       {b}
@@ -229,7 +229,7 @@ function WeeklyResetWizardClient() {
                       className={`min-h-11 rounded-full px-3.5 text-sm font-medium transition-colors ${
                         row.rebalance === r
                           ? "bg-repair text-paper"
-                          : "border border-rule/15 bg-white text-ink"
+                          : "border border-rule/60 bg-white text-ink"
                       }`}
                     >
                       Rebalance? {r}
@@ -345,14 +345,14 @@ function WeeklyResetWizardClient() {
       )}
 
       {confirmClear ? (
-        <div role="group" aria-label="Clear Weekly Reset data" className="space-y-2 rounded-xl border border-rule/15 bg-white px-3.5 py-3">
+        <div role="group" aria-label="Clear Weekly Reset data" className="space-y-2 rounded-xl border border-rule/60 bg-white px-3.5 py-3">
           <p className="text-sm leading-normal text-ink-muted">
             What should be cleared from this device?
           </p>
           <button
             type="button"
             onClick={clear}
-            className="w-full min-h-11 rounded-xl border border-rule/15 text-sm font-medium text-ink"
+            className="w-full min-h-11 rounded-xl border border-rule/60 text-sm font-medium text-ink"
           >
             This week’s answers only
           </button>

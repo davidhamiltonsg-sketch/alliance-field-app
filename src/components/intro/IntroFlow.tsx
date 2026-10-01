@@ -140,7 +140,7 @@ export function IntroFlow() {
       aria-label="Introduction"
       role="region"
     >
-      <div className="relative flex h-dvh w-full max-w-lg flex-col bg-paper sm:border-x sm:border-rule/[0.07] sm:shadow-[0_0_60px_-20px_rgb(44_62_45/0.25)]">
+      <div className="relative flex h-dvh w-full max-w-lg flex-col bg-paper sm:border-x sm:border-rule/30 sm:shadow-[0_0_60px_-20px_rgb(44_62_45/0.25)]">
         {/* soft brand wash */}
         <div
           className="pointer-events-none absolute inset-x-0 top-0 h-80 bg-[radial-gradient(120%_80%_at_50%_0%,rgb(44_62_45/0.10),transparent_70%)]"
@@ -191,7 +191,7 @@ export function IntroFlow() {
                 {/* The stage takes the height that's left (equal across panels, so
                     headlines line up) and shrinks on short screens so the text
                     stays in view. */}
-                <div className="flex min-h-[200px] max-h-[436px] max-w-full flex-1 basis-0 items-center justify-center self-center rounded-[26px_26px_6px_6px] border border-rule/15 bg-white/90 p-2 shadow-[var(--shadow-card)]">
+                <div className="flex min-h-[200px] max-h-[436px] max-w-full flex-1 basis-0 items-center justify-center self-center rounded-[26px_26px_6px_6px] border border-rule/60 bg-white/90 p-2 shadow-[var(--shadow-card)]">
                   <div className="flex aspect-[340/336] h-full max-w-full items-center">{i <= reached ? p.diagram : null}</div>
                 </div>
                 <div className="mt-5 shrink-0">
@@ -260,7 +260,7 @@ export function IntroFlow() {
               <button
                 type="button"
                 onClick={() => goTo(Math.max(0, index - 1))}
-                className={`inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-rule/15 bg-white text-accent transition-opacity ${
+                className={`inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-rule/60 bg-white text-accent transition-opacity ${
                   index === 0 ? "pointer-events-none opacity-0" : ""
                 }`}
                 aria-label="Back"

@@ -51,7 +51,7 @@ export default function HelpPage() {
               <h3 className="px-4 pb-1 pt-3 text-sm font-semibold uppercase tracking-[0.08em] text-accent">
                 {r.region}
               </h3>
-              <ul className="divide-y divide-rule/[0.07]">
+              <ul className="divide-y divide-rule/30">
                 {r.lines.map((l) => (
                   <li key={l.href}>
                     <a
@@ -73,7 +73,7 @@ export default function HelpPage() {
           <h3 className="px-4 pb-1 pt-3 text-sm font-semibold uppercase tracking-[0.08em] text-accent">
             LGBTQ+-affirming
           </h3>
-          <ul className="divide-y divide-rule/[0.07]">
+          <ul className="divide-y divide-rule/30">
             {lgbtqLines.map((l) => (
               <li key={l.href}>
                 <a
@@ -132,14 +132,14 @@ export default function HelpPage() {
         <SectionLabel>Flooded, but safe?</SectionLabel>
         <Link
           href="/pause"
-          className="flex min-h-12 items-center justify-between rounded-xl border border-rule/[0.1] bg-white px-4 text-base font-medium text-accent"
+          className="flex min-h-12 items-center justify-between rounded-xl border border-rule/40 bg-white px-4 text-base font-medium text-accent"
         >
           Pause + Return timer
           <ArrowRight size={16} />
         </Link>
         <Link
           href="/protocols/60-second-reset"
-          className="flex min-h-12 items-center justify-between rounded-xl border border-rule/[0.1] bg-white px-4 text-base font-medium text-accent"
+          className="flex min-h-12 items-center justify-between rounded-xl border border-rule/40 bg-white px-4 text-base font-medium text-accent"
         >
           60-Second Alliance Reset
           <ArrowRight size={16} />

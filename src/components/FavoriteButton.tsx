@@ -52,7 +52,7 @@ export function FavoriteButton({
           : `h-11 w-11 border ${
               favorite
                 ? "border-accent/30 bg-accent/10"
-                : "border-rule/15 bg-white"
+                : "border-rule/60 bg-white"
             }`
       } ${favorite ? "text-accent" : "text-ink-muted"}`}
     >

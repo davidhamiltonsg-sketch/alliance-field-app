@@ -116,7 +116,7 @@ export function ProtocolSearch({ protocols }: { protocols: Protocol[] }) {
           className={`inline-flex min-h-11 items-center gap-1.5 rounded-full px-3.5 text-sm font-medium transition-colors ${
             favoritesOnly
               ? "bg-accent text-paper"
-              : "border border-rule/15 bg-white text-ink-muted"
+              : "border border-rule/60 bg-white text-ink-muted"
           }`}
         >
           <StarIcon size={14} filled={favoritesOnly} />

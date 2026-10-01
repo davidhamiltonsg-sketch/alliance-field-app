@@ -40,7 +40,7 @@ export default async function UnlockPage({
             required
             aria-invalid={wrong || undefined}
             aria-describedby={wrong ? "code-error" : undefined}
-            className="min-h-12 w-full rounded-xl border border-rule/20 bg-white px-3.5 text-base text-ink"
+            className="min-h-12 w-full rounded-xl border border-rule/85 bg-white px-3.5 text-base text-ink"
           />
           {wrong && (
             <p id="code-error" role="alert" className="text-sm font-medium text-failure">
