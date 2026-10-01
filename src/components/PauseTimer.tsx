@@ -20,6 +20,7 @@ import { formatRemaining } from "./TimerDisplay";
 import { clearKey, PAUSE_KEY, readPause, writePause } from "@/lib/storage";
 import { timerAnnouncement } from "@/lib/timer";
 import { buildPauseReturnIcs } from "@/lib/ics";
+import { downloadObjectUrl } from "@/lib/download";
 import { KIT } from "@/data/kit";
 
 const DURATIONS = [
@@ -120,13 +121,7 @@ async function notifyExpired() {
 
 function downloadReturnTime(returnAt: string) {
   const { url, filename } = buildPauseReturnIcs(new Date(returnAt));
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
+  downloadObjectUrl(url, filename);
 }
 
 const noopSubscribe = () => () => {};

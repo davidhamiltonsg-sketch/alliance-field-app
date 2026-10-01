@@ -75,64 +75,7 @@ function toIcsDate(d: Date) {
 /** Canonical Weekly Reset length (Manual/Kit): five parts, about 40 minutes. */
 export const WEEKLY_RESET_MINUTES = KIT.weeklyResetMinutes;
 
-/** Returns an object URL for a Weekly Reset calendar event, one week from now, 40 minutes. */
-export function buildWeeklyResetIcs(fromDate = new Date()): { url: string; filename: string } {
-  const start = new Date(fromDate.getTime() + 7 * 24 * 60 * 60 * 1000);
-  const end = new Date(start.getTime() + WEEKLY_RESET_MINUTES * 60 * 1000);
-  const uid = `alliance-weekly-reset-${start.getTime()}@allianceprotocols.com`;
-  const stamp = toIcsDate(new Date());
-
-  const ics = calendar([
-    "BEGIN:VEVENT",
-    `UID:${uid}`,
-    `DTSTAMP:${stamp}`,
-    `DTSTART:${toIcsDate(start)}`,
-    `DTEND:${toIcsDate(end)}`,
-    text("SUMMARY", "Weekly Reset (Alliance Protocols)"),
-    text(
-      "DESCRIPTION",
-      "Scheduled maintenance meeting (about 40 minutes) — appreciation, check the load, one friction point, requests, next steps. Not a fight forum: if either partner is flooded, Pause + Return and reschedule."
-    ),
-    "RRULE:FREQ=WEEKLY;INTERVAL=1",
-    "END:VEVENT",
-  ]);
-  return toBlobUrl(ics, "alliance-weekly-reset.ics");
-}
-
-/**
- * Returns an object URL for a daily 10-minute reminder for the 7-day start
- * plan, at the given local time ("HH:MM"), starting tomorrow.
- */
-export function buildStartPlanIcs(
-  time = "20:00",
-  fromDate = new Date(),
-  days = 7
-): { url: string; filename: string } {
-  const [h, m] = time.split(":").map((n) => Number(n));
-  const start = new Date(fromDate);
-  start.setDate(start.getDate() + 1);
-  start.setHours(Number.isFinite(h) ? h : 20, Number.isFinite(m) ? m : 0, 0, 0);
-  const end = new Date(start.getTime() + 10 * 60 * 1000);
-  const uid = `alliance-start-plan-${start.getTime()}@allianceprotocols.com`;
-
-  const ics = calendar([
-    "BEGIN:VEVENT",
-    `UID:${uid}`,
-    `DTSTAMP:${toIcsDate(new Date())}`,
-    `DTSTART:${toIcsDate(start)}`,
-    `DTEND:${toIcsDate(end)}`,
-    `RRULE:FREQ=DAILY;COUNT=${days}`,
-    text("SUMMARY", "Alliance start plan (10 min)"),
-    text(
-      "DESCRIPTION",
-      "Today’s step of the 7-day plan — open the Field App at /start. Day 7 is your first Weekly Reset (about 40 minutes). If either of you is flooded, Pause + Return first."
-    ),
-    "END:VEVENT",
-  ]);
-  return toBlobUrl(ics, "alliance-start-plan.ics");
-}
-
-/** Local wall-clock "floating" time (no Z, no TZID): the event stays at 7pm wherever the user is. */
+/** Local wall-clock "floating" time (no Z, no TZID): the event stays at 7pm wherever the user is, across DST changes. */
 function toFloatingDate(d: Date) {
   return (
     d.getFullYear().toString() +
@@ -145,9 +88,85 @@ function toFloatingDate(d: Date) {
   );
 }
 
+/** Adds minutes on the local clock (so a 40-minute event ends 40 wall-clock minutes later). */
+function addLocalMinutes(d: Date, minutes: number) {
+  const e = new Date(d);
+  e.setMinutes(e.getMinutes() + minutes);
+  return e;
+}
+
+/** True for a 24-hour "HH:MM" time, as <input type="time"> gives it. Empty is not a time. */
+export function isValidTime(time: string): boolean {
+  const m = /^(\d{2}):(\d{2})$/.exec(time);
+  return !!m && Number(m[1]) <= 23 && Number(m[2]) <= 59;
+}
+
 function parseTime(time: string) {
-  const [h, m] = time.split(":").map((n) => Number(n));
-  return { h: Number.isFinite(h) ? h : 19, m: Number.isFinite(m) ? m : 0 };
+  if (!isValidTime(time)) throw new Error(`Not a valid time: "${time}"`);
+  const [h, m] = time.split(":").map(Number);
+  return { h, m };
+}
+
+/**
+ * The Weekly Reset as a recurring event: same local time, 7 calendar days
+ * from `fromDate` (not 7 × 24 hours, which drifts by an hour across a DST
+ * change), 40 minutes, at a floating local time so it stays put.
+ */
+export function weeklyResetIcsText(fromDate = new Date()): string {
+  const start = new Date(fromDate);
+  start.setSeconds(0, 0);
+  start.setDate(start.getDate() + 7);
+  const end = addLocalMinutes(start, WEEKLY_RESET_MINUTES);
+  return calendar([
+    "BEGIN:VEVENT",
+    `UID:alliance-weekly-reset-${toFloatingDate(start)}@allianceprotocols.com`,
+    `DTSTAMP:${toIcsDate(new Date())}`,
+    `DTSTART:${toFloatingDate(start)}`,
+    `DTEND:${toFloatingDate(end)}`,
+    text("SUMMARY", "Weekly Reset (Alliance Protocols)"),
+    text(
+      "DESCRIPTION",
+      "Scheduled maintenance meeting (about 40 minutes) — appreciation, check the load, one friction point, requests, next steps. Not a fight forum: if either partner is flooded, Pause + Return and reschedule."
+    ),
+    "RRULE:FREQ=WEEKLY;INTERVAL=1",
+    "END:VEVENT",
+  ]);
+}
+
+/** Returns an object URL for the Weekly Reset calendar event (see weeklyResetIcsText). */
+export function buildWeeklyResetIcs(fromDate = new Date()): { url: string; filename: string } {
+  return toBlobUrl(weeklyResetIcsText(fromDate), "alliance-weekly-reset.ics");
+}
+
+/**
+ * A daily 10-minute reminder for the 7-day start plan, at the given local
+ * time ("HH:MM", floating, so every day is at that clock time even across a
+ * DST change), starting tomorrow. Throws on an empty or invalid time.
+ */
+export function startPlanIcsText(time = "20:00", fromDate = new Date(), days = 7): string {
+  const { h, m } = parseTime(time);
+  const start = new Date(fromDate);
+  start.setDate(start.getDate() + 1);
+  start.setHours(h, m, 0, 0);
+  const end = addLocalMinutes(start, 10);
+  return calendar([
+    "BEGIN:VEVENT",
+    `UID:alliance-start-plan-${toFloatingDate(start)}@allianceprotocols.com`,
+    `DTSTAMP:${toIcsDate(new Date())}`,
+    `DTSTART:${toFloatingDate(start)}`,
+    `DTEND:${toFloatingDate(end)}`,
+    `RRULE:FREQ=DAILY;COUNT=${days}`,
+    text("SUMMARY", "Alliance start plan (10 min)"),
+    text(
+      "DESCRIPTION",
+      "Today’s step of the 7-day plan — open the Field App at /start. Day 7 is your first Weekly Reset (about 40 minutes). If either of you is flooded, Pause + Return first."
+    ),
+    "END:VEVENT",
+  ]);
+}
+
+export function buildStartPlanIcs(time = "20:00", fromDate = new Date(), days = 7): { url: string; filename: string } {
+  return toBlobUrl(startPlanIcsText(time, fromDate, days), "alliance-start-plan.ics");
 }
 
 /** The next Sunday at the given local time, strictly after `from`. */
@@ -186,14 +205,13 @@ export function keepGoingIcsText(time = "19:00", fromDate = new Date()): string 
   const weekly = nextSundayAt(fromDate, time);
   const monthly = nextFirstSundayAt(fromDate, time);
   const stamp = toIcsDate(new Date());
-  const minutes = WEEKLY_RESET_MINUTES * 60 * 1000;
 
   const event = (uid: string, start: Date, rrule: string, summary: string, description: string) => [
     "BEGIN:VEVENT",
     `UID:${uid}-${start.getTime()}@allianceprotocols.com`,
     `DTSTAMP:${stamp}`,
     `DTSTART:${toFloatingDate(start)}`,
-    `DTEND:${toFloatingDate(new Date(start.getTime() + minutes))}`,
+    `DTEND:${toFloatingDate(addLocalMinutes(start, WEEKLY_RESET_MINUTES))}`,
     `RRULE:${rrule}`,
     text("SUMMARY", summary),
     text("DESCRIPTION", description),

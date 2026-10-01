@@ -14,6 +14,7 @@ import {
   writeWeekly,
 } from "@/lib/storage";
 import { buildWeeklyResetIcs } from "@/lib/ics";
+import { downloadObjectUrl } from "@/lib/download";
 import { PrimaryButton } from "./PrimaryButton";
 import { Field, WizardStep } from "./WizardStep";
 import { WarnBanner } from "./WarnBanner";
@@ -89,13 +90,7 @@ function WeeklyResetWizardClient() {
 
   const addToCalendar = () => {
     const { url, filename } = buildWeeklyResetIcs();
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    downloadObjectUrl(url, filename);
     setCalendarAdded(true);
   };
 

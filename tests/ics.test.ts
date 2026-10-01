@@ -10,7 +10,10 @@ import {
   buildWeeklyResetIcs,
   escapeText,
   foldLine,
+  isValidTime,
   keepGoingIcsText,
+  startPlanIcsText,
+  weeklyResetIcsText,
   pauseReturnIcsText,
   nextFirstSundayAt,
   nextSundayAt,
@@ -54,17 +57,17 @@ describe("buildWeeklyResetIcs", () => {
     expect(field(lines, "RRULE")).toBe("FREQ=WEEKLY;INTERVAL=1");
   });
 
-  it("starts one week later (UTC) and lasts the canonical 40 minutes", async () => {
-    const { lines } = await build(new Date("2026-03-02T09:30:00Z"));
+  it("starts 7 calendar days later at the same local (floating) time and lasts the canonical 40 minutes", async () => {
+    const { lines } = await build(new Date(2026, 2, 2, 9, 30, 41));
     expect(WEEKLY_RESET_MINUTES).toBe(KIT.weeklyResetMinutes);
-    expect(field(lines, "DTSTART")).toBe("20260309T093000Z");
-    expect(field(lines, "DTEND")).toBe("20260309T101000Z");
+    expect(field(lines, "DTSTART")).toBe("20260309T093000");
+    expect(field(lines, "DTEND")).toBe("20260309T101000");
   });
 
   it("rolls over month and year boundaries", async () => {
-    const { lines } = await build(new Date("2026-12-28T23:50:00Z"));
-    expect(field(lines, "DTSTART")).toBe("20270104T235000Z");
-    expect(field(lines, "DTEND")).toBe("20270105T003000Z");
+    const { lines } = await build(new Date(2026, 11, 28, 23, 50));
+    expect(field(lines, "DTSTART")).toBe("20270104T235000");
+    expect(field(lines, "DTEND")).toBe("20270105T003000");
   });
 
   it("describes the canonical agenda and the flooding rule", async () => {
@@ -83,11 +86,16 @@ describe("buildStartPlanIcs", () => {
     expect(result.filename).toBe("alliance-start-plan.ics");
     const lines = unfold(await captured!.text()).split("\r\n");
     expect(field(lines, "RRULE")).toBe("FREQ=DAILY;COUNT=7");
-    const start = new Date(2026, 2, 3, 19, 45);
-    const iso = (d: Date) => d.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
-    expect(field(lines, "DTSTART")).toBe(iso(start));
-    expect(field(lines, "DTEND")).toBe(iso(new Date(start.getTime() + 10 * 60 * 1000)));
+    expect(field(lines, "DTSTART")).toBe("20260303T194500");
+    expect(field(lines, "DTEND")).toBe("20260303T195500");
     expect(field(lines, "DESCRIPTION")).toContain("Pause + Return");
+  });
+
+  it("refuses an empty or invalid time instead of silently using midnight (L9)", () => {
+    expect(isValidTime("19:45")).toBe(true);
+    for (const bad of ["", "7pm", "24:00", "19:60", "1:05"]) expect(isValidTime(bad), bad).toBe(false);
+    expect(() => buildStartPlanIcs("")).toThrow(/valid time/);
+    expect(() => keepGoingIcsText("")).toThrow(/valid time/);
   });
 });
 
@@ -204,5 +212,61 @@ describe("pause return time", () => {
     expect(lines).toContain("BEGIN:VALARM");
     expect(lines).toContain("TRIGGER:PT0M");
     expect(field(lines, "DESCRIPTION")).toContain("get outside help");
+  });
+});
+
+/**
+ * DST (M5): calendar events are written as floating local times, so they stay
+ * at the chosen clock time across a daylight-saving change, and "next week"
+ * is 7 calendar days, not 7 × 24 hours.
+ */
+describe("daylight saving time", () => {
+  const originalTZ = process.env.TZ;
+  afterEach(() => {
+    process.env.TZ = originalTZ;
+  });
+  const lines = (text: string) => unfold(text).split("\r\n");
+  const all = (ls: string[], name: string) => ls.filter((l) => l.startsWith(`${name}:`)).map((l) => l.slice(name.length + 1));
+
+  it("Europe/London, clocks go back on 25 Oct 2026: the Weekly Reset stays at 7pm", () => {
+    process.env.TZ = "Europe/London";
+    const from = new Date(2026, 9, 20, 19, 0); // Tue 20 Oct, 19:00 BST
+    expect(from.getTimezoneOffset()).toBe(-60);
+    expect(new Date(2026, 9, 27, 19, 0).getTimezoneOffset()).toBe(0); // GMT by then
+    const ls = lines(weeklyResetIcsText(from));
+    expect(field(ls, "DTSTART")).toBe("20261027T190000");
+    expect(field(ls, "DTEND")).toBe("20261027T194000");
+    // No UTC instant that would show as 6pm or 8pm after the change.
+    expect(field(ls, "DTSTART")).not.toMatch(/Z$/);
+  });
+
+  it("Europe/London: the 7-day plan reminder is 8pm every day through 25 Oct", () => {
+    process.env.TZ = "Europe/London";
+    const ls = lines(startPlanIcsText("20:00", new Date(2026, 9, 22, 12, 0)));
+    expect(field(ls, "DTSTART")).toBe("20261023T200000");
+    expect(field(ls, "RRULE")).toBe("FREQ=DAILY;COUNT=7");
+  });
+
+  it("America/New_York, clocks go back on 1 Nov 2026: next week is 7 calendar days", () => {
+    process.env.TZ = "America/New_York";
+    const from = new Date(2026, 9, 28, 19, 30); // Wed 28 Oct, 19:30 EDT
+    expect(from.getTimezoneOffset()).toBe(240);
+    const ls = lines(weeklyResetIcsText(from));
+    expect(field(ls, "DTSTART")).toBe("20261104T193000");
+    expect(field(ls, "DTEND")).toBe("20261104T201000");
+  });
+
+  it("America/New_York: Keep it going lands on Sunday 1 Nov at 7pm, the day the clocks change", () => {
+    process.env.TZ = "America/New_York";
+    const ls = lines(keepGoingIcsText("19:00", new Date(2026, 9, 30, 12, 0)));
+    expect(all(ls, "DTSTART")).toEqual(["20261101T190000", "20261101T190000"]);
+    expect(all(ls, "DTEND")).toEqual(["20261101T194000", "20261101T194000"]);
+  });
+
+  it("America/New_York: the 7-day plan starting 31 Oct stays at 9pm", () => {
+    process.env.TZ = "America/New_York";
+    const ls = lines(startPlanIcsText("21:00", new Date(2026, 9, 30, 8, 0)));
+    expect(field(ls, "DTSTART")).toBe("20261031T210000");
+    expect(field(ls, "DTEND")).toBe("20261031T211000");
   });
 });
