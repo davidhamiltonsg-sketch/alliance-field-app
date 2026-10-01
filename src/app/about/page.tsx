@@ -68,7 +68,7 @@ export default function AboutPage() {
         <div className="relative flex flex-col items-center">
           <AllianceMark size={76} className="text-paper" title="ALLIANCE PROTOCOLS" />
           <h1 className="mt-4 text-lg font-medium tracking-[0.14em] pl-[0.14em]">
-            ALLIANCE PROTOCOLS
+            ALLIANCE PROTOCOLS™
           </h1>
           <p className="mt-2 text-xs font-medium uppercase tracking-[0.08em] pl-[0.08em] text-paper/75">
             Field App
@@ -86,7 +86,7 @@ export default function AboutPage() {
 
       <section className="space-y-2">
         <p className="text-base leading-normal text-ink">
-          A relationship operating system with named tools — clear protocols,
+          A shared system for hard moments: named tools and clear protocols,
           not pep talks.
         </p>
         <p className="text-base leading-normal text-ink-muted">
@@ -329,6 +329,10 @@ export default function AboutPage() {
           {" · "}
           <Link href="/privacy" className="font-medium text-accent underline underline-offset-4">
             Privacy notice
+          </Link>
+          {" · "}
+          <Link href="/terms" className="font-medium text-accent underline underline-offset-4">
+            Website terms
           </Link>
         </p>
       </section>

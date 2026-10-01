@@ -387,14 +387,16 @@ describe("banned claims", () => {
 });
 
 describe("contact and store links", () => {
-  it("has a real contact address and never links to a placeholder store", () => {
-    expect(CONTACT_EMAIL).toMatch(/^[^@\s]+@[^@\s]+\.[a-z]{2,}$/);
-    expect(CONTACT_EMAIL).not.toMatch(/thealliance\.app/);
+  it("never shows a made-up contact address or links to a placeholder store", () => {
+    if (!process.env.NEXT_PUBLIC_CONTACT_EMAIL) expect(CONTACT_EMAIL).toBeNull();
     if (!process.env.NEXT_PUBLIC_FULL_SYSTEM_URL) expect(FULL_SYSTEM_URL).toBeNull();
     expect(httpsUrlOrNull("http://example.com")).toBeNull();
     expect(httpsUrlOrNull("javascript:alert(1)")).toBeNull();
     expect(httpsUrlOrNull("https://store.example/p")).toBe("https://store.example/p");
     expect(componentSource("GetFullSystem")).toMatch(/Coming soon/);
+    for (const f of ["src/app/privacy/page.tsx", "src/app/terms/page.tsx", "src/components/SignupForm.tsx", "src/lib/links.ts"]) {
+      expect(readFileSync(join(__dirname, "..", f), "utf8"), f).not.toMatch(/hello@/);
+    }
   });
 });
 

@@ -43,9 +43,11 @@ in Vercel's project env vars (or `.env.local` locally) and redeploy.
 | ----------------------------- | --------------------------------------------------------------------------------------------------------- |
 | `LAUNCH_ACCESS_CODE`          | Turns on the pre-launch lock (see below). Unset = launched, no lock.                                      |
 | `LAUNCH_COOKIE_SECRET`        | Key for the access cookie's HMAC. Recommended while locked; if unset, a key is derived from the code.      |
-| `NEXT_PUBLIC_CONTACT_EMAIL`   | Contact address on /privacy and the signup mailto: fallback. Default `hello@allianceprotocols.com`.        |
-| `NEXT_PUBLIC_FULL_SYSTEM_URL` | https store page for the Manual + Field Kit. Unset: the buy button is replaced by "Coming soon".           |
+| `NEXT_PUBLIC_CONTACT_EMAIL`   | Contact address on /privacy and /terms. Unset (or not an address): no address is shown, only "via allianceprotocols.com". |
+| `NEXT_PUBLIC_FULL_SYSTEM_URL` | https store page, the fallback for each product below. With no store URL at all, "Coming soon" replaces the buy links. |
+| `NEXT_PUBLIC_STORE_URL_MANUAL` / `_KIT` / `_BUNDLE` | https store pages for the Operating Manual, Field Kit and Complete Bundle (Gumroad). Each falls back to `NEXT_PUBLIC_FULL_SYSTEM_URL`; a product with neither gets no buy link. |
 | `NEXT_PUBLIC_SIGNUP_ENDPOINT` | Email signup endpoint (see *Email signup* below). Its origin is added to the CSP.                          |
+| `NEXT_PUBLIC_EMAIL_PROVIDER_NAME` | Name of the mailing-list service (e.g. `Buttondown`), named on /privacy. The sign-up form is live only when this **and** the endpoint are set. |
 
 ## Pre-launch lock
 
@@ -171,9 +173,10 @@ sees only the couple report.
 ## Email signup and free download
 
 The "Get the full system" card (`src/components/GetFullSystem.tsx`, on
-About) has the store link (`FULL_SYSTEM_URL` from
-`NEXT_PUBLIC_FULL_SYSTEM_URL`; "Coming soon" when unset), a free printable
-Situation Map and an email signup.
+About) has a buy link per product (`STORE_URLS`: Manual, Field Kit, Bundle,
+each from its own `NEXT_PUBLIC_STORE_URL_*` or `NEXT_PUBLIC_FULL_SYSTEM_URL`;
+"Coming soon" when none is set), a free printable Situation Map and an email
+signup.
 
 | Variable                      | Purpose                                                                                     |
 | ----------------------------- | ------------------------------------------------------------------------------------------- |
@@ -184,12 +187,24 @@ Situation Map and an email signup.
   or anything that accepts a form-encoded `email`.
 - It is read at **build time** (it's a `NEXT_PUBLIC_` variable): set it in
   Vercel's project env vars, or `.env.local` for local builds, then rebuild.
-- Unset: the form falls back to opening a `mailto:` to `CONTACT_EMAIL`.
+- The form is shown only when `NEXT_PUBLIC_EMAIL_PROVIDER_NAME` is set too,
+  so /privacy can name who holds the list. Otherwise the card says sign-up
+  isn't open yet, and /privacy says the sign-up is not active.
 - Cross-origin endpoints are posted with `mode: "no-cors"` (the response is
-  opaque), so "Sent — check your inbox to confirm" means the request was
-  delivered, not that the address was accepted; a network failure shows an
-  error (`role="alert"`) with a retry and a mailto fallback. Same-origin
-  endpoints also check the HTTP status. No third-party scripts are loaded.
+  opaque), so the success message is deliberately careful: "If the address
+  is right, a confirmation email will arrive shortly." A network failure
+  shows an error (`role="alert"`) with a retry. Same-origin endpoints also
+  check the HTTP status. No third-party scripts are loaded.
+
+## Legal pages
+
+`/privacy` (plain-English privacy notice: on-device data, the email list,
+Gumroad purchases, transfers outside Singapore, retention, deletion requests,
+the pre-launch cookie) and `/terms` (website terms: who runs the site, not
+therapy, no warranty, acceptable use, statutory rights). Both are public
+while the lock is on and linked from the home footer and About. Before
+launch, the owner must complete the governing-law and registered-address
+details noted in a code comment at the top of `src/app/terms/page.tsx`.
 
 The printable map is served from `public/downloads/situation-map.pdf`
 (`SITUATION_MAP_PDF`), which is committed. Replace that file when the printed

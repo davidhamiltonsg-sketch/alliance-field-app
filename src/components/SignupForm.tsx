@@ -3,15 +3,20 @@
 import Link from "next/link";
 import { useId, useState } from "react";
 import { PrimaryButton } from "./PrimaryButton";
-import { CONTACT_EMAIL, SIGNUP_ENDPOINT } from "@/lib/links";
+import { SIGNUP_ACTIVE, SIGNUP_ENDPOINT } from "@/lib/links";
 
 type Status = "idle" | "sending" | "done" | "error";
 
+/** Shown after a successful submit. A double-opt-in list sends the confirmation; we can't see whether the address exists. */
+export const SIGNUP_SUCCESS = "If the address is right, a confirmation email will arrive shortly.";
+
 /**
- * Email signup. With NEXT_PUBLIC_SIGNUP_ENDPOINT set, POSTs a form-encoded
- * `email` to it (Buttondown / ConvertKit / Formspree style) and shows inline
- * success or error (with a retry). Without it, opens a mailto: to CONTACT_EMAIL.
- * No third-party scripts; the email is the only data this app ever sends.
+ * Email signup. Live only when the endpoint and the list provider's name are
+ * both configured (SIGNUP_ACTIVE; the privacy notice names the provider).
+ * POSTs a form-encoded `email` to the endpoint (Buttondown / Kit / Formspree
+ * style) and shows inline success or an error with a retry. Otherwise it
+ * says sign-up isn't open yet. No third-party scripts; the email is the only
+ * data this app ever sends.
  */
 export function SignupForm() {
   const [email, setEmail] = useState("");
@@ -19,22 +24,22 @@ export function SignupForm() {
   const [error, setError] = useState("");
   const id = useId();
 
-  const mailtoHref = (address: string) => {
-    const subject = encodeURIComponent("Send me the Alliance system link");
-    const body = encodeURIComponent(`Please add me to the list: ${address}`);
-    return `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
-  };
+  if (!SIGNUP_ACTIVE) {
+    return (
+      <div>
+        <p className="text-sm font-medium text-ink">Email updates</p>
+        <p className="mt-0.5 text-sm leading-snug text-ink-muted">
+          Email sign-up isn’t open yet. Nothing you do in this app is sent
+          anywhere.
+        </p>
+      </div>
+    );
+  }
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     const address = email.trim();
     if (!address) return;
-
-    if (!SIGNUP_ENDPOINT) {
-      window.location.href = mailtoHref(address);
-      setStatus("done");
-      return;
-    }
 
     setStatus("sending");
     setError("");
@@ -73,9 +78,7 @@ export function SignupForm() {
       </p>
       {status === "done" ? (
         <p role="status" className="mt-2 text-base font-medium text-accent">
-          {SIGNUP_ENDPOINT
-            ? "Sent — check your inbox to confirm."
-            : "Your email app should open with a message ready to send."}
+          {SIGNUP_SUCCESS}
         </p>
       ) : (
         <form onSubmit={submit} className="mt-2 flex gap-2">
@@ -113,11 +116,7 @@ export function SignupForm() {
       </p>
       {status === "error" && (
         <p id={`${id}-error`} role="alert" className="mt-2 text-sm font-medium text-failure">
-          {error}{" "}
-          <a href={mailtoHref(email.trim())} className="underline underline-offset-4">
-            Or email us instead
-          </a>
-          .
+          {error}
         </p>
       )}
     </div>
