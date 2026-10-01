@@ -8,12 +8,12 @@ import { StartReminder } from "@/components/StartReminder";
 import { WarnBanner } from "@/components/WarnBanner";
 import { ArrowLeft } from "@/components/icons";
 
-export const metadata = { title: "7-day start" };
+export const metadata = { title: "7-day plan" };
 
 export default function StartPage() {
   return (
     <div className="space-y-5">
-      <PageHeader eyebrow={<Marker kind="DO" label="Seven days" />} title="Your 7-day start">
+      <PageHeader eyebrow={<Marker kind="DO" label="Seven days" />} title="Your 7-day plan">
         About 10 minutes a day. Day 7 is your first Weekly Reset. Miss a day?
         Just pick up where you left off.
       </PageHeader>
@@ -26,7 +26,7 @@ export default function StartPage() {
 
       <SoloStart />
 
-      <WarnBanner pauseLink safetyLink>
+      <WarnBanner pauseLink={false} safetyLink>
         If either of you gets flooded during a practice day, stop and use
         Pause + Return. If it’s fear, threats or coercion — not just
         flooding — these tools are not for this. Get outside help.
