@@ -50,23 +50,35 @@ in Vercel's project env vars (or `.env.local` locally) and redeploy.
 ## Pre-launch lock
 
 While `LAUNCH_ACCESS_CODE` is set, `src/proxy.ts` sends every page except
-`/help`, `/privacy` and `/unlock` to `/unlock`, which asks for the code
-(case-insensitive, surrounding spaces ignored). Locked pages are `noindex`,
-and `/sw.js` 404s so a locked visitor never installs the offline worker.
+`/help`, `/privacy`, `/terms` and `/unlock` to `/unlock`, which asks for the
+code. Locked pages are `noindex`, and `/sw.js` 404s so a locked visitor never
+installs the offline worker.
 
 - The right code sets `ap_access` (httpOnly, Secure, SameSite=Lax, 30 days)
-  holding `HMAC-SHA256(key, code)`, never the code. The key is
-  `LAUNCH_COOKIE_SECRET`, or (if unset) derived from the code, which is fine
-  for a gate whose only secret is the code. Set a long random
+  holding `v2.<issued-at>.<HMAC-SHA256(key, code + issued-at)>`, never the
+  code. The issued-at time (Unix seconds) is signed, so it can't be edited,
+  and the proxy refuses a token more than 30 days old (or dated in the
+  future) even if a browser kept the cookie longer or it was copied. The key
+  is `LAUNCH_COOKIE_SECRET`, or (if unset) derived from the code, which is
+  fine for a gate whose only secret is the code. Set a long random
   `LAUNCH_COOKIE_SECRET` so a leaked cookie can't be brute-forced offline;
-  changing it signs everyone out.
-- Codes and cookies are compared in constant time. A wrong code waits
+  changing it signs everyone out. Cookies from before this format (`v1`)
+  are refused, so early-access users enter the code once more.
+- Codes are compared **case-insensitively**, ignoring surrounding spaces, on
+  purpose: the code is passed on by word of mouth and typed on phones that
+  auto-capitalise. That costs little entropy if the code is long (4+ random
+  words, or 12+ random characters); choose one like that.
+- Codes and signatures are compared in constant time. A wrong code waits
   ~600 ms before answering; malformed bodies bounce back with an error.
 - After unlocking, `next` must be a same-origin path (backslashes and control
   characters are rejected, then the URL must resolve to the same origin).
-- **Rate limiting:** the delay only slows a single client. On Vercel, add a
-  Firewall rate-limit rule for `POST /unlock` (for example 10 requests per
-  minute per IP) before sharing the code widely.
+- **Rate limiting (do this before sharing the code):** the proxy is
+  stateless, so it can't count attempts per IP; the delay only slows a
+  single client that waits for each answer. Add a Vercel Firewall rule
+  (Project → Firewall → Configure → New rule): *If* Request Path *equals*
+  `/unlock` *and* Method *equals* `POST`, *then* **Rate Limit**, fixed
+  window, 60 s, 10 requests, keyed on IP, action Deny (429). Publish it,
+  then check it under Firewall → Rules.
 - **To launch:** delete `LAUNCH_ACCESS_CODE` (and `LAUNCH_COOKIE_SECRET`) in
   Vercel and redeploy. `/unlock` then 404s, the cookie is no longer set, and
   existing ones simply expire.

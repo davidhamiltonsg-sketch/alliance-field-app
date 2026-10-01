@@ -2,16 +2,15 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import {
   ACCESS_COOKIE,
+  ACCESS_MAX_AGE_S,
   UNLOCK_PATH,
   WRONG_CODE_DELAY_MS,
-  accessToken,
   codesMatch,
   isPublicPath,
+  issueAccessToken,
   safeNext,
-  tokenMatches,
+  verifyAccessToken,
 } from "@/lib/launch-lock";
-
-const THIRTY_DAYS = 60 * 60 * 24 * 30;
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -33,7 +32,7 @@ export async function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
-  const token = await accessToken(code, process.env.LAUNCH_COOKIE_SECRET);
+  const secret = process.env.LAUNCH_COOKIE_SECRET;
 
   // The unlock form posts here.
   if (pathname === UNLOCK_PATH && request.method === "POST") {
@@ -51,17 +50,18 @@ export async function proxy(request: NextRequest) {
       return backToUnlock(request, next);
     }
     const res = NextResponse.redirect(new URL(next, request.url), 303);
-    res.cookies.set(ACCESS_COOKIE, token, {
+    res.cookies.set(ACCESS_COOKIE, await issueAccessToken(code, secret), {
       httpOnly: true,
       secure: true,
       sameSite: "lax",
       path: "/",
-      maxAge: THIRTY_DAYS,
+      maxAge: ACCESS_MAX_AGE_S,
     });
     return res;
   }
 
-  const unlocked = tokenMatches(request.cookies.get(ACCESS_COOKIE)?.value, token);
+  // Signed issued-at time: a token older than 30 days is refused even if the cookie survived.
+  const unlocked = await verifyAccessToken(request.cookies.get(ACCESS_COOKIE)?.value, code, secret);
   if (unlocked || isPublicPath(pathname)) {
     const res = NextResponse.next();
     if (!unlocked) res.headers.set("X-Robots-Tag", "noindex");

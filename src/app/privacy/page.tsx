@@ -133,8 +133,8 @@ export default function PrivacyPage() {
             <strong className="font-medium">One cookie, only before launch.</strong>{" "}
             While the app is in early access, entering the access code sets a
             single cookie (<code className="text-sm">ap_access</code>) so
-            you don’t have to type the code again. It holds a signed token,
-            not the code and nothing about you; page scripts can’t read it
+            you don’t have to type the code again. It holds a signed token and
+            the time it was issued, not the code and nothing about you; page scripts can’t read it
             (httpOnly); it expires after 30 days; and it isn’t used for
             tracking. Once early access ends, it is no longer set. Otherwise
             the app sets no cookies.

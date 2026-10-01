@@ -3,11 +3,21 @@
  * except the public ones below asks for the code first (see src/proxy.ts).
  * Launching = delete the env var and redeploy; nothing else changes.
  *
- * The cookie holds HMAC-SHA256(secret, code), never the code. The secret is
+ * The cookie holds "v2.<issued-at>.<HMAC-SHA256(secret, code + issued-at)>",
+ * never the code. The issued-at time (Unix seconds) is signed with the code,
+ * so it can't be changed, and a token older than 30 days is refused even if
+ * the browser kept the cookie (or it was copied elsewhere). The secret is
  * LAUNCH_COOKIE_SECRET when set; otherwise it is derived from the code itself
  * (fine for a pre-launch gate, since knowing the code already grants access).
  * Setting a separate secret means a leaked cookie can't be brute-forced back
  * into the code, and rotating the secret signs everyone out.
+ *
+ * Codes are compared case-insensitively, ignoring surrounding spaces, on
+ * purpose: the code is shared by word of mouth and typed on phones, where
+ * auto-capitalisation is common. Folding case costs little: a code of 4+
+ * random words (or 12+ random characters) keeps far more entropy than an
+ * online attacker slowed by the wrong-code delay and a WAF rate limit can
+ * search (see README, "Pre-launch lock").
  */
 
 export const ACCESS_COOKIE = "ap_access";
@@ -16,7 +26,12 @@ export const UNLOCK_PATH = "/unlock";
 export const WRONG_CODE_DELAY_MS = 600;
 
 /** Safety and legal pages stay reachable even while the app is locked. */
-const PUBLIC_PATHS = new Set([UNLOCK_PATH, "/help", "/privacy"]);
+const PUBLIC_PATHS = new Set([UNLOCK_PATH, "/help", "/privacy", "/terms"]);
+
+/** How long an access token is honoured after it was issued (and the cookie's Max-Age). */
+export const ACCESS_MAX_AGE_S = 60 * 60 * 24 * 30;
+/** Clock skew tolerated for an issued-at time slightly in the future. */
+const FUTURE_SKEW_S = 5 * 60;
 
 export function isPublicPath(pathname: string): boolean {
   const path = pathname.length > 1 ? pathname.replace(/\/+$/, "") : pathname;
@@ -74,15 +89,37 @@ async function hmacKey(code: string, secret?: string): Promise<CryptoKey> {
   return crypto.subtle.importKey("raw", raw, { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
 }
 
-/** Cookie value: HMAC-SHA256 of the (normalised) code, as 64 hex characters. */
-export async function accessToken(code: string, secret?: string): Promise<string> {
+async function signature(code: string, iat: number, secret?: string): Promise<string> {
   const key = await hmacKey(code, secret);
-  return toHex(await crypto.subtle.sign("HMAC", key, encoder.encode(`ap_access:v1:${normaliseCode(code)}`)));
+  return toHex(await crypto.subtle.sign("HMAC", key, encoder.encode(`ap_access:v2:${iat}:${normaliseCode(code)}`)));
 }
 
-/** True when the cookie value is the current access token (constant-time). */
-export function tokenMatches(cookie: string | undefined, token: string): boolean {
-  return typeof cookie === "string" && timingSafeEqual(cookie, token);
+/** Cookie value for a successful unlock: "v2.<issued-at seconds>.<64 hex HMAC>". */
+export async function issueAccessToken(code: string, secret?: string, nowMs = Date.now()): Promise<string> {
+  const iat = Math.floor(nowMs / 1000);
+  return `v2.${iat}.${await signature(code, iat, secret)}`;
+}
+
+const TOKEN_SHAPE = /^v2\.(\d{1,12})\.([0-9a-f]{64})$/;
+
+/**
+ * True when the cookie is a token for this code (and secret), issued no more
+ * than 30 days ago and not in the future. The signature is compared in
+ * constant time.
+ */
+export async function verifyAccessToken(
+  cookie: string | undefined,
+  code: string,
+  secret?: string,
+  nowMs = Date.now(),
+): Promise<boolean> {
+  if (typeof cookie !== "string") return false;
+  const m = TOKEN_SHAPE.exec(cookie);
+  if (!m) return false;
+  const iat = Number(m[1]);
+  const now = Math.floor(nowMs / 1000);
+  if (iat > now + FUTURE_SKEW_S || now - iat > ACCESS_MAX_AGE_S) return false;
+  return timingSafeEqual(m[2], await signature(code, iat, secret));
 }
 
 /**
