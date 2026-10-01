@@ -75,8 +75,8 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
         "kind": "step"
       },
       {
-        "title": "Touch",
-        "detail": "Brief touch, if welcome.",
+        "title": "Touch (only if welcome)",
+        "detail": "A brief touch is enough.",
         "kind": "step"
       },
       {
@@ -103,7 +103,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       {
         "title": "Say what feels unsafe",
         "detail": "One sentence: “This doesn’t feel safe right now.”",
-        "kind": "safety"
+        "kind": "step"
       },
       {
         "title": "Stop the topic",
@@ -127,7 +127,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       }
     ],
     "note": {
-      "kind": "safety",
+      "kind": "note",
       "text": "Priority over all content tools. If safety fails, content stops."
     },
     "outcome": "Honesty stays speakable without punishment."

@@ -287,7 +287,8 @@ describe("step diagrams use plain step names (CANON round 5)", () => {
       expect(d.steps.length, card.slug).toBe(card.steps.length);
       card.steps.forEach((step, i) => {
         const m = step.match(/^([^—:]+?)(?: \([^)]*\))? — /);
-        if (m && m[1].split(" ").length <= 6) expect(d.steps[i].title, `${card.slug} step ${i + 1}`).toBe(m[1]);
+        // The title may keep a qualifier that is part of the name, e.g. "Touch (only if welcome)".
+        if (m && m[1].split(" ").length <= 6) expect([m[1], m[0].replace(/ — $/, "")], `${card.slug} step ${i + 1}`).toContain(d.steps[i].title);
       });
     }
     const all = Object.values(protocolDiagrams).flatMap((d) => d.steps.map((s) => s.title));
