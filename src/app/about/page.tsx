@@ -178,7 +178,7 @@ export default function AboutPage() {
               <p className="display text-lg leading-snug">Field App</p>
               <p className="mt-0.5 text-sm leading-snug text-ink-muted">
                 Free, to act in the moment: the Situation Map, exact phrases,
-                the Pause timer, Weekly Reset and Profile Calibration.
+                the Pause + Return timer, Weekly Reset and Profile Calibration.
               </p>
             </div>
           </li>
@@ -225,7 +225,7 @@ export default function AboutPage() {
           <li>
             <Link
               href="/help"
-              className="flex min-h-12 items-center justify-between px-4 text-base font-medium text-ink hover:bg-surface-tool"
+              className="flex min-h-12 items-center justify-between gap-3 px-4 text-base font-medium text-ink hover:bg-surface-tool"
             >
               <span className="flex flex-col py-2.5">
                 Help &amp; safety
@@ -233,13 +233,13 @@ export default function AboutPage() {
                   Help lines and when not to use this app
                 </span>
               </span>
-              <ChevronRight size={18} className="text-ink-muted/50" />
+              <ChevronRight size={18} className="shrink-0 text-ink-muted/50" />
             </Link>
           </li>
           <li>
             <Link
               href="/intro"
-              className="flex min-h-12 items-center justify-between px-4 text-base font-medium text-ink hover:bg-surface-tool"
+              className="flex min-h-12 items-center justify-between gap-3 px-4 text-base font-medium text-ink hover:bg-surface-tool"
             >
               <span className="flex flex-col py-2.5">
                 Intro
@@ -247,27 +247,27 @@ export default function AboutPage() {
                   How the app works, in six short panels
                 </span>
               </span>
-              <ChevronRight size={18} className="text-ink-muted/50" />
+              <ChevronRight size={18} className="shrink-0 text-ink-muted/50" />
             </Link>
           </li>
           <li>
             <Link
               href="/start"
-              className="flex min-h-12 items-center justify-between px-4 text-base font-medium text-ink hover:bg-surface-tool"
+              className="flex min-h-12 items-center justify-between gap-3 px-4 text-base font-medium text-ink hover:bg-surface-tool"
             >
               <span className="flex flex-col py-2.5">
-                7-day start
+                7-day plan
                 <span className="text-sm font-normal text-ink-muted">
                   The Core 5, about 10 minutes a day
                 </span>
               </span>
-              <ChevronRight size={18} className="text-ink-muted/50" />
+              <ChevronRight size={18} className="shrink-0 text-ink-muted/50" />
             </Link>
           </li>
           <li>
             <Link
               href="/together"
-              className="flex min-h-12 items-center justify-between px-4 text-base font-medium text-ink hover:bg-surface-tool"
+              className="flex min-h-12 items-center justify-between gap-3 px-4 text-base font-medium text-ink hover:bg-surface-tool"
             >
               <span className="flex flex-col py-2.5">
                 Together against outside pressure
@@ -275,22 +275,13 @@ export default function AboutPage() {
                   For interracial, intercultural and other couples facing outside pressure
                 </span>
               </span>
-              <ChevronRight size={18} className="text-ink-muted/50" />
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/start"
-              className="flex min-h-12 items-center justify-between px-4 text-base font-medium text-ink hover:bg-surface-tool"
-            >
-              7-day plan
-              <ChevronRight size={18} className="text-ink-muted/50" />
+              <ChevronRight size={18} className="shrink-0 text-ink-muted/50" />
             </Link>
           </li>
           <li>
             <Link
               href="/calibrate"
-              className="flex min-h-12 items-center justify-between px-4 text-base font-medium text-ink hover:bg-surface-tool"
+              className="flex min-h-12 items-center justify-between gap-3 px-4 text-base font-medium text-ink hover:bg-surface-tool"
             >
               <span className="flex flex-col py-2.5">
                 Profile Calibration
@@ -298,13 +289,13 @@ export default function AboutPage() {
                   44 questions each — a Layer Scan (where each of you sits on the profile) and a couple report
                 </span>
               </span>
-              <ChevronRight size={18} className="text-ink-muted/50" />
+              <ChevronRight size={18} className="shrink-0 text-ink-muted/50" />
             </Link>
           </li>
           <li>
             <Link
               href="/connect"
-              className="flex min-h-12 items-center justify-between px-4 text-base font-medium text-ink hover:bg-surface-tool"
+              className="flex min-h-12 items-center justify-between gap-3 px-4 text-base font-medium text-ink hover:bg-surface-tool"
             >
               <span className="flex flex-col py-2.5">
                 Connection Cards
@@ -312,16 +303,16 @@ export default function AboutPage() {
                   A flip-card game for reconnecting on purpose
                 </span>
               </span>
-              <ChevronRight size={18} className="text-ink-muted/50" />
+              <ChevronRight size={18} className="shrink-0 text-ink-muted/50" />
             </Link>
           </li>
           <li>
             <Link
               href="/"
-              className="flex min-h-12 items-center justify-between px-4 text-base font-medium text-ink hover:bg-surface-tool"
+              className="flex min-h-12 items-center justify-between gap-3 px-4 text-base font-medium text-ink hover:bg-surface-tool"
             >
               Situation Map
-              <ChevronRight size={18} className="text-ink-muted/50" />
+              <ChevronRight size={18} className="shrink-0 text-ink-muted/50" />
             </Link>
           </li>
         </ul>

@@ -125,7 +125,7 @@ export function buildStartPlanIcs(
     text("SUMMARY", "Alliance start plan (10 min)"),
     text(
       "DESCRIPTION",
-      "Today’s step of the 7-day start plan — open the Field App at /start. Day 7 is your first Weekly Reset (about 40 minutes). If either of you is flooded, Pause + Return first."
+      "Today’s step of the 7-day plan — open the Field App at /start. Day 7 is your first Weekly Reset (about 40 minutes). If either of you is flooded, Pause + Return first."
     ),
     "END:VEVENT",
   ]);
