@@ -268,7 +268,7 @@ describe("/privacy", () => {
   const src = pageSource("privacy");
 
   it("is dated, names both authors and Singapore's PDPA, and points to data deletion", () => {
-    expect(src).toContain("30 September 2026");
+    expect(src).toContain("1 October 2026");
     expect(src).toContain("David Hamilton");
     expect(src).toContain("Dr Zhongming Shi");
     expect(src).toContain("PDPA");

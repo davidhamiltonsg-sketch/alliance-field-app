@@ -5,6 +5,7 @@ import {
   FAVORITES_KEY,
   MAX_RECENT,
   MAX_WEEKLY_HISTORY,
+  START_PROGRESS_KEY,
   WEEKLY_HISTORY_KEY,
   WEEKLY_KEY,
   allianceKeys,
@@ -15,10 +16,12 @@ import {
   readJson,
   readPause,
   readRecent,
+  readStartProgress,
   readWeekly,
   readWeeklyHistory,
   recordRecent,
   toggleFavorite,
+  toggleStartDay,
   wipeAll,
   writeJson,
   writePause,
@@ -88,6 +91,31 @@ describe("favorites and recent", () => {
     expect(recent[0]).toBe("p3");
     expect(recent).toHaveLength(MAX_RECENT);
     expect(new Set(recent).size).toBe(recent.length);
+  });
+});
+
+describe("7-day plan progress", () => {
+  it("ticks and unticks days, sorted and deduped", () => {
+    expect(readStartProgress()).toEqual([]);
+    expect(toggleStartDay(3)).toEqual([3]);
+    expect(toggleStartDay(1)).toEqual([1, 3]);
+    expect(toggleStartDay(3)).toEqual([1]);
+    expect(readStartProgress()).toEqual([1]);
+  });
+
+  it("ignores corrupt or out-of-range values", () => {
+    writeJson(START_PROGRESS_KEY, [0, 2, 2, 8, "4", 7.5, 7]);
+    expect(readStartProgress()).toEqual([2, 7]);
+    writeJson(START_PROGRESS_KEY, { day: 1 });
+    expect(readStartProgress()).toEqual([]);
+  });
+
+  it("lives under the alliance.* prefix, so Delete all data removes it", async () => {
+    toggleStartDay(2);
+    expect(allianceKeys()).toContain(START_PROGRESS_KEY);
+    vi.stubGlobal("caches", { keys: async () => [], delete: async () => true });
+    await wipeAll();
+    expect(readStartProgress()).toEqual([]);
   });
 });
 

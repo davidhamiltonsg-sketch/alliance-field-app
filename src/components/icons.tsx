@@ -50,6 +50,12 @@ export const ArrowLeft = (p: IconProps) => (
   </Base>
 );
 
+export const CheckIcon = (p: IconProps) => (
+  <Base {...p}>
+    <path d="m5 12.5 4.5 4.5L19 7.5" />
+  </Base>
+);
+
 export const QuoteIcon = (p: IconProps) => (
   <Base {...p}>
     <path d="M5 18.5c3-1 4.5-3.5 4.5-7V6.5H5V12h4.5M14.5 18.5c3-1 4.5-3.5 4.5-7V6.5h-4.5V12H19" />

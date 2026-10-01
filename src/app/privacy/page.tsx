@@ -7,13 +7,14 @@ import { CONTACT_EMAIL } from "@/lib/links";
 
 export const metadata = { title: "Privacy notice" };
 
-const PRIVACY_LAST_UPDATED = "30 September 2026";
+const PRIVACY_LAST_UPDATED = "1 October 2026";
 
 const onDevice = [
   "Pause + Return: your return time while a pause is running",
   "Weekly Reset: your current draft and past resets",
   "Profile Calibration: your answers and couple report",
   "Favourites and recently opened protocols",
+  "7-day plan: which days you have ticked as done",
   "Whether you have already seen the intro",
   "The offline copy of the app itself",
 ];

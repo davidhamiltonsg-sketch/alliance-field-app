@@ -3,11 +3,10 @@ import { KeepItGoing } from "@/components/KeepItGoing";
 import { Marker } from "@/components/Marker";
 import { PageHeader } from "@/components/PageHeader";
 import { SoloStart } from "@/components/SoloStart";
+import { StartPlan } from "@/components/StartPlan";
 import { StartReminder } from "@/components/StartReminder";
 import { WarnBanner } from "@/components/WarnBanner";
-import { ArrowLeft, ArrowRight } from "@/components/icons";
-import { getProtocol } from "@/data/protocols";
-import { startDays } from "@/data/start";
+import { ArrowLeft } from "@/components/icons";
 
 export const metadata = { title: "7-day start" };
 
@@ -19,46 +18,7 @@ export default function StartPage() {
         Reset. Miss a day? Just pick up where you left off.
       </PageHeader>
 
-      <ol className="space-y-2.5">
-        {startDays.map((d) => {
-          const card = getProtocol(d.slug);
-          return (
-            <li key={d.day} className="card px-4 py-3.5">
-              <div className="flex items-center gap-3">
-                <span className="tabular flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent text-sm font-medium text-paper">
-                  {d.day}
-                </span>
-                <h2 className="display min-w-0 flex-1 text-lg leading-snug">
-                  <span className="sr-only">Day {d.day}: </span>
-                  {d.title}
-                </h2>
-                <span className="tabular shrink-0 text-sm text-ink-muted">~{d.minutes} min</span>
-              </div>
-              <p className="mt-2 pl-11 text-base leading-normal text-ink-muted">{d.task}</p>
-              <div className="mt-1 flex flex-wrap gap-x-5 pl-11">
-                {card && (
-                  <Link
-                    href={`/protocols/${d.slug}`}
-                    className="inline-flex min-h-11 items-center gap-1.5 text-base font-medium text-accent"
-                  >
-                    {card.title}
-                    <ArrowRight size={16} />
-                  </Link>
-                )}
-                {d.tool && (
-                  <Link
-                    href={d.tool.href}
-                    className="inline-flex min-h-11 items-center gap-1.5 text-base font-medium text-accent"
-                  >
-                    {d.tool.label}
-                    <ArrowRight size={16} />
-                  </Link>
-                )}
-              </div>
-            </li>
-          );
-        })}
-      </ol>
+      <StartPlan />
 
       <StartReminder />
 
