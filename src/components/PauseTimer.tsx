@@ -467,7 +467,7 @@ function PauseTimerClient() {
         </div>
       </section>
 
-      <section className="grid grid-cols-1 gap-3 min-[400px]:grid-cols-2">
+      <section className="grid grid-cols-1 gap-3">
         <div className="space-y-2">
           <label htmlFor="custom-minutes" className="block text-sm font-medium text-ink">
             Custom minutes
