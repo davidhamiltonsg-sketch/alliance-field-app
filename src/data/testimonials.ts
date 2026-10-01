@@ -6,12 +6,12 @@ export interface Testimonial {
 export const coupleTestimonials: Testimonial[] = [
   {
     quote:
-      "Switching to the “Team Frame” mindset changed how we fight. Instead of treating each other like the enemy during a disagreement, we actually feel like we’re on the same side of the problem now.",
+      "Switching to the “Team Frame” mindset changed how we fight. Instead of treating each other like the enemy during a disagreement, we actually feel like we're on the same side of the problem now.",
     names: "Chloe & Ben",
   },
   {
     quote:
-      "My partner and I used to get trapped in this exhausting pursuer-withdrawer loop whenever we argued, but learning to use a timed Pause + Return completely changed our dynamic. Knowing there’s a set time to come back means taking space doesn’t trigger abandonment fears anymore.",
+      "My partner and I used to get trapped in this exhausting pursuer-withdrawer loop whenever we argued, but learning to use a timed Pause + Return completely changed our dynamic. Knowing there’s a set time to come back means taking space doesn't trigger abandonment fears anymore.",
     names: "Mateo & Leo",
   },
   {
@@ -21,17 +21,17 @@ export const coupleTestimonials: Testimonial[] = [
   },
   {
     quote:
-      "I used to carry all the mental load for our household and just build up silent resentment until I blew up. Doing the monthly Care Check-in (inside the Weekly Reset) changed everything because it finally made that invisible work visible without turning into an argument.",
+      "I used to carry all the mental load for our household and just build up silent resentment until I blew up. Doing the Care Check-in during our Weekly Reset changed everything because it finally made that invisible work visible without turning into an argument.",
     names: "Marcus & Taylor",
   },
   {
     quote:
-      "Hard talks used to derail our entire evening because we’d jump straight into complaints. Following the proper sequence — starting with warmth and safety before bringing up an issue — stops defences from going up immediately.",
+      "Hard talks used to derail our entire evening because we'd jump straight into complaints. Following the proper sequence — starting with warmth and safety before bringing up an issue — stops defenses from going up immediately.",
     names: "Liam & Jess",
   },
   {
     quote:
-      "We stopped relying on vague promises to try harder and started using concrete proof windows with observable behaviour, which finally allowed us to rebuild real trust.",
+      "We stopped relying on vague promises to try harder and started using concrete proof windows with observable behavior, which finally allowed us to rebuild real trust.",
     names: "David & Mei",
   },
 ];
@@ -39,17 +39,17 @@ export const coupleTestimonials: Testimonial[] = [
 export const individualTestimonials: Testimonial[] = [
   {
     quote:
-      "As someone who tends to over-analyse and optimise everything, the Sun Memory protocol saved me from turning my relationship into a constant performance review. Being able to pull the plug on all system-talk gave our unforced ease back.",
+      "As someone who tends to over-analyze and optimize everything, the Sun Memory protocol saved me from turning my relationship into a constant performance review. Being able to pull the plug on all system-talk gave our unforced ease back.",
     names: "Alex",
   },
   {
     quote:
-      "Running the Layer Scan saved us from barking up the wrong tree when things felt off. Instead of treating a basic fatigue or atmosphere problem like a massive relationship crisis, we knew exactly which layer to stabilise first.",
+      "Running the Layer Scan saved us from barking up the wrong tree when things felt off. Instead of treating a basic fatigue or atmosphere problem like a massive relationship crisis, we knew exactly which layer to stabilize first.",
     names: "Devon",
   },
   {
     quote:
-      "Doing the Consistency Pact on my own each week has been an eye-opener for checking my own blind spots. It lets me look at where my words and actions didn’t match up under stress without feeling like I’m putting my partner on trial.",
+      "Doing the Consistency Pact on my own each week has been an eye-opener for checking my own blind spots. It lets me look at where my words and actions didn't match up under stress without feeling like I'm putting my partner on trial.",
     names: "Julian",
   },
   {

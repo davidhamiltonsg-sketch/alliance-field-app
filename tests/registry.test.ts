@@ -56,8 +56,11 @@ function userText(file: string): string[] {
 
 // User-facing copy: all data (except the registry and icon geometry), every
 // page and component, and the libraries that write report or calendar text.
+// testimonials.ts is excluded from every copy scan (curly quotes, British
+// spelling, banned wording, terminology): those are real people's words and
+// stay verbatim, as they were given. Never edit them to pass a test.
 const scanned = [
-  ...walk(join(src, "data")).filter((f) => /\.(json|ts)$/.test(f) && !/registry\.json$|icons\.ts$/.test(f)),
+  ...walk(join(src, "data")).filter((f) => /\.(json|ts)$/.test(f) && !/registry\.json$|icons\.ts$|testimonials\.ts$/.test(f)),
   ...walk(join(src, "app")).filter((f) => f.endsWith(".tsx")),
   ...walk(join(src, "components")).filter((f) => f.endsWith(".tsx")),
   join(src, "lib/calibration.ts"),
