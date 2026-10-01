@@ -1,7 +1,8 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { BOT_UA_SOURCE } from "./boot";
 
 /**
  * Opening splash. Server-rendered so there is no flash of the page before it,
@@ -23,7 +24,7 @@ const FULL_MS = 1950; // fade starts; gone by ~2.37 s
 const SHORT_MS = 260;
 const REDUCED_MS = 700;
 const FADE_MS = 420;
-const BOT = /bot|crawler|spider|crawling|slurp|lighthouse|preview/i;
+const BOT = new RegExp(BOT_UA_SOURCE, "i");
 
 // First-time visitors get the serious tagline. Returning visitors (mode
 // "short") get one of these instead — picked once per load, not a cycle.
@@ -76,7 +77,6 @@ function splashElapsed() {
 
 export function Splash() {
   const router = useRouter();
-  const pathname = usePathname();
   const [phase, setPhase] = useState<Phase>("css");
   // Server render (and hydration) use the first-visit tagline; the client then
   // switches to a return tagline when the boot script marked this a return visit.
@@ -109,8 +109,6 @@ export function Splash() {
     plan.current = { toIntro, leaveAt };
     const list = timers.current;
 
-    if (toIntro) router.prefetch("/intro");
-
     const now = splashElapsed();
     // Hydrated after the CSS fallback already finished: stay out of the way.
     const tooLate = now > leaveAt + FADE_MS;
@@ -123,20 +121,12 @@ export function Splash() {
 
     list.push(window.setTimeout(() => setPhase((p) => (p === "css" ? "js" : p)), 0));
     const remaining = Math.max(0, leaveAt - now);
-    if (toIntro) {
-      list.push(window.setTimeout(handOff, Math.max(0, remaining - 260)));
-    }
+    // Fallback for when the boot script couldn't redirect: move to the intro
+    // straight away, underneath the splash, so it's ready when the splash lifts.
+    if (toIntro) handOff();
     list.push(window.setTimeout(leave, remaining));
     return () => list.forEach(clearTimeout);
   }, [handOff, leave, router]);
-
-  // Once the intro has taken over, make sure we fade promptly.
-  useEffect(() => {
-    if (pathname === "/intro" && phase === "js" && plan.current && !plan.current.toIntro) {
-      const t = window.setTimeout(leave, 120);
-      return () => clearTimeout(t);
-    }
-  }, [pathname, phase, leave]);
 
   const skip = useCallback(() => {
     handOff();

@@ -26,12 +26,70 @@ npm run dev     # http://localhost:3000
 | `npm start`         | Serve the production build.                                                  |
 | `npm run lint`      | ESLint (Next core-web-vitals + TypeScript).                                  |
 | `npm run typecheck` | `tsc --noEmit`.                                                              |
-| `npm test`          | Vitest: calibration scoring, storage, `.ics`, timer, data consistency.       |
+| `npm test`          | Vitest: calibration, storage, `.ics`, timer, data consistency, lock/proxy, security headers, service worker. |
 | `npm run icons`     | Regenerate icons and iOS launch images only.                                 |
 | `npm run sw`        | Regenerate `public/sw.js` only.                                              |
 
-CI (`.github/workflows/ci.yml`) runs `npm ci`, lint, `tsc --noEmit`, tests and
-the build on every push and pull request.
+CI (`.github/workflows/ci.yml`) runs `npm ci`, `npm audit --omit=dev
+--audit-level=high`, lint, `tsc --noEmit`, tests and the build on every push
+and pull request.
+
+## Environment variables
+
+All optional. `NEXT_PUBLIC_*` values are baked in at **build time**: set them
+in Vercel's project env vars (or `.env.local` locally) and redeploy.
+
+| Variable                      | Purpose                                                                                                   |
+| ----------------------------- | --------------------------------------------------------------------------------------------------------- |
+| `LAUNCH_ACCESS_CODE`          | Turns on the pre-launch lock (see below). Unset = launched, no lock.                                      |
+| `LAUNCH_COOKIE_SECRET`        | Key for the access cookie's HMAC. Recommended while locked; if unset, a key is derived from the code.      |
+| `NEXT_PUBLIC_CONTACT_EMAIL`   | Contact address on /privacy and the signup mailto: fallback. Default `hello@allianceprotocols.com`.        |
+| `NEXT_PUBLIC_FULL_SYSTEM_URL` | https store page for the Manual + Field Kit. Unset: the buy button is replaced by "Coming soon".           |
+| `NEXT_PUBLIC_SIGNUP_ENDPOINT` | Email signup endpoint (see *Email signup* below). Its origin is added to the CSP.                          |
+
+## Pre-launch lock
+
+While `LAUNCH_ACCESS_CODE` is set, `src/proxy.ts` sends every page except
+`/help`, `/privacy` and `/unlock` to `/unlock`, which asks for the code
+(case-insensitive, surrounding spaces ignored). Locked pages are `noindex`,
+and `/sw.js` 404s so a locked visitor never installs the offline worker.
+
+- The right code sets `ap_access` (httpOnly, Secure, SameSite=Lax, 30 days)
+  holding `HMAC-SHA256(key, code)`, never the code. The key is
+  `LAUNCH_COOKIE_SECRET`, or (if unset) derived from the code, which is fine
+  for a gate whose only secret is the code. Set a long random
+  `LAUNCH_COOKIE_SECRET` so a leaked cookie can't be brute-forced offline;
+  changing it signs everyone out.
+- Codes and cookies are compared in constant time. A wrong code waits
+  ~600 ms before answering; malformed bodies bounce back with an error.
+- After unlocking, `next` must be a same-origin path (backslashes and control
+  characters are rejected, then the URL must resolve to the same origin).
+- **Rate limiting:** the delay only slows a single client. On Vercel, add a
+  Firewall rate-limit rule for `POST /unlock` (for example 10 requests per
+  minute per IP) before sharing the code widely.
+- **To launch:** delete `LAUNCH_ACCESS_CODE` (and `LAUNCH_COOKIE_SECRET`) in
+  Vercel and redeploy. `/unlock` then 404s, the cookie is no longer set, and
+  existing ones simply expire.
+
+## Security headers
+
+`next.config.ts` sends, on every response (see `src/lib/security-headers.ts`):
+a Content-Security-Policy (`default-src 'self'`; no third-party scripts,
+styles, fonts or frames; `img-src 'self' data: blob:`; `connect-src` and
+`form-action` add only the signup endpoint's origin; `frame-ancestors
+'none'`; `object-src 'none'`; `base-uri 'self'`), `X-Content-Type-Options:
+nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`,
+`Permissions-Policy: camera=(), microphone=(), geolocation=()`,
+`X-Frame-Options: DENY` and `Cross-Origin-Opener-Policy: same-origin`, with
+`X-Powered-By` turned off. `sw.js` is served `no-cache`.
+
+`script-src` keeps `'unsafe-inline'`: the App Router streams its page data as
+inline `self.__next_f.push(…)` scripts whose contents change per page and per
+build, so they can't be allow-listed by hash, and adding any hash would make
+browsers ignore `'unsafe-inline'` and break hydration. The strict alternative,
+a per-request nonce, forces every page to render dynamically (no static HTML
+or CDN caching), which this offline-first app doesn't need: it renders no
+user-supplied HTML. `'unsafe-eval'` is added only under `next dev`.
 
 ## Prebuild: icons and launch images (sharp)
 
@@ -74,10 +132,12 @@ chooses to submit the "Get updates" form (see *Email signup* below). Everything 
 under keys starting with `alliance.` (see `src/lib/storage.ts`): pause return
 time, Weekly Reset draft and history, calibration answers (and Partner A's
 privacy choice), favourites, recent protocols, and whether the intro was
-seen. The offline copy of the app lives in Cache Storage.
+seen. The offline copy of the app lives in Cache Storage. The only cookie is
+the pre-launch `ap_access` cookie, and only while the lock is on.
 
 **Delete all my data** (`/help#your-data`, linked from About) calls
-`wipeAll()`, which removes every `alliance.*` key and clears Cache Storage.
+`wipeAll()`, which removes every `alliance.*` key, clears Cache Storage and
+unregisters the service worker.
 The Weekly Reset "Clear entries" button can also clear history.
 
 On a shared device, Profile Calibration asks Partner A before the hand-over
@@ -87,8 +147,9 @@ sees only the couple report.
 ## Email signup and free download
 
 The "Get the full system" card (`src/components/GetFullSystem.tsx`, on
-About) has a Gumroad link (`FULL_SYSTEM_URL` in `src/lib/links.ts`), a free
-printable Situation Map and an email signup.
+About) has the store link (`FULL_SYSTEM_URL` from
+`NEXT_PUBLIC_FULL_SYSTEM_URL`; "Coming soon" when unset), a free printable
+Situation Map and an email signup.
 
 | Variable                      | Purpose                                                                                     |
 | ----------------------------- | ------------------------------------------------------------------------------------------- |
@@ -99,13 +160,16 @@ printable Situation Map and an email signup.
   or anything that accepts a form-encoded `email`.
 - It is read at **build time** (it's a `NEXT_PUBLIC_` variable): set it in
   Vercel's project env vars, or `.env.local` for local builds, then rebuild.
-- Unset: the form falls back to opening a `mailto:` to `SIGNUP_CAPTURE_EMAIL`.
-- The form shows inline success (`role="status"`) and error (`role="alert"`,
-  with a mailto fallback). No third-party scripts are loaded.
+- Unset: the form falls back to opening a `mailto:` to `CONTACT_EMAIL`.
+- Cross-origin endpoints are posted with `mode: "no-cors"` (the response is
+  opaque), so "Sent — check your inbox to confirm" means the request was
+  delivered, not that the address was accepted; a network failure shows an
+  error (`role="alert"`) with a retry and a mailto fallback. Same-origin
+  endpoints also check the HTTP status. No third-party scripts are loaded.
 
 The printable map is served from `public/downloads/situation-map.pdf`
-(`SITUATION_MAP_PDF`). Only `public/downloads/.gitkeep` is committed: drop the
-real PDF in before deploying, or the link 404s.
+(`SITUATION_MAP_PDF`), which is committed. Replace that file when the printed
+map changes (it must match the Kit's Situation Map rows).
 
 ## Safety page
 

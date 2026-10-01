@@ -19,14 +19,21 @@ export function GetFullSystem() {
           one-time purchase.
         </p>
         <p className="text-[15px] font-medium leading-normal text-accent">{POSITIONING_LINE}</p>
-        <a
-          href={FULL_SYSTEM_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-accent px-4 text-[15px] font-semibold text-paper shadow-[0_6px_16px_-8px_rgb(61_90_76/0.7)] transition hover:bg-[#35503f] active:scale-[0.99]"
-        >
-          Get the full system
-        </a>
+        {FULL_SYSTEM_URL ? (
+          <a
+            href={FULL_SYSTEM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-accent px-4 text-[15px] font-semibold text-paper shadow-[0_6px_16px_-8px_rgb(61_90_76/0.7)] transition hover:bg-[#35503f] active:scale-[0.99]"
+          >
+            Get the full system
+            <span className="sr-only"> (opens in a new tab)</span>
+          </a>
+        ) : (
+          <p className="flex min-h-12 w-full items-center justify-center rounded-xl border border-dashed border-accent/35 px-4 text-[15px] font-medium text-accent">
+            Coming soon — sign up below to hear first.
+          </p>
+        )}
 
         <div className="border-t border-rule/[0.08] pt-3">
           <SituationMapDownload />

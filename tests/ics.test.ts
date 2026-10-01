@@ -6,13 +6,20 @@ import {
   WEEKLY_RESET_RRULE,
   buildKeepGoingIcs,
   buildStartPlanIcs,
+  buildPauseReturnIcs,
   buildWeeklyResetIcs,
+  escapeText,
+  foldLine,
   keepGoingIcsText,
+  pauseReturnIcsText,
   nextFirstSundayAt,
   nextSundayAt,
 } from "@/lib/ics";
 
 let captured: Blob | null = null;
+
+/** RFC 5545 unfolding: a CRLF followed by one space joins the lines. */
+const unfold = (text: string) => text.replace(/\r\n /g, "");
 
 beforeEach(() => {
   captured = null;
@@ -26,7 +33,7 @@ afterEach(() => vi.restoreAllMocks());
 async function build(from: Date) {
   const result = buildWeeklyResetIcs(from);
   const text = await captured!.text();
-  return { result, text, lines: text.split("\r\n") };
+  return { result, text, lines: unfold(text).split("\r\n") };
 }
 
 const field = (lines: string[], name: string) => lines.find((l) => l.startsWith(`${name}:`))?.slice(name.length + 1);
@@ -74,7 +81,7 @@ describe("buildStartPlanIcs", () => {
     const from = new Date(2026, 2, 2, 9, 30);
     const result = buildStartPlanIcs("19:45", from);
     expect(result.filename).toBe("alliance-start-plan.ics");
-    const lines = (await captured!.text()).split("\r\n");
+    const lines = unfold(await captured!.text()).split("\r\n");
     expect(field(lines, "RRULE")).toBe("FREQ=DAILY;COUNT=7");
     const start = new Date(2026, 2, 3, 19, 45);
     const iso = (d: Date) => d.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
@@ -86,7 +93,7 @@ describe("buildStartPlanIcs", () => {
 
 describe("keep it going (weekly Reset + monthly Care Check-in)", () => {
   const events = (text: string) =>
-    text
+    unfold(text)
       .split("BEGIN:VEVENT")
       .slice(1)
       .map((chunk) => chunk.split("END:VEVENT")[0].split("\r\n").filter(Boolean));
@@ -102,7 +109,7 @@ describe("keep it going (weekly Reset + monthly Care Check-in)", () => {
   it("is one CRLF calendar with exactly two events", () => {
     const text = keepGoingIcsText("19:00", new Date(2026, 8, 30, 12, 0));
     expect(text).not.toMatch(/[^\r]\n/);
-    const lines = text.split("\r\n");
+    const lines = unfold(text).split("\r\n");
     expect(lines[0]).toBe("BEGIN:VCALENDAR");
     expect(lines.at(-1)).toBe("END:VCALENDAR");
     expect(events(text)).toHaveLength(2);
@@ -147,5 +154,55 @@ describe("keep it going (weekly Reset + monthly Care Check-in)", () => {
     expect(result).toEqual({ url: "blob:test", filename: "alliance-keep-it-going.ics" });
     expect(captured!.type).toBe("text/calendar;charset=utf-8");
     expect(await captured!.text()).toContain("RRULE:FREQ=MONTHLY;BYDAY=1SU");
+  });
+});
+
+describe("escaping and folding (shared by every calendar)", () => {
+  it("escapes backslash, semicolon, comma and newlines", () => {
+    expect(escapeText("a\\b;c,d\ne\r\nf")).toBe("a\\\\b\\;c\\,d\\ne\\nf");
+    expect(escapeText("plain")).toBe("plain");
+  });
+
+  it("folds at 75 octets without splitting UTF-8 characters", () => {
+    const long = "DESCRIPTION:" + "é—".repeat(60);
+    const folded = foldLine(long);
+    const physical = folded.split("\r\n");
+    expect(physical.length).toBeGreaterThan(1);
+    const enc = new TextEncoder();
+    for (const line of physical) expect(enc.encode(line).length).toBeLessThanOrEqual(75);
+    for (const line of physical.slice(1)) expect(line.startsWith(" ")).toBe(true);
+    expect(unfold(folded)).toBe(long);
+    expect(foldLine("SHORT:x")).toBe("SHORT:x");
+  });
+
+  it("every generated calendar has lines of at most 75 octets and escaped text", async () => {
+    const enc = new TextEncoder();
+    const texts = [
+      keepGoingIcsText("19:00", new Date(2026, 8, 30, 12, 0)),
+      pauseReturnIcsText(new Date("2026-09-30T20:00:00Z"), new Date("2026-09-30T19:00:00Z")),
+    ];
+    buildWeeklyResetIcs(new Date("2026-03-02T09:30:00Z"));
+    texts.push(await captured!.text());
+    buildStartPlanIcs("19:45", new Date(2026, 2, 2, 9, 30));
+    texts.push(await captured!.text());
+    for (const text of texts) {
+      for (const line of text.split("\r\n")) expect(enc.encode(line).length).toBeLessThanOrEqual(75);
+      for (const line of unfold(text).split("\r\n").filter((l) => /^(SUMMARY|DESCRIPTION):/.test(l))) {
+        expect(line.slice(line.indexOf(":") + 1)).not.toMatch(/(^|[^\\])[,;]/);
+      }
+    }
+  });
+});
+
+describe("pause return time", () => {
+  it("is one event at the return time with an alarm", async () => {
+    const at = new Date("2026-09-30T20:15:00Z");
+    const result = buildPauseReturnIcs(at, new Date("2026-09-30T19:00:00Z"));
+    expect(result.filename).toBe("alliance-return-time.ics");
+    const lines = unfold(await captured!.text()).split("\r\n");
+    expect(field(lines, "DTSTART")).toBe("20260930T201500Z");
+    expect(lines).toContain("BEGIN:VALARM");
+    expect(lines).toContain("TRIGGER:PT0M");
+    expect(field(lines, "DESCRIPTION")).toContain("get outside help");
   });
 });

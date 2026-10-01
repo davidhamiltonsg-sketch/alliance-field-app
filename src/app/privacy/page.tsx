@@ -3,7 +3,7 @@ import { Marker } from "@/components/Marker";
 import { PageHeader } from "@/components/PageHeader";
 import { SectionLabel } from "@/components/SectionLabel";
 import { ArrowLeft } from "@/components/icons";
-import { SIGNUP_CAPTURE_EMAIL } from "@/lib/links";
+import { CONTACT_EMAIL } from "@/lib/links";
 
 export const metadata = { title: "Privacy notice" };
 
@@ -18,7 +18,7 @@ const onDevice = [
   "The offline copy of the app itself",
 ];
 
-const mailto = `mailto:${SIGNUP_CAPTURE_EMAIL}`;
+const mailto = `mailto:${CONTACT_EMAIL}`;
 
 export default function PrivacyPage() {
   return (
@@ -43,7 +43,7 @@ export default function PrivacyPage() {
             Questions, or a request to see, correct or delete data we hold
             about you:{" "}
             <a href={mailto} className="font-medium text-accent underline underline-offset-4">
-              {SIGNUP_CAPTURE_EMAIL}
+              {CONTACT_EMAIL}
             </a>
             .
           </p>
@@ -104,14 +104,14 @@ export default function PrivacyPage() {
               the email service the site uses to run the mailing list, which
               stores it on our behalf. If that form isn&apos;t set up, your own
               email app opens instead and the message comes straight to{" "}
-              {SIGNUP_CAPTURE_EMAIL}.
+              {CONTACT_EMAIL}.
             </li>
             <li className="list-disc">
               <strong className="font-medium text-ink">Leaving:</strong> every
               email has an unsubscribe link. To have your address deleted
               altogether, email{" "}
               <a href={mailto} className="font-medium text-accent underline underline-offset-4">
-                {SIGNUP_CAPTURE_EMAIL}
+                {CONTACT_EMAIL}
               </a>
               .
             </li>
@@ -121,13 +121,22 @@ export default function PrivacyPage() {
 
       <section aria-labelledby="tracking-heading" className="space-y-3">
         <SectionLabel>
-          <span id="tracking-heading">No analytics, cookies or trackers</span>
+          <span id="tracking-heading">No analytics or trackers</span>
         </SectionLabel>
         <div className="card space-y-3 px-4 py-4 text-[15px] leading-normal text-ink">
           <p>
-            The app has no analytics, no advertising, no tracking pixels and no
-            cookies. It loads no third-party scripts; fonts are served from the
-            app itself.
+            The app has no analytics, no advertising and no tracking pixels. It
+            loads no third-party scripts; fonts are served from the app itself.
+          </p>
+          <p>
+            <strong className="font-medium">One cookie, only before launch.</strong>{" "}
+            While the app is in early access, entering the access code sets a
+            single cookie (<code className="text-[14px]">ap_access</code>) so
+            you don&apos;t have to type the code again. It holds a signed token,
+            not the code and nothing about you; page scripts can&apos;t read it
+            (httpOnly); it expires after 30 days; and it isn&apos;t used for
+            tracking. Once early access ends, it is no longer set. Otherwise
+            the app sets no cookies.
           </p>
           <p>
             <strong className="font-medium">Hosting.</strong> The app is hosted

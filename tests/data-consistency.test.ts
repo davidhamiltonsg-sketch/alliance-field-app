@@ -11,6 +11,8 @@ import { START_PLAN_DAYS, startDays } from "@/data/start";
 import { TOGETHER_CITATION, commonMoves, togetherFaq, togetherTools, whoFor } from "@/data/together";
 import { protocolDiagrams } from "@/data/visuals/protocol-diagrams";
 import { precacheUrls } from "../scripts/generate-sw.mjs";
+import { ACCESS_COOKIE } from "@/lib/launch-lock";
+import { CONTACT_EMAIL, FULL_SYSTEM_URL, httpsUrlOrNull } from "@/lib/links";
 
 const cardsDir = join(__dirname, "../src/data/cards");
 const cardFiles = readdirSync(cardsDir).filter((f) => f.endsWith(".json"));
@@ -96,6 +98,81 @@ describe("CANON numbers and wording", () => {
     expect(getProtocol("unity-anchor")!.warn).toContain("never how much access a relative gets");
     expect(getProtocol("trust-recovery")!.warn).toContain("never becomes monitoring");
     expect(JSON.stringify(getProtocol("unity-anchor"))).not.toMatch(/how much access they get/);
+  });
+});
+
+describe("CANON round 3", () => {
+  const LEAVING = "Deciding not to rebuild, or to end the relationship, is a valid outcome of this protocol, not a failure of it.";
+  const all = (slug: string) => JSON.stringify(getProtocol(slug));
+
+  it("says leaving is valid on Trust Recovery, Full Recovery and the Uninvestment Check", () => {
+    for (const slug of ["trust-recovery", "full-recovery", "uninvestment-check"]) {
+      expect(getProtocol(slug)!.note, slug).toBe(LEAVING);
+    }
+    expect(componentSource("ProtocolLayout")).toContain("protocol.note");
+  });
+
+  it("Uninvestment Check: sign 4 wording, contempt skips the count, routing", () => {
+    const card = getProtocol("uninvestment-check")!;
+    expect(card.activity).toContain("(4) doing more on your own in place of shared time (time apart is healthy)");
+    const contempt = "If contempt is one of your signs, skip the count: contempt means stop and get outside support first.";
+    expect(card.activity).toContain(contempt);
+    expect(card.steps.join(" ")).toContain(contempt);
+    expect(card.warn).toContain(contempt);
+    expect(card.steps.join(" ")).toContain("Full Recovery within a week");
+    expect(card.crossLinks.map((c) => c.href)).toContain("/protocols/trust-recovery");
+  });
+
+  it("Micro-Repair uses the one canonical window", () => {
+    const text = [all("micro-repair"), JSON.stringify(protocolDiagrams["micro-repair"])].join(" ");
+    expect(text.toLowerCase()).toContain("start within minutes if you can; complete within 24 hours");
+    expect(text).not.toMatch(/48[- ]hour|within (10|ten) minutes/i);
+  });
+
+  it("Full Recovery and Trust Recovery handle one-sided breaches", () => {
+    const full = getProtocol("full-recovery")!.steps.join(" ");
+    expect(full).toContain("only that partner acknowledges impact; the hurt partner is never asked to confess in return");
+    expect(full).toContain("only if it's true for both of you");
+    expect(getProtocol("trust-recovery")!.steps[0]).toContain("never asked to confess in return");
+  });
+
+  it("Intimacy Pact never routes repeated pressure to in-house tools only", () => {
+    const card = getProtocol("intimacy-pact")!;
+    const last = card.steps.at(-1)!;
+    expect(last).toMatch(/Green Rule or Trust Recovery/);
+    expect(last).toMatch(/If it happens again, or either of you feels unable to say no, stop and use the Help Lines/);
+    expect(card.warn).toMatch(/Help Lines/);
+    expect(card.safetyLink).toBe(true);
+  });
+
+  it("never asks to track or verify the other partner", () => {
+    const text = JSON.stringify([getProtocol("trust-recovery"), getProtocol("proof-protocol")]);
+    expect(text).not.toMatch(/\btrack(ing)? (the facts|it)\b|\bverify\b/i);
+    expect(text).toContain("see and review at the agreed check-in");
+  });
+
+  it("Weekly Reset part 4 is Requests, part 5 is Next steps", () => {
+    const card = getProtocol("weekly-reset")!;
+    expect(card.steps[3]).toMatch(/^Requests — /);
+    expect(card.steps[4]).toMatch(/^Next steps — /);
+    expect(protocolDiagrams["weekly-reset"].steps.map((s) => s.title).slice(3)).toEqual(["Requests", "Next steps"]);
+    expect(componentSource("WeeklyResetWizard")).toContain('title="Requests"');
+    expect(componentSource("WeeklyResetWizard")).not.toContain("Requests (5 min, with next steps)");
+  });
+
+  it("Situation Map (app and intro diagram) splits trust breach from pulling away and routes outside pressure to Unity Anchor", () => {
+    const byId = Object.fromEntries(situations.map((s) => [s.id, s]));
+    expect(byId["trust-breach"].primaryHref).toBe("/protocols/trust-recovery");
+    expect(byId["trust-breach"].firstMove).toContain("Trust Recovery + Proof");
+    expect(byId["detachment"].primaryHref).toBe("/protocols/uninvestment-check");
+    expect(byId["detachment"].label).toMatch(/Pulling away/);
+    expect(byId["outside-pressure"].primaryHref).toBe("/protocols/unity-anchor");
+    expect(byId["outside-pressure"].label).toMatch(/Outside pressure, disapproval or jealousy about others/);
+    const diagrams = readFileSync(join(__dirname, "../src/components/intro/diagrams.tsx"), "utf8");
+    expect(diagrams).toContain('q: ["Trust breach?"]');
+    expect(diagrams).toContain('q: ["Pulling away?"]');
+    expect(diagrams).toContain('a: ["Unity Anchor"]');
+    expect(diagrams).not.toContain("Trust breach or");
   });
 });
 
@@ -196,9 +273,17 @@ describe("/privacy", () => {
     expect(src).toContain("Dr Zhongming Shi");
     expect(src).toContain("PDPA");
     expect(src).toContain("/help#your-data");
-    expect(src).toContain("SIGNUP_CAPTURE_EMAIL");
+    expect(src).toContain("CONTACT_EMAIL");
     expect(src).toMatch(/Vercel/);
     expect(src).toMatch(/under\s+18/);
+  });
+
+  it("discloses the pre-launch access cookie by its real name and lifetime", () => {
+    expect(src).toContain(ACCESS_COOKIE);
+    expect(src).toMatch(/httpOnly/);
+    expect(src).toMatch(/30 days/);
+    expect(src).not.toMatch(/analytics, cookies or trackers|and no\s+cookies/i);
+    expect(componentSource("DeleteAllData")).toMatch(/cookie/);
   });
 
   it("is linked from the email signup, Help (Your data) and About", () => {
@@ -252,5 +337,17 @@ describe("banned claims", () => {
   it("new pages never say evidence-based, proven or clinically", () => {
     const text = [pageSource("privacy"), pageSource("together"), componentSource("KeepItGoing"), JSON.stringify([commonMoves, togetherFaq, togetherTools, whoFor])].join(" ");
     expect(text).not.toMatch(/evidence[- ]based|\bproven\b|clinically/i);
+  });
+});
+
+describe("contact and store links", () => {
+  it("has a real contact address and never links to a placeholder store", () => {
+    expect(CONTACT_EMAIL).toMatch(/^[^@\s]+@[^@\s]+\.[a-z]{2,}$/);
+    expect(CONTACT_EMAIL).not.toMatch(/thealliance\.app/);
+    if (!process.env.NEXT_PUBLIC_FULL_SYSTEM_URL) expect(FULL_SYSTEM_URL).toBeNull();
+    expect(httpsUrlOrNull("http://example.com")).toBeNull();
+    expect(httpsUrlOrNull("javascript:alert(1)")).toBeNull();
+    expect(httpsUrlOrNull("https://store.example/p")).toBe("https://store.example/p");
+    expect(componentSource("GetFullSystem")).toMatch(/Coming soon/);
   });
 });

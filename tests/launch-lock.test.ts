@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { accessToken, codesMatch, isPublicPath, safeNext } from "../src/lib/launch-lock";
+import { accessToken, codesMatch, isPublicPath, safeNext, timingSafeEqual, tokenMatches } from "../src/lib/launch-lock";
 import { precacheUrls } from "../scripts/generate-sw.mjs";
 
 describe("launch lock", () => {
@@ -11,22 +11,57 @@ describe("launch lock", () => {
   it("only redirects to same-site paths after unlocking", () => {
     expect(safeNext("/start")).toBe("/start");
     expect(safeNext("/protocols/pause-and-return?x=1")).toBe("/protocols/pause-and-return?x=1");
-    for (const bad of ["https://evil.example", "//evil.example", "evil", "", null, undefined, "/unlock?next=/"]) {
+    expect(safeNext("/a/../b")).toBe("/b");
+    for (const bad of ["https://evil.example", "//evil.example", "evil", "", null, undefined, "/unlock?next=/", "/unlock/", "/unlock"]) {
       expect(safeNext(bad)).toBe("/");
     }
   });
 
-  it("compares codes ignoring case and surrounding spaces", () => {
-    expect(codesMatch("  Alliance-2026 ", "alliance-2026")).toBe(true);
-    expect(codesMatch("alliance-2025", "alliance-2026")).toBe(false);
+  it("rejects backslash and control-character open-redirect vectors", () => {
+    for (const bad of [
+      "/\\evil.com",
+      "/\\\\evil.com",
+      "/\t/evil.com",
+      "/\n/evil.com",
+      "/\r//evil.com",
+      "/\u0000/evil.com",
+      "/\u007f/evil.com",
+      "///evil.com",
+      "/" + "a".repeat(3000),
+    ]) {
+      expect(safeNext(bad), JSON.stringify(bad)).toBe("/");
+    }
+    // Encoded characters stay encoded in the path, so they can't change the origin.
+    expect(safeNext("/%2F%2Fevil.com")).toBe("/%2F%2Fevil.com");
+    expect(new URL(safeNext("/%2F%2Fevil.com"), "https://allianceprotocols.com").origin).toBe("https://allianceprotocols.com");
   });
 
-  it("stores a hash, not the code, and the hash is stable", async () => {
+  it("compares codes ignoring case and surrounding spaces", async () => {
+    expect(await codesMatch("  Alliance-2026 ", "alliance-2026")).toBe(true);
+    expect(await codesMatch("alliance-2025", "alliance-2026")).toBe(false);
+    expect(await codesMatch("", "alliance-2026")).toBe(false);
+    expect(await codesMatch("a".repeat(10_000), "alliance-2026")).toBe(false);
+  });
+
+  it("compares tokens in constant time, and only equal-length strings can match", () => {
+    expect(timingSafeEqual("abc", "abc")).toBe(true);
+    expect(timingSafeEqual("abc", "abd")).toBe(false);
+    expect(timingSafeEqual("abc", "abcd")).toBe(false);
+    expect(tokenMatches(undefined, "abc")).toBe(false);
+    expect(tokenMatches("abc", "abc")).toBe(true);
+  });
+
+  it("stores an HMAC, not the code; stable, and keyed by LAUNCH_COOKIE_SECRET when set", async () => {
     const a = await accessToken("alliance-2026");
     expect(a).toMatch(/^[0-9a-f]{64}$/);
     expect(a).not.toContain("alliance");
-    expect(await accessToken(" alliance-2026 ")).toBe(a);
+    expect(await accessToken(" ALLIANCE-2026 ")).toBe(a);
     expect(await accessToken("other")).not.toBe(a);
+    const keyed = await accessToken("alliance-2026", "s3cret");
+    expect(keyed).toMatch(/^[0-9a-f]{64}$/);
+    expect(keyed).not.toBe(a);
+    expect(await accessToken("alliance-2026", "s3cret")).toBe(keyed);
+    expect(await accessToken("alliance-2026", "rotated")).not.toBe(keyed);
   });
 
   it("never caches the lock screen offline", () => {

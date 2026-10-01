@@ -1,17 +1,32 @@
 /**
- * Store / contact links used by the free-app "Get the full system" CTA.
+ * Contact and store links. Both come from build-time env vars (see README):
  *
- * TODO(david): swap these placeholders for your real Gumroad product URL and
- * a capture address you actually check — see the delivery notes.
+ * - NEXT_PUBLIC_CONTACT_EMAIL: where privacy requests and the signup mailto:
+ *   fallback go. Defaults to hello@allianceprotocols.com.
+ * - NEXT_PUBLIC_FULL_SYSTEM_URL: the store page for the Manual + Field Kit.
+ *   Must be an https URL; when unset (or invalid) the "Get the full system"
+ *   button is replaced by "Coming soon" instead of linking to a placeholder.
  */
-export const FULL_SYSTEM_URL = "https://thealliance.gumroad.com/l/complete-bundle";
-export const SIGNUP_CAPTURE_EMAIL = "hello@thealliance.app";
+export const CONTACT_EMAIL = process.env.NEXT_PUBLIC_CONTACT_EMAIL?.trim() || "hello@allianceprotocols.com";
+
+/** Returns the URL when it is a valid https URL, else null. */
+export function httpsUrlOrNull(value: string | undefined | null): string | null {
+  if (!value?.trim()) return null;
+  try {
+    const url = new URL(value.trim());
+    return url.protocol === "https:" ? url.toString() : null;
+  } catch {
+    return null;
+  }
+}
+
+export const FULL_SYSTEM_URL = httpsUrlOrNull(process.env.NEXT_PUBLIC_FULL_SYSTEM_URL);
 
 /**
  * Email-signup endpoint (Buttondown, ConvertKit, Formspree or similar): the
  * form POSTs a form-encoded `email` field here. Set at build time via
  * NEXT_PUBLIC_SIGNUP_ENDPOINT; when unset, signup falls back to a mailto: to
- * SIGNUP_CAPTURE_EMAIL. This is the only thing the app ever sends.
+ * CONTACT_EMAIL. This is the only thing the app ever sends.
  */
 export const SIGNUP_ENDPOINT = process.env.NEXT_PUBLIC_SIGNUP_ENDPOINT?.trim() || "";
 

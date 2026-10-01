@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useSyncExternalStore } from "react";
 import {
   connectionCards,
   STAGE_META,
@@ -27,17 +27,29 @@ const accentClasses: Record<string, { bg: string; text: string; ring: string }> 
 
 type Filter = "all" | ConnectionStage;
 
-function buildDeck(filter: Filter) {
+function buildDeck(filter: Filter, shuffled = true) {
   const pool =
     filter === "all"
       ? connectionCards
       : connectionCards.filter((c) => c.stage === filter);
-  return shuffle(pool.map((c) => c.id));
+  const ids = pool.map((c) => c.id);
+  return shuffled ? shuffle(ids) : ids;
 }
 
+const noopSubscribe = () => () => {};
+
+/**
+ * The server (and hydration) render the deck in a fixed order so the HTML
+ * matches; once on the client the deck remounts shuffled.
+ */
 export function ConnectionCards() {
+  const onClient = useSyncExternalStore(noopSubscribe, () => true, () => false);
+  return <ConnectionDeck key={onClient ? "client" : "server"} shuffled={onClient} />;
+}
+
+function ConnectionDeck({ shuffled }: { shuffled: boolean }) {
   const [filter, setFilter] = useState<Filter>("all");
-  const [deck, setDeck] = useState<string[]>(() => buildDeck("all"));
+  const [deck, setDeck] = useState<string[]>(() => buildDeck("all", shuffled));
   const [index, setIndex] = useState(0);
   const [flipped, setFlipped] = useState(false);
   const [round, setRound] = useState(1);

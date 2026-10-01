@@ -3,14 +3,14 @@
 import Link from "next/link";
 import { useId, useState } from "react";
 import { PrimaryButton } from "./PrimaryButton";
-import { SIGNUP_CAPTURE_EMAIL, SIGNUP_ENDPOINT } from "@/lib/links";
+import { CONTACT_EMAIL, SIGNUP_ENDPOINT } from "@/lib/links";
 
 type Status = "idle" | "sending" | "done" | "error";
 
 /**
  * Email signup. With NEXT_PUBLIC_SIGNUP_ENDPOINT set, POSTs a form-encoded
  * `email` to it (Buttondown / ConvertKit / Formspree style) and shows inline
- * success or error. Without it, opens a mailto: to SIGNUP_CAPTURE_EMAIL.
+ * success or error (with a retry). Without it, opens a mailto: to CONTACT_EMAIL.
  * No third-party scripts; the email is the only data this app ever sends.
  */
 export function SignupForm() {
@@ -22,7 +22,7 @@ export function SignupForm() {
   const mailtoHref = (address: string) => {
     const subject = encodeURIComponent("Send me the Alliance system link");
     const body = encodeURIComponent(`Please add me to the list: ${address}`);
-    return `mailto:${SIGNUP_CAPTURE_EMAIL}?subject=${subject}&body=${body}`;
+    return `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
   };
 
   const submit = async (e: React.FormEvent) => {
@@ -38,29 +38,24 @@ export function SignupForm() {
 
     setStatus("sending");
     setError("");
+    const body = new URLSearchParams({ email: address }).toString();
+    const headers = { "Content-Type": "application/x-www-form-urlencoded" };
     try {
-      const res = await fetch(SIGNUP_ENDPOINT, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          Accept: "application/json",
-        },
-        body: new URLSearchParams({ email: address }).toString(),
-      });
-      if (!res.ok) throw new Error(`status ${res.status}`);
-      setStatus("done");
-    } catch (err) {
-      // A form-encoded POST is a CORS "simple request": it reaches services
-      // that don't send CORS headers (e.g. some embed endpoints) even though
-      // the browser then hides the response. So a network-level TypeError
-      // while online is treated as sent; offline or an HTTP error is not.
-      if (err instanceof TypeError && navigator.onLine) {
-        setStatus("done");
-        return;
+      const endpoint = new URL(SIGNUP_ENDPOINT, window.location.href);
+      if (endpoint.origin !== window.location.origin) {
+        // Cross-origin list services rarely send CORS headers, so post as a
+        // "no-cors" simple request: it is delivered, but the response is
+        // opaque. Resolving means it was sent; only a network failure throws.
+        await fetch(endpoint, { method: "POST", mode: "no-cors", headers, body });
+      } else {
+        const res = await fetch(endpoint, { method: "POST", headers: { ...headers, Accept: "application/json" }, body });
+        if (!res.ok) throw new Error(`status ${res.status}`);
       }
+      setStatus("done");
+    } catch {
       setError(
         navigator.onLine
-          ? "That didn't go through. Check the address and try again."
+          ? "That didn't go through. Check your connection and the address, then try again."
           : "You're offline. Try again when you have a connection."
       );
       setStatus("error");
@@ -79,7 +74,7 @@ export function SignupForm() {
       {status === "done" ? (
         <p role="status" className="mt-2 text-[15px] font-medium text-safety-text">
           {SIGNUP_ENDPOINT
-            ? "Thanks — you're on the list. Check your inbox to confirm."
+            ? "Sent — check your inbox to confirm."
             : "Your email app should open with a message ready to send."}
         </p>
       ) : (
@@ -104,7 +99,7 @@ export function SignupForm() {
             className="shrink-0 px-5"
             disabled={status === "sending"}
           >
-            {status === "sending" ? "Sending…" : "Notify me"}
+            {status === "sending" ? "Sending…" : status === "error" ? "Try again" : "Notify me"}
           </PrimaryButton>
         </form>
       )}

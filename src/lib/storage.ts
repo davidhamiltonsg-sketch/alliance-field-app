@@ -91,15 +91,25 @@ export function allianceKeys(): string[] {
 }
 
 /**
- * Deletes everything this app has stored on this device: every "alliance.*"
- * localStorage key and all Cache Storage entries (the offline copy of the
- * app). Nothing is stored anywhere else, so afterwards nothing is left.
+ * Deletes everything this app has stored in this browser: every "alliance.*"
+ * localStorage key, all Cache Storage entries (the offline copy of the app)
+ * and the service worker registration that keeps it. Nothing is stored on a
+ * server, so afterwards nothing from the app is left on this device (the
+ * worker registers again, empty, if the app is opened again).
  * Returns the number of localStorage keys removed.
  */
 export async function wipeAll(): Promise<number> {
   if (typeof window === "undefined") return 0;
   const keys = allianceKeys();
   keys.forEach(clearKey);
+  try {
+    if ("serviceWorker" in navigator) {
+      const registrations = await navigator.serviceWorker.getRegistrations();
+      await Promise.all(registrations.map((r) => r.unregister()));
+    }
+  } catch {
+    /* no service worker support (or blocked) — nothing registered */
+  }
   try {
     if ("caches" in window) {
       const names = await window.caches.keys();

@@ -63,8 +63,8 @@ export const situations: Situation[] = [
   },
   {
     id: "trust-breach",
-    label: "Trust has been broken",
-    description: "A betrayal, a lie, or a broken agreement.",
+    label: "Trust breach",
+    description: "Trust has been broken: a betrayal, a lie, or a broken agreement.",
     firstMove: "Safety first, then Trust Recovery + Proof",
     primaryHref: "/protocols/trust-recovery",
     secondaryHrefs: [
@@ -82,9 +82,9 @@ export const situations: Situation[] = [
   },
   {
     id: "detachment",
-    label: "I'm worried one of us is checking out",
-    description: "Several signs of pulling away, not just needing space.",
-    firstMove: "Run the Uninvestment Check, then Proof if you proceed",
+    label: "Pulling away / uninvestment",
+    description: "Worried one of you is checking out: several signs of pulling away, not just needing space.",
+    firstMove: "Run the Uninvestment Check (3 or more signs → Full Recovery within a week)",
     primaryHref: "/protocols/uninvestment-check",
     secondaryHrefs: [
       { label: "Full Recovery", href: "/protocols/full-recovery" },
@@ -94,8 +94,8 @@ export const situations: Situation[] = [
   },
   {
     id: "outside-pressure",
-    label: "We're getting pressure from outside",
-    description: "Family disapproval, discrimination, or judgment from others is landing on the relationship.",
+    label: "Outside pressure, disapproval or jealousy about others",
+    description: "Family disapproval, discrimination, judgment from others — or jealousy about people outside the relationship — is landing on the two of you.",
     firstMove: "Name it as external, then run the Unity Anchor",
     primaryHref: "/protocols/unity-anchor",
     secondaryHrefs: [

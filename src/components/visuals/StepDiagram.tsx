@@ -186,8 +186,8 @@ export function StepDiagram({
                 <StepMedallion n={i + 1} />
               </div>
               <div className={`v2-panel v2-${s.kind} min-w-0 flex-1 px-3.5 pb-3 pt-2.5`}>
-                <div className="flex items-start justify-between gap-2">
-                  <p className="font-display text-[17px] font-semibold leading-snug text-ink">
+                <div className="flex flex-wrap items-start justify-between gap-x-2 gap-y-0.5">
+                  <p className="min-w-0 break-words font-display text-[17px] font-semibold leading-snug text-ink">
                     <span className="sr-only">Step {i + 1}: </span>
                     {s.title}
                   </p>

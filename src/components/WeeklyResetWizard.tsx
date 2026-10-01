@@ -291,13 +291,14 @@ function WeeklyResetWizardClient() {
           step={4}
           total={5}
           focusHeading={navigated}
-          title="Requests (5 min, with next steps)"
+          title="Requests"
           onBack={() => setStep(3)}
           onNext={() => setStep(5)}
         >
           <p className="text-[15px] leading-normal text-ink-muted">
             Confirm one specific ask each for next week (from friction). Edit
-            below if needed.
+            below if needed. Requests and next steps share the last 5
+            minutes.
           </p>
           <Field
             label="Partner A request"

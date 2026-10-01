@@ -90,3 +90,15 @@ self.addEventListener("fetch", (event) => {
     })
   );
 });
+
+// Tapping the Pause + Return notification brings the app back to the timer.
+self.addEventListener("notificationclick", (event) => {
+  event.notification.close();
+  event.waitUntil(
+    self.clients.matchAll({ type: "window", includeUncontrolled: true }).then((windows) => {
+      const open = windows.find((w) => new URL(w.url).pathname === "/pause");
+      if (open) return open.focus();
+      return self.clients.openWindow("/pause");
+    })
+  );
+});

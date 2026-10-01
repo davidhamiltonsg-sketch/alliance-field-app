@@ -95,6 +95,10 @@ export function IntroFlow() {
   const trackRef = useRef<HTMLDivElement>(null);
   const [index, setIndex] = useState(0);
   const last = panels.length - 1;
+  // Only the first panels' diagrams render up front; later ones mount as you
+  // get near them (and stay mounted), keeping the first paint light.
+  const [reached, setReached] = useState(1);
+  if (index + 1 > reached) setReached(Math.min(last, index + 1));
 
   // Arm the diagrams (hidden until their panel is active) and remember the intro.
   useEffect(() => {
@@ -142,6 +146,7 @@ export function IntroFlow() {
           className="pointer-events-none absolute inset-x-0 top-0 h-80 bg-[radial-gradient(120%_80%_at_50%_0%,rgb(61_90_76/0.10),transparent_70%)]"
           aria-hidden
         />
+        <h1 className="sr-only">Welcome to the Alliance Protocols Field App</h1>
         <header className="relative flex h-14 shrink-0 items-center justify-between pl-4 pr-2">
           <span className="flex items-center gap-2.5">
             <AllianceMark size={26} className="text-accent" />
@@ -183,7 +188,7 @@ export function IntroFlow() {
               <div className="mx-auto my-auto w-full max-w-[420px] pb-2">
                 <div className="rounded-[26px_26px_6px_6px] border border-[#A8895A]/45 bg-white/90 p-2 shadow-[var(--shadow-card)]">
                   {/* equal-height stage so headlines line up across panels */}
-                  <div className="flex aspect-[340/336] w-full items-center">{p.diagram}</div>
+                  <div className="flex aspect-[340/336] w-full items-center">{i <= reached ? p.diagram : null}</div>
                 </div>
                 <div className="mt-5">
                   <p className="eyebrow flex items-center gap-1.5 text-accent">
