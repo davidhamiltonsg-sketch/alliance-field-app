@@ -72,7 +72,15 @@ export function Marker({
   const id = icon === undefined ? iconFor[kind] : icon;
   return (
     <span className={`marker-pill ${styles[kind]} ${className}`}>
-      {id && <ApIcon id={id} size={16} mono className="-my-1" />}
+      {id && (
+        <ApIcon
+          id={id}
+          size={16}
+          mono
+          // The safety glyph is safety green on light backgrounds (CANON round 5).
+          className={`-my-1 ${id === "help-safety" || id === "section-safety" ? "text-safety" : ""}`}
+        />
+      )}
       {label ?? labels[kind]}
     </span>
   );
