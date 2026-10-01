@@ -37,7 +37,7 @@ export function StartReminder() {
             type="time"
             value={time}
             onChange={(e) => setTime(e.target.value)}
-            className="field-input w-32"
+            className="field-input tabular w-[9.5rem] shrink-0 px-3"
           />
         </label>
         <PrimaryButton variant="secondary" fullWidth={false} className="flex-1" onClick={download}>

@@ -54,7 +54,7 @@ export const situations: Situation[] = [
     id: "conflict-starting",
     label: "A fight is starting",
     description: "Tone is rising; it’s starting to feel like a courtroom, not a conversation.",
-    firstMove: "System Overlay · Conflict Protocol. Flooded midway → Pause + Return.",
+    firstMove: "System Overlay · Conflict Protocol. Green Rule first; flooded midway → Pause + Return.",
     primaryHref: "/protocols/system-overlay",
     secondaryHrefs: [
       { label: "Conflict Protocol", href: "/protocols/conflict-protocol" },
