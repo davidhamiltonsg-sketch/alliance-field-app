@@ -1,3 +1,8 @@
+import { situations } from "./situations";
+
+/** The Situation Map row this page sends people to (its label, never a copy of it). */
+const outsidePressureRow = situations.find((s) => s.id === "outside-pressure")!;
+
 /**
  * /together: outside pressure on a couple (interracial, intercultural and
  * other minority-stress couples). Adapted from the landing copy, without
@@ -30,6 +35,7 @@ export const whoFor = [
 export const notFor = [
   "Relationships with fear, intimidation, coercion or control. If you’re afraid of your partner, couples exercises aren’t the right tool.",
   "Immediate danger, including harassment or threats from other people. Contact local emergency services where it’s safe to do so.",
+  "Pressure or put-downs that come from your partner. That isn’t a Unity Anchor situation: use the Green Rule (Safety Gate), and the Help Lines if you’re afraid.",
 ];
 
 export interface CommonMove {
@@ -57,7 +63,7 @@ export const commonMoves: CommonMove[] = [
   {
     move: "Relitigating after every visit",
     result: "The same argument every holiday.",
-    alliance: "Log it at the Weekly Reset and plan before the next visit.",
+    alliance: "Agree your response together before the next visit, not after it.",
   },
 ];
 
@@ -70,7 +76,7 @@ export const togetherTools = [
   {
     label: "Situation Map",
     href: "/",
-    note: "Pick “We’re getting pressure from outside” — it goes straight to the first move.",
+    note: `Pick “${outsidePressureRow.label}” — it goes straight to the first move.`,
   },
   {
     label: "Weekly Reset",

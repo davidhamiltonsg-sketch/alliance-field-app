@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Source_Serif_4 } from "next/font/google";
 import { AppHeader } from "@/components/AppHeader";
 import { AppNav } from "@/components/AppNav";
+import { ChromeGate } from "@/components/ChromeGate";
 import { Splash } from "@/components/splash/Splash";
 import { splashBootScript } from "@/components/splash/boot";
 import { ServiceWorkerRegister } from "@/components/ServiceWorkerRegister";
@@ -94,9 +95,13 @@ export default function RootLayout({
         <ServiceWorkerRegister />
         <Splash />
         <div className="relative mx-auto flex min-h-dvh w-full max-w-lg flex-col bg-paper sm:border-x sm:border-rule/30 sm:shadow-[0_0_60px_-20px_rgb(44_62_45/0.25)]">
-          <AppHeader />
+          <ChromeGate>
+            <AppHeader />
+          </ChromeGate>
           <main className="flex-1 px-4 pb-28 pt-4">{children}</main>
-          <AppNav />
+          <ChromeGate>
+            <AppNav />
+          </ChromeGate>
         </div>
       </body>
     </html>

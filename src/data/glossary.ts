@@ -4,12 +4,12 @@
  * registry.json `plainEnglishSubtitles` (checked by tests/registry.test.ts).
  */
 export const plainEnglish: Record<string, string> = {
-  "System Overlay": "spotting the pattern you’re both stuck in",
+  "System Overlay": "a five-step order for hard conversations",
   Circuit: "a repeating loop between you",
   "Layer Scan": "where each of you sits on the profile",
   "Reach–Recoil": "one reaches, the other pulls back",
   "One-Handed Alliance": "one partner carrying the relationship work",
-  Proof: "a small action the other can see",
+  Proof: "a specific change, evidence you can both see, and a set time window",
 };
 
 /** Protocol titles that are, or carry, a coined term. */

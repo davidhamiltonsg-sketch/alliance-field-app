@@ -27,8 +27,18 @@ describe("splash boot script", () => {
 
   it("leaves returning visitors, other pages and crawlers alone", () => {
     expect(run({ seen: true, path: "/" })).toEqual({ mode: "short", replaced: [] });
-    expect(run({ seen: false, path: "/help" })).toEqual({ mode: "full", replaced: [] });
+    expect(run({ seen: false, path: "/about" })).toEqual({ mode: "full", replaced: [] });
     expect(run({ seen: false, path: "/", ua: "Googlebot/2.1" })).toEqual({ mode: "full", replaced: [] });
+  });
+
+  it("never shows the splash on /help, /pause or /unlock, first visit or not (M1)", () => {
+    for (const path of ["/help", "/pause", "/unlock", "/help/"]) {
+      expect(run({ seen: false, path })).toEqual({ mode: "off", replaced: [] });
+      expect(run({ seen: true, path })).toEqual({ mode: "off", replaced: [] });
+      expect(run({ seen: false, path, throws: true })).toEqual({ mode: "off", replaced: [] });
+    }
+    expect(run({ seen: false, path: "/helpful" }).mode).toBe("full");
+    expect(run({ seen: true, path: "/pause-and-return" }).mode).toBe("short");
   });
 
   it("never redirects when storage is unavailable (no loop)", () => {

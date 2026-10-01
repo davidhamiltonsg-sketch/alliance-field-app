@@ -1,8 +1,8 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
-import { BOT_UA_SOURCE } from "./boot";
+import { BOT_UA_SOURCE, isNoSplashPath } from "./boot";
 
 /**
  * Opening splash. Server-rendered so there is no flash of the page before it,
@@ -11,6 +11,10 @@ import { BOT_UA_SOURCE } from "./boot";
  * visit or "short" once the intro has been seen, before first paint.
  * When JS is running this component takes over: tap to skip, first-visit
  * hand-off to /intro, and unmounting once done.
+ *
+ * Never shown on /help, /pause or /unlock (not even server-rendered, so not
+ * without JS either): those are opened in a hurry. Everywhere else it carries
+ * a working Help link and a visible "Tap anywhere to skip".
  */
 
 // Same geometry as <AllianceMark/>: the legs draw in first (sp-ribbon), the
@@ -77,6 +81,10 @@ function splashElapsed() {
 
 export function Splash() {
   const router = useRouter();
+  const pathname = usePathname();
+  // Decided once, from the page the app was opened on (a later client-side
+  // move to "/" must not bring the splash back).
+  const [suppressed] = useState(() => isNoSplashPath(pathname));
   const [phase, setPhase] = useState<Phase>("css");
   // Server render (and hydration) use the first-visit tagline; the client then
   // switches to a return tagline when the boot script marked this a return visit.
@@ -99,6 +107,10 @@ export function Splash() {
   }, [router]);
 
   useEffect(() => {
+    if (suppressed) {
+      announce("done");
+      return;
+    }
     const html = document.documentElement;
     const mode = html.dataset.splash ?? "full";
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -126,14 +138,25 @@ export function Splash() {
     if (toIntro) handOff();
     list.push(window.setTimeout(leave, remaining));
     return () => list.forEach(clearTimeout);
-  }, [handOff, leave, router]);
+  }, [handOff, leave, router, suppressed]);
 
   const skip = useCallback(() => {
     handOff();
     leave();
   }, [handOff, leave]);
 
-  if (phase === "done") return null;
+  // Escape (or Enter / Space) skips while the splash is up.
+  const showing = !suppressed && phase !== "done" && phase !== "leaving";
+  useEffect(() => {
+    if (!showing) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape" || e.key === "Enter" || e.key === " ") skip();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [showing, skip]);
+
+  if (suppressed || phase === "done") return null;
 
   return (
     <div
@@ -141,13 +164,16 @@ export function Splash() {
       data-js={phase !== "css" ? "" : undefined}
       data-leaving={phase === "leaving" ? "" : undefined}
       onClick={skip}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " " || e.key === "Escape") skip();
-      }}
-      role="button"
-      tabIndex={-1}
-      aria-label="Skip opening"
     >
+      {/* Help is one tap away even during the opening: a real link, so it works without JS too. */}
+      <a
+        href="/help"
+        onClick={(e) => e.stopPropagation()}
+        className="absolute right-2 top-[calc(env(safe-area-inset-top)+4px)] z-[1] inline-flex h-12 items-center rounded-full px-3 text-sm font-semibold text-failure"
+        aria-label="Help and safety: help lines"
+      >
+        Help
+      </a>
       <div
         className="splash-glow pointer-events-none absolute inset-0 bg-[radial-gradient(60%_40%_at_50%_42%,rgb(44_62_45/0.10),transparent_70%)]"
         aria-hidden
@@ -183,6 +209,16 @@ export function Splash() {
           {tagline}
         </p>
       </div>
+      <button
+        type="button"
+        onClick={(e) => {
+          e.stopPropagation();
+          skip();
+        }}
+        className="splash-skip absolute inset-x-0 bottom-[calc(env(safe-area-inset-bottom)+20px)] mx-auto inline-flex min-h-12 w-fit items-center rounded-full px-4 text-sm font-medium text-ink-muted"
+      >
+        Tap anywhere to skip
+      </button>
     </div>
   );
 }

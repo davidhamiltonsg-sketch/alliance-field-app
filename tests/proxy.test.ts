@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { NextRequest } from "next/server";
-import { proxy } from "../src/proxy";
-import { ACCESS_COOKIE, accessToken } from "../src/lib/launch-lock";
+import { config, proxy } from "../src/proxy";
+import { ACCESS_COOKIE, issueAccessToken } from "../src/lib/launch-lock";
 
 const ORIGIN = "https://allianceprotocols.com";
 const CODE = "Alliance-2026";
@@ -67,7 +67,7 @@ describe("proxy: locked", () => {
   });
 
   it("lets a visitor with the right cookie through, and rejects a wrong one", async () => {
-    const token = await accessToken(CODE);
+    const token = await issueAccessToken(CODE);
     const ok = await proxy(get("/about", token));
     expect(passedThrough(ok)).toBe(true);
     expect(ok.headers.get("x-robots-tag")).toBeNull();
@@ -78,11 +78,22 @@ describe("proxy: locked", () => {
     expect((await proxy(get("/about", "short"))).status).toBe(307);
   });
 
+  it("refuses a correctly signed token issued more than 30 days ago", async () => {
+    const old = await issueAccessToken(CODE, undefined, Date.now() - 31 * 24 * 60 * 60 * 1000);
+    expect((await proxy(get("/about", old))).status).toBe(307);
+    const recent = await issueAccessToken(CODE, undefined, Date.now() - 29 * 24 * 60 * 60 * 1000);
+    expect(passedThrough(await proxy(get("/about", recent)))).toBe(true);
+  });
+
+  it("keeps /terms public while locked", async () => {
+    expect(passedThrough(await proxy(get("/terms")))).toBe(true);
+  });
+
   it("uses LAUNCH_COOKIE_SECRET when set", async () => {
     vi.stubEnv("LAUNCH_COOKIE_SECRET", "rotate-me");
-    const derived = await accessToken(CODE);
+    const derived = await issueAccessToken(CODE);
     expect((await proxy(get("/about", derived))).status).toBe(307);
-    const keyed = await accessToken(CODE, "rotate-me");
+    const keyed = await issueAccessToken(CODE, "rotate-me");
     expect(passedThrough(await proxy(get("/about", keyed)))).toBe(true);
   });
 
@@ -92,7 +103,11 @@ describe("proxy: locked", () => {
     expect(location(res)!.pathname).toBe("/start");
     expect(location(res)!.origin).toBe(ORIGIN);
     const cookie = res.headers.get("set-cookie")!;
-    expect(cookie).toContain(`${ACCESS_COOKIE}=${await accessToken(CODE)}`);
+    const value = cookie.match(new RegExp(`${ACCESS_COOKIE}=([^;]+)`))![1];
+    expect(value).toMatch(/^v2\.\d+\.[0-9a-f]{64}$/);
+    expect(Math.abs(Number(value.split(".")[1]) - Date.now() / 1000)).toBeLessThan(60);
+    // The cookie it sets is the one it accepts.
+    expect(passedThrough(await proxy(get("/start", value)))).toBe(true);
     expect(cookie).toMatch(/HttpOnly/i);
     expect(cookie).toMatch(/Secure/i);
     expect(cookie).toMatch(/SameSite=lax/i);
@@ -142,5 +157,23 @@ describe("/unlock page", () => {
     const at = (s: string) => src.indexOf(s);
     expect(at("await connection()")).toBeGreaterThan(-1);
     expect(at("await connection()")).toBeLessThan(at("notFound()"));
+  });
+});
+
+describe("proxy matcher (L15)", () => {
+  // Next compiles each matcher source into an anchored path regexp; this is the same pattern.
+  const matchers = config.matcher.map((m) => new RegExp(`^${m}$`));
+  const runs = (path: string) => matchers.some((re) => re.test(path));
+
+  it("runs on every page, the worker and the unlock form", () => {
+    for (const p of ["/", "/about", "/help", "/privacy", "/terms", "/unlock", "/sw.js", "/protocols/green-rule", "/calibrate/report", "/intro"]) {
+      expect(runs(p), p).toBe(true);
+    }
+  });
+
+  it("skips build assets and brand files, which hold nothing locked", () => {
+    for (const p of ["/_next/static/chunks/a.js", "/_next/image", "/favicon.ico", "/icon-192.png", "/icon.svg", "/apple-touch-icon.png", "/manifest.json", "/splash/launch-750x1334.png", "/alliance-mark.svg", "/og-image.png"]) {
+      expect(runs(p), p).toBe(false);
+    }
   });
 });

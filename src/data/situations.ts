@@ -10,7 +10,8 @@ export const situations: Situation[] = [
   {
     id: "unsafe",
     label: "I’m afraid, being threatened, or not free to say no",
-    description: "Afraid of your partner, threats, pressure or control — not just a hard conversation.",
+    description:
+      "Afraid of your partner, threats, pressure or control — not just a hard conversation. This includes jealousy that leads to checking, restricting, or accusing.",
     firstMove: "Stop. These tools are not for this. Get outside help (see Help Lines).",
     primaryHref: "/help",
     danger: true,
@@ -28,8 +29,9 @@ export const situations: Situation[] = [
   },
   {
     id: "outside-pressure",
-    label: "Outside pressure, disapproval or jealousy about others",
-    description: "Family disapproval, discrimination, judgement from others — or jealousy about people outside the relationship — is landing on the two of you.",
+    label: "Outside pressure or disapproval from family, friends or strangers",
+    description:
+      "Family disapproval, discrimination or judgement from others is landing on the two of you. Pressure from your partner isn’t this row: Green Rule, or row 1.",
     firstMove: "Unity Anchor: decide together how the couple responds. Never limit a partner’s contact with anyone.",
     primaryHref: "/protocols/unity-anchor",
     secondaryHrefs: [{ label: "Together under pressure", href: "/together" }],
@@ -46,7 +48,8 @@ export const situations: Situation[] = [
     id: "detachment",
     label: "Pulling away / uninvestment",
     description: "Warmth missing, repairs on autopilot: several signs of pulling away, not just needing space.",
-    firstMove: "Uninvestment Check. 0–2 signs: Pause + Return and small repairs. 3 or more: may be pulling away — book a Full Recovery within a week. Contempt: outside support first.",
+    firstMove:
+      "Uninvestment Check. 0 signs: nothing to fix. 1–2: space and small repairs. 3 or more: may be pulling away — book a Full Recovery within a week. Contempt, fear or coercion: outside support first.",
     primaryHref: "/protocols/uninvestment-check",
     secondaryHrefs: [{ label: "Full Recovery", href: "/protocols/full-recovery" }],
   },
@@ -99,7 +102,7 @@ export const situations: Situation[] = [
   },
   {
     id: "daily-drift",
-    label: "We feel like roommates",
+    label: "We feel like housemates",
     description: "Conversations are just logistics; the connection feels thin.",
     firstMove: "Morning + Evening Rhythm. Rituals feel like a checklist? Sun Memory.",
     primaryHref: "/protocols/morning-evening-rhythm",

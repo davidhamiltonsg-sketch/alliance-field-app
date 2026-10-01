@@ -1,7 +1,8 @@
 "use client";
 
-import { useId, useState } from "react";
-import { buildStartPlanIcs } from "@/lib/ics";
+import { useId, useRef, useState } from "react";
+import { buildStartPlanIcs, isValidTime } from "@/lib/ics";
+import { downloadObjectUrl } from "@/lib/download";
 import { PrimaryButton } from "./PrimaryButton";
 
 /** Optional: download a daily 10-minute calendar reminder for the 7-day plan. */
@@ -10,15 +11,19 @@ export function StartReminder() {
   const [added, setAdded] = useState(false);
   const id = useId();
 
+  const [timeError, setTimeError] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+
   const download = () => {
+    // An empty time field would otherwise become a reminder at midnight.
+    if (!isValidTime(time)) {
+      setTimeError(true);
+      setAdded(false);
+      inputRef.current?.focus();
+      return;
+    }
     const { url, filename } = buildStartPlanIcs(time);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    downloadObjectUrl(url, filename);
     setAdded(true);
   };
 
@@ -35,8 +40,15 @@ export function StartReminder() {
           <input
             id={id}
             type="time"
+            ref={inputRef}
             value={time}
-            onChange={(e) => setTime(e.target.value)}
+            required
+            aria-invalid={timeError || undefined}
+            aria-describedby={timeError ? `${id}-error` : undefined}
+            onChange={(e) => {
+              setTime(e.target.value);
+              setTimeError(false);
+            }}
             className="field-input tabular w-[9.5rem] shrink-0 px-3"
           />
         </label>
@@ -44,6 +56,11 @@ export function StartReminder() {
           Add reminder (.ics)
         </PrimaryButton>
       </div>
+      {timeError && (
+        <p id={`${id}-error`} role="alert" className="text-sm font-medium text-failure">
+          Choose a time first, for example 20:00.
+        </p>
+      )}
       <p role="status" className="text-sm font-medium text-accent empty:hidden">
         {added ? "Reminder downloaded — open it to add it to your calendar." : ""}
       </p>

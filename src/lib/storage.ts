@@ -93,19 +93,36 @@ export function allianceKeys(): string[] {
 }
 
 /**
+ * In-memory flag (not storage): set by wipeAll so the service worker isn't
+ * registered again — re-downloading the offline copy — while this page stays
+ * open. It disappears on the next full page load, when the app registers the
+ * worker as usual.
+ */
+const SW_PAUSED = "__allianceSwPausedUntilReload";
+
+export function swRegistrationPaused(): boolean {
+  return typeof window !== "undefined" && (window as unknown as Record<string, unknown>)[SW_PAUSED] === true;
+}
+
+/**
  * Deletes everything this app has stored in this browser: every "alliance.*"
  * localStorage key, all Cache Storage entries (the offline copy of the app)
  * and the service worker registration that keeps it. Nothing is stored on a
- * server, so afterwards nothing from the app is left on this device (the
- * worker registers again, empty, if the app is opened again).
+ * server. The worker is not registered again until the next full page load
+ * (see swRegistrationPaused); then the offline copy is downloaded afresh,
+ * with none of the deleted answers.
  * Returns the number of localStorage keys removed.
  */
 export async function wipeAll(): Promise<number> {
   if (typeof window === "undefined") return 0;
+  (window as unknown as Record<string, unknown>)[SW_PAUSED] = true;
   const keys = allianceKeys();
   keys.forEach(clearKey);
   try {
     if ("serviceWorker" in navigator) {
+      // The worker keeps serving this open page after it is unregistered:
+      // tell it to stop caching first (see scripts/sw.template.js).
+      navigator.serviceWorker.controller?.postMessage({ type: "alliance:wipe" });
       const registrations = await navigator.serviceWorker.getRegistrations();
       await Promise.all(registrations.map((r) => r.unregister()));
     }

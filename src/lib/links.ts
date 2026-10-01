@@ -1,13 +1,18 @@
 /**
- * Contact and store links. Both come from build-time env vars (see README):
+ * Contact, email-list and store settings. All come from build-time env vars
+ * (see README, "Environment variables"); every one is optional, and the app
+ * says less rather than show a placeholder when one is missing.
  *
- * - NEXT_PUBLIC_CONTACT_EMAIL: where privacy requests and the signup mailto:
- *   fallback go. Defaults to hello@allianceprotocols.com.
- * - NEXT_PUBLIC_FULL_SYSTEM_URL: the store page for the Manual + Field Kit.
- *   Must be an https URL; when unset (or invalid) the "Get the full system"
- *   button is replaced by "Coming soon" instead of linking to a placeholder.
+ * - NEXT_PUBLIC_CONTACT_EMAIL: shown on /privacy and /terms. When unset (or
+ *   not an email address), no address is shown: people are pointed to
+ *   allianceprotocols.com instead.
+ * - NEXT_PUBLIC_SIGNUP_ENDPOINT + NEXT_PUBLIC_EMAIL_PROVIDER_NAME: the email
+ *   sign-up is live only when both are set, so the privacy notice can always
+ *   name the service that holds the list.
+ * - NEXT_PUBLIC_STORE_URL_MANUAL / _KIT / _BUNDLE: store pages for each
+ *   product, each falling back to NEXT_PUBLIC_FULL_SYSTEM_URL. https only; a
+ *   product with no valid URL gets no buy link.
  */
-export const CONTACT_EMAIL = process.env.NEXT_PUBLIC_CONTACT_EMAIL?.trim() || "hello@allianceprotocols.com";
 
 /** Returns the URL when it is a valid https URL, else null. */
 export function httpsUrlOrNull(value: string | undefined | null): string | null {
@@ -20,15 +25,41 @@ export function httpsUrlOrNull(value: string | undefined | null): string | null 
   }
 }
 
+/** Returns the address when it looks like an email address, else null. */
+export function emailOrNull(value: string | undefined | null): string | null {
+  const v = value?.trim();
+  return v && /^[^@\s]+@[^@\s]+\.[a-z]{2,}$/i.test(v) ? v : null;
+}
+
+export const CONTACT_EMAIL = emailOrNull(process.env.NEXT_PUBLIC_CONTACT_EMAIL);
+
+/** Where to point people when no contact address is configured. */
+export const SITE_CONTACT_TEXT = "via allianceprotocols.com";
+export const SITE_URL = "https://allianceprotocols.com";
+
 export const FULL_SYSTEM_URL = httpsUrlOrNull(process.env.NEXT_PUBLIC_FULL_SYSTEM_URL);
 
+export type StoreProduct = "manual" | "kit" | "bundle";
+
+/** Store page per product (falling back to the single full-system URL); null = no buy link. */
+export const STORE_URLS: Record<StoreProduct, string | null> = {
+  manual: httpsUrlOrNull(process.env.NEXT_PUBLIC_STORE_URL_MANUAL) ?? FULL_SYSTEM_URL,
+  kit: httpsUrlOrNull(process.env.NEXT_PUBLIC_STORE_URL_KIT) ?? FULL_SYSTEM_URL,
+  bundle: httpsUrlOrNull(process.env.NEXT_PUBLIC_STORE_URL_BUNDLE) ?? FULL_SYSTEM_URL,
+};
+
 /**
- * Email-signup endpoint (Buttondown, ConvertKit, Formspree or similar): the
- * form POSTs a form-encoded `email` field here. Set at build time via
- * NEXT_PUBLIC_SIGNUP_ENDPOINT; when unset, signup falls back to a mailto: to
- * CONTACT_EMAIL. This is the only thing the app ever sends.
+ * Email-signup endpoint (Buttondown, Kit/ConvertKit, Formspree or similar):
+ * the form POSTs a form-encoded `email` field here. This is the only thing
+ * the app ever sends.
  */
 export const SIGNUP_ENDPOINT = process.env.NEXT_PUBLIC_SIGNUP_ENDPOINT?.trim() || "";
+
+/** The service that runs the mailing list, named on /privacy (e.g. "Buttondown"). */
+export const EMAIL_PROVIDER_NAME = process.env.NEXT_PUBLIC_EMAIL_PROVIDER_NAME?.trim() || null;
+
+/** The sign-up form is shown only when it can send somewhere and the privacy notice can say who holds the list. */
+export const SIGNUP_ACTIVE = Boolean(SIGNUP_ENDPOINT && EMAIL_PROVIDER_NAME);
 
 /** Free lead magnet: printable Situation Map (drop the PDF in public/downloads/). */
 export const SITUATION_MAP_PDF = "/downloads/situation-map.pdf";

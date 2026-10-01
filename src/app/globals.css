@@ -93,6 +93,14 @@ b {
   outline-offset: 2px;
   border-radius: 12px;
 }
+/* Programmatic focus targets (a step heading, a status after an action):
+   always show where focus went, even after a tap, when browsers would
+   otherwise skip :focus-visible for script-moved focus. */
+.focus-target:focus {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+  border-radius: 8px;
+}
 :where(input, textarea):focus-visible {
   outline-offset: 0;
 }
@@ -364,6 +372,9 @@ b {
 .splash-glow {
   animation: dg-fade 1.4s var(--ease-out) 200ms both;
 }
+.splash-skip {
+  animation: dg-fade 300ms var(--ease-out) 150ms both;
+}
 
 /* Returning visit: static lockup, gone in well under a second */
 html[data-splash="short"] .splash {
@@ -374,7 +385,8 @@ html[data-splash="short"] .splash-mark .sp-ribbon,
 html[data-splash="short"] .splash-mark .sp-over,
 html[data-splash="short"] .splash-word,
 html[data-splash="short"] .splash-tag,
-html[data-splash="short"] .splash-glow {
+html[data-splash="short"] .splash-glow,
+html[data-splash="short"] .splash-skip {
   animation: none;
   stroke-dashoffset: 0;
 }

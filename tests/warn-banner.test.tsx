@@ -1,3 +1,4 @@
+// @vitest-environment jsdom
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
@@ -5,6 +6,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { WarnBanner } from "@/components/WarnBanner";
 import { ProtocolLayout } from "@/components/ProtocolLayout";
 import { protocols } from "@/data/protocols";
+import type { Protocol } from "@/data/types";
 
 describe("WarnBanner: help comes first", () => {
   it("never offers the pause timer unless asked", () => {
@@ -23,13 +25,41 @@ describe("WarnBanner: help comes first", () => {
     expect(html.indexOf('href="/help"')).toBeLessThan(html.indexOf('href="/pause"'));
   });
 
-  it("no protocol's safety warning offers the pause timer", () => {
-    for (const p of protocols.filter((p) => p.warn && p.safetyLink)) {
-      const html = renderToStaticMarkup(<ProtocolLayout protocol={p} />);
-      const banner = html.slice(html.indexOf('role="alert"'), html.indexOf("</div>", html.indexOf('role="alert"') + 2000));
-      expect(banner, p.slug).toContain('href="/help"');
-      expect(banner, p.slug).not.toContain("Open Pause + Return timer");
+  /** The rendered warning note of a protocol page (the first role="note"). */
+  const bannerOf = (protocol: Protocol) => {
+    const doc = new DOMParser().parseFromString(renderToStaticMarkup(<ProtocolLayout protocol={protocol} />), "text/html");
+    return doc.querySelector('[role="note"]');
+  };
+
+  it("is a static note, not an alert (M9)", () => {
+    const html = renderToStaticMarkup(<WarnBanner safetyLink>Afraid?</WarnBanner>);
+    expect(html).toContain('role="note"');
+    expect(html).toContain('aria-label="Safety"');
+    expect(html).not.toContain('role="alert"');
+    expect(renderToStaticMarkup(<WarnBanner pauseLink>Flooded?</WarnBanner>)).toContain('aria-label="Caution"');
+  });
+
+  it("every card whose warning mentions fear, threats or coercion routes to Help, never the timer (L15)", () => {
+    const fearful = protocols.filter((p) => p.warn && /\b(fear|afraid|threat|coerc)/i.test(p.warn));
+    expect(fearful.length).toBeGreaterThan(3);
+    for (const p of fearful) {
+      const banner = bannerOf(p)!;
+      expect(banner, p.slug).not.toBeNull();
+      expect(banner.querySelector('a[href="/help"]'), p.slug).not.toBeNull();
+      expect(banner.querySelector('a[href="/pause"]'), p.slug).toBeNull();
     }
+  });
+
+  it("…even when a card forgets its safetyLink flag", () => {
+    const base = protocols.find((p) => p.slug === "full-recovery")!;
+    for (const warn of ["If fear or coercion appear, stop.", "Threats mean this tool is not for you.", "Afraid? Get help."]) {
+      const banner = bannerOf({ ...base, warn, safetyLink: false })!;
+      expect(banner.querySelector('a[href="/help"]'), warn).not.toBeNull();
+      expect(banner.querySelector('a[href="/pause"]'), warn).toBeNull();
+    }
+    // A plain flooding caution still offers the timer.
+    const plain = bannerOf({ ...base, warn: "Not during active conflict.", safetyLink: false })!;
+    expect(plain.querySelector('a[href="/pause"]')).not.toBeNull();
   });
 
   it("no page's fear or coercion warning offers the pause timer", () => {

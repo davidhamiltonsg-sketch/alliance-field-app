@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useSyncExternalStore } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import type { WorksheetDraft } from "@/data/types";
 import {
@@ -14,6 +14,7 @@ import {
   writeWeekly,
 } from "@/lib/storage";
 import { buildWeeklyResetIcs } from "@/lib/ics";
+import { downloadObjectUrl } from "@/lib/download";
 import { PrimaryButton } from "./PrimaryButton";
 import { Field, WizardStep } from "./WizardStep";
 import { WarnBanner } from "./WarnBanner";
@@ -48,6 +49,15 @@ function WeeklyResetWizardClient() {
   const [history, setHistory] = useState<WorksheetDraft[]>(readWeeklyHistory);
   const [calendarAdded, setCalendarAdded] = useState(false);
   const [confirmClear, setConfirmClear] = useState(false);
+  const doneHeading = useRef<HTMLHeadingElement>(null);
+
+  // L10: after "Complete reset" the step that had focus is gone; move focus
+  // to the result's heading so keyboard and screen-reader users land there.
+  useEffect(() => {
+    if (!done) return;
+    doneHeading.current?.closest("[data-wizard-root]")?.scrollIntoView({ block: "start" });
+    doneHeading.current?.focus({ preventScroll: true });
+  }, [done]);
 
   const update = (patch: Partial<WorksheetDraft>) => {
     setDraft((prev) => {
@@ -89,24 +99,20 @@ function WeeklyResetWizardClient() {
 
   const addToCalendar = () => {
     const { url, filename } = buildWeeklyResetIcs();
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    downloadObjectUrl(url, filename);
     setCalendarAdded(true);
   };
 
   if (done) {
     const recent = history.slice(0, 5);
     return (
-      <div className="space-y-4">
+      <div data-wizard-root className="scroll-mt-20 space-y-4">
         <Marker kind="OK" label="Complete" />
-        <h2 className="display text-xl leading-tight">Reset locked</h2>
+        <h2 ref={doneHeading} tabIndex={-1} className="focus-target display text-xl leading-tight">
+          Reset locked
+        </h2>
         <p className="text-sm leading-normal text-ink-muted">
-          Forty minutes, five parts, zero group text required.
+          Forty minutes, five parts, done. Same time next week.
         </p>
         <div className="card space-y-2 px-4 py-3.5 text-base leading-normal">
           <p>
@@ -155,7 +161,7 @@ function WeeklyResetWizardClient() {
   }
 
   return (
-    <div className="space-y-4">
+    <div data-wizard-root className="scroll-mt-20 space-y-4">
       <WarnBanner pauseLink>
         If either of you is flooded, take a Pause + Return and reschedule.
       </WarnBanner>

@@ -40,7 +40,7 @@ export const startDays: StartDay[] = [
   {
     day: 3,
     title: "Micro-repair muscle",
-    task: "Clear one small residue with softness + 2% ownership. No “but”. Start within minutes if you can; complete within 24 hours.",
+    task: "Clear one small residue: soften your tone and own your small part of it. No “but”. Start within minutes if you can; complete within 24 hours.",
     proof: "One micro-repair delivered.",
     minutes: 10,
     slug: "micro-repair",

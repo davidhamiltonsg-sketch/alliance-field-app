@@ -43,30 +43,44 @@ in Vercel's project env vars (or `.env.local` locally) and redeploy.
 | ----------------------------- | --------------------------------------------------------------------------------------------------------- |
 | `LAUNCH_ACCESS_CODE`          | Turns on the pre-launch lock (see below). Unset = launched, no lock.                                      |
 | `LAUNCH_COOKIE_SECRET`        | Key for the access cookie's HMAC. Recommended while locked; if unset, a key is derived from the code.      |
-| `NEXT_PUBLIC_CONTACT_EMAIL`   | Contact address on /privacy and the signup mailto: fallback. Default `hello@allianceprotocols.com`.        |
-| `NEXT_PUBLIC_FULL_SYSTEM_URL` | https store page for the Manual + Field Kit. Unset: the buy button is replaced by "Coming soon".           |
+| `NEXT_PUBLIC_CONTACT_EMAIL`   | Contact address on /privacy and /terms. Unset (or not an address): no address is shown, only "via allianceprotocols.com". |
+| `NEXT_PUBLIC_FULL_SYSTEM_URL` | https store page, the fallback for each product below. With no store URL at all, "Coming soon" replaces the buy links. |
+| `NEXT_PUBLIC_STORE_URL_MANUAL` / `_KIT` / `_BUNDLE` | https store pages for the Operating Manual, Field Kit and Complete Bundle (Gumroad). Each falls back to `NEXT_PUBLIC_FULL_SYSTEM_URL`; a product with neither gets no buy link. |
 | `NEXT_PUBLIC_SIGNUP_ENDPOINT` | Email signup endpoint (see *Email signup* below). Its origin is added to the CSP.                          |
+| `NEXT_PUBLIC_EMAIL_PROVIDER_NAME` | Name of the mailing-list service (e.g. `Buttondown`), named on /privacy. The sign-up form is live only when this **and** the endpoint are set. |
 
 ## Pre-launch lock
 
 While `LAUNCH_ACCESS_CODE` is set, `src/proxy.ts` sends every page except
-`/help`, `/privacy` and `/unlock` to `/unlock`, which asks for the code
-(case-insensitive, surrounding spaces ignored). Locked pages are `noindex`,
-and `/sw.js` 404s so a locked visitor never installs the offline worker.
+`/help`, `/privacy`, `/terms` and `/unlock` to `/unlock`, which asks for the
+code. Locked pages are `noindex`, and `/sw.js` 404s so a locked visitor never
+installs the offline worker.
 
 - The right code sets `ap_access` (httpOnly, Secure, SameSite=Lax, 30 days)
-  holding `HMAC-SHA256(key, code)`, never the code. The key is
-  `LAUNCH_COOKIE_SECRET`, or (if unset) derived from the code, which is fine
-  for a gate whose only secret is the code. Set a long random
+  holding `v2.<issued-at>.<HMAC-SHA256(key, code + issued-at)>`, never the
+  code. The issued-at time (Unix seconds) is signed, so it can't be edited,
+  and the proxy refuses a token more than 30 days old (or dated in the
+  future) even if a browser kept the cookie longer or it was copied. The key
+  is `LAUNCH_COOKIE_SECRET`, or (if unset) derived from the code, which is
+  fine for a gate whose only secret is the code. Set a long random
   `LAUNCH_COOKIE_SECRET` so a leaked cookie can't be brute-forced offline;
-  changing it signs everyone out.
-- Codes and cookies are compared in constant time. A wrong code waits
+  changing it signs everyone out. Cookies from before this format (`v1`)
+  are refused, so early-access users enter the code once more.
+- Codes are compared **case-insensitively**, ignoring surrounding spaces, on
+  purpose: the code is passed on by word of mouth and typed on phones that
+  auto-capitalise. That costs little entropy if the code is long (4+ random
+  words, or 12+ random characters); choose one like that.
+- Codes and signatures are compared in constant time. A wrong code waits
   ~600 ms before answering; malformed bodies bounce back with an error.
 - After unlocking, `next` must be a same-origin path (backslashes and control
   characters are rejected, then the URL must resolve to the same origin).
-- **Rate limiting:** the delay only slows a single client. On Vercel, add a
-  Firewall rate-limit rule for `POST /unlock` (for example 10 requests per
-  minute per IP) before sharing the code widely.
+- **Rate limiting (do this before sharing the code):** the proxy is
+  stateless, so it can't count attempts per IP; the delay only slows a
+  single client that waits for each answer. Add a Vercel Firewall rule
+  (Project → Firewall → Configure → New rule): *If* Request Path *equals*
+  `/unlock` *and* Method *equals* `POST`, *then* **Rate Limit**, fixed
+  window, 60 s, 10 requests, keyed on IP, action Deny (429). Publish it,
+  then check it under Firewall → Rules.
 - **To launch:** delete `LAUNCH_ACCESS_CODE` (and `LAUNCH_COOKIE_SECRET`) in
   Vercel and redeploy. `/unlock` then 404s, the cookie is no longer set, and
   existing ones simply expire.
@@ -108,7 +122,8 @@ it) into `public/favicon.ico`, `apple-touch-icon.png`, `icon-192.png`,
 ## Offline service worker and cache versioning
 
 `public/sw.js` is generated (and git-ignored). Edit `scripts/sw.template.js`;
-`scripts/generate-sw.mjs` runs in `predev`/`prebuild` and injects:
+`scripts/generate-sw.mjs` runs in `predev`/`prebuild` (routes and icons) and
+again in `postbuild` (`--after-build`, adding the build's assets), and injects:
 
 - **Cache version**: `alliance-field-<git SHA>` (from `VERCEL_GIT_COMMIT_SHA`,
   `GITHUB_SHA` or `git rev-parse`; a timestamp is appended for uncommitted
@@ -117,12 +132,23 @@ it) into `public/favicon.ico`, `apple-touch-icon.png`, `icon-192.png`,
   older `alliance-field-*` caches.
 - **Precache list**: every static route found under `src/app` (including
   `/calibrate`, `/connect`, `/help`), every `/protocols/[slug]` page from
-  `src/data/cards/*.json`, plus the manifest and icons. Each URL is added on
-  its own (`Promise.allSettled`), so one missing file can't fail the install.
+  `src/data/cards/*.json`, plus the manifest and icons. After `next build`,
+  the postbuild step adds every `/_next/static` asset the build produced: the
+  JS/CSS chunks and fonts referenced by the prerendered HTML in
+  `.next/server/app`, plus every JS/CSS file in `.next/static` (chunks loaded
+  on demand). So every precached page loads offline straight after the first
+  install, not only pages already visited. (npm runs `postbuild`
+  automatically after `npm run build`, on Vercel too, before the output is
+  collected.) Each URL is fetched on its own (`Promise.allSettled`), so one
+  missing file can't fail the install.
 
 At runtime, navigations are network-first with a cache fallback (then `/`);
-other same-origin GETs are stale-while-revalidate. Only `ok`, same-origin
-responses are written to the cache.
+other same-origin GETs are stale-while-revalidate. Only `ok`, same-origin,
+non-redirected responses are written to the cache, and nothing under
+`/unlock` is ever cached: a locked page answers with a redirect to the lock
+screen, and caching that would store the lock screen under the page's own
+URL. "Delete all my data" unregisters the worker and clears its caches; it
+isn't registered again until the next full page load.
 
 ## Where data is stored
 
@@ -147,9 +173,10 @@ sees only the couple report.
 ## Email signup and free download
 
 The "Get the full system" card (`src/components/GetFullSystem.tsx`, on
-About) has the store link (`FULL_SYSTEM_URL` from
-`NEXT_PUBLIC_FULL_SYSTEM_URL`; "Coming soon" when unset), a free printable
-Situation Map and an email signup.
+About) has a buy link per product (`STORE_URLS`: Manual, Field Kit, Bundle,
+each from its own `NEXT_PUBLIC_STORE_URL_*` or `NEXT_PUBLIC_FULL_SYSTEM_URL`;
+"Coming soon" when none is set), a free printable Situation Map and an email
+signup.
 
 | Variable                      | Purpose                                                                                     |
 | ----------------------------- | ------------------------------------------------------------------------------------------- |
@@ -160,12 +187,24 @@ Situation Map and an email signup.
   or anything that accepts a form-encoded `email`.
 - It is read at **build time** (it's a `NEXT_PUBLIC_` variable): set it in
   Vercel's project env vars, or `.env.local` for local builds, then rebuild.
-- Unset: the form falls back to opening a `mailto:` to `CONTACT_EMAIL`.
+- The form is shown only when `NEXT_PUBLIC_EMAIL_PROVIDER_NAME` is set too,
+  so /privacy can name who holds the list. Otherwise the card says sign-up
+  isn't open yet, and /privacy says the sign-up is not active.
 - Cross-origin endpoints are posted with `mode: "no-cors"` (the response is
-  opaque), so "Sent — check your inbox to confirm" means the request was
-  delivered, not that the address was accepted; a network failure shows an
-  error (`role="alert"`) with a retry and a mailto fallback. Same-origin
-  endpoints also check the HTTP status. No third-party scripts are loaded.
+  opaque), so the success message is deliberately careful: "If the address
+  is right, a confirmation email will arrive shortly." A network failure
+  shows an error (`role="alert"`) with a retry. Same-origin endpoints also
+  check the HTTP status. No third-party scripts are loaded.
+
+## Legal pages
+
+`/privacy` (plain-English privacy notice: on-device data, the email list,
+Gumroad purchases, transfers outside Singapore, retention, deletion requests,
+the pre-launch cookie) and `/terms` (website terms: who runs the site, not
+therapy, no warranty, acceptable use, statutory rights). Both are public
+while the lock is on and linked from the home footer and About. Before
+launch, the owner must complete the governing-law and registered-address
+details noted in a code comment at the top of `src/app/terms/page.tsx`.
 
 The printable map is served from `public/downloads/situation-map.pdf`
 (`SITUATION_MAP_PDF`), which is committed. Replace that file when the printed

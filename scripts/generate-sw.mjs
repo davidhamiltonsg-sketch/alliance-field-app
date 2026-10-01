@@ -1,9 +1,20 @@
-// Writes public/sw.js from scripts/sw.template.js (runs in `predev` and
-// `prebuild`). Injects a per-build cache version and the precache list:
-// every static route under src/app, every /protocols/[slug] page (from
-// src/data/cards/*.json), and the icons/manifest in public/.
+// Writes public/sw.js from scripts/sw.template.js. Injects a per-build cache
+// version and the precache list: every static route under src/app, every
+// /protocols/[slug] page (from src/data/cards/*.json), and the icons/manifest
+// in public/.
+//
+// Runs twice in a production build:
+//   prebuild  (no flag)        routes and icons only, so `next build` and
+//                              `next dev` always have a valid worker.
+//   postbuild (--after-build)  adds every /_next/static asset the build
+//                              produced: the JS/CSS chunks and fonts that the
+//                              prerendered pages in .next/server/app load,
+//                              plus every JS/CSS file in .next/static (for
+//                              chunks loaded on demand). Without these, a
+//                              precached page's HTML would load offline but
+//                              its scripts wouldn't ("couldn't load").
 import { execSync } from "node:child_process";
-import { readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -67,6 +78,42 @@ function cacheVersion() {
 
 export const precacheUrls = () => [...new Set([...staticRoutes().sort(), ...protocolRoutes().sort(), ...assets])];
 
+function filesUnder(dir) {
+  if (!existsSync(dir)) return [];
+  return readdirSync(dir).flatMap((name) => {
+    const full = join(dir, name);
+    return statSync(full).isDirectory() ? filesUnder(full) : [full];
+  });
+}
+
+/** /_next/static URLs referenced by an HTML page (script tags, CSS and font links, and the inline RSC payload). */
+export function staticAssetUrlsInHtml(html) {
+  const urls = new Set();
+  for (const m of html.matchAll(/(?:\/_next\/)?static\/(?:chunks|css|media)\/[^"'\\\s()<>?#]+/g)) {
+    const path = m[0].startsWith("/_next/") ? m[0] : `/_next/${m[0]}`;
+    // Only real files: skip template fragments like "static/chunks/" + name.
+    if (/\.(?:js|css|woff2?|ttf|otf|png|jpe?g|webp|avif|svg|ico)$/.test(path)) urls.add(path);
+  }
+  return [...urls];
+}
+
+/**
+ * Every /_next/static asset a production build needs offline: the assets the
+ * prerendered pages reference, plus every .js/.css file in .next/static.
+ * Returns [] when there is no build (e.g. before `next build`).
+ */
+export function buildAssetUrls(nextDir = join(root, ".next")) {
+  const urls = new Set();
+  for (const file of filesUnder(join(nextDir, "server/app")).filter((f) => f.endsWith(".html"))) {
+    for (const u of staticAssetUrlsInHtml(readFileSync(file, "utf8"))) urls.add(u);
+  }
+  const staticDir = join(nextDir, "static");
+  for (const file of filesUnder(staticDir).filter((f) => /\.(?:js|css)$/.test(f))) {
+    urls.add(`/_next/static/${relative(staticDir, file).split(sep).join("/")}`);
+  }
+  return [...urls].sort();
+}
+
 /** Renders the worker from the template: exactly one of each placeholder, both replaced. */
 export function renderServiceWorker(template, version, urls) {
   for (const token of ["__CACHE_VERSION__", "__PRECACHE_URLS__"]) {
@@ -78,9 +125,14 @@ export function renderServiceWorker(template, version, urls) {
 export const readTemplate = () => readFileSync(join(root, "scripts/sw.template.js"), "utf8");
 
 if (import.meta.url === `file://${process.argv[1]}`) {
+  const afterBuild = process.argv.includes("--after-build");
   const version = cacheVersion();
-  const urls = precacheUrls();
+  const built = afterBuild ? buildAssetUrls() : [];
+  if (afterBuild && built.length === 0) {
+    throw new Error("[sw] --after-build: no assets found in .next (run after `next build`)");
+  }
+  const urls = [...precacheUrls(), ...built];
   const out = renderServiceWorker(readTemplate(), version, urls);
   writeFileSync(join(root, "public/sw.js"), out);
-  console.log(`[sw] public/sw.js: cache ${version}, ${urls.length} precached URLs`);
+  console.log(`[sw] public/sw.js: cache ${version}, ${urls.length} precached URLs (${built.length} build assets)`);
 }
