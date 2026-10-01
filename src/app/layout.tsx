@@ -59,7 +59,14 @@ export const metadata: Metadata = {
   openGraph: {
     title: "ALLIANCE PROTOCOLS · Field App",
     description: "Built for precision. Designed for connection.",
-    images: [{ url: "/icon-512.png", width: 512, height: 512 }],
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Alliance Protocols Field App: “What’s happening right now?” with three routes, afraid, flooded or something else",
+      },
+    ],
   },
 };
 
