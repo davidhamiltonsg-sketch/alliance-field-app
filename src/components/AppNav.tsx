@@ -31,14 +31,14 @@ export function AppNav() {
               ? pathname === "/"
               : pathname.startsWith(item.href);
           return (
-            <li key={item.href} className="flex-1">
+            <li key={item.href} className="min-w-0 flex-1">
               <Link
                 href={item.href}
                 aria-current={active ? "page" : undefined}
                 className="group flex min-h-16 flex-col items-center justify-center gap-1 px-1"
               >
                 <span
-                  className={`flex h-8 w-14 items-center justify-center rounded-full transition-colors ${
+                  className={`flex h-8 w-full max-w-14 items-center justify-center rounded-full transition-colors ${
                     active
                       ? "bg-accent text-paper shadow-[0_4px_12px_-4px_rgb(44_62_45/0.6)]"
                       : "text-ink-muted group-hover:bg-accent/[0.07] group-hover:text-accent"

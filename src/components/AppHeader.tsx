@@ -15,7 +15,7 @@ export function AppHeader() {
           <span className="hidden whitespace-nowrap text-sm font-medium tracking-[0.1em] text-ink min-[360px]:inline">
             ALLIANCE PROTOCOLS
           </span>
-          <span className="hidden rounded-full border border-accent/20 bg-surface-tool px-2 py-[3px] text-xs font-medium tracking-[0.08em] text-accent min-[400px]:inline">
+          <span className="hidden rounded-full border border-accent/20 bg-surface-tool px-2 py-[3px] text-xs font-medium tracking-[0.08em] text-accent min-[480px]:inline">
             FIELD
           </span>
         </Link>
