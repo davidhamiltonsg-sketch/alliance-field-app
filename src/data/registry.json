@@ -495,7 +495,8 @@
         {
           "id": "unsafe",
           "label": "I’m afraid, being threatened, or not free to say no",
-          "route": "Help Lines"
+          "route": "Help Lines",
+          "note": "Includes jealousy that leads to checking, restricting or accusing."
         },
         {
           "id": "flooded",
@@ -504,7 +505,7 @@
         },
         {
           "id": "outside-pressure",
-          "label": "Outside pressure, disapproval or jealousy about others",
+          "label": "Outside pressure or disapproval from family, friends or strangers",
           "route": "Unity Anchor"
         },
         {
@@ -574,12 +575,12 @@
     }
   },
   "plainEnglishSubtitles": {
-    "System Overlay": "spotting the pattern you're both stuck in",
+    "System Overlay": "a five-step order for hard conversations",
     "Circuit": "a repeating loop between you",
     "Layer Scan": "where each of you sits on the profile",
     "Reach–Recoil": "one reaches, the other pulls back",
     "One-Handed Alliance": "one partner carrying the relationship work",
-    "Proof": "a small action the other can see",
+    "Proof": "a specific change, evidence you can both see, and a set time window",
     "rule": "First appearance of the coined term in each artifact."
   },
   "guardrails": {
