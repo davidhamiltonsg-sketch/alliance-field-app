@@ -7,11 +7,18 @@
 //                      so the browser installs the new worker and old caches
 //                      are dropped on activate.
 //   precache list      every static route, every /protocols/[slug] page and
-//                      the icons/manifest.
+//                      the icons/manifest; after `next build` (postbuild)
+//                      also every JS/CSS chunk and font the prerendered
+//                      pages load, so each precached page works offline
+//                      straight after the first install.
 //
-// Strategy: precache the app shell and all pages, then cache-as-you-go for
-// everything else (JS/CSS chunks, fonts), so the app keeps working with no
+// Strategy: precache the app shell, all pages and their assets, then
+// cache-as-you-go for anything else, so the app keeps working with no
 // signal — which is exactly when a pause protocol is most needed.
+//
+// Never cached: the pre-launch lock screen (/unlock) and any redirected
+// response (a locked page redirects to /unlock), so the lock screen can't be
+// stored under another page's URL.
 
 const CACHE_PREFIX = "alliance-field-";
 const CACHE_NAME = CACHE_PREFIX + "__CACHE_VERSION__";
@@ -21,7 +28,16 @@ self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) =>
       // Per-URL so one missing file (e.g. an icon in dev) can't fail the rest.
-      Promise.allSettled(PRECACHE_URLS.map((url) => cache.add(url)))
+      // fetch + put rather than cache.add, which would also store a redirect
+      // to the lock screen under the page's own URL.
+      Promise.allSettled(
+        PRECACHE_URLS.map((url) =>
+          fetch(url).then((response) => {
+            if (!cacheable(url, response)) throw new Error("not cacheable: " + url);
+            return cache.put(url, response);
+          })
+        )
+      )
     )
   );
   self.skipWaiting();
@@ -42,9 +58,26 @@ self.addEventListener("activate", (event) => {
   );
 });
 
-/** Only successful, same-origin responses are worth keeping offline. */
-function cacheable(response) {
-  return Boolean(response && response.ok && response.type === "basic");
+const UNLOCK_PATH = "/unlock";
+
+function isUnlock(url) {
+  const path = new URL(url, self.location.origin).pathname;
+  return path === UNLOCK_PATH || path.startsWith(UNLOCK_PATH + "/");
+}
+
+/**
+ * Only successful, same-origin, non-redirected responses are worth keeping
+ * offline — and never anything from the lock screen.
+ */
+function cacheable(requestUrl, response) {
+  return Boolean(
+    response &&
+      response.ok &&
+      response.type === "basic" &&
+      !response.redirected &&
+      !isUnlock(requestUrl) &&
+      !(response.url && isUnlock(response.url))
+  );
 }
 
 function store(request, response) {
@@ -58,6 +91,8 @@ self.addEventListener("fetch", (event) => {
 
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
+  // The lock screen always goes to the network and is never stored.
+  if (isUnlock(request.url)) return;
 
   // Navigations: try the network first (fresh content), fall back to cache,
   // then to the cached home page so the app shell always loads offline.
@@ -65,7 +100,7 @@ self.addEventListener("fetch", (event) => {
     event.respondWith(
       fetch(request)
         .then((response) => {
-          if (cacheable(response)) store(request, response);
+          if (cacheable(request.url, response)) store(request, response);
           return response;
         })
         .catch(() =>
@@ -82,7 +117,7 @@ self.addEventListener("fetch", (event) => {
     caches.match(request).then((cached) => {
       const network = fetch(request)
         .then((response) => {
-          if (cacheable(response)) store(request, response);
+          if (cacheable(request.url, response)) store(request, response);
           return response;
         })
         .catch(() => cached || Response.error());

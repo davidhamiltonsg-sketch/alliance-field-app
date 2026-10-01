@@ -108,7 +108,8 @@ it) into `public/favicon.ico`, `apple-touch-icon.png`, `icon-192.png`,
 ## Offline service worker and cache versioning
 
 `public/sw.js` is generated (and git-ignored). Edit `scripts/sw.template.js`;
-`scripts/generate-sw.mjs` runs in `predev`/`prebuild` and injects:
+`scripts/generate-sw.mjs` runs in `predev`/`prebuild` (routes and icons) and
+again in `postbuild` (`--after-build`, adding the build's assets), and injects:
 
 - **Cache version**: `alliance-field-<git SHA>` (from `VERCEL_GIT_COMMIT_SHA`,
   `GITHUB_SHA` or `git rev-parse`; a timestamp is appended for uncommitted
@@ -117,12 +118,23 @@ it) into `public/favicon.ico`, `apple-touch-icon.png`, `icon-192.png`,
   older `alliance-field-*` caches.
 - **Precache list**: every static route found under `src/app` (including
   `/calibrate`, `/connect`, `/help`), every `/protocols/[slug]` page from
-  `src/data/cards/*.json`, plus the manifest and icons. Each URL is added on
-  its own (`Promise.allSettled`), so one missing file can't fail the install.
+  `src/data/cards/*.json`, plus the manifest and icons. After `next build`,
+  the postbuild step adds every `/_next/static` asset the build produced: the
+  JS/CSS chunks and fonts referenced by the prerendered HTML in
+  `.next/server/app`, plus every JS/CSS file in `.next/static` (chunks loaded
+  on demand). So every precached page loads offline straight after the first
+  install, not only pages already visited. (npm runs `postbuild`
+  automatically after `npm run build`, on Vercel too, before the output is
+  collected.) Each URL is fetched on its own (`Promise.allSettled`), so one
+  missing file can't fail the install.
 
 At runtime, navigations are network-first with a cache fallback (then `/`);
-other same-origin GETs are stale-while-revalidate. Only `ok`, same-origin
-responses are written to the cache.
+other same-origin GETs are stale-while-revalidate. Only `ok`, same-origin,
+non-redirected responses are written to the cache, and nothing under
+`/unlock` is ever cached: a locked page answers with a redirect to the lock
+screen, and caching that would store the lock screen under the page's own
+URL. "Delete all my data" unregisters the worker and clears its caches; it
+isn't registered again until the next full page load.
 
 ## Where data is stored
 

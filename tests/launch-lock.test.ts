@@ -75,6 +75,5 @@ describe("service worker registration", () => {
     const { UNLOCK_PATH } = await import("../src/lib/launch-lock");
     const src = readFileSync(new URL("../src/components/ServiceWorkerRegister.tsx", import.meta.url), "utf8");
     expect(src).toContain(`const UNLOCK_PATH = "${UNLOCK_PATH}"`);
-    expect(src).toContain("if (pathname === UNLOCK_PATH) return;");
   });
 });

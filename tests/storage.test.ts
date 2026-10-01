@@ -181,3 +181,20 @@ describe("wipeAll", () => {
     }
   });
 });
+
+describe("after Delete all data (L12)", () => {
+  it("doesn't register the service worker again until the next full page load", async () => {
+    const { shouldRegisterServiceWorker } = await import("@/components/ServiceWorkerRegister");
+    const { swRegistrationPaused } = await import("@/lib/storage");
+    vi.stubGlobal("navigator", { ...navigator, serviceWorker: { getRegistrations: async () => [] } });
+    delete (window as unknown as Record<string, unknown>).__allianceSwPausedUntilReload;
+    expect(swRegistrationPaused()).toBe(false);
+    expect(shouldRegisterServiceWorker("/help")).toBe(true);
+    expect(shouldRegisterServiceWorker("/unlock")).toBe(false);
+    await wipeAll();
+    expect(swRegistrationPaused()).toBe(true);
+    // Client-side navigation keeps the page (and the flag): still no worker.
+    expect(shouldRegisterServiceWorker("/")).toBe(false);
+    expect(shouldRegisterServiceWorker("/privacy")).toBe(false);
+  });
+});
