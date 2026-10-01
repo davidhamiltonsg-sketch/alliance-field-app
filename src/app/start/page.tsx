@@ -14,8 +14,8 @@ export default function StartPage() {
   return (
     <div className="space-y-5">
       <PageHeader eyebrow={<Marker kind="DO" label="Seven days" />} title="Your 7-day start">
-        About 10 minutes a day with the Core 5. Day 7 is your first Weekly
-        Reset. Miss a day? Just pick up where you left off.
+        About 10 minutes a day. Day 7 is your first Weekly Reset. Miss a day?
+        Just pick up where you left off.
       </PageHeader>
 
       <StartPlan />
@@ -33,11 +33,8 @@ export default function StartPage() {
       </WarnBanner>
 
       <p className="text-sm leading-normal text-ink-muted">
-        Want the longer, Kit-based version? See the{" "}
-        <Link href="/install" className="font-medium text-accent underline underline-offset-4">
-          7-Day Install
-        </Link>
-        .
+        Go deeper: the same plan, day for day, is “The First Week” in the Field
+        Kit and “Your First 7 Days” in the Operating Manual.
       </p>
 
       <Link href="/" className="inline-flex min-h-12 items-center gap-1.5 text-base font-medium text-accent">

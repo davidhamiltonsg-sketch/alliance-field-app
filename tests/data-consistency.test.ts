@@ -238,7 +238,7 @@ describe("Core 5 and the 7-day start plan", () => {
     for (const d of startDays) {
       expect(getProtocol(d.slug), `day ${d.day} → ${d.slug}`).toBeDefined();
       expect(routes).toContain(`/protocols/${d.slug}`);
-      if (d.tool) expect(routes, `day ${d.day} → ${d.tool.href}`).toContain(d.tool.href);
+      if (d.tool) expect(routes, `day ${d.day} → ${d.tool.href}`).toContain(d.tool.href.replace(/#.*$/, "") || "/");
     }
   });
 
@@ -248,12 +248,27 @@ describe("Core 5 and the 7-day start plan", () => {
     expect(last.slug).toBe("weekly-reset");
     expect(last.task).toContain("40-minute timer");
     for (const slug of coreFiveSlugs) expect(startDays.map((d) => d.slug)).toContain(slug);
-    for (const d of startDays.slice(0, -1)) expect(d.minutes).toBeLessThanOrEqual(10);
+    // About 10 minutes a day; the Pause + Return drill includes 20 minutes apart.
+    for (const d of startDays.slice(0, -1).filter((d) => d.slug !== "pause-and-return")) expect(d.minutes).toBeLessThanOrEqual(10);
+  });
+
+  it("is the Field Kit's “The First Week”, day for day (CANON round 5: one plan)", () => {
+    expect(startDays.map((d) => d.title)).toEqual([
+      "Safety + Pause defaults",
+      "60-Second Reset drill",
+      "Micro-repair muscle",
+      "Pause + Return drill",
+      "Daily anchors",
+      "Set up the Reset",
+      "Weekly Reset #1",
+    ]);
+    for (const d of startDays) expect(d.proof, `day ${d.day}`).toMatch(/\S/);
   });
 
   it("never offers a pause shorter than 20 minutes", () => {
     for (const d of startDays) expect(d.task).not.toMatch(/\b(10|15|ten|fifteen)[- ]?min(ute)? (pause|break)/i);
-    expect(startDays.find((d) => d.slug === "pause-and-return")!.task).toContain("20 minutes minimum, 24 hours max");
+    expect(startDays[0].task).toContain("a 20-minute minimum");
+    expect(startDays.find((d) => d.slug === "pause-and-return")!.task).toContain("Take 20 minutes apart");
   });
 });
 

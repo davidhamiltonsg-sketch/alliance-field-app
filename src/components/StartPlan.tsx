@@ -62,6 +62,9 @@ export function StartPlan() {
                 <span className="tabular shrink-0 text-sm text-ink-muted">~{d.minutes} min</span>
               </div>
               <p className="mt-2 pl-11 text-base leading-normal text-ink-muted">{d.task}</p>
+              <p className="mt-1.5 pl-11 text-sm leading-snug text-ink">
+                <span className="font-medium text-accent">Proof:</span> {d.proof}
+              </p>
               <div className="mt-1 flex flex-wrap items-center gap-x-5 pl-11">
                 {card && (
                   <Link

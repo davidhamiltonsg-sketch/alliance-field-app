@@ -74,14 +74,6 @@ export interface PauseState {
   startedAt: string | null;
 }
 
-export interface InstallDay {
-  day: number;
-  title: string;
-  bullets: string[];
-  proof: string;
-  cardSlugs?: string[];
-}
-
 export interface NavItem {
   href: string;
   label: string;

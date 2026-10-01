@@ -1,12 +1,15 @@
 /**
- * /start — a 7-day start plan built on the Core 5. About 10 minutes a day;
- * day 7 is the first Weekly Reset (five parts, about 40 minutes).
+ * /start — the one 7-day plan (CANON round 5): the same plan, day for day,
+ * as the Field Kit's "The First Week" and the Manual's "Your First 7 Days".
+ * About 10 minutes a day; day 7 is the first Weekly Reset (about 40 minutes).
  */
 export interface StartDay {
   day: number;
   title: string;
   /** What to do today, in one or two sentences. */
   task: string;
+  /** The Kit's "Proof" line: how you know the day is done. */
+  proof: string;
   minutes: number;
   /** Protocol card this day is built on (must exist in src/data/cards). */
   slug: string;
@@ -19,53 +22,59 @@ export const START_PLAN_DAYS = 7;
 export const startDays: StartDay[] = [
   {
     day: 1,
-    title: "Safety first: the Green Rule",
-    task: "Read the Green Rule together. Agree one sentence either of you can say when something feels unsafe, and find the help lines in the app.",
+    title: "Safety + Pause defaults",
+    task: "Read the Situation Map, safety row first, and the Green Rule and Pause + Return cards. Set your Pause + Return defaults together: your signal, a 20-minute minimum, an exact return time. Say the safety sentences aloud once.",
+    proof: "Defaults written and initialled.",
     minutes: 10,
     slug: "green-rule",
-    tool: { label: "Help lines", href: "/help" },
+    tool: { label: "Situation Map", href: "/#situation-map" },
   },
   {
     day: 2,
-    title: "Agree how you pause",
-    task: "Read Pause + Return. Agree your pause phrase and that every pause gets an exact return time — 20 minutes minimum, 24 hours max.",
-    minutes: 10,
-    slug: "pause-and-return",
-    tool: { label: "Pause timer", href: "/pause" },
-  },
-  {
-    day: 3,
-    title: "Rehearse the 60-Second Reset",
-    task: "Practise the five steps three times on a fake topic (“dishes”) while you’re both calm. Pick the phrase you’ll actually use.",
+    title: "60-Second Reset drill",
+    task: "Practise all five steps of the 60-Second Alliance Reset once while calm, so it’s familiar before you need it. Start the daily floor: one check-in, one acknowledgement, one appreciation.",
+    proof: "One calm rehearsal; daily floor begun.",
     minutes: 10,
     slug: "60-second-reset",
   },
   {
-    day: 4,
-    title: "One small repair",
-    task: "Pick one small thing from the last few days. Soften your tone, own 2% of it, and name the impact — one sentence, no “but”.",
+    day: 3,
+    title: "Micro-repair muscle",
+    task: "Clear one small residue with softness + 2% ownership. No “but”. Start within minutes if you can; complete within 24 hours.",
+    proof: "One micro-repair delivered.",
     minutes: 10,
     slug: "micro-repair",
   },
   {
-    day: 5,
-    title: "Walk the Situation Map",
-    task: "Read the Situation Map top to bottom. Notice the safety row comes first, and that “flooded, but safe” routes to Pause + Return. Each name the row you hit most often.",
-    minutes: 10,
+    day: 4,
+    title: "Pause + Return drill",
+    task: "Rehearse it once, calm: “I need a pause. I’ll be back at [exact time].” Take 20 minutes apart; come back on the minute.",
+    proof: "Back at the stated time.",
+    minutes: 25,
     slug: "pause-and-return",
-    tool: { label: "Situation Map", href: "/" },
+    tool: { label: "Pause timer", href: "/pause" },
+  },
+  {
+    day: 5,
+    title: "Daily anchors",
+    task: "Run a short version of the morning and the evening check-in (about 5 minutes apiece) and mark both on a shared note.",
+    proof: "Both anchors marked on the note.",
+    minutes: 10,
+    slug: "morning-evening-rhythm",
   },
   {
     day: 6,
-    title: "Book your first Weekly Reset",
-    task: "Read the Weekly Reset card. Put a 40-minute slot in both calendars for tomorrow, and each note one appreciation to bring.",
+    title: "Set up the Reset",
+    task: "Read the Weekly Reset card. Book 40 minutes for tomorrow; each of you notes one appreciation and one small friction point.",
+    proof: "Time booked; agenda drafted.",
     minutes: 10,
     slug: "weekly-reset",
   },
   {
     day: 7,
-    title: "Your first Weekly Reset",
-    task: "Run it with the in-app wizard: Appreciation (5 min) · Check the load (15 min) · One friction point (15 min) · Requests + Next steps (5 min). Run a 40-minute timer.",
+    title: "Weekly Reset #1",
+    task: "All five parts, a 40-minute timer, one friction point only. Each makes one request; agree one next step. Book the next three weeks before you stand up.",
+    proof: "Reset done; next three weeks in the calendar.",
     minutes: 40,
     slug: "weekly-reset",
     tool: { label: "Weekly Reset wizard", href: "/weekly-reset" },

@@ -262,10 +262,10 @@ export default function AboutPage() {
           </li>
           <li>
             <Link
-              href="/install"
+              href="/start"
               className="flex min-h-12 items-center justify-between px-4 text-base font-medium text-ink hover:bg-surface-tool"
             >
-              7-Day Install plan
+              7-day plan
               <ChevronRight size={18} className="text-ink-muted/50" />
             </Link>
           </li>

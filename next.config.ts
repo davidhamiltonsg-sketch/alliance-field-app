@@ -3,6 +3,10 @@ import { securityHeaders } from "./src/lib/security-headers";
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  async redirects() {
+    // The separate "7-Day Install" plan was retired: /start is the one plan (CANON round 5).
+    return [{ source: "/install", destination: "/start", permanent: true }];
+  },
   async headers() {
     return [
       {
