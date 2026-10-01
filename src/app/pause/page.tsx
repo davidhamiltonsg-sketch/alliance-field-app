@@ -11,8 +11,8 @@ export default function PausePage() {
     <div className="space-y-5">
       <div data-calm-hide>
         <PageHeader eyebrow={<Marker kind="PAUSE" label="Timer" />} title="Pause + Return">
-          Pair separation with a non-negotiable return time. Protection without
-          disappearance.
+          Time apart to calm down, with an exact time to come back: a pause,
+          not a disappearance.
         </PageHeader>
       </div>
       <PauseTimer />

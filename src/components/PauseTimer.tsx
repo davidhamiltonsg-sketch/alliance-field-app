@@ -654,7 +654,13 @@ function CalmPause({
             <span className="calm-breath absolute inset-0 rounded-full bg-pause/[0.13]" aria-hidden />
             <span className="absolute inset-6 rounded-full border border-pause/40 bg-paper/70" aria-hidden />
             <div className="relative">
-              <p className={`tabular text-2xl font-semibold ${expired ? "text-pause-text" : "text-ink"}`}>{returnLabel}</p>
+              <p className={`tabular text-2xl font-semibold ${expired ? "text-pause-text" : "text-ink"}`}>
+                {/* A 12-hour clock's "AM"/"PM" is set smaller so the time fits inside the ring. */}
+                {returnLabel.replace(/\s*([AaPp]\.?\s?[Mm]\.?)$/, "")}
+                {/[AaPp]\.?\s?[Mm]\.?$/.test(returnLabel) && (
+                  <span className="ml-1 text-lg">{returnLabel.match(/[AaPp]\.?\s?[Mm]\.?$/)?.[0]}</span>
+                )}
+              </p>
               <p className="tabular mt-2 text-sm text-ink-muted">
                 {expired ? "Time to reconnect" : `${formatRemaining(remainingMs)} to go`}
               </p>
