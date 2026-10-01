@@ -210,7 +210,7 @@ function CalibrationFlowClient() {
 
       <section className="card space-y-4 px-4 py-4">
         <p className="text-xs font-medium uppercase tracking-[0.08em] text-ink-muted">{question.domain}</p>
-        <h2 ref={questionHeading} tabIndex={-1} className="display text-lg leading-tight focus:outline-none">
+        <h2 ref={questionHeading} tabIndex={-1} className="focus-target display text-lg leading-tight">
           <span className="sr-only">
             {personInput.name}, question {index + 1} of {questions.length}:{" "}
           </span>

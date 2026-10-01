@@ -68,7 +68,7 @@ export function DeleteAllData() {
           onKeyDown={(e) => {
             if (e.key === "Escape" && status === "confirm") go("idle");
           }}
-          className="space-y-3 rounded-xl bg-surface-warn px-3.5 py-3 outline-none focus-visible:ring-2 focus-visible:ring-accent"
+          className="focus-target space-y-3 rounded-xl bg-surface-warn px-3.5 py-3"
         >
           <p id="wipe-q" className="text-base font-medium leading-normal text-ink">
             Delete everything this app has saved in this browser, including
@@ -97,7 +97,7 @@ export function DeleteAllData() {
         ref={statusRef}
         role="status"
         tabIndex={-1}
-        className="text-base font-medium text-accent outline-none empty:hidden"
+        className="focus-target text-base font-medium text-accent empty:hidden"
       >
         {status === "done"
           ? "Deleted. Your saved answers and the offline copy are gone from this browser. Next time you open or reload the app, it downloads a fresh offline copy, with none of your old answers. The early-access cookie, if you have one, isn’t touched; it holds nothing about you and expires on its own."

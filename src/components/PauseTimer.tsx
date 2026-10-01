@@ -334,7 +334,7 @@ function PauseTimerClient() {
           id="restart-cue"
           tabIndex={-1}
           aria-label="Restart cue"
-          className="card space-y-3 px-4 py-4 focus:outline-none"
+          className="focus-target card space-y-3 px-4 py-4"
         >
           <Marker kind="DO" label="Restart cue" />
           <ol className="space-y-2 text-base leading-normal">
@@ -447,7 +447,7 @@ function PauseTimerClient() {
       </div>
 
       <section className="space-y-2">
-        <p id="pause-duration" tabIndex={-1} className="text-sm font-medium text-ink focus:outline-none">
+        <p id="pause-duration" tabIndex={-1} className="focus-target text-sm font-medium text-ink">
           Duration
         </p>
         <div className="grid grid-cols-12 gap-2">

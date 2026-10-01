@@ -2,11 +2,23 @@ import Link from "next/link";
 import { Marker } from "./Marker";
 import { ArrowRight } from "./icons";
 
+/** Wording that makes a caution a safety matter: it must route to Help, never to the pause timer. */
+const SAFETY_WORDING = /\b(fear|afraid|threat|coerc|violen|abuse)/i;
+
+/** True when a caution's text is about fear, threats, coercion or violence. */
+export function isSafetyWording(text: string): boolean {
+  return SAFETY_WORDING.test(text);
+}
+
 /**
  * A caution or safety note. Help always comes first: on a safety note
  * (safetyLink) the Help link is listed before anything else, and the pause
  * timer is offered only when `pauseLink` is passed explicitly for flooding
  * (never on fear or coercion wording).
+ *
+ * It is a static note (role="note"), not an alert: alerts are for content
+ * that appears in response to something, and an alert on page load is read
+ * out over everything else.
  */
 export function WarnBanner({
   children,
@@ -24,7 +36,8 @@ export function WarnBanner({
   const safety = safetyLink;
   return (
     <div
-      role="alert"
+      role="note"
+      aria-label={safety ? "Safety" : "Caution"}
       className={`v2-card relative px-4 py-3.5 text-base leading-normal shadow-none ${
         safety ? "v2-card--safety bg-surface-tool" : "bg-surface-warn"
       }`}

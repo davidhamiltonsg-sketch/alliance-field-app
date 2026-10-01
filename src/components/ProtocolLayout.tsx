@@ -12,7 +12,7 @@ import { protocolSubtitle } from "@/data/glossary";
 import { worksheetsFor } from "@/data/worksheets";
 import { chapterLabel, goDeeper } from "@/data/go-deeper";
 import { protocolDiagrams } from "@/data/visuals/protocol-diagrams";
-import { WarnBanner } from "./WarnBanner";
+import { WarnBanner, isSafetyWording } from "./WarnBanner";
 import { FavoriteButton } from "./FavoriteButton";
 import { ArrowLeft, ChevronRight } from "./icons";
 
@@ -22,6 +22,15 @@ const headerWash: Record<string, string> = {
   repair: "border-repair/15 bg-repair/[0.05]",
   accent: "border-accent/15 bg-accent/[0.05]",
 };
+
+function SafetyAwareWarn({ warn, safetyLink }: { warn: string; safetyLink: boolean }) {
+  const safety = safetyLink || isSafetyWording(warn);
+  return (
+    <WarnBanner safetyLink={safety} pauseLink={!safety}>
+      {warn}
+    </WarnBanner>
+  );
+}
 
 export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
   const diagram = protocolDiagrams[protocol.slug];
@@ -53,9 +62,9 @@ export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
       </header>
 
       {protocol.warn && (
-        <WarnBanner safetyLink={protocol.safetyLink} pauseLink={!protocol.safetyLink}>
-          {protocol.warn}
-        </WarnBanner>
+        // A warning that mentions fear, threats or coercion always routes to
+        // Help and never offers the pause timer, whatever the card's flag says.
+        <SafetyAwareWarn warn={protocol.warn} safetyLink={!!protocol.safetyLink} />
       )}
 
       <PhraseBlock phrases={protocol.phrases} />

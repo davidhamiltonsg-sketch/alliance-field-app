@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { NextRequest } from "next/server";
-import { proxy } from "../src/proxy";
+import { config, proxy } from "../src/proxy";
 import { ACCESS_COOKIE, issueAccessToken } from "../src/lib/launch-lock";
 
 const ORIGIN = "https://allianceprotocols.com";
@@ -157,5 +157,23 @@ describe("/unlock page", () => {
     const at = (s: string) => src.indexOf(s);
     expect(at("await connection()")).toBeGreaterThan(-1);
     expect(at("await connection()")).toBeLessThan(at("notFound()"));
+  });
+});
+
+describe("proxy matcher (L15)", () => {
+  // Next compiles each matcher source into an anchored path regexp; this is the same pattern.
+  const matchers = config.matcher.map((m) => new RegExp(`^${m}$`));
+  const runs = (path: string) => matchers.some((re) => re.test(path));
+
+  it("runs on every page, the worker and the unlock form", () => {
+    for (const p of ["/", "/about", "/help", "/privacy", "/terms", "/unlock", "/sw.js", "/protocols/green-rule", "/calibrate/report", "/intro"]) {
+      expect(runs(p), p).toBe(true);
+    }
+  });
+
+  it("skips build assets and brand files, which hold nothing locked", () => {
+    for (const p of ["/_next/static/chunks/a.js", "/_next/image", "/favicon.ico", "/icon-192.png", "/icon.svg", "/apple-touch-icon.png", "/manifest.json", "/splash/launch-750x1334.png", "/alliance-mark.svg", "/og-image.png"]) {
+      expect(runs(p), p).toBe(false);
+    }
   });
 });

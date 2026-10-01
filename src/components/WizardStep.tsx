@@ -27,7 +27,12 @@ export function WizardStep({
 }) {
   const headingRef = useRef<HTMLHeadingElement>(null);
   useEffect(() => {
-    if (focusHeading) headingRef.current?.focus();
+    if (!focusHeading) return;
+    // Bring the top of the step (progress bar first) into view below the
+    // sticky header, then focus the heading without a second scroll that
+    // would tuck the controls above it under the header.
+    headingRef.current?.closest("[data-wizard-root]")?.scrollIntoView({ block: "start" });
+    headingRef.current?.focus({ preventScroll: true });
   }, [focusHeading]);
   const pct = Math.round((step / total) * 100);
   return (
@@ -58,7 +63,7 @@ export function WizardStep({
         </div>
       </div>
       <section className="card space-y-4 px-4 pb-4 pt-4">
-        <h2 ref={headingRef} tabIndex={-1} className="display text-lg leading-tight focus:outline-none">
+        <h2 ref={headingRef} tabIndex={-1} className="focus-target display text-lg leading-tight">
           <span className="sr-only">Step {step} of {total}: </span>
           {title}
         </h2>
