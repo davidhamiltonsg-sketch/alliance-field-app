@@ -156,7 +156,7 @@ function WeeklyResetWizardClient() {
 
   return (
     <div className="space-y-4">
-      <WarnBanner>
+      <WarnBanner pauseLink>
         If either partner is flooded — Pause + Return; reschedule. This is
         maintenance, not a fight forum.
       </WarnBanner>

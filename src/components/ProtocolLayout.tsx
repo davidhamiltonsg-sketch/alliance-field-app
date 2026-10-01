@@ -52,7 +52,11 @@ export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
         <p className="text-base leading-normal text-ink">{protocol.concept}</p>
       </header>
 
-      {protocol.warn && <WarnBanner safetyLink={protocol.safetyLink}>{protocol.warn}</WarnBanner>}
+      {protocol.warn && (
+        <WarnBanner safetyLink={protocol.safetyLink} pauseLink={!protocol.safetyLink}>
+          {protocol.warn}
+        </WarnBanner>
+      )}
 
       <PhraseBlock phrases={protocol.phrases} />
 
