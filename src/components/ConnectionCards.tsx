@@ -133,7 +133,7 @@ function ConnectionDeck({ shuffled }: { shuffled: boolean }) {
                 <span className="text-xs font-medium uppercase tracking-[0.14em] text-paper/70">
                   Connection Cards
                 </span>
-                <span className="display text-xl leading-tight">{meta.label}</span>
+                <span className="display text-xl leading-tight !text-paper">{meta.label}</span>
                 <span className="h-px w-12 bg-brass" aria-hidden />
                 <span className="max-w-[220px] text-sm leading-snug text-paper/85">
                   {meta.caption}
