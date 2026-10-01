@@ -364,6 +364,9 @@ b {
 .splash-glow {
   animation: dg-fade 1.4s var(--ease-out) 200ms both;
 }
+.splash-skip {
+  animation: dg-fade 300ms var(--ease-out) 150ms both;
+}
 
 /* Returning visit: static lockup, gone in well under a second */
 html[data-splash="short"] .splash {
@@ -374,7 +377,8 @@ html[data-splash="short"] .splash-mark .sp-ribbon,
 html[data-splash="short"] .splash-mark .sp-over,
 html[data-splash="short"] .splash-word,
 html[data-splash="short"] .splash-tag,
-html[data-splash="short"] .splash-glow {
+html[data-splash="short"] .splash-glow,
+html[data-splash="short"] .splash-skip {
   animation: none;
   stroke-dashoffset: 0;
 }

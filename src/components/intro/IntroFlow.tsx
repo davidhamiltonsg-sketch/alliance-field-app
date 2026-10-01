@@ -110,6 +110,25 @@ export function IntroFlow() {
     }
   }, []);
 
+  // Scroll cue: on short screens the active panel's text can run below the
+  // fold; say so instead of letting it look finished.
+  const [moreBelow, setMoreBelow] = useState(false);
+  const checkMore = useCallback(() => {
+    const panel = document.getElementById(`intro-${panels[index].id}`);
+    setMoreBelow(!!panel && panel.scrollHeight - panel.clientHeight - panel.scrollTop > 8);
+  }, [index]);
+  useEffect(() => {
+    const raf = window.requestAnimationFrame(checkMore);
+    window.addEventListener("resize", checkMore);
+    // Diagrams mount lazily and fonts swap in: check again once they have.
+    const t = window.setTimeout(checkMore, 600);
+    return () => {
+      window.cancelAnimationFrame(raf);
+      window.removeEventListener("resize", checkMore);
+      window.clearTimeout(t);
+    };
+  }, [checkMore, reached]);
+
   const onScroll = useCallback(() => {
     const el = trackRef.current;
     if (!el) return;
@@ -196,12 +215,28 @@ export function IntroFlow() {
               aria-hidden={i !== index ? true : undefined}
               // Scrollable on short screens: keep the active panel reachable by keyboard.
               tabIndex={i === index ? 0 : -1}
+              onScroll={i === index ? checkMore : undefined}
             >
               <div className="mx-auto flex w-full max-w-[420px] flex-1 flex-col justify-center pb-2">
+                {/* The safety line comes first, above the diagram, so it is on
+                    screen even on the smallest phones (320×568). */}
+                {p.safety && (
+                  <p className="mb-3 shrink-0 rounded-xl border border-failure/20 bg-surface-warn px-3 py-2 text-sm leading-snug text-ink">
+                    Afraid of your partner, being threatened, or not free to
+                    say no? These tools are not for this.{" "}
+                    <Link
+                      href="/help"
+                      tabIndex={i === index ? undefined : -1}
+                      className="font-medium text-failure underline underline-offset-4"
+                    >
+                      Get outside help
+                    </Link>
+                  </p>
+                )}
                 {/* The stage takes the height that's left (equal across panels, so
                     headlines line up) and shrinks on short screens so the text
                     stays in view. */}
-                <div className="flex min-h-[200px] max-h-[436px] max-w-full flex-1 basis-0 [@media(max-height:600px)]:min-h-[140px] items-center justify-center self-center rounded-[26px_26px_6px_6px] border border-rule/60 bg-white/90 p-2 shadow-[var(--shadow-card)]">
+                <div className="flex min-h-[200px] max-h-[436px] max-w-full flex-1 basis-0 [@media(max-height:600px)]:min-h-[112px] items-center justify-center self-center rounded-[26px_26px_6px_6px] border border-rule/60 bg-white/90 p-2 shadow-[var(--shadow-card)]">
                   <div className="flex aspect-[340/336] h-full max-w-full items-center">{i <= reached ? p.diagram : null}</div>
                 </div>
                 <div className="mt-5 shrink-0">
@@ -211,19 +246,6 @@ export function IntroFlow() {
                   </p>
                   <h2 className="display mt-2.5 text-xl leading-[1.12]">{p.title}</h2>
                   <p className="mt-2 text-base leading-normal text-ink-muted">{p.body}</p>
-                  {p.safety && (
-                    <p className="mt-2 text-sm leading-snug text-ink">
-                      Afraid of your partner, being threatened, or not free to
-                      say no? These tools are not for this.{" "}
-                      <Link
-                        href="/help"
-                        tabIndex={i === index ? undefined : -1}
-                        className="font-medium text-failure underline underline-offset-4"
-                      >
-                        Get outside help
-                      </Link>
-                    </p>
-                  )}
                   {p.id === "system" && (
                     <Link
                       href="/about#product-line"
@@ -246,6 +268,14 @@ export function IntroFlow() {
         </div>
 
         <footer className="relative shrink-0 px-5 pb-[calc(env(safe-area-inset-bottom)+16px)] pt-2">
+          {moreBelow && (
+            <p
+              aria-hidden
+              className="pointer-events-none absolute inset-x-0 -top-9 flex h-9 items-end justify-center bg-gradient-to-t from-paper via-paper/90 to-transparent pb-1 text-xs font-medium text-ink-muted"
+            >
+              Scroll for more ↓
+            </p>
+          )}
           <div className="flex items-center justify-center pb-1" role="group" aria-label="Choose a panel">
             {panels.map((p, i) => (
               <button
