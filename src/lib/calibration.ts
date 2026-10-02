@@ -275,7 +275,7 @@ export function generateCoupleReport(profileA: Profile, profileB: Profile): Coup
     {
       domain: "How care lands",
       diverges: (a.structureNeed > a.warmthNeed) !== (b.structureNeed > b.warmthNeed),
-      risk: "Care may be getting shown in a way that isn’t recognised as care.",
+      risk: "One of you may be showing care in a way the other doesn’t count as care.",
       summary: "For one of you, care looks like things getting sorted; for the other, it looks like warmth. Each of you name one thing that feels like care to you.",
       shared: "You both count the same kinds of things as care.",
     },
@@ -289,14 +289,14 @@ export function generateCoupleReport(profileA: Profile, profileB: Profile): Coup
     {
       domain: "What makes trust feel real",
       diverges: diff(a.proofOrientation, b.proofOrientation) > 24,
-      risk: "Trust may come from what’s said for one of you, and from what’s done for the other.",
+      risk: "One of you trusts what’s said; the other waits to see it done. Say what you’ll do, then do it where you can both see it.",
       summary: "Warm words are enough for one of you, while the other waits to see what happens next. Pick one small promise and keep it where you can both see it.",
       shared: "Trust feels real to both of you in much the same way.",
     },
     {
       domain: "How heated is too heated",
       diverges: diff(a.heatTolerance, b.heatTolerance) > 24,
-      risk: "If one of you can take more heat than the other, that can build a Reach–Recoil loop (one reaches, the other pulls back).",
+      risk: "When one of you can stay in a heated talk longer than the other, one tends to push and the other to pull back.",
       summary: "Your limits for a heated conversation aren’t the same. Agree the signal that means ‘stop here’, before you need it.",
       shared: "You agree, more or less, on how heated a conversation can get.",
     },
@@ -318,7 +318,7 @@ export function generateCoupleReport(profileA: Profile, profileB: Profile): Coup
     ...(firstShared ? [firstShared.shared] : []),
     average([a.proofOrientation, b.proofOrientation]) > 60
       ? "Your answers both lean towards trusting what you can see, so the Proof Protocol (a change you can both point to) may feel familiar."
-      : "You two lean on warmth and daily habits more than on keeping a record. Build from there.",
+      : "You two lean on warmth and daily habits more than on keeping a record. Keep your morning and evening check-ins going, and add one small habit at your next Weekly Reset.",
   ];
 
   const routes = routeTools(profileA, profileB, health);

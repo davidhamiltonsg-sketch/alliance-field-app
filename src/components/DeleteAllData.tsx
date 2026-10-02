@@ -38,8 +38,8 @@ export function DeleteAllData() {
       <p className="text-base leading-normal text-ink">
         Everything you enter — the times you set to come back, your Weekly Reset answers and
         history, calibration answers, favourites, 7-day plan ticks — stays on
-        this device. The
-        app has no account. The only time any data leaves your device is if
+        your phone. The
+        app has no account. The only time any data leaves your phone is if
         you choose to give us your email for updates. (While early access is
         on, one sign-in cookie remembers the access code; it holds nothing
         about you.){" "}

@@ -83,11 +83,11 @@ export const connectionCards: ConnectionCard[] = [
   { id: "r7", stage: "repair", question: "What’s the difference between you needing space and you pulling away? How would I tell?" },
 
   // Alliance
-  { id: "a1", stage: "alliance", question: "What’s one thing we’re building right now that you’re genuinely excited about?" },
+  { id: "a1", stage: "alliance", question: "What’s one thing we’re working towards that you’re actually excited about?" },
   { id: "a2", stage: "alliance", question: "If we’re doing this right, what does an ordinary weeknight look like a year from now?" },
   { id: "a3", stage: "alliance", question: "What’s one of our habits that’s really working and worth keeping?" },
   { id: "a4", stage: "alliance", question: "What’s one way we could back each other up more visibly, in front of other people?" },
-  { id: "a5", stage: "alliance", question: "What’s something you want us to be known for, as a team?" },
+  { id: "a5", stage: "alliance", question: "What do you hope our friends say about us?" },
   { id: "a6", stage: "alliance", question: "What’s one thing about us that you hope never changes?" },
   { id: "a7", stage: "alliance", question: "What’s one hard thing we got through together that you’re still proud of?" },
 ];

@@ -560,16 +560,24 @@ describe("CANON round 6", () => {
     expect(card.steps.join(" ")).toContain("Drift is nobody’s fault, so you each name your part.");
   });
 
-  it("Weekly Reset scope rule names the Monthly Review (in What it is, as on the Kit card since pass 35; once on the card)", () => {
+  it("Weekly Reset scope rule names the Monthly Review (short What it is, as on the Kit card since pass 40; once on the card; gloss off the card)", () => {
     const card = getProtocol("weekly-reset")!;
     const scope =
-      "Forty minutes is enough for the five parts and nothing else. Bigger things (checking a Proof item, planning something fun, where you’re heading) wait for the Monthly Review, a 40-minute once-a-month look at how things are going";
+      "Anything bigger (checking a Proof item, planning something fun, where you’re heading) waits for the Monthly Review";
+    const gloss = "a 40-minute once-a-month look at how things are going";
     expect(card.concept).toContain("Maintenance, not a trial. Ours happens at home, on a Sunday.");
     expect(card.whenToUse).toContain("Same day and time each week; also after travel or a hard stretch. Not for a fight: flooded? Pause + Return first.");
     expect(card.concept).toContain(`${scope}. Maintenance, not a trial.`);
     expect(card.whenToUse).not.toContain(scope);
     expect(JSON.stringify(card).split(scope).length - 1).toBe(1);
+    expect(JSON.stringify(card)).not.toContain(gloss);
     expect(card.activity).toContain("Book the next three weeks. Set a 40-minute timer; stop when it rings. Anything bigger waits for the Monthly Review.");
+  });
+
+  it("the Monthly Review gloss is defined once in the app, on the Weekly Reset page", () => {
+    const gloss = "the Monthly Review, a 40-minute once-a-month look at how things are going";
+    const page = readFileSync(join(process.cwd(), "src/app/weekly-reset/page.tsx"), "utf8").replace(/\s+/g, " ");
+    expect(page.split(gloss).length - 1).toBe(1);
   });
 
   it("/together points at the live Situation Map row", () => {

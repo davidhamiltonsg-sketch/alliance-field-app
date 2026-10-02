@@ -348,7 +348,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Note yes or no",
-        "detail": "For each of you for a week. If it’s slipping, adjust the timing, not how much you’re doing.",
+        "detail": "For each of you for a week. If it’s slipping, move the time, and keep both check-ins.",
         "kind": "step",
         "badge": "7 days"
       }
@@ -511,7 +511,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "outcome": "One agreed change, with a date to check it."
   },
   "uninvestment-check": {
-    "when": "When dinner is all logistics and the last real question was weeks ago. If contempt has taken the place of frustration, go straight to step 2.",
+    "when": "When dinner is all logistics and the last real question was weeks ago. If contempt has taken the place of frustration, skip the count: contempt means stop and get outside support first.",
     "steps": [
       {
         "title": "Each of you marks, on your own",
