@@ -49,7 +49,7 @@ export const situations: Situation[] = [
     label: "Pulling away / uninvestment",
     description: "Warmth missing, repairs on autopilot: several signs of pulling away, not just needing space.",
     firstMove:
-      "Uninvestment Check. 0 signs: nothing to fix. 1–2: space and small repairs. 3 or more: may be pulling away — book a Full Recovery within a week. Contempt, fear or coercion: stop and get outside support first.",
+      "Uninvestment Check. None of these? You’re fine. Keep up the daily floor. 1–2: space and small repairs. 3 or more: may be pulling away — book a Full Recovery within a week. Contempt, fear or coercion: stop and get outside support first.",
     primaryHref: "/protocols/uninvestment-check",
     secondaryHrefs: [{ label: "Full Recovery", href: "/protocols/full-recovery" }],
   },
@@ -104,7 +104,7 @@ export const situations: Situation[] = [
     id: "daily-drift",
     label: "We feel like housemates",
     description: "Conversations are just logistics; the connection feels thin.",
-    firstMove: "Morning + Evening Rhythm. Feels like a chore? Try a Sun Memory, a short break from fixing (Sensory Comfort Inventory). Flat after two weeks? Drift Check.",
+    firstMove: "Morning + Evening Rhythm. Feels like a chore? Take a night off fixing: a Sun Memory (Sensory Comfort Inventory). Flat after two weeks? Drift Check.",
     primaryHref: "/protocols/morning-evening-rhythm",
   },
   {

@@ -178,7 +178,7 @@ describe("registry: banned wording", () => {
     // The Weekly Reset's own "Check the load" step (card and diagram) is already inside the
     // Weekly Reset; it uses the Field Kit's shorter wording (voice pass 10), and the card's
     // activity still carries the full phrase.
-    const mentions = texts.filter((t) => /Care Check-in/.test(t.text) && !/^Care Check-in$/.test(t.text) && !/Is it fair\? Once a month, this part is the monthly Care Check-in\.$/.test(t.text));
+    const mentions = texts.filter((t) => /Care Check-in/.test(t.text) && !/^Care Check-in$/.test(t.text) && !/Is it fair\? Once a month, this part is the Care Check-in\.$/.test(t.text));
     expect(mentions.length).toBeGreaterThan(0);
     for (const m of mentions) {
       expect(m.text.toLowerCase(), `${m.file}: ${m.text}`).toContain(phrase.toLowerCase().replace(/^the /, ""));

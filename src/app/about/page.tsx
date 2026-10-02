@@ -195,7 +195,8 @@ export default function AboutPage() {
         <Marker kind="NOTE" label="Feeling checked out?" />
         <p className="mt-2 text-base leading-normal">
           <strong>Not sure if it’s needing space or pulling away?</strong> Try the
-          Uninvestment Check. 0 signs: nothing to fix. 1–2: likely needs
+          Uninvestment Check. None of these? You’re fine. Keep up the daily
+          floor. 1–2: likely needs
           space and small repairs. 3 or more: may be pulling away — book a
           Full Recovery conversation within a week.
         </p>

@@ -32,7 +32,7 @@ export const startDays: StartDay[] = [
   {
     day: 2,
     title: "Practise the 60-Second Alliance Reset",
-    task: "Practise all five steps of the 60-Second Alliance Reset once, calm, so they’re familiar before you need them. Start the daily floor (four small things you do every day): a check-in, an “I see you”, an appreciation, and a repair within 24 hours if anything stings.",
+    task: "Practise all five steps once, calm, so they’re familiar before you need them. Start the daily floor (four small things you do every day): a check-in, an “I see you”, an appreciation, and a repair within 24 hours if anything stings.",
     proof: "One calm practice run; daily floor begun.",
     minutes: 10,
     slug: "60-second-reset",

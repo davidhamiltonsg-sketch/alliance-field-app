@@ -82,11 +82,11 @@ describe("CANON numbers and wording", () => {
     expect(minutes.reduce((a, b) => a + b, 0)).toBe(KIT.weeklyResetMinutes);
   });
 
-  it("Uninvestment Check lists 8 signs and the 0 / 1–2 / 3+ bands (CANON round 6)", () => {
+  it("Uninvestment Check lists 8 signs and the none / 1–2 / 3+ bands (CANON round 6; Kit wording, voice pass 14)", () => {
     const card = getProtocol("uninvestment-check")!;
     expect(card.activity.match(/\(\d\)/g)).toHaveLength(8);
     const steps = card.steps.join(" ");
-    expect(steps).toContain("0 signs → nothing to fix");
+    expect(steps).toContain("None of these? You’re fine. Keep up the daily floor.");
     expect(steps).toContain("1–2 signs → likely needs space and small repairs (Micro-Repair, Morning + Evening Rhythm)");
     expect(steps).toContain("3 or more signs → may be pulling away");
     expect(steps).not.toContain("0–2");

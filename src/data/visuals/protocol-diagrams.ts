@@ -178,7 +178,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Check the load",
-        "detail": "Do you feel supported? Alone? Is it fair? Once a month, this part is the monthly Care Check-in.",
+        "detail": "Do you feel supported? Alone? Is it fair? Once a month, this part is the Care Check-in.",
         "kind": "step",
         "badge": "15 min"
       },
@@ -457,7 +457,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Keep it private",
-        "detail": "Keep it private unless you choose to share it — privacy makes you more honest, not less.",
+        "detail": "Keep it private unless you choose to share it. It’s easier to be honest with yourself when no one’s watching.",
         "kind": "note"
       },
       {
@@ -470,7 +470,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "outcome": "One honest look a week at what you say and what you do."
   },
   "full-recovery": {
-    "when": "Use for a repeated fight, or a clear before/after dent in trust, when a normal Weekly Reset can’t hold the topic. Don’t use it mid-fight, as a stand-in for a smaller repair, or unless you’ve both agreed to sit down for it.",
+    "when": "Use for a repeated fight, or a clear before/after dent in trust, when a normal Weekly Reset can’t hold the topic. Only when you’ve both agreed to sit down for it — never mid-fight, and not in place of a smaller repair.",
     "steps": [
       {
         "title": "Warm up first",
@@ -526,7 +526,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Likely needs space",
-        "detail": "0 signs → nothing to fix. 1–2 signs → likely needs space and small repairs (Micro-Repair, Morning + Evening Rhythm).",
+        "detail": "None of these? You’re fine. Keep up the daily floor. 1–2 signs → likely needs space and small repairs (Micro-Repair, Morning + Evening Rhythm).",
         "kind": "step",
         "badge": "1–2"
       },
