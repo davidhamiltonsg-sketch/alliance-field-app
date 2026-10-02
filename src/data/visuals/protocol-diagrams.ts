@@ -555,7 +555,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Trace the source",
-        "detail": "Is this about us, or about their disapproval landing on us? Say out loud that it came from outside: “That’s coming from them, not from us.” Check what’s needed now: reassurance, a plan, or just to vent.",
+        "detail": "About us, or about them? Say it: “That’s coming from them, not from us.” Then ask what’s needed: reassurance, a plan, or just to vent.",
         "kind": "step"
       },
       {

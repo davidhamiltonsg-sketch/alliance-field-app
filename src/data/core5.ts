@@ -16,7 +16,7 @@ export const coreFive: CoreTool[] = [
   },
   {
     slug: "pause-and-return",
-    why: "Space with an exact return time — 20 minutes to 24 hours.",
+    why: "Time apart that ends when you said it would: 20 minutes to 24 hours.",
   },
   {
     slug: "60-second-reset",
@@ -28,7 +28,7 @@ export const coreFive: CoreTool[] = [
   },
   {
     slug: "weekly-reset",
-    why: "Five parts, about 40 minutes, once a week, appreciation first.",
+    why: "Five parts, about 40 minutes, once a week, appreciation first, so nothing piles up until it blows up.",
   },
 ];
 

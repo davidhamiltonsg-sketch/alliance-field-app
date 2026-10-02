@@ -74,7 +74,7 @@ export const connectionCards: ConnectionCard[] = [
   { id: "ca7", stage: "care", question: "What did you carry this week that I didn’t notice? I’d like to thank you for it." },
 
   // Repair
-  { id: "r1", stage: "repair", question: "What’s a friction point from this week that we haven’t actually named yet?" },
+  { id: "r1", stage: "repair", question: "What bugged you this week that we haven’t actually talked about?" },
   { id: "r2", stage: "repair", question: "When we last disagreed, what did you need that you didn’t ask for?" },
   { id: "r3", stage: "repair", question: "What’s one specific thing I could do differently next time we’re stuck?" },
   { id: "r4", stage: "repair", question: "Is there something small I did recently that came across wrong, even if it wasn’t a big deal?" },

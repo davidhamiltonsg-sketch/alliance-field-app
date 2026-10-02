@@ -161,7 +161,7 @@ export default function AboutPage() {
         className="relative scroll-mt-20 overflow-hidden rounded-2xl border border-repair/25 bg-surface-tool px-4 py-3.5"
       >
         <span className="absolute inset-y-0 left-0 w-1 bg-repair" aria-hidden />
-        <Marker kind="NOTE" label="Feeling checked out?" />
+        <Marker kind="NOTE" label="Feeling far apart?" />
         <p className="mt-2 text-base leading-normal">
           <strong>Not sure if it’s needing space or pulling away?</strong> That’s
           what the Uninvestment Check is for. If contempt has crept in (the

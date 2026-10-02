@@ -209,18 +209,18 @@ function routeTools(a: Profile, b: Profile, health: Record<LayerKey, number>) {
   };
 
   if (health.Atmosphere < 62) add("Morning + Evening Rhythm", "Your answers are furthest apart on the warmth between you. Start there: a little warmth each day, before you ask for any change.");
-  if (health.Structure < 62) add("Weekly Reset", "You see the routines and agreements quite differently. A weekly check-in you can both count on is the place to begin.");
+  if (health.Structure < 62) add("Weekly Reset", "You disagree most about the everyday arrangements: who does what, and when. A weekly check-in you can both count on is the place to begin.");
   if (health.Repair < 62) add("Micro-Repair", "You make up after a row in different ways. Try smaller repairs, more often.");
   if (health.Protection < 62) add("Pause + Return", "You differ most on what keeps you safe in a heated moment. Agree now what you’ll each do when it gets there.");
 
   if (diff(a.scores.privacyNeed, b.scores.closenessNeed) > 18 || diff(b.scores.privacyNeed, a.scores.closenessNeed) > 18) {
-    add("Pause + Return", "You need different amounts of space and closeness: one of you can take space as rejection, while the other feels closeness as pressure.");
+    add("Pause + Return", "You need different amounts of space and closeness. One of you hears ‘I need a minute’ as a door closing.");
   }
   if (diff(a.scores.careVisibility, b.scores.careVisibility) > 14 || diff(a.scores.warmthNeed, b.scores.structureNeed) > 18 || diff(b.scores.warmthNeed, a.scores.structureNeed) > 18) {
     add("Care Check-in", "You show care differently. One of you may be giving it in a way the other doesn’t notice as care.");
   }
   if (average([a.scores.proofOrientation, b.scores.proofOrientation]) > 64) {
-    add("Consistency Pact", "Your answers suggest trust feels most real to you both when you can see it, kept up over a set time.");
+    add("Consistency Pact", "You both trust what you can see, kept up week after week.");
   }
   if (average([a.scores.deflectionRisk, b.scores.deflectionRisk]) > 62) {
     add("Impact first, then explain", "One of you tends to slide away from hard moments with a joke or an explanation. Try naming the impact first. Explaining can come after; the repair is designed around that order.");
