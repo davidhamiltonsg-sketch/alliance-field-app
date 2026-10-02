@@ -23,7 +23,7 @@ export const startDays: StartDay[] = [
   {
     day: 1,
     title: "Safety + Pause defaults",
-    task: "Read the Situation Map, safety row first. Use the Green Rule and Pause + Return cards. Agree your defaults together and write them where you’ll both see them: your signal, a 20-minute minimum, 24 hours max, an exact return time. Read the Green Rule card’s Say This lines aloud, once each.",
+    task: "Read the Situation Map, safety row first. Open Green Rule and Pause + Return. Agree your defaults together and write them where you’ll both see them: your signal, a 20-minute minimum, 24 hours max, an exact return time. Then, on Green Rule, read the Say This lines aloud, once each.",
     proof: "Defaults agreed out loud and written down.",
     minutes: 10,
     slug: "green-rule",

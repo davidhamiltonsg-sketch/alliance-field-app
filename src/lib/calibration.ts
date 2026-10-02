@@ -273,7 +273,7 @@ export function generateCoupleReport(profileA: Profile, profileB: Profile): Coup
       shared: "You want about the same balance of space and closeness.",
     },
     {
-      domain: "How care lands",
+      domain: "What feels like care",
       diverges: (a.structureNeed > a.warmthNeed) !== (b.structureNeed > b.warmthNeed),
       risk: "One of you may be showing care in a way the other doesn’t count as care.",
       summary: "For one of you, care looks like things getting sorted; for the other, it looks like warmth. Each of you name one thing that feels like care to you.",
@@ -296,7 +296,7 @@ export function generateCoupleReport(profileA: Profile, profileB: Profile): Coup
     {
       domain: "How heated is too heated",
       diverges: diff(a.heatTolerance, b.heatTolerance) > 24,
-      risk: "If one of you can stay in a heated talk longer, one tends to push while the other pulls back.",
+      risk: "When one of you can stay in a heated talk longer than the other, that one tends to push and the other to pull back.",
       summary: "Your limits for a heated conversation aren’t the same. Agree the signal that means ‘stop here’, before you need it.",
       shared: "You agree, more or less, on how heated a conversation can get.",
     },
@@ -305,7 +305,7 @@ export function generateCoupleReport(profileA: Profile, profileB: Profile): Coup
       diverges: diff(a.transparency, b.transparency) > 24,
       risk: "What one of you leaves unsaid, the other tends to fill in with a guess.",
       summary: "Thinking out loud comes easily to one of you and less to the other. Tell each other which you are, so silence isn’t read as a verdict.",
-      shared: "You both say about as much out loud as each other.",
+      shared: "You both say about the same amount out loud.",
     },
   ];
 
@@ -317,7 +317,7 @@ export function generateCoupleReport(profileA: Profile, profileB: Profile): Coup
   const strengths = [
     ...(firstShared ? [firstShared.shared] : []),
     average([a.proofOrientation, b.proofOrientation]) > 60
-      ? "Your answers both lean towards trusting what you can see, so the Proof Protocol (a change you can both point to) may feel familiar."
+      ? "You both trust what you can see, so the Proof Protocol (a change you can both point to) may feel familiar."
       : "You two lean on warmth and daily habits more than on keeping a record. Keep your morning and evening check-ins going, and add one small habit at your next Weekly Reset.",
   ];
 

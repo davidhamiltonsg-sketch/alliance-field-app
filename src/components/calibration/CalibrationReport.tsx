@@ -201,12 +201,12 @@ export function SoloProfile({ profile, otherName, preview = false }: { profile: 
       </PageHeader>
 
       <section className="space-y-2.5">
-        <SectionLabel>How safety builds</SectionLabel>
+        <SectionLabel>What helps you feel safe</SectionLabel>
         <p className="card px-4 py-3.5 text-base leading-normal text-ink">{profile.safetyLogic}</p>
       </section>
 
       <section className="space-y-2.5">
-        <SectionLabel>How care lands</SectionLabel>
+        <SectionLabel>What feels like care</SectionLabel>
         <p className="card px-4 py-3.5 text-base leading-normal text-ink">{profile.careStyle}</p>
       </section>
 
