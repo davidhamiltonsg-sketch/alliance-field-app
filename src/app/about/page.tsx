@@ -288,7 +288,7 @@ export default function AboutPage() {
               <span className="flex flex-col py-2.5">
                 Profile Calibration
                 <span className="text-sm font-normal text-ink-muted">
-                  44 questions each — a Layer Scan (where you two differ most, layer by layer) and a couple report
+                  44 questions each, then a short report on where you two see things differently
                 </span>
               </span>
               <ChevronRight size={18} className="shrink-0 text-ink-muted/50" />
@@ -319,7 +319,7 @@ export default function AboutPage() {
           </li>
         </ul>
         <p className="px-1 text-sm leading-normal text-ink-muted">
-          Private by default: pause return times, Weekly Reset answers, and
+          Private by default: the times you set to come back, your Weekly Reset answers, and
           calibration answers all stay on this device. The only time data
           leaves it is if you choose to submit your email for updates.{" "}
           <Link href="/help#your-data" className="font-medium text-accent underline underline-offset-4">

@@ -49,7 +49,7 @@ export const situations: Situation[] = [
     label: "Pulling away / uninvestment",
     description: "Warmth missing, repairs on autopilot: several signs of pulling away, not just needing space.",
     firstMove:
-      "Uninvestment Check. No signs: you’re fine. Keep up the daily floor. One or two signs: probably needing space, so try small repairs. Three or more: may be pulling away — book a Full Recovery within a week. Contempt, fear or coercion: stop and get outside support first.",
+      "Uninvestment Check. No signs: you’re fine. Keep up the daily floor. With one or two, it likely needs space and small repairs; with three or more, you may be pulling away, so book a Full Recovery within a week. Contempt, fear or coercion: stop and get outside support first.",
     primaryHref: "/protocols/uninvestment-check",
     secondaryHrefs: [{ label: "Full Recovery", href: "/protocols/full-recovery" }],
   },
@@ -57,7 +57,7 @@ export const situations: Situation[] = [
     id: "conflict-starting",
     label: "A fight is starting",
     description: "Tone is rising; it’s starting to feel like a courtroom, not a conversation.",
-    firstMove: "System Overlay · Conflict Protocol. Green Rule first; flooded midway → Pause + Return.",
+    firstMove: "Start with the Green Rule, then use the System Overlay and the Conflict Protocol. If either of you floods partway through, switch to Pause + Return.",
     primaryHref: "/protocols/system-overlay",
     secondaryHrefs: [
       { label: "Conflict Protocol", href: "/protocols/conflict-protocol" },
@@ -79,7 +79,7 @@ export const situations: Situation[] = [
     id: "attachment-clash",
     label: "We keep clashing the same way",
     description: "Reach–Recoil (one reaches, the other pulls back), the same ask on repeat, or out of sync on timing (Pace Mismatch).",
-    firstMove: "Name the loop out loud, then find it in the Circuit Library (Manual Appendix A). Clashing on timing? Manual Ch X. In the app, Profile Calibration shows where you two differ.",
+    firstMove: "Name the loop out loud. Profile Calibration shows where you two differ. In the Manual: the Circuit Library (Appendix A), and Chapter X if you clash on timing.",
     primaryHref: "/calibrate",
     icon: "profile-calibration",
     secondaryHrefs: [{ label: "System Overlay", href: "/protocols/system-overlay" }],

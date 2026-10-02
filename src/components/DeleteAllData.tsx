@@ -36,7 +36,7 @@ export function DeleteAllData() {
   return (
     <div className="card space-y-3 px-4 py-4">
       <p className="text-base leading-normal text-ink">
-        Everything you enter — pause return times, Weekly Reset answers and
+        Everything you enter — the times you set to come back, your Weekly Reset answers and
         history, calibration answers, favourites, 7-day plan ticks — stays on
         this device. The
         app has no account. The only time any data leaves your device is if
