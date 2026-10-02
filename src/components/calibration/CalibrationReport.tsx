@@ -96,7 +96,7 @@ function CalibrationReportClient() {
           ))}
         </div>
         <p className="px-1 text-sm leading-normal text-ink-muted">
-          Lower means the two of you differ more in that layer. Worth steadying first; not a verdict on the relationship.
+          Lower means the two of you differ more in that layer. Worth steadying first. It isn’t a score for the relationship.
         </p>
       </section>
 

@@ -77,7 +77,7 @@ const panels: Panel[] = [
     eyebrow: "Optional",
     icon: "manual",
     title: "Want the full system?",
-    body: "We made this app for the moment itself, when there’s no time to look anything up. It is free, and stands on its own. The books and the kit go further, if you want them.",
+    body: "We made this app for when it’s actually happening and there’s no time to look anything up. It is free, and stands on its own. The books and the kit go further, if you want them.",
     diagram: <SystemDiagram />,
   },
 ];

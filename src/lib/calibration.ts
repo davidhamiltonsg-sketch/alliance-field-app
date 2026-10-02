@@ -184,7 +184,7 @@ function buildConflictPattern(a: Profile, b: Profile): string {
 // Maps a recommendation's concept to a real Field Kit protocol slug.
 // Concepts with no standalone card route to the closest existing one.
 const TOOL_SLUG: Record<string, string> = {
-  "60-Second Reset": "60-second-reset",
+  "60-Second Alliance Reset": "60-second-reset",
   "Pause + Return": "pause-and-return",
   "Weekly Reset": "weekly-reset",
   "Care Check-in": "weekly-reset",
@@ -306,8 +306,8 @@ export function generateCoupleReport(profileA: Profile, profileB: Profile): Coup
   const strengths = [
     "These profiles give you shared words for what you each need, so you can talk about it without anyone being in the wrong.",
     average([a.proofOrientation, b.proofOrientation]) > 60
-      ? "You both trust what you can see, so rebuilding trust through change you can both point to (the Proof Protocol) suits you."
-      : "For you two, warm repairs and a steady daily rhythm will probably matter more than keeping a record.",
+      ? "Your answers both lean towards trusting what you can see, so the Proof Protocol (a change you can both point to) may feel familiar."
+      : "Your answers lean more towards warm repairs and a steady daily rhythm than towards keeping a record.",
   ];
 
   const routes = routeTools(profileA, profileB, health);

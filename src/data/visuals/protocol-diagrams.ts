@@ -511,11 +511,11 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "outcome": "One agreed change, with a date to check it."
   },
   "uninvestment-check": {
-    "when": "When warmth is missing even in ordinary moments, repairs feel like going through the motions, you’ve stopped planning ahead together, or contempt has replaced frustration. Check monthly, or weekly if you’re worried.",
+    "when": "When warmth is missing even in ordinary moments, repairs feel like going through the motions, you’ve stopped planning ahead together, or contempt has replaced frustration.",
     "steps": [
       {
         "title": "Mark the signs alone",
-        "detail": "Each of you marks, on your own, which of the 8 signs (listed under Practise) you’ve noticed, then share. Describe behaviour you’ve seen — don’t claim to know the other person’s intent.",
+        "detail": "Each of you marks, on your own, which of the eight signs (listed under Practise) you’ve noticed, then share. Describe behaviour you’ve seen — don’t claim to know the other person’s intent.",
         "kind": "step",
         "badge": "8 signs"
       },
@@ -546,7 +546,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "outcome": "Space or pulling away: you name which, and book the right next step."
   },
   "unity-anchor": {
-    "when": "When disapproval, discrimination, or judgement from outside (family, friends, community, strangers) is putting pressure on the two of you, and it’s starting to look like a problem between you instead of a problem coming from outside. If the pressure comes from your partner, this isn’t a Unity Anchor situation: use the Green Rule (Safety Gate), and the safety line below.",
+    "when": "When disapproval, discrimination, or judgement from outside (family, community, strangers) is putting pressure on the two of you, and it’s starting to look like a problem between you instead of a problem coming from outside. If the pressure comes from your partner, this isn’t a Unity Anchor situation: use the Green Rule (Safety Gate), and the safety line below.",
     "steps": [
       {
         "title": "Pause before reacting",

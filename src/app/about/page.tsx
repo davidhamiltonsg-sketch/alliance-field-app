@@ -302,7 +302,7 @@ export default function AboutPage() {
               <span className="flex flex-col py-2.5">
                 Connection Cards
                 <span className="text-sm font-normal text-ink-muted">
-                  A flip-card game for reconnecting on purpose
+                  A deck of question cards for coming back to each other
                 </span>
               </span>
               <ChevronRight size={18} className="shrink-0 text-ink-muted/50" />

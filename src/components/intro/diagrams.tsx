@@ -407,7 +407,7 @@ export function ConnectionCardsDiagram() {
     { title: "Curiosity", sub: "What’s changed lately" },
     { title: "Care", sub: "What they’re carrying" },
     { title: "Repair", sub: "No re-arguing it" },
-    { title: "Alliance", sub: "On purpose, together" },
+    { title: "Alliance", sub: "Looking ahead, together" },
   ];
   const seg = 72,
     gapDeg = 15;

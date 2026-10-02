@@ -102,8 +102,8 @@ export default function TogetherPage() {
         <div className="card px-4 py-3.5 text-base leading-normal text-ink">
           <p>
             <strong className="font-medium">Built-in safeguard.</strong> The
-            Unity Anchor decides how the two of you respond to outside
-            pressure — never how much access a relative gets to your partner.
+            Unity Anchor is there to help you two decide how to respond to
+            outside pressure — never how much access a relative gets to your partner.
             No tool is ever used to limit a partner’s contact with
             friends, family, money, phone or movement.
           </p>

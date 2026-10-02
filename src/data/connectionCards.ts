@@ -12,7 +12,7 @@ export const STAGE_META: Record<
 > = {
   warmth: {
     label: "Warmth",
-    caption: "Low-stakes. Use when you’re distant or just back from a pause.",
+    caption: "Nothing heavy here. Use when you’re distant or just back from a pause.",
   },
   curiosity: {
     label: "Curiosity",
@@ -28,7 +28,7 @@ export const STAGE_META: Record<
   },
   alliance: {
     label: "Alliance",
-    caption: "Future-facing. What you’re building together, on purpose.",
+    caption: "These look ahead. What you’re building together.",
   },
 };
 
@@ -71,7 +71,7 @@ export const connectionCards: ConnectionCard[] = [
   { id: "ca4", stage: "care", question: "When did you last feel truly looked after — by anyone?" },
   { id: "ca5", stage: "care", question: "What’s something I could take off your list this week?" },
   { id: "ca6", stage: "care", question: "What’s one way I show care that really lands for you?" },
-  { id: "ca7", stage: "care", question: "Name one thing you did for us this week that went unnoticed." },
+  { id: "ca7", stage: "care", question: "Name one thing your partner did this week that you haven’t thanked them for yet." },
 
   // Repair
   { id: "r1", stage: "repair", question: "What’s a friction point from this week that we haven’t actually named yet?" },
@@ -88,6 +88,6 @@ export const connectionCards: ConnectionCard[] = [
   { id: "a3", stage: "alliance", question: "What’s one of our habits that’s really working and worth keeping?" },
   { id: "a4", stage: "alliance", question: "What’s one way we could back each other up more visibly, in front of other people?" },
   { id: "a5", stage: "alliance", question: "What’s something you want us to be known for, as a team?" },
-  { id: "a6", stage: "alliance", question: "Say it plainly: what does 'the Alliance' mean to you right now?" },
-  { id: "a7", stage: "alliance", question: "What’s one thing we made it through that you’re still proud we didn’t quit on?" },
+  { id: "a6", stage: "alliance", question: "What’s one thing about us that you hope never changes?" },
+  { id: "a7", stage: "alliance", question: "What’s one hard thing we got through together that you’re still proud of?" },
 ];
