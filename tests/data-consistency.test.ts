@@ -82,11 +82,11 @@ describe("CANON numbers and wording", () => {
     expect(minutes.reduce((a, b) => a + b, 0)).toBe(KIT.weeklyResetMinutes);
   });
 
-  it("Uninvestment Check lists 8 signs and the none / 1–2 / 3+ bands (CANON round 6; Kit wording, voice pass 14)", () => {
+  it("Uninvestment Check lists 8 signs and the none / 1–2 / 3+ bands (CANON round 6; Kit wording, voice passes 14 and 24)", () => {
     const card = getProtocol("uninvestment-check")!;
     expect(card.activity.match(/\(\d\)/g)).toHaveLength(8);
     const steps = card.steps.join(" ");
-    expect(steps).toContain("None of these? You’re fine. Keep up the daily floor.");
+    expect(steps).toContain("None of these? Good. Keep up the daily floor.");
     expect(steps).toContain("1–2 signs → likely needs space and small repairs (Micro-Repair, Morning + Evening Rhythm)");
     expect(steps).toContain("3 or more signs → may be pulling away");
     expect(steps).not.toContain("0–2");
@@ -121,8 +121,12 @@ describe("CANON round 3", () => {
     expect(card.activity).toContain("(4) doing more on your own in place of shared time (time apart is healthy)");
     const contempt = "If contempt is one of your signs, skip the count: contempt means stop and get outside support first.";
     // Voice pass 21: the Practise text is short sentences with no worksheet
-    // reference, and still carries the contempt rule in full.
-    expect(card.activity).toContain("Contempt never goes into the count: contempt means stop and get outside support first.");
+    // reference, and still carries the contempt rule in full. Voice pass 24:
+    // the counting rules live once, in the steps; the Practise text lists the
+    // eight signs and carries the contempt stop rule verbatim.
+    expect(card.activity).toContain(contempt);
+    expect(card.activity).toContain("Mark the signs on your own, then compare.");
+    expect(card.activity).not.toMatch(/1–2|3 or more/);
     expect(card.activity).not.toMatch(/worksheet/i);
     expect(card.steps[1]).toContain(contempt);
     expect(card.steps.join(" ")).toContain(contempt);
@@ -492,7 +496,7 @@ describe("CANON round 6", () => {
   it("Uninvestment Check: within a week, and no one caused drift", () => {
     const card = getProtocol("uninvestment-check")!;
     expect(JSON.stringify(card)).not.toMatch(/before you leave the conversation/);
-    expect(card.activity).toContain("book a Full Recovery conversation within a week");
+    expect(card.steps.join(" ")).toContain("Book a Full Recovery conversation within a week");
     expect(card.steps.join(" ")).toContain("For drift, no one “caused” it: you both name your part.");
   });
 

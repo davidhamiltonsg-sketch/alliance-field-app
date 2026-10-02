@@ -163,8 +163,8 @@ export default function AboutPage() {
         <span className="absolute inset-y-0 left-0 w-1 bg-repair" aria-hidden />
         <Marker kind="NOTE" label="Feeling checked out?" />
         <p className="mt-2 text-base leading-normal">
-          <strong>Not sure if it’s needing space or pulling away?</strong> We
-          use the Uninvestment Check for that. Contempt means stop and get
+          <strong>Not sure if it’s needing space or pulling away?</strong> That’s
+          what the Uninvestment Check is for. Contempt means stop and get
           outside support first.
         </p>
         <Link

@@ -79,7 +79,7 @@ export const situations: Situation[] = [
     id: "attachment-clash",
     label: "We keep clashing the same way",
     description: "Reach–Recoil (one reaches, the other pulls back), the same ask on repeat, or out of sync on timing (Pace Mismatch).",
-    firstMove: "Name the loop out loud: ‘I think we’re doing the thing again.’ Then take Profile Calibration to see where you two differ.",
+    firstMove: "Name the loop out loud: ‘I think we’re doing the thing again.’ Then try Profile Calibration together to see where you differ.",
     primaryHref: "/calibrate",
     icon: "profile-calibration",
     secondaryHrefs: [{ label: "System Overlay", href: "/protocols/system-overlay" }],
@@ -104,7 +104,7 @@ export const situations: Situation[] = [
     id: "daily-drift",
     label: "We feel like housemates",
     description: "Conversations are just logistics; the connection feels thin.",
-    firstMove: "Morning + Evening Rhythm. Feels like a chore? Take a night off fixing (a Sun Memory; ideas: Sensory Comfort Inventory). Still flat after two weeks? Drift Check.",
+    firstMove: "Morning + Evening Rhythm. Feels like a chore? Take a night off fixing (a Sun Memory); see the Sensory Comfort Inventory. Two weeks flat? Try the Drift Check.",
     primaryHref: "/protocols/morning-evening-rhythm",
   },
   {

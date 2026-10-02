@@ -190,7 +190,7 @@ const TOOL_SLUG: Record<string, string> = {
   "Care Check-in": "weekly-reset",
   "Micro-Repair": "micro-repair",
   "Conflict Protocol": "conflict-protocol",
-  "Impact before explanation (Full Recovery)": "full-recovery",
+  "Impact first, then explain": "full-recovery",
   "Consistency Pact": "consistency-pact",
   "Uninvestment Check": "uninvestment-check",
   "Full Recovery": "full-recovery",
@@ -223,7 +223,7 @@ function routeTools(a: Profile, b: Profile, health: Record<LayerKey, number>) {
     add("Consistency Pact", "For you two, trust grows from things you can both see, kept up over a set time.");
   }
   if (average([a.scores.deflectionRisk, b.scores.deflectionRisk]) > 62) {
-    add("Impact before explanation (Full Recovery)", "One of you tends to slide away from hard moments with a joke or an explanation. Name the impact first, then explain what you meant, so the repair lands.");
+    add("Impact first, then explain", "One of you tends to slide away from hard moments with a joke or an explanation. Name the impact first, then explain what you meant, so the repair lands.");
   }
   if (
     average([a.scores.withdrawalUnderStress, b.scores.withdrawalUnderStress]) > 60 &&
@@ -266,7 +266,7 @@ export function generateCoupleReport(profileA: Profile, profileB: Profile): Coup
   type Row = { domain: string; diverges: boolean; risk: string; summary: string };
   const rows: Row[] = [
     {
-      domain: "Privacy / closeness",
+      domain: "Space and closeness",
       diverges: diff(a.closenessNeed - a.privacyNeed, b.closenessNeed - b.privacyNeed) > 24,
       risk: "Space can read as rejection, and closeness as pressure.",
       summary: "How much space and how much closeness do you each need? Talk about that first.",
@@ -284,7 +284,7 @@ export function generateCoupleReport(profileA: Profile, profileB: Profile): Coup
       summary: "It’s about timing: one of you wants to make up sooner than the other.",
     },
     {
-      domain: "Proof / trust",
+      domain: "What makes trust feel real",
       diverges: diff(a.proofOrientation, b.proofOrientation) > 24,
       risk: "One of you tends to trust warm words; the other needs to see it.",
       summary: "Trust feels real in different ways: warm words for one of you, things you can see for the other.",

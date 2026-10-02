@@ -526,7 +526,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Likely needs space",
-        "detail": "None of these? You’re fine. Keep up the daily floor. 1–2 signs → likely needs space and small repairs (Micro-Repair, Morning + Evening Rhythm).",
+        "detail": "None of these? Good. Keep up the daily floor. 1–2 signs → likely needs space and small repairs (Micro-Repair, Morning + Evening Rhythm).",
         "kind": "step",
         "badge": "1–2"
       },

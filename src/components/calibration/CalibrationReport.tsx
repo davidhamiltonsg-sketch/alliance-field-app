@@ -105,7 +105,7 @@ function CalibrationReportClient() {
           ))}
         </div>
         <p className="px-1 text-sm leading-normal text-ink-muted">
-          A longer bar means the two of you are further apart in that layer. Worth steadying first. It isn’t a score for the relationship.
+          A longer bar means you’re further apart in that layer. Start with the longest bar. It isn’t a score for the relationship.
         </p>
       </section>
 
