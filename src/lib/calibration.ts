@@ -178,7 +178,7 @@ function buildConflictPattern(a: Profile, b: Profile): string {
     return `${b.name} tends to push for an answer while ${a.name} backs off. Left alone, that can become a Reach–Recoil loop (one reaches, the other pulls back). Pause + Return, with an exact return time, is designed to break it.`;
   if (aPursues && bPursues)
     return "Both of you tend to push harder to get a response. The first move is to slow down, before the push for reassurance becomes the fight.";
-  return "Both of you tend to back off. Few fights can hide little contact — keep up the Morning + Evening Rhythm and the Weekly Reset so distance doesn’t build quietly.";
+  return "Both of you tend to back off. Fewer fights can still mean less contact: keep up the Morning + Evening Rhythm and the Weekly Reset so distance doesn’t build quietly.";
 }
 
 // Maps a recommendation's concept to a real Field Kit protocol slug.

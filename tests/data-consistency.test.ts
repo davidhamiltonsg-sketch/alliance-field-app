@@ -149,6 +149,14 @@ describe("CANON round 3", () => {
     expect(card.safetyLink).toBe(true);
   });
 
+  it("Intimacy Pact sends force, threats or fear straight to the Help Lines", () => {
+    const FORCE = "If it involved force, threats or fear, it isn’t a ‘once’: go straight to the Help Lines.";
+    const last = getProtocol("intimacy-pact")!.steps.at(-1)!;
+    expect(last).toContain(FORCE);
+    expect(last.indexOf(FORCE)).toBeGreaterThan(last.indexOf("Green Rule or Trust Recovery"));
+    expect(JSON.stringify(protocolDiagrams["intimacy-pact"])).toContain(FORCE);
+  });
+
   it("never asks to track or verify the other partner", () => {
     const text = JSON.stringify([getProtocol("trust-recovery"), getProtocol("proof-protocol")]);
     expect(text).not.toMatch(/\btrack(ing)? (the facts|it)\b|\bverify\b/i);
