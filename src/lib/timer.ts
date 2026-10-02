@@ -80,8 +80,8 @@ export function clockReturnTarget(hhmm: string, now: Date): Checked<{ target: Da
   target.setHours(Number(m[1]), Number(m[2]), 0, 0);
   if (target.getTime() <= now.getTime()) target.setDate(target.getDate() + 1);
   const delta = target.getTime() - now.getTime();
-  if (delta < PAUSE_MIN_MINUTES * MINUTE) return { ok: false, error: "That’s less than 20 minutes away — pick a later time." };
-  if (delta > PAUSE_MAX_MINUTES * MINUTE) return { ok: false, error: "That’s more than 24 hours away — pick a sooner time." };
+  if (delta < PAUSE_MIN_MINUTES * MINUTE) return { ok: false, error: "That’s less than 20 minutes away. Pick a later time." };
+  if (delta > PAUSE_MAX_MINUTES * MINUTE) return { ok: false, error: "That’s more than 24 hours away. Pick a sooner time." };
   return { ok: true, target };
 }
 

@@ -400,6 +400,9 @@ describe("/privacy", () => {
     expect(src).toMatch(/30 days/);
     expect(src).not.toMatch(/analytics, cookies or trackers|and no\s+cookies/i);
     expect(componentSource("DeleteAllData")).toMatch(/cookie/);
+    // Delete-all can't clear the httpOnly cookie; the Privacy page says so.
+    expect(src).toMatch(/Delete all my data[\s\S]{0,80}doesn’t\s+remove it/);
+    expect(src).toMatch(/expires on its\s+own/);
   });
 
   it("is linked from the email signup, Help (Your data) and About", () => {
@@ -538,13 +541,15 @@ describe("CANON round 6", () => {
     expect(card.steps.join(" ")).toContain("For drift, no one “caused” it: you both name your part.");
   });
 
-  it("Weekly Reset scope rule names the Monthly Review (in Practise, as on the Kit card since pass 27; still on the card)", () => {
+  it("Weekly Reset scope rule names the Monthly Review (in When to use, as on the Kit card since pass 31; once on the card)", () => {
     const card = getProtocol("weekly-reset")!;
+    const scope =
+      "Forty minutes is enough for the five parts and nothing else. Bigger things (checking a Proof item, planning something fun, where you’re heading) wait for the Monthly Review, a 40-minute once-a-month look at how things are going";
     expect(card.concept).toContain("Maintenance, not a trial. Ours happens at home, on a Sunday.");
     expect(card.whenToUse).toContain("Same day and time each week; also after travel, stress, or distance.");
-    expect(card.activity).toContain(
-      "Forty minutes is enough for the five parts and nothing else. Bigger things (checking a Proof item, planning something fun, where you’re heading) wait for the Monthly Review, a 40-minute once-a-month look at how things are going",
-    );
+    expect(card.whenToUse).toContain(scope);
+    expect(JSON.stringify(card).split(scope).length - 1).toBe(1);
+    expect(card.activity).toContain("Book the next three weeks. Set a 40-minute timer; stop when it rings. Anything bigger waits for the Monthly Review.");
   });
 
   it("/together points at the live Situation Map row", () => {

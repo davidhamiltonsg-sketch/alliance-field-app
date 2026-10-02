@@ -217,10 +217,10 @@ function routeTools(a: Profile, b: Profile, health: Record<LayerKey, number>) {
     add("Pause + Return", "You need different amounts of space and closeness: one of you can take space as rejection, while the other feels closeness as pressure.");
   }
   if (diff(a.scores.careVisibility, b.scores.careVisibility) > 14 || diff(a.scores.warmthNeed, b.scores.structureNeed) > 18 || diff(b.scores.warmthNeed, a.scores.structureNeed) > 18) {
-    add("Care Check-in", "You show care differently — one of you may be caring in a way the other doesn’t feel.");
+    add("Care Check-in", "You show care differently. One of you may be giving it in a way the other doesn’t notice as care.");
   }
   if (average([a.scores.proofOrientation, b.scores.proofOrientation]) > 64) {
-    add("Consistency Pact", "For you two, trust grows from things you can both see, kept up over a set time.");
+    add("Consistency Pact", "Your answers suggest trust feels most real to you both when you can see it, kept up over a set time.");
   }
   if (average([a.scores.deflectionRisk, b.scores.deflectionRisk]) > 62) {
     add("Impact first, then explain", "One of you tends to slide away from hard moments with a joke or an explanation. Try naming the impact first. Explaining can come after; the repair is designed around that order.");

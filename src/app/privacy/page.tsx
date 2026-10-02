@@ -157,7 +157,9 @@ export default function PrivacyPage() {
             you don’t have to type the code again. It holds a signed token and
             the time it was issued, not the code and nothing about you; page scripts can’t read it
             (httpOnly); it expires after 30 days; and it isn’t used for
-            tracking. Once early access ends, it is no longer set. Otherwise
+            tracking. “Delete all my data” (Help &rarr; Your data) doesn’t
+            remove it, because page scripts can’t reach it; it expires on its
+            own. Once early access ends, it is no longer set. Otherwise
             the app sets no cookies.
           </p>
           <p>

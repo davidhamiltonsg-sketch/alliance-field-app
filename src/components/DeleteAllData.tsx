@@ -100,7 +100,7 @@ export function DeleteAllData() {
         className="focus-target text-base font-medium text-accent empty:hidden"
       >
         {status === "done"
-          ? "Deleted. Your saved answers and the offline copy are gone from this browser. Next time you open or reload the app, it downloads a fresh offline copy, with none of your old answers. The early-access cookie, if you have one, isn’t touched; it holds nothing about you and expires on its own."
+          ? "Deleted. Everything you saved is gone from this phone. Next time you open the app, it starts fresh."
           : ""}
       </p>
     </div>
