@@ -170,7 +170,7 @@ export function Splash() {
         href="/help"
         onClick={(e) => e.stopPropagation()}
         className="absolute right-2 top-[calc(env(safe-area-inset-top)+4px)] z-[1] inline-flex h-12 items-center rounded-full px-3 text-sm font-semibold text-failure"
-        aria-label="Help and safety: help lines"
+        aria-label="Help and safety: Help Lines"
       >
         Help
       </a>

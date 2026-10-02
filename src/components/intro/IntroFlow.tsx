@@ -178,7 +178,7 @@ export function IntroFlow() {
           <Link
             href="/help"
             className="inline-flex min-h-11 items-center rounded-full px-3 text-sm font-semibold text-failure transition-colors hover:bg-failure/10"
-            aria-label="Help and safety: help lines"
+            aria-label="Help and safety: Help Lines"
           >
             Help
           </Link>

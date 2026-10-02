@@ -76,7 +76,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Touch (only if welcome)",
-        "detail": "A brief touch is enough.",
+        "detail": "A brief touch, nothing more.",
         "kind": "step"
       },
       {
@@ -264,7 +264,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Do one small thing",
-        "detail": "An action, or just own your part.",
+        "detail": "An action, or own your part out loud.",
         "kind": "repair"
       },
       {

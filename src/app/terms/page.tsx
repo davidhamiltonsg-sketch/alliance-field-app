@@ -53,7 +53,7 @@ export default function TermsPage() {
             your partner, being threatened, or not free to say no, these tools
             are not for this:{" "}
             <Link href="/help" className="font-medium text-failure underline underline-offset-4">
-              use the help lines
+              use the Help Lines
             </Link>
             .
           </p>

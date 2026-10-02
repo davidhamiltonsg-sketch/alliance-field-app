@@ -482,7 +482,7 @@ export function ResetStepsDiagram() {
   const steps = [
     { title: "Stop", sub: "Quit trying to win or solve it." },
     { title: "Say it", sub: "“I want to connect, not fight.”" },
-    { title: "Touch (only if welcome)", sub: "A brief touch is enough." },
+    { title: "Touch (only if welcome)", sub: "A brief touch, nothing more." },
     { title: "Breathe", sub: "Three slow breaths together." },
     { title: "Return", sub: "Pick an exact time to keep talking." },
   ];

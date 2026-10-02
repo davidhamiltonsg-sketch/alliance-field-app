@@ -53,7 +53,7 @@ export default function HelpPage() {
 
       <section aria-labelledby="lines-heading" className="space-y-3">
         <SectionLabel>
-          <span id="lines-heading">Help lines</span>
+          <span id="lines-heading">Help Lines</span>
         </SectionLabel>
         <ul className="space-y-3">
           {helpRegions.map((r) => (
@@ -149,14 +149,14 @@ export default function HelpPage() {
         <SectionLabel>When not to use this app</SectionLabel>
         <div className="card space-y-3 px-4 py-4 text-base leading-normal text-ink">
           <p>
-            This app is a communication and repair tool. It is not a substitute
-            for professional help, and it is not built for situations involving
-            contempt, fear, coercion, threats, or violence.
+            We built this for couples who are safe with each other. It isn’t
+            professional help. It isn’t for situations involving contempt,
+            fear, coercion, threats, or violence.
           </p>
           <p>
             <strong>Pause + Return is for flooding, never for fear.</strong> If
             threats, fear, coercion or violence appear, do not return at the set
-            time. Leave safely and use the help lines above.
+            time. Leave safely and use the Help Lines above.
           </p>
           <p>
             A &ldquo;no&rdquo; needs no script, reason, or substitute offer. No

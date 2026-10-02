@@ -80,16 +80,16 @@ function scorePerson(answers: PersonAnswers): Scores {
 
 function detectPatterns(scores: Scores): string[] {
   const patterns: string[] = [];
-  if (high(scores.closenessNeed) && high(scores.withdrawalUnderStress)) patterns.push("Reaches out, then pulls back, under stress");
-  if (high(scores.structureNeed) && high(scores.warmthNeed)) patterns.push("Needs both warmth and structure to feel safe");
-  if (high(scores.accountabilityOrientation) && scores.repairSpeed <= 42) patterns.push("Wants to see change over time, not a quick fix");
-  if (high(scores.privacyNeed) && high(scores.careVisibility)) patterns.push("Private care style — shows care quietly");
-  if (high(scores.signalSensitivity) && scores.transparency <= 42) patterns.push("Reads small signals but doesn’t always name them");
-  if (high(scores.deflectionRisk)) patterns.push("Deflects when exposed — with humour, logic or a change of subject");
-  if (high(scores.proofOrientation)) patterns.push("Trusts evidence over words");
-  if (high(scores.privacyNeed) && high(scores.autonomyProtection)) patterns.push("Guards their independence — space is a need, not distance");
-  if (high(scores.reassuranceNeed) && high(scores.signalSensitivity)) patterns.push("Needs visible reassurance to feel stable");
-  if (!patterns.length) patterns.push("Balanced profile — no single pattern stands out");
+  if (high(scores.closenessNeed) && high(scores.withdrawalUnderStress)) patterns.push("Under stress, may reach out, then pull back");
+  if (high(scores.structureNeed) && high(scores.warmthNeed)) patterns.push("Feels safest with both warmth and a clear plan");
+  if (high(scores.accountabilityOrientation) && scores.repairSpeed <= 42) patterns.push("Would rather see change over time than get a quick fix");
+  if (high(scores.privacyNeed) && high(scores.careVisibility)) patterns.push("Tends to show care quietly, in small private ways");
+  if (high(scores.signalSensitivity) && scores.transparency <= 42) patterns.push("Notices small signals, but doesn’t always say so");
+  if (high(scores.deflectionRisk)) patterns.push("When it feels exposed, may reach for a joke, a fact or a new subject");
+  if (high(scores.proofOrientation)) patterns.push("Trusts what someone does more than what they say");
+  if (high(scores.privacyNeed) && high(scores.autonomyProtection)) patterns.push("Needs time alone, and it isn’t a sign of distance");
+  if (high(scores.reassuranceNeed) && high(scores.signalSensitivity)) patterns.push("Feels steadier when reassurance is said out loud or shown");
+  if (!patterns.length) patterns.push("No one pattern stands out yet.");
   return Array.from(new Set(patterns)).slice(0, 5);
 }
 
@@ -260,41 +260,48 @@ export function generateCoupleReport(profileA: Profile, profileB: Profile): Coup
   const b = profileB.scores;
   const health = layerHealth(a, b);
 
-  type Row = { domain: string; diverges: boolean; risk: string };
+  type Row = { domain: string; diverges: boolean; risk: string; summary: string };
   const rows: Row[] = [
     {
       domain: "Privacy / closeness",
       diverges: diff(a.closenessNeed - a.privacyNeed, b.closenessNeed - b.privacyNeed) > 24,
       risk: "Space may be read as rejection; closeness may be read as pressure.",
+      summary: "The main thing to work with here is how much space and how much closeness you each need.",
     },
     {
       domain: "How care lands",
       diverges: (a.structureNeed > a.warmthNeed) !== (b.structureNeed > b.warmthNeed),
       risk: "One of you may be caring in a way the other doesn’t feel as care.",
+      summary: "The main thing to work with here is how you each show care, and how you each notice it.",
     },
     {
       domain: "Repair speed",
       diverges: diff(a.repairSpeed, b.repairSpeed) > 24,
       risk: "Fast repair can feel like pressure; slow repair can feel like abandonment.",
+      summary: "The main thing to work with here is timing: one of you wants to make up sooner than the other.",
     },
     {
       domain: "Proof / trust",
       diverges: diff(a.proofOrientation, b.proofOrientation) > 24,
       risk: "One of you may trust warmth while the other needs evidence they can see.",
+      summary: "The main thing to work with here is what makes trust feel real: warm words for one of you, things you can see for the other.",
     },
     {
       domain: "How heated is too heated",
       diverges: diff(a.heatTolerance, b.heatTolerance) > 24,
       risk: "If one of you can take more heat than the other, that can build a Reach–Recoil loop (one reaches, the other pulls back).",
+      summary: "The main thing to work with here is how heated a conversation can get before one of you needs to stop.",
     },
     {
       domain: "Saying what’s going on",
       diverges: diff(a.transparency, b.transparency) > 24,
       risk: "What one of you leaves unsaid, the other may fill in with a guess.",
+      summary: "The main thing to work with here is how much you each say out loud about what’s going on.",
     },
   ];
 
-  const mismatch = rows.filter((r) => r.diverges).map((r) => `${r.domain}: ${r.risk}`);
+  const diverging = rows.filter((r) => r.diverges);
+  const mismatch = diverging.map((r) => `${r.domain}: ${r.risk}`);
 
   const strengths = [
     "Both profiles can become shared words for what you each need, not verdicts about who’s right.",
@@ -307,7 +314,7 @@ export function generateCoupleReport(profileA: Profile, profileB: Profile): Coup
   const recommendedTools = toRecommendedTools(routes);
 
   return {
-    executiveSummary: `The main thing to work with here is ${mismatch[0]?.split(":")[0].toLowerCase() || "a pattern that’s still settling"}. A good next step is to turn the pattern into a small, low-stakes agreement, then look at how it went at the agreed check-in, instead of re-arguing what anyone meant.`,
+    executiveSummary: `${diverging[0]?.summary ?? "No one difference stands out yet, so there’s no single thing to work on first."} A good next step is to turn the pattern into a small, low-stakes agreement, then look at how it went at the agreed check-in, instead of re-arguing what anyone meant.`,
     strengths,
     coreMismatch: mismatch.length ? mismatch.slice(0, 4) : ["No single mismatch dominates yet — keep using the tools and revisit this in a few weeks."],
     conflictPattern: buildConflictPattern(profileA, profileB),

@@ -86,8 +86,7 @@ export default function AboutPage() {
 
       <section className="space-y-2">
         <p className="text-base leading-normal text-ink">
-          A shared system for hard moments: named tools and clear protocols,
-          not pep talks.
+          What we use when it goes wrong, written down so you can use it too.
         </p>
         <p className="text-base leading-normal text-ink-muted">
           The scripts are training wheels. Use your own words as soon as you can.
@@ -212,9 +211,9 @@ export default function AboutPage() {
       <section id="safety" className="scroll-mt-20 space-y-2">
         <SectionLabel>When not to use this</SectionLabel>
         <WarnBanner pauseLink={false} safetyLink>
-          This app is a communication and repair tool. It is not a substitute
-          for professional help, and it is not built for situations involving
-          contempt, fear, coercion, or any form of abuse. Afraid of your
+          We built this for couples who are safe with each other. It isn’t
+          professional help. It isn’t for situations involving contempt, fear,
+          coercion, or any form of abuse. Afraid of your
           partner, being threatened, or not free to say no? Stop — these tools
           are not for this. Get outside help.
         </WarnBanner>
@@ -233,7 +232,7 @@ export default function AboutPage() {
               <span className="flex flex-col py-2.5">
                 Help &amp; safety
                 <span className="text-sm font-normal text-ink-muted">
-                  Help lines and when not to use this app
+                  Help Lines and when not to use this app
                 </span>
               </span>
               <ChevronRight size={18} className="shrink-0 text-ink-muted/50" />

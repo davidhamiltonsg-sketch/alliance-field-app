@@ -124,7 +124,7 @@ describe("email sign-up", () => {
 describe("About", () => {
   it("uses the new line and marks the wordmark ™ once", () => {
     const src = readFileSync(join(__dirname, "../src/app/about/page.tsx"), "utf8");
-    expect(src).toContain("A shared system for hard moments");
+    expect(src).toContain("What we use when it goes wrong, written down so you can use it too.");
     expect(src).not.toMatch(/relationship operating system/i);
     expect(src.match(/™/g)).toHaveLength(1);
     expect(src).toContain("ALLIANCE PROTOCOLS™");

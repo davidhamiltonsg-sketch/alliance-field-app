@@ -176,7 +176,7 @@ export default function TogetherPage() {
         </ul>
         <WarnBanner pauseLink={false} safetyLink>
           Afraid of your partner, being threatened, or not free to say no?
-          Stop. These tools are not for this. Get outside help — help lines for
+          Stop. These tools are not for this. Get outside help — Help Lines for
           the US, UK, Australia and Singapore are on the Help page.
         </WarnBanner>
       </section>
