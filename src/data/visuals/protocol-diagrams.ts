@@ -255,7 +255,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "outcome": "The fight stops repeating, and nobody ends up on trial."
   },
   "micro-repair": {
-    "when": "Tone sharpens, small hurts, residue starting. Full repair feels impossible, but waiting will worsen the Tone Spiral.",
+    "when": "Tone sharpens, small hurts start to pile up. Full repair feels impossible, but waiting will worsen the Tone Spiral.",
     "steps": [
       {
         "title": "Soften your tone",
