@@ -87,7 +87,7 @@ describe("CANON numbers and wording", () => {
     expect(card.activity.match(/\(\d\)/g)).toHaveLength(8);
     const steps = card.steps.join(" ");
     expect(steps).toContain("None of these? Good. Keep up the daily floor.");
-    expect(steps).toContain("With one or two signs, it likely needs space and small repairs (Micro-Repair, Morning + Evening Rhythm)");
+    expect(steps).toContain("One or two signs: you likely need some space and a few small repairs (Micro-Repair, Morning + Evening Rhythm)");
     expect(steps).toContain("Three or more signs: one or both of you may be pulling away");
     expect(steps).toContain("may be pulling away. Book a Full Recovery conversation within a week.");
     expect(steps).not.toContain("0–2");
@@ -497,7 +497,7 @@ describe("CANON round 6", () => {
 
   it("Intimacy Pact steps 1 and 4 keep the consent wording (voice pass 25)", () => {
     const card = getProtocol("intimacy-pact")!;
-    expect(card.steps[0]).toBe("Before you make a move, think about how it will land for the other person. If you’re declining, you owe nothing. No is enough.");
+    expect(card.steps[0]).toBe("Asking? Think first about how it will land for the other person tonight. If you’re declining, you owe nothing. No is enough.");
     expect(card.steps[3]).toContain("body language can signal interest, but ask, and wait for a clear yes.");
   });
 

@@ -273,23 +273,23 @@ function WeeklyResetWizardClient() {
           onNext={() => setStep(4)}
         >
           <Field
-            label="Partner A: friction"
+            label="A’s friction point"
             value={draft.frictionA}
             onChange={(v) => update({ frictionA: v })}
           />
           <Field
-            label="Partner A: ask"
+            label="A asks for…"
             value={draft.askA}
             onChange={(v) => update({ askA: v })}
             placeholder="One specific ask…"
           />
           <Field
-            label="Partner B: friction"
+            label="B’s friction point"
             value={draft.frictionB}
             onChange={(v) => update({ frictionB: v })}
           />
           <Field
-            label="Partner B: ask"
+            label="B asks for…"
             value={draft.askB}
             onChange={(v) => update({ askB: v })}
             placeholder="One specific ask…"
@@ -312,12 +312,12 @@ function WeeklyResetWizardClient() {
             minutes.
           </p>
           <Field
-            label="Partner A request"
+            label="A asks for…"
             value={draft.askA}
             onChange={(v) => update({ askA: v })}
           />
           <Field
-            label="Partner B request"
+            label="B asks for…"
             value={draft.askB}
             onChange={(v) => update({ askB: v })}
           />
@@ -356,7 +356,7 @@ function WeeklyResetWizardClient() {
       )}
 
       {confirmClear ? (
-        <div role="group" aria-label="Clear Weekly Reset data" className="space-y-2 rounded-xl border border-rule/60 bg-white px-3.5 py-3">
+        <div role="group" aria-label="Clear this week’s notes" className="space-y-2 rounded-xl border border-rule/60 bg-white px-3.5 py-3">
           <p className="text-sm leading-normal text-ink-muted">
             What would you like to clear from this phone?
           </p>

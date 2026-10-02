@@ -361,7 +361,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "steps": [
       {
         "title": "Think how it lands",
-        "detail": "Before you make a move, think about how it will land for the other person. If you’re declining, you owe nothing. No is enough.",
+        "detail": "Asking? Think first about how it will land for the other person tonight. If you’re declining, you owe nothing. No is enough.",
         "kind": "step"
       },
       {
@@ -526,7 +526,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Likely needs space",
-        "detail": "None of these? Good. Keep up the daily floor. With one or two signs, it likely needs space and small repairs (Micro-Repair, Morning + Evening Rhythm).",
+        "detail": "None of these? Good. Keep up the daily floor. One or two signs: you likely need some space and a few small repairs (Micro-Repair, Morning + Evening Rhythm).",
         "kind": "step",
         "badge": "1–2"
       },

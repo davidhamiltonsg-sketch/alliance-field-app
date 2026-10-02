@@ -28,7 +28,7 @@ export const STAGE_META: Record<
   },
   alliance: {
     label: "Alliance",
-    caption: "These look ahead. What you’re building together.",
+    caption: "Questions about where the two of you are heading.",
   },
 };
 

@@ -69,7 +69,7 @@ const panels: Panel[] = [
     eyebrow: "Connection Cards",
     icon: "connection-cards",
     title: "For when things are fine, too.",
-    body: "Flip through 35 questions of five kinds — Warmth, Curiosity, Care, Repair, Alliance. No protocol. Five minutes, together.",
+    body: "Thirty-five questions to flip through together, light to deep. Nothing to fix. Five minutes.",
     diagram: <ConnectionCardsDiagram />,
   },
   {

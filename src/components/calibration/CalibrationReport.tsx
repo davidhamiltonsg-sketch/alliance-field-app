@@ -25,10 +25,10 @@ export function CalibrationReport() {
 
 const LAYER_ORDER: LayerKey[] = ["Atmosphere", "Structure", "Repair", "Protection", "Insight"];
 
-/** Plain words for a layer's bar, for screen readers (no numbers on screen). */
+/** Word band for how far apart you are in a layer (no numbers on screen). */
 function apartWords(health: number): string {
-  if (health >= 85) return "close together";
-  if (health >= 62) return "a little apart";
+  if (health >= 85) return "close";
+  if (health >= 62) return "some distance";
   return "far apart";
 }
 
@@ -85,27 +85,19 @@ function CalibrationReportClient() {
 
       <section className="space-y-3">
         <SectionLabel>Layer Scan</SectionLabel>
-        <p className="px-1 text-sm text-ink-muted">How far apart you are, layer by layer.</p>
-        <div className="card space-y-3.5 px-4 py-4">
-          <p className="text-xs font-medium uppercase tracking-wide text-ink-muted">How far apart</p>
-          {LAYER_ORDER.map((layer) => (
-            <div key={layer} className="space-y-1.5">
-              <span className="block text-sm font-medium text-ink">{layer}</span>
-              <div
-                className="h-2 w-full overflow-hidden rounded-full bg-accent/10"
-                role="img"
-                aria-label={`${layer}: ${apartWords(report.layerHealth[layer])}`}
-              >
-                <div
-                  className="h-full rounded-full bg-accent"
-                  style={{ width: `${100 - report.layerHealth[layer]}%` }}
-                />
-              </div>
-            </div>
-          ))}
+        <div className="card px-4 py-1">
+          <h3 className="pt-3 text-sm font-semibold text-ink">Where you two see things most differently</h3>
+          <ul className="divide-y divide-rule/30">
+            {LAYER_ORDER.map((layer) => (
+              <li key={layer} className="flex items-baseline justify-between gap-3 py-3">
+                <span className="text-sm font-medium text-ink">{layer}</span>
+                <span className="text-sm text-ink-muted">{apartWords(report.layerHealth[layer])}</span>
+              </li>
+            ))}
+          </ul>
         </div>
         <p className="px-1 text-sm leading-normal text-ink-muted">
-          A longer bar means you’re further apart in that layer. Start with the longest bar. It isn’t a score for the relationship.
+          Start with the layer where you’re furthest apart. It isn’t a score for the relationship.
         </p>
       </section>
 
