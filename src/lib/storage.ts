@@ -13,13 +13,34 @@ export const MAX_RECENT = 6;
 /** 7-day start plan: the day numbers ticked as done (no dates, no streaks). */
 export const START_PROGRESS_KEY = "alliance.field.startPlanDone";
 
+/** Care Check-in areas (CANON round 9). Also the `domain` stored on each row. */
 export const CARE_DOMAINS = [
-  "Emotional attunement & check-ins",
+  "Noticing each other & check-ins",
   "Logistics & household",
-  "Social coordination",
-  "Financial planning",
-  "Conflict initiation & repair",
+  "Social plans",
+  "Money planning",
+  "Raising problems & repairing",
 ] as const;
+
+/**
+ * Earlier names for the same areas, in the same order. Drafts saved before the
+ * rename still carry these, so they are mapped to the current label on read
+ * (and for display) rather than thrown away.
+ */
+const LEGACY_CARE_DOMAINS: Record<string, (typeof CARE_DOMAINS)[number]> = {
+  "Emotional attunement & check-ins": "Noticing each other & check-ins",
+  "Social coordination": "Social plans",
+  "Financial planning": "Money planning",
+  "Conflict initiation & repair": "Raising problems & repairing",
+};
+
+/** The label to show for a stored Care Check-in area (old names map to the current ones). */
+export function careDomainLabel(domain: string): string {
+  return LEGACY_CARE_DOMAINS[domain] ?? domain;
+}
+
+/** Display labels for the stored load values (stored values stay "balanced" / "skewed"). */
+export const CARE_BALANCE_LABELS = { balanced: "Even", skewed: "Lopsided" } as const;
 
 export function emptyCareAudit(): CareAuditRow[] {
   return CARE_DOMAINS.map((domain) => ({
@@ -157,6 +178,8 @@ export function readWeekly(): WorksheetDraft {
   if (!d) return emptyWeeklyDraft();
   if (!d.careAudit || d.careAudit.length !== CARE_DOMAINS.length) {
     d.careAudit = emptyCareAudit();
+  } else {
+    d.careAudit = d.careAudit.map((row) => ({ ...row, domain: careDomainLabel(row.domain) }));
   }
   return d;
 }

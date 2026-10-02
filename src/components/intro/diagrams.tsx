@@ -187,7 +187,7 @@ export function SystemDiagram() {
         {/* flood gate: pause advisory strip */}
         <AdvisoryStrip x={0} y={272} w={340} h={32} {...a("dg-rise", 2100)}>
           <text x={42} y={292.5} fontSize={13.5} fill={V.ink}>
-            Flooded? Pause + Return or Green Rule first.
+            Flooded? Pause + Return or the 60-Second Reset.
           </text>
         </AdvisoryStrip>
       </g>

@@ -31,15 +31,15 @@ export const startDays: StartDay[] = [
   },
   {
     day: 2,
-    title: "60-Second Reset drill",
-    task: "Practise all five steps of the 60-Second Alliance Reset once while calm, so it’s familiar before you need it. Start the daily floor: one check-in, one acknowledgement, one appreciation.",
-    proof: "One calm rehearsal; daily floor begun.",
+    title: "Practise the 60-Second Reset",
+    task: "Practise all five steps of the 60-Second Alliance Reset once, calm, so they’re familiar before you need them. Start the daily floor (four small things you do every day): a check-in, an “I see you”, an appreciation, and a repair within 24 hours if anything stings.",
+    proof: "One calm practice run; daily floor begun.",
     minutes: 10,
     slug: "60-second-reset",
   },
   {
     day: 3,
-    title: "Micro-Repair muscle",
+    title: "A first Micro-Repair",
     task: "Clear up one small thing that stung: soften your tone and own your small part of it. No “but”. Start within minutes if you can; complete within 24 hours.",
     proof: "One micro-repair made.",
     minutes: 10,
@@ -47,8 +47,8 @@ export const startDays: StartDay[] = [
   },
   {
     day: 4,
-    title: "Pause + Return drill",
-    task: "Rehearse it once, calm: “I need a pause. I’ll be back at [exact time].” Take 20 minutes apart; come back on the minute.",
+    title: "Practise Pause + Return",
+    task: "Practise it once, calm: “I need a pause. I’ll be ready at [exact time].” Take 20 minutes apart; come back on the minute.",
     proof: "Back at the stated time.",
     minutes: 25,
     slug: "pause-and-return",
@@ -56,7 +56,7 @@ export const startDays: StartDay[] = [
   },
   {
     day: 5,
-    title: "Daily anchors",
+    title: "Morning and evening check-ins",
     task: "Start the Morning + Evening Rhythm: a morning check-in (5 minutes or less) and an evening check-in (about 10 minutes). Mark both on a shared note.",
     proof: "Both check-ins marked on the note.",
     minutes: 15,
@@ -73,7 +73,7 @@ export const startDays: StartDay[] = [
   {
     day: 7,
     title: "Weekly Reset #1",
-    task: "All five parts, a 40-minute timer, one friction point each. Each makes one request; agree one next step. Book the next three weeks before you stand up.",
+    task: "All five parts, a 40-minute timer, one friction point and one request each; agree one next step. Book the next three weeks before you get up.",
     proof: "Reset done; next three weeks in the calendar.",
     minutes: 40,
     slug: "weekly-reset",

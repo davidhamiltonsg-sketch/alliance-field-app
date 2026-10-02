@@ -60,7 +60,7 @@ export function parseCustomMinutes(input: string): Checked<{ minutes: number }> 
   if (!/^\d+$/.test(t)) return { ok: false, error: "Enter a whole number of minutes, 20 to 1440." };
   const minutes = Number(t);
   if (minutes < PAUSE_MIN_MINUTES) {
-    return { ok: false, error: "A pause needs at least 20 minutes to calm down. Pick 20 or more." };
+    return { ok: false, error: "A pause needs at least 20 minutes to get calm. Pick 20 or more." };
   }
   if (minutes > PAUSE_MAX_MINUTES) {
     return { ok: false, error: "24 hours (1440 minutes) is the maximum. Pick a shorter pause." };

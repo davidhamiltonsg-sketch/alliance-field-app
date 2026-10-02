@@ -15,7 +15,7 @@ type Cover = "manual" | "kit" | "companion" | "app";
 const products: { name: string; body: string; cover: Cover }[] = [
   {
     name: "Operating Manual",
-    body: "The reference: every protocol in full, with the reasoning and edge cases.",
+    body: "The reference: every protocol in full, with the reasoning and the harder cases.",
     cover: "manual",
   },
   {
@@ -25,7 +25,7 @@ const products: { name: string; body: string; cover: Cover }[] = [
   },
   {
     name: "Companion Book",
-    body: "Why it works: the stories and thinking behind the tools, with “The Third Voice” narrated by David.",
+    body: "The why: the stories and thinking behind the tools, with “The Third Voice” narrated by David.",
     cover: "companion",
   },
   {
@@ -110,7 +110,7 @@ export default function AboutPage() {
           </p>
         </div>
         <p className="text-base leading-normal text-ink">
-          Dami and I built it from our own relationship — how we come back to
+          We built it from our own relationship — how we come back to
           each other, what we say when things go sideways, what we promise
           not to do. This app, the Manual, the Field Kit and the Companion
           Book are that same system, written down so other couples can use it.

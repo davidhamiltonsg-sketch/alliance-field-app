@@ -9,4 +9,4 @@ export const aboutAuthors =
 
 /** Short line for pages that speak to intercultural / minority-stress couples (/together). */
 export const authorsCoupleLine =
-  "Written by David Hamilton and Dr Zhongming Shi, a biracial couple. Neither of us is a therapist; we first used these protocols in our own relationship.";
+  "We’re David Hamilton and Dr Zhongming Shi, a biracial couple. Neither of us is a therapist; we first used these protocols in our own relationship.";

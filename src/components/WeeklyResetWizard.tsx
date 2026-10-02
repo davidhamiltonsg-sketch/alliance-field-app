@@ -5,6 +5,8 @@ import Link from "next/link";
 import type { WorksheetDraft } from "@/data/types";
 import {
   appendWeeklyHistory,
+  CARE_BALANCE_LABELS,
+  careDomainLabel,
   clearKey,
   clearWeeklyHistory,
   emptyWeeklyDraft,
@@ -209,8 +211,8 @@ function WeeklyResetWizardClient() {
                 key={row.domain}
                 className="rounded-xl border border-rule/35 bg-surface-activity px-3 py-3"
               >
-                <p className="text-base font-medium">{row.domain}</p>
-                <div className="mt-2 flex flex-wrap items-center gap-2" role="group" aria-label={`${row.domain}: load`}>
+                <p className="text-base font-medium">{careDomainLabel(row.domain)}</p>
+                <div className="mt-2 flex flex-wrap items-center gap-2" role="group" aria-label={`${careDomainLabel(row.domain)}: load`}>
                   <span className="w-20 text-sm text-ink-muted" aria-hidden>Load</span>
                   {(["balanced", "skewed"] as const).map((b) => (
                     <button
@@ -224,11 +226,11 @@ function WeeklyResetWizardClient() {
                           : "border border-rule/60 bg-white text-ink"
                       }`}
                     >
-                      {b}
+                      {CARE_BALANCE_LABELS[b]}
                     </button>
                   ))}
                 </div>
-                <div className="mt-2 flex flex-wrap items-center gap-2" role="group" aria-label={`${row.domain}: rebalance?`}>
+                <div className="mt-2 flex flex-wrap items-center gap-2" role="group" aria-label={`${careDomainLabel(row.domain)}: rebalance?`}>
                   <span className="w-20 text-sm text-ink-muted" aria-hidden>Rebalance?</span>
                   {(["yes", "no"] as const).map((r) => (
                     <button
@@ -306,8 +308,8 @@ function WeeklyResetWizardClient() {
           onNext={() => setStep(5)}
         >
           <p className="text-base leading-normal text-ink-muted">
-            Confirm one specific ask each for next week (from friction). Edit
-            below if needed. Requests and next steps share the last 5
+            One specific ask each for next week, from your friction points.
+            Edit below if needed. Requests and next steps share the last 5
             minutes.
           </p>
           <Field

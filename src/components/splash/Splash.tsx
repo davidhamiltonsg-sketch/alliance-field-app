@@ -36,7 +36,7 @@ const DEFAULT_TAGLINE = "Built for precision. Designed for connection.";
 // Shown on its own line above the first-visit tagline.
 const ALLIANCE_LINE = "We are an alliance.";
 const RETURN_TAGLINES = [
-  "Still precise. Still here.",
+  "Still here.",
   "On time, as promised.",
   "Back again. That’s the whole point.",
 ];

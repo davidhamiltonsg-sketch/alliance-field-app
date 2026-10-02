@@ -258,8 +258,8 @@ describe("Core 5 and the 7-day start plan", () => {
     expect(last.slug).toBe("weekly-reset");
     expect(last.task).toContain("40-minute timer");
     for (const slug of coreFiveSlugs) expect(startDays.map((d) => d.slug)).toContain(slug);
-    // About 10 minutes a day; the Pause + Return drill includes 20 minutes apart,
-    // and Daily anchors is the Manual's two check-ins (≤5 + about 10) across the day.
+    // About 10 minutes a day; the Pause + Return practice includes 20 minutes apart,
+    // and the morning and evening check-ins are the Manual's two check-ins (≤5 + about 10) across the day.
     for (const d of startDays.slice(0, -1).filter((d) => d.slug !== "pause-and-return" && d.slug !== "morning-evening-rhythm")) expect(d.minutes).toBeLessThanOrEqual(10);
     expect(startDays.find((d) => d.day === 5)!.task).toMatch(/morning check-in \(5 minutes or less\) and an evening check-in \(about 10 minutes\)/);
   });
@@ -267,10 +267,10 @@ describe("Core 5 and the 7-day start plan", () => {
   it("is the Field Kit's “The First Week”, day for day (CANON round 5: one plan)", () => {
     expect(startDays.map((d) => d.title)).toEqual([
       "Safety + Pause defaults",
-      "60-Second Reset drill",
-      "Micro-Repair muscle",
-      "Pause + Return drill",
-      "Daily anchors",
+      "Practise the 60-Second Reset",
+      "A first Micro-Repair",
+      "Practise Pause + Return",
+      "Morning and evening check-ins",
       "Set up the Reset",
       "Weekly Reset #1",
     ]);

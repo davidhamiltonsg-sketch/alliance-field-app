@@ -29,7 +29,7 @@ export const whoFor = [
   "Interracial, intercultural and interfaith couples.",
   "Couples facing disapproval because of age gap, class, nationality, migration status, or sexual or gender identity.",
   "Couples where one partner is new to a country, a language or a family’s customs.",
-  "Couples where only one of you is ready to start. The Unity Anchor works best together, but one person can begin by saying: “That’s coming from them, not from us.”",
+  "Couples where only one of you is ready to start. The Unity Anchor is meant for the two of you, but one person can begin by saying: “That’s coming from them, not from us.”",
 ];
 
 export const notFor = [
@@ -58,7 +58,7 @@ export const commonMoves: CommonMove[] = [
   {
     move: "The partner whose family it is handles it alone",
     result: "Resentment on both sides.",
-    alliance: "Decide the response as a team. Each partner handles their own family, with the plan agreed together.",
+    alliance: "Agree the response together, so neither of you is deciding alone.",
   },
   {
     move: "Re-arguing it after every visit",

@@ -131,7 +131,7 @@ function CalibrationFlowClient() {
     return (
       <div className="space-y-4 text-center">
         <div className="card space-y-2 px-4 py-6">
-          <p className="display text-lg leading-tight">{state.personA.name}’s profile is calibrated.</p>
+          <p className="display text-lg leading-tight">{state.personA.name}’s answers are in.</p>
           <p className="text-base leading-normal text-ink-muted">
             Hand the device to {state.personB.name}. Same 44 questions, answered for themself.
           </p>

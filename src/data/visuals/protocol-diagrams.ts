@@ -40,7 +40,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Step away",
-        "detail": "Down-regulate: walk, shower, breathe, music. Avoid rehearsing arguments.",
+        "detail": "Get calm: walk, shower, breathe, music. Don’t rehearse the argument.",
         "kind": "pause"
       },
       {
@@ -208,7 +208,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "outcome": "Small things stay small. Forty minutes, then done."
   },
   "conflict-protocol": {
-    "when": "Active conflict or recurring loops, when Warmth is still possible, or after a pause returns you to regulation.",
+    "when": "Active conflict or recurring loops, when warmth is still possible, or after a pause has brought you back to calm.",
     "steps": [
       {
         "title": "Check if you’re calm",
@@ -255,11 +255,11 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "outcome": "The fight stops repeating, and nobody ends up on trial."
   },
   "micro-repair": {
-    "when": "Tone sharpens, small hurts start to pile up. Full repair feels impossible, but waiting will worsen the Tone Spiral.",
+    "when": "Tone sharpens, small hurts start to pile up. A full repair feels like too much, but waiting will make it worse.",
     "steps": [
       {
         "title": "Soften your tone",
-        "detail": "Soften tone deliberately (Reciprocal Softness): “Soft reset, my tone.”",
+        "detail": "Soften your tone on purpose: “Soft reset, my tone.”",
         "kind": "repair"
       },
       {
@@ -290,7 +290,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "outcome": "Small stings clear before they harden."
   },
   "proof-protocol": {
-    "when": "After any meaningful change request; when “I promise” appears without a plan; ending Hope Fog.",
+    "when": "After any meaningful change request; when “I promise” appears without a plan; instead of just hoping.",
     "steps": [
       {
         "title": "Name the change",
@@ -314,7 +314,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Check in",
-        "detail": "Extend, adjust, or close; Team Frame on.",
+        "detail": "Extend, adjust, or close; stay on the same team.",
         "kind": "repair"
       },
       {
@@ -333,13 +333,13 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
         "title": "Morning check-in",
         "detail": "Devices down → touch (if welcome) or eye contact → “How are you feeling about today?” → one intention.",
         "kind": "step",
-        "badge": "≤ 5 min"
+        "badge": "5 min or less"
       },
       {
         "title": "Evening check-in",
         "detail": "Decompress side-by-side → no logistics → “How did today actually go?” → one specific appreciation.",
         "kind": "step",
-        "badge": "first 10 min"
+        "badge": "about 10 min"
       },
       {
         "title": "Keep the same times",
@@ -357,7 +357,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "outcome": "You stay in touch every day, so drift stays small."
   },
   "intimacy-pact": {
-    "when": "Initiating or declining feels tense; intimacy stall; after a trust dent; preventive Structure.",
+    "when": "Initiating or declining feels tense; when it’s stalled; after a dent in trust; or to set it up in advance.",
     "steps": [
       {
         "title": "Think how it lands",
@@ -414,7 +414,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Keep a simple table",
-        "detail": "Behaviour Window table: facts, seen and reviewed at the agreed check-in.",
+        "detail": "A simple table: facts, seen and reviewed at the agreed check-in.",
         "kind": "step",
         "badge": "weekly"
       },
@@ -433,7 +433,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "outcome": "The evidence builds, and things begin to feel calmer."
   },
   "consistency-pact": {
-    "when": "Weekly personal integrity practice; after emotional promising; alongside shared Proof during rebuild.",
+    "when": "A weekly check on your own follow-through; after a promise that mattered; alongside shared Proof during rebuild.",
     "steps": [
       {
         "title": "What you say",
@@ -496,7 +496,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
         "title": "Ask for one change",
         "detail": "Name it and agree by when: “visible by ___.”",
         "kind": "repair",
-        "badge": "proof window"
+        "badge": "by a set date"
       },
       {
         "title": "Say it out loud",
@@ -538,7 +538,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Set a time window",
-        "detail": "Set a window to check whether things are reinvesting.",
+        "detail": "Set a window to check whether you’re both leaning back in.",
         "kind": "step"
       }
     ],

@@ -425,7 +425,7 @@ function PauseTimerClient() {
           Cancel pause
         </PrimaryButton>
         <p className="text-center text-sm text-ink-muted">
-          Step away · calm down · don’t rehearse the argument.
+          Step away · get calm · don’t rehearse the argument.
         </p>
       </div>
     );
@@ -509,7 +509,7 @@ function PauseTimerClient() {
             </p>
           ) : (
             <p id="custom-minutes-hint" className="text-sm text-ink-muted">
-              Whole minutes · Min 20 · Max 1440 (24h)
+              Whole minutes, 20 to 1,440 (24 hours)
             </p>
           )}
         </div>
@@ -547,7 +547,7 @@ function PauseTimerClient() {
             </p>
           ) : (
             <p id="clock-time-hint" className="text-sm text-ink-muted">
-              Min 20 min · Max 24h away
+              20 minutes to 24 hours away
             </p>
           )}
         </div>
@@ -666,7 +666,7 @@ function CalmPause({
                 ? "Breathe slowly: in for a count of four, out for six."
                 : "Breathe in as it grows, out as it settles."}
           </p>
-          <p className="mt-1.5 text-sm text-ink-muted">Step away · calm down · don’t rehearse the argument.</p>
+          <p className="mt-1.5 text-sm text-ink-muted">Step away · get calm · don’t rehearse the argument.</p>
         </div>
 
         <div className="space-y-3">
