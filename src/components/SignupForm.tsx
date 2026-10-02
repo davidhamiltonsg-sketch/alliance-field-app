@@ -3,9 +3,12 @@
 import Link from "next/link";
 import { useId, useState } from "react";
 import { PrimaryButton } from "./PrimaryButton";
-import { SIGNUP_ACTIVE, SIGNUP_ENDPOINT } from "@/lib/links";
+import { SIGNUP_ACTIVE, SIGNUP_ENDPOINT, STORE_URLS } from "@/lib/links";
 
 type Status = "idle" | "sending" | "done" | "error";
+
+/** Whether any book has a buy link yet; the signup line only says "when they’re out" while none does. */
+const BOOKS_ON_SALE = Object.values(STORE_URLS).some(Boolean);
 
 /** Shown after a successful submit. A double-opt-in list sends the confirmation; we can't see whether the address exists. */
 export const SIGNUP_SUCCESS = "If the address is right, a confirmation email will arrive shortly.";
@@ -73,8 +76,9 @@ export function SignupForm() {
         Not ready yet? Get updates by email
       </label>
       <p className="mt-0.5 text-sm leading-snug text-ink-muted">
-        Occasional updates and the link to the full system. This is the only
-        time the app sends anything off your device.
+        Now and then, a short note from us, and a link to the books
+        {BOOKS_ON_SALE ? "" : " when they’re out"}. This is the only time the
+        app sends anything off your device.
       </p>
       {status === "done" ? (
         <p role="status" className="mt-2 text-base font-medium text-accent">

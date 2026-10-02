@@ -289,7 +289,7 @@ export function generateCoupleReport(profileA: Profile, profileB: Profile): Coup
     {
       domain: "What makes trust feel real",
       diverges: diff(a.proofOrientation, b.proofOrientation) > 24,
-      risk: "One of you trusts what’s said; the other waits to see it done. Say what you’ll do, then do it where you can both see it.",
+      risk: "One of you trusts what’s said; the other waits to see it done.",
       summary: "Warm words are enough for one of you, while the other waits to see what happens next. Pick one small promise and keep it where you can both see it.",
       shared: "Trust feels real to both of you in much the same way.",
     },
@@ -339,7 +339,7 @@ export function generateCoupleReport(profileA: Profile, profileB: Profile): Coup
     scriptPack: (getProtocol("system-overlay")?.phrases ?? []).map((p) => p.text),
     evidenceLimitations: [
       "This is a starting map, built from how you each answered 44 questions. It can’t see what either of you does day to day, and it isn’t a diagnosis.",
-      "The scoring draws on research that skews heterosexual and Western. The Manual folds in research on same-sex, interracial and intercultural couples, but treat any one suggestion here as a place to start, not a verdict.",
+      "These questions lean on research done mostly with straight, Western couples. The Manual folds in research on same-sex, interracial and intercultural couples, but treat any one suggestion here as a place to start, not a verdict.",
     ],
   };
 }

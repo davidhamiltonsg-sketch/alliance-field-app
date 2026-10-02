@@ -484,7 +484,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Acknowledge the impact",
-        "detail": "Do it before either of you explains. If one of you caused the breach (infidelity, lying, a broken agreement), only that partner acknowledges impact; the hurt partner is never asked to confess in return.",
+        "detail": "Do it before either of you explains. If one of you caused the breach (infidelity, lying, a broken agreement), only that partner acknowledges impact; the hurt partner is never asked to confess in return. If it’s drift rather than a breach: Drift is nobody’s fault, so you each name your part.",
         "kind": "repair"
       },
       {
