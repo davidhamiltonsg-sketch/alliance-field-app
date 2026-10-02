@@ -22,8 +22,8 @@ export function GetFullSystem() {
       <SectionLabel>Get the full system</SectionLabel>
       <div className="card space-y-3 px-4 py-4">
         <p className="text-base leading-normal text-ink">
-          This app is free, always. The Operating Manual and Field Kit — the
-          deep protocols, the printable cards, the worksheets — are a
+          This app is free, always. The Operating Manual and Field Kit — every
+          protocol in full, the printable cards, the worksheets — are a
           one-time purchase. Digital PDF + HTML.
         </p>
         <p className="text-base font-medium leading-normal text-accent">{POSITIONING_LINE}</p>

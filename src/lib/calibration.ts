@@ -89,7 +89,7 @@ function detectPatterns(scores: Scores): string[] {
   if (high(scores.proofOrientation)) patterns.push("Trusts evidence over words");
   if (high(scores.privacyNeed) && high(scores.autonomyProtection)) patterns.push("Protects autonomy — space reads as necessary, not distant");
   if (high(scores.reassuranceNeed) && high(scores.signalSensitivity)) patterns.push("Needs visible reassurance to feel stable");
-  if (!patterns.length) patterns.push("Balanced operating profile — no single pattern dominates");
+  if (!patterns.length) patterns.push("Balanced profile — no single pattern stands out");
   return Array.from(new Set(patterns)).slice(0, 5);
 }
 
@@ -173,9 +173,9 @@ function buildConflictPattern(a: Profile, b: Profile): string {
   const aPursues = a.scores.conflictActivation > a.scores.withdrawalUnderStress;
   const bPursues = b.scores.conflictActivation > b.scores.withdrawalUnderStress;
   if (aPursues && !bPursues)
-    return `${a.name} tends to pursue clarity while ${b.name} de-intensifies. Left alone that’s a demand–withdraw loop — Pause + Return with an explicit return time breaks it.`;
+    return `${a.name} tends to pursue clarity while ${b.name} de-intensifies. Left alone, that can become a pursue–withdraw loop. Pause + Return, with an exact return time, is designed to interrupt it.`;
   if (!aPursues && bPursues)
-    return `${b.name} tends to pursue clarity while ${a.name} de-intensifies. Left alone that’s a demand–withdraw loop — Pause + Return with an explicit return time breaks it.`;
+    return `${b.name} tends to pursue clarity while ${a.name} de-intensifies. Left alone, that can become a pursue–withdraw loop. Pause + Return, with an exact return time, is designed to interrupt it.`;
   if (aPursues && bPursues)
     return "Both of you tend to escalate to get a reaction. The first move is slowing the urgency down before reassurance itself becomes the fight.";
   return "Both of you tend to de-intensify. Low conflict can hide low contact — keep Morning + Evening Rhythm and Weekly Reset running so distance doesn’t build quietly.";
@@ -208,32 +208,32 @@ function routeTools(a: Profile, b: Profile, health: Record<LayerKey, number>) {
     if (!routes.some((r) => r.tool === tool)) routes.push({ tool, reason });
   };
 
-  if (health.Atmosphere < 62) add("Morning + Evening Rhythm", "Atmosphere is running low — restore warmth before asking for change.");
-  if (health.Structure < 62) add("Weekly Reset", "Structure is running low — install a predictable maintenance rhythm.");
-  if (health.Repair < 62) add("Micro-Repair", "Repair capacity is running low — use smaller repair units, more often.");
-  if (health.Protection < 62) add("Pause + Return", "Protection is running low — you need clearer guardrails under stress.");
+  if (health.Atmosphere < 62) add("Morning + Evening Rhythm", "Atmosphere is running low — bring the warmth back before asking for change.");
+  if (health.Structure < 62) add("Weekly Reset", "Structure is running low — set a weekly check-in you can count on.");
+  if (health.Repair < 62) add("Micro-Repair", "Repair is running low — make smaller repairs, more often.");
+  if (health.Protection < 62) add("Pause + Return", "Protection is running low — agree clearer guardrails for when things get heated.");
 
   if (diff(a.scores.privacyNeed, b.scores.closenessNeed) > 18 || diff(b.scores.privacyNeed, a.scores.closenessNeed) > 18) {
     add("Pause + Return", "Privacy and closeness needs are far enough apart to be misread as rejection or pressure.");
   }
   if (diff(a.scores.careVisibility, b.scores.careVisibility) > 14 || diff(a.scores.warmthNeed, b.scores.structureNeed) > 18 || diff(b.scores.warmthNeed, a.scores.structureNeed) > 18) {
-    add("Care Check-in", "Care grammar mismatch — one of you may be caring in a language the other can’t feel.");
+    add("Care Check-in", "You show care differently — one of you may be caring in a way the other doesn’t feel.");
   }
   if (average([a.scores.proofOrientation, b.scores.proofOrientation]) > 64) {
     add("Consistency Pact", "Trust needs behaviour, evidence, and a review window here, not just words.");
   }
   if (average([a.scores.deflectionRisk, b.scores.deflectionRisk]) > 62) {
-    add("Accountability Sequence", "Deflection risk is elevated — use impact-before-intent to keep repair from sliding off.");
+    add("Accountability Sequence", "One of you tends to deflect — name the impact before explaining intent, so the repair doesn’t slide off.");
   }
   if (
     average([a.scores.withdrawalUnderStress, b.scores.withdrawalUnderStress]) > 60 &&
     average([a.scores.reassuranceNeed, b.scores.reassuranceNeed, a.scores.signalSensitivity, b.scores.signalSensitivity]) > 55
   ) {
-    add("Uninvestment Check", "Withdrawal under stress is high, and so is sensitivity to it. Run the check together to tell needing space from pulling away, rather than assuming either.");
+    add("Uninvestment Check", "Withdrawal under stress is high, and so is sensitivity to it. Do the check together to tell needing space from pulling away, rather than assuming either.");
   }
   if (!routes.length) {
     add("Morning + Evening Rhythm", "Keep daily contact predictable.");
-    add("Weekly Reset", "Maintain the operating rhythm before drift appears.");
+    add("Weekly Reset", "Keep the weekly check-in going before drift sets in.");
   }
 
   return routes.slice(0, 6);
@@ -297,17 +297,17 @@ export function generateCoupleReport(profileA: Profile, profileB: Profile): Coup
   const mismatch = rows.filter((r) => r.diverges).map((r) => `${r.domain}: ${r.risk}`);
 
   const strengths = [
-    "Both profiles can be turned into shared operating language instead of verdicts about who’s right.",
+    "Both profiles can become shared words for what you each need, not verdicts about who’s right.",
     average([a.proofOrientation, b.proofOrientation]) > 60
       ? "There’s real potential for proof-based trust repair here — you both respond to evidence."
-      : "Warmth-first repair and a daily rhythm will do more work here than proof windows will.",
+      : "Here, warmth-first repair and a daily rhythm are likely to matter more than proof windows.",
   ];
 
   const routes = routeTools(profileA, profileB, health);
   const recommendedTools = toRecommendedTools(routes);
 
   return {
-    executiveSummary: `This relationship is operating around ${mismatch[0]?.split(":")[0].toLowerCase() || "a workable, still-calibrating pattern"}. The strongest next step is turning the pattern into a low-threat agreement, then reviewing Proof at the agreed check-in instead of relitigating intent.`,
+    executiveSummary: `The main thing to work with here is ${mismatch[0]?.split(":")[0].toLowerCase() || "a workable pattern that’s still settling"}. A good next step is to turn the pattern into a small, low-stakes agreement, then review Proof at the agreed check-in instead of re-arguing what anyone meant.`,
     strengths,
     coreMismatch: mismatch.length ? mismatch.slice(0, 4) : ["No single mismatch dominates yet — keep using the tools and revisit this in a few weeks."],
     conflictPattern: buildConflictPattern(profileA, profileB),

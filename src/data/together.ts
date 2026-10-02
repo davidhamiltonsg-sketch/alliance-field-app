@@ -61,7 +61,7 @@ export const commonMoves: CommonMove[] = [
     alliance: "Decide the response as a team. Each partner handles their own family, with the plan agreed together.",
   },
   {
-    move: "Relitigating after every visit",
+    move: "Re-arguing it after every visit",
     result: "The same argument every holiday.",
     alliance: "Agree your response together before the next visit, not after it.",
   },

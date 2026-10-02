@@ -101,7 +101,7 @@ describe("generateProfile", () => {
     const profile = generateProfile("B", { name: "", answers: {} });
     expect(new Set(Object.values(profile.scores))).toEqual(new Set([50]));
     expect(profile.name).toBe("Partner B");
-    expect(profile.primaryPattern).toBe("Balanced operating profile — no single pattern dominates");
+    expect(profile.primaryPattern).toBe("Balanced profile — no single pattern stands out");
   });
 
   it("reports at most five distinct patterns and uses the name in the narrative", () => {

@@ -14,8 +14,8 @@ export function SoloStart() {
         Only one of you using this?
       </h2>
       <p className="mt-1.5 text-base leading-normal text-ink">
-        You can start on your own. One person changing their half of the
-        pattern often changes the pattern.
+        You can start on your own. When one of you changes your half of a
+        pattern, the whole pattern can shift.
       </p>
       <ul className="mt-2 space-y-1.5 pl-4 text-base leading-normal text-ink-muted">
         <li className="list-disc">
@@ -23,7 +23,7 @@ export function SoloStart() {
           — safety row first, then the first match.
         </li>
         <li className="list-disc">
-          <strong className="font-medium text-ink">Run your half of Pause + Return</strong>{" "}
+          <strong className="font-medium text-ink">Do your half of Pause + Return</strong>{" "}
           — say you need a pause, give an exact return time, and come back on
           time.
         </li>

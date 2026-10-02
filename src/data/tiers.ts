@@ -4,8 +4,8 @@ import type { Protocol, Tier } from "./types";
 /** CANON round 4 tiers: dots plus a text label, always shown together. */
 export const tierInfo: Record<Tier, { label: string; dots: number; icon: IconId; meaning: string }> = {
   core: { label: "Core", dots: 1, icon: "tier-core", meaning: "Learn these first." },
-  situational: { label: "Situational", dots: 2, icon: "tier-situational", meaning: "Pulled when the Situation Map routes you." },
-  build: { label: "Build", dots: 3, icon: "tier-build", meaning: "Ongoing practices." },
+  situational: { label: "Situational", dots: 2, icon: "tier-situational", meaning: "For when the Situation Map sends you there." },
+  build: { label: "Build", dots: 3, icon: "tier-build", meaning: "Habits you keep going." },
 };
 
 export const tierOrder: Tier[] = ["core", "situational", "build"];

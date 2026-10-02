@@ -268,7 +268,7 @@ describe("Core 5 and the 7-day start plan", () => {
     expect(startDays.map((d) => d.title)).toEqual([
       "Safety + Pause defaults",
       "60-Second Reset drill",
-      "Micro-repair muscle",
+      "Micro-Repair muscle",
       "Pause + Return drill",
       "Daily anchors",
       "Set up the Reset",
@@ -468,7 +468,7 @@ describe("CANON round 6", () => {
 
   it("Weekly Reset scope rule names the Monthly Review", () => {
     expect(getProtocol("weekly-reset")!.activity).toContain(
-      "Only the five parts fit in 40 minutes: anything else (Proof reviews, enrichment picks, governance) goes to the Monthly Review, a longer once-a-month check",
+      "Only the five parts fit in 40 minutes: anything else (Proof reviews, enrichment picks, governance) goes to the Monthly Review, a longer once-a-month look",
     );
   });
 

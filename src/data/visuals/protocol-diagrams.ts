@@ -59,7 +59,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       "kind": "failure",
       "text": "“Later” is not a return time. Always give a clock time."
     },
-    "outcome": "Protection without disappearance."
+    "outcome": "Space without disappearing."
   },
   "60-second-reset": {
     "when": "Co-present, and the conversation has become about winning. Both willing to stop for one minute.",
@@ -95,7 +95,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       "kind": "failure",
       "text": "Always pair stop with return. A reset with no return time is withdrawal."
     },
-    "outcome": "Damage stops in one minute; real repair is scheduled."
+    "outcome": "The fight stops within a minute, and the real talk has a time."
   },
   "green-rule": {
     "when": "Always, especially when honesty feels costly, or ultimatums, stonewalling, or retaliation appear.",
@@ -130,7 +130,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       "kind": "note",
       "text": "Priority over all content tools. If safety fails, content stops."
     },
-    "outcome": "Honesty stays speakable without punishment."
+    "outcome": "Honest things stay safe to say."
   },
   "system-overlay": {
     "when": "Any sensitive discussion, change request, rupture repair, or joint decision. Also a diagnostic when stuck.",
@@ -165,10 +165,10 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       "kind": "note",
       "text": "If a conversation collapses, restart from the last intact step."
     },
-    "outcome": "Hard conversations produce outcomes, not always/never fights."
+    "outcome": "Hard conversations end somewhere, not in “always” and “never”."
   },
   "weekly-reset": {
-    "when": "Same day and time each week; also after travel, stress, or distance. A maintenance meeting, not a trial.",
+    "when": "Same day and time each week; also after travel, stress, or distance. Maintenance, not a trial.",
     "steps": [
       {
         "title": "Appreciation",
@@ -205,7 +205,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       "kind": "pause",
       "text": "If either partner is flooded: Pause + Return first, then reschedule."
     },
-    "outcome": "Friction stays small and predictable. 40-minute timer."
+    "outcome": "Small things stay small. Forty minutes, then done."
   },
   "conflict-protocol": {
     "when": "Active conflict or recurring loops, when Warmth is still possible, or after a pause returns you to regulation.",
@@ -252,7 +252,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       }
     ],
     "note": null,
-    "outcome": "The loop interrupts without a courtroom."
+    "outcome": "The fight stops repeating, and nobody ends up on trial."
   },
   "micro-repair": {
     "when": "Tone sharpens, small hurts, residue starting. Full repair feels impossible, but waiting will worsen the Tone Spiral.",
@@ -287,7 +287,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       "kind": "note",
       "text": "Start within minutes if you can; complete within 24 hours."
     },
-    "outcome": "Residue clears before it hardens."
+    "outcome": "Small stings clear before they harden."
   },
   "proof-protocol": {
     "when": "After any meaningful change request; when “I promise” appears without a plan; ending Hope Fog.",
@@ -354,7 +354,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       }
     ],
     "note": null,
-    "outcome": "Predictable daily contact. Drift stays small."
+    "outcome": "You stay in touch every day, so drift stays small."
   },
   "intimacy-pact": {
     "when": "Initiating or declining feels tense; intimacy stall; after a trust dent; preventive Structure.",
@@ -392,7 +392,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       }
     ],
     "note": null,
-    "outcome": "Vulnerability stays safe; the pact holds."
+    "outcome": "Asking and saying no both stay safe."
   },
   "trust-recovery": {
     "when": "After betrayal, deception, repeated broken agreements, or any before/after in safety.",
@@ -430,7 +430,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       }
     ],
     "note": null,
-    "outcome": "Evidence accumulates; the nervous system quiets."
+    "outcome": "The evidence builds, and things begin to feel calmer."
   },
   "consistency-pact": {
     "when": "Weekly personal integrity practice; after emotional promising; alongside shared Proof during rebuild.",
@@ -467,7 +467,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       }
     ],
     "note": null,
-    "outcome": "The integrity gap shrinks."
+    "outcome": "The gap between what you say and what you do gets smaller."
   },
   "full-recovery": {
     "when": "A repeated fight or a clear before/after dent in trust that a Weekly Reset can’t hold. Calm, agreed, scheduled — never mid-fight.",

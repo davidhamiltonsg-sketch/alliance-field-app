@@ -39,9 +39,9 @@ export const startDays: StartDay[] = [
   },
   {
     day: 3,
-    title: "Micro-repair muscle",
-    task: "Clear one small residue: soften your tone and own your small part of it. No “but”. Start within minutes if you can; complete within 24 hours.",
-    proof: "One micro-repair delivered.",
+    title: "Micro-Repair muscle",
+    task: "Clear up one small thing that stung: soften your tone and own your small part of it. No “but”. Start within minutes if you can; complete within 24 hours.",
+    proof: "One micro-repair made.",
     minutes: 10,
     slug: "micro-repair",
   },
@@ -57,8 +57,8 @@ export const startDays: StartDay[] = [
   {
     day: 5,
     title: "Daily anchors",
-    task: "Run a morning check-in (5 minutes or less) and an evening check-in (about 10 minutes), and mark both on a shared note.",
-    proof: "Both anchors marked on the note.",
+    task: "Start the Morning + Evening Rhythm: a morning check-in (5 minutes or less) and an evening check-in (about 10 minutes). Mark both on a shared note.",
+    proof: "Both check-ins marked on the note.",
     minutes: 15,
     slug: "morning-evening-rhythm",
   },

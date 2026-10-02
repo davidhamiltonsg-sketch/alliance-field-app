@@ -83,9 +83,9 @@ function playChime() {
   }
 }
 
-const NOTIFY_TITLE = "Pause complete";
+const NOTIFY_TITLE = "Time to come back";
 const NOTIFY_OPTIONS: NotificationOptions = {
-  body: "Your return time has arrived. Read the restart cue before you speak.",
+  body: "It’s your return time. Read the restart cue before you speak.",
   tag: "alliance-pause-return",
   icon: "/icon-192.png",
 };
@@ -328,7 +328,7 @@ function PauseTimerClient() {
       <div className="space-y-4">
         {live}
         <WarnBanner pauseLink={false} safetyLink>
-          You’re back. Do not restart “where you left off.” If you’re afraid,
+          You’re back. Don’t pick up “where you left off.” If you’re afraid,
           not just flooded, don’t return — get help.
         </WarnBanner>
         <section
@@ -425,7 +425,7 @@ function PauseTimerClient() {
           Cancel pause
         </PrimaryButton>
         <p className="text-center text-sm text-ink-muted">
-          Separate · calm down · don’t rehearse the argument.
+          Step away · calm down · don’t rehearse the argument.
         </p>
       </div>
     );
@@ -666,7 +666,7 @@ function CalmPause({
                 ? "Breathe slowly: in for a count of four, out for six."
                 : "Breathe in as it grows, out as it settles."}
           </p>
-          <p className="mt-1.5 text-sm text-ink-muted">Separate · calm down · don’t rehearse the argument.</p>
+          <p className="mt-1.5 text-sm text-ink-muted">Step away · calm down · don’t rehearse the argument.</p>
         </div>
 
         <div className="space-y-3">

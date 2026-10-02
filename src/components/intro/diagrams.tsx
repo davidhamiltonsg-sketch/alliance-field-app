@@ -406,7 +406,7 @@ export function ConnectionCardsDiagram() {
     { title: "Warmth", sub: "Reconnect, low stakes" },
     { title: "Curiosity", sub: "What’s changed lately" },
     { title: "Care", sub: "What they’re carrying" },
-    { title: "Repair", sub: "No relitigating it" },
+    { title: "Repair", sub: "No re-arguing it" },
     { title: "Alliance", sub: "On purpose, together" },
   ];
   const seg = 72,

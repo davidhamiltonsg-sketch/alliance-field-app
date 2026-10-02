@@ -14,7 +14,7 @@ export default function ConnectPage() {
         title="Connection Cards"
       >
         Five stages, one flip at a time — Warmth, Curiosity, Care, Repair,
-        Alliance. Pick a stage or draw from all of them.
+        Alliance. Pick a stage, or draw from all five.
       </PageHeader>
       <ConnectionCards />
       <Link

@@ -24,7 +24,7 @@ export const STAGE_META: Record<
   },
   repair: {
     label: "Repair",
-    caption: "For after friction — process it without relitigating it.",
+    caption: "For after friction — talk it through without re-arguing it.",
   },
   alliance: {
     label: "Alliance",

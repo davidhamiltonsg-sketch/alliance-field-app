@@ -24,7 +24,7 @@ export const coreFive: CoreTool[] = [
   },
   {
     slug: "micro-repair",
-    why: "Small repairs, early — before residue hardens.",
+    why: "Small repairs, early — before a sting hardens.",
   },
   {
     slug: "weekly-reset",
