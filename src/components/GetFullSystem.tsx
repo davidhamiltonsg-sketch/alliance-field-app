@@ -22,9 +22,9 @@ export function GetFullSystem() {
       <SectionLabel>The books, if you want more.</SectionLabel>
       <div className="card space-y-3 px-4 py-4">
         <p className="text-base leading-normal text-ink">
-          The app is free. The Operating Manual and Field Kit — every
-          protocol in full, the printable cards, the worksheets — are a
-          one-time purchase. Digital PDF + HTML.
+          The app is free. For the Operating Manual and Field Kit, pay once
+          for the whole set: every protocol in full, plus the cards and
+          worksheets to print. Digital PDF + HTML.
         </p>
         <p className="text-base font-medium leading-normal text-accent">{POSITIONING_LINE}</p>
         {forSale.length > 0 ? (

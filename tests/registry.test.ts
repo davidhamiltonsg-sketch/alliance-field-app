@@ -194,8 +194,8 @@ describe("registry: banned wording", () => {
     expect(sun).toHaveLength(1);
     // Kit wording, mirrored word for word (voice pass 38).
     expect(sun[0].text).toMatch(/Quick: a few minutes inside one ritual, to put the to-do list down\./);
-    // Voice pass 41: the Kit's new wording, still literally "2–24 hours", safety clause first.
-    expect(sun[0].text).toMatch(/Full: from two hours to a whole day \(2–24 hours\) with no talk about the tools\./);
+    // Voice pass 43: the Kit's new wording, still literally "2–24 hours".
+    expect(sun[0].text).toMatch(/Full: 2–24 hours with no talk about the tools\./);
     expect(sun[0].text).toMatch(/Everything else carries on: safety, childcare, the shopping, any repair you’ve already booked\./);
     expect(sun[0].text).toMatch(/[Ee]ither of you can end it by naming a safety concern/);
   });

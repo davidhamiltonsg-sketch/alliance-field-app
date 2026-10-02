@@ -11,7 +11,7 @@ export default function WeeklyResetPage() {
   return (
     <div className="space-y-5">
       <PageHeader eyebrow={<Marker kind="DO" label="Weekly" icon="weekly-reset" />} title="Weekly Reset">
-        Five parts, about 40 minutes. Maintenance, not a trial. Your answers stay on your phone.
+        Five parts, about 40 minutes: maintenance, not a trial. What you type stays on this phone.
       </PageHeader>
       <WeeklyResetWizard />
       <p className="px-1 text-sm leading-normal text-ink-muted">

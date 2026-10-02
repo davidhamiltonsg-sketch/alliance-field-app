@@ -150,8 +150,8 @@ export default function HelpPage() {
         <div className="card space-y-3 px-4 py-4 text-base leading-normal text-ink">
           <p>
             We built this for couples who are safe with each other. It isn’t
-            professional help. It isn’t for situations involving fear,
-            coercion, threats, or violence. If contempt has crept in (the rolled eyes, the mocking tone), stop
+            professional help, and it isn’t for fear, coercion, threats or
+            violence. If contempt has crept in (the rolled eyes, the mocking tone), stop
             and get outside support first.
           </p>
           <p>

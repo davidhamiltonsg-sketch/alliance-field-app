@@ -307,9 +307,9 @@ function WeeklyResetWizardClient() {
           onNext={() => setStep(5)}
         >
           <p className="text-base leading-normal text-ink-muted">
-            One specific ask each for next week, from your friction points.
-            Edit anything that doesn’t sound right. These two parts share the last five
-            minutes.
+            One specific ask each for next week (start from your friction points).
+            Requests and next steps share the last five minutes. Edit anything
+            that doesn’t sound right.
           </p>
           <Field
             label="A asks for…"

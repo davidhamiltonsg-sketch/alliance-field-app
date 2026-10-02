@@ -61,7 +61,7 @@ const panels: Panel[] = [
     eyebrow: "Pause + Return",
     icon: "pause-and-return",
     title: "Pause, then come back on time.",
-    body: "Give a clock time, 20 minutes to 24 hours. Coming back on time is what makes the pause feel safe.",
+    body: "Give a clock time, 20 minutes to 24 hours. Coming back on time is what makes it a pause, not a walk-out.",
     diagram: <PauseTimelineDiagram />,
   },
   {
