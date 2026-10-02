@@ -13,7 +13,7 @@ export interface StartDay {
   minutes: number;
   /** Protocol card this day is built on (must exist in src/data/cards). */
   slug: string;
-  /** Optional in-app tool for the day (a route, e.g. the Weekly Reset wizard). */
+  /** Optional in-app tool for the day (a route, e.g. the weekly-reset page). */
   tool?: { label: string; href: string };
 }
 
@@ -24,14 +24,14 @@ export const startDays: StartDay[] = [
     day: 1,
     title: "Safety + Pause defaults",
     task: "Read the Situation Map, safety row first, and the Green Rule and Pause + Return cards. Set your Pause + Return defaults together: your signal, a 20-minute minimum, 24 hours max, an exact return time. Say the safety sentences aloud once.",
-    proof: "Defaults agreed, out loud, by both of you.",
+    proof: "Defaults agreed out loud and written down.",
     minutes: 10,
     slug: "green-rule",
     tool: { label: "Situation Map", href: "/#situation-map" },
   },
   {
     day: 2,
-    title: "Practise the 60-Second Reset",
+    title: "Practise the 60-Second Alliance Reset",
     task: "Practise all five steps of the 60-Second Alliance Reset once, calm, so they’re familiar before you need them. Start the daily floor (four small things you do every day): a check-in, an “I see you”, an appreciation, and a repair within 24 hours if anything stings.",
     proof: "One calm practice run; daily floor begun.",
     minutes: 10,
@@ -77,6 +77,6 @@ export const startDays: StartDay[] = [
     proof: "Reset done; next three weeks in the calendar.",
     minutes: 40,
     slug: "weekly-reset",
-    tool: { label: "Weekly Reset wizard", href: "/weekly-reset" },
+    tool: { label: "Do this week’s Reset", href: "/weekly-reset" },
   },
 ];

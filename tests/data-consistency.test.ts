@@ -275,7 +275,7 @@ describe("Core 5 and the 7-day start plan", () => {
   it("is the Field Kit's “The First Week”, day for day (CANON round 5: one plan)", () => {
     expect(startDays.map((d) => d.title)).toEqual([
       "Safety + Pause defaults",
-      "Practise the 60-Second Reset",
+      "Practise the 60-Second Alliance Reset",
       "A first Micro-Repair",
       "Practise Pause + Return",
       "Morning and evening check-ins",

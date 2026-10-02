@@ -104,7 +104,7 @@ export const situations: Situation[] = [
     id: "daily-drift",
     label: "We feel like housemates",
     description: "Conversations are just logistics; the connection feels thin.",
-    firstMove: "Morning + Evening Rhythm. Rituals feel like a checklist? Sun Memory.",
+    firstMove: "Morning + Evening Rhythm. Check-ins feeling like chores? Try Sun Memory (Sensory Comfort Inventory). Still flat after two weeks? Do the Drift Check.",
     primaryHref: "/protocols/morning-evening-rhythm",
   },
   {

@@ -525,7 +525,7 @@ export function CoreFiveDiagram() {
   const tools: { slug: IconId; title: string; sub: string; color: string }[] = [
     { slug: "green-rule", title: "Green Rule (Safety Gate)", sub: "Honesty is never punished.", color: V.safety },
     { slug: "pause-and-return", title: "Pause + Return", sub: "20 min – 24 h, exact return time.", color: V.pause },
-    { slug: "60-second-reset", title: "60-Second Alliance Reset", sub: "Stop a fight to win.", color: V.pause },
+    { slug: "60-second-reset", title: "60-Second Alliance Reset", sub: "When it’s become a fight to win.", color: V.pause },
     { slug: "micro-repair", title: "Micro-Repair", sub: "Small repairs, early.", color: V.repair },
     { slug: "weekly-reset", title: "Weekly Reset", sub: "Five parts, about 40 minutes.", color: V.accent },
   ];

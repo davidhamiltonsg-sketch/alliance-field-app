@@ -47,22 +47,22 @@ export interface CommonMove {
 export const commonMoves: CommonMove[] = [
   {
     move: "Debating whether the comment was “really” racist or rude",
-    result: "You end up opponents — one defending, one prosecuting.",
+    result: "You end up opponents: one defending, one prosecuting.",
     alliance: "Name the pressure as external first. Decide what it was later, if ever.",
   },
   {
     move: "“Just ignore it”",
-    result: "One partner carries it alone.",
+    result: "One of you ends up carrying it alone.",
     alliance: "Ask: reassurance, a plan, or just to vent?",
   },
   {
     move: "The partner whose family it is handles it alone",
-    result: "Resentment on both sides.",
+    result: "You both end up resenting it.",
     alliance: "Agree the response together, so neither of you is deciding alone.",
   },
   {
     move: "Re-arguing it after every visit",
-    result: "The same argument every holiday.",
+    result: "You have the same argument every holiday.",
     alliance: "Agree your response together before the next visit, not after it.",
   },
 ];

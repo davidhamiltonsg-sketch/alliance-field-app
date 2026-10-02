@@ -208,10 +208,10 @@ function routeTools(a: Profile, b: Profile, health: Record<LayerKey, number>) {
     if (!routes.some((r) => r.tool === tool)) routes.push({ tool, reason });
   };
 
-  if (health.Atmosphere < 62) add("Morning + Evening Rhythm", "You answer most differently on Atmosphere — start there: bring the warmth back before asking for change.");
-  if (health.Structure < 62) add("Weekly Reset", "You answer most differently on Structure — start there: set a weekly check-in you can count on.");
-  if (health.Repair < 62) add("Micro-Repair", "You answer most differently on Repair — start there: make smaller repairs, more often.");
-  if (health.Protection < 62) add("Pause + Return", "You answer most differently on Protection — start there: agree what you’ll each do when things get heated.");
+  if (health.Atmosphere < 62) add("Morning + Evening Rhythm", "Your answers are furthest apart on the warmth between you. Start by bringing it back before you ask for change.");
+  if (health.Structure < 62) add("Weekly Reset", "You see the routines and agreements quite differently. A weekly check-in you can both count on is the place to begin.");
+  if (health.Repair < 62) add("Micro-Repair", "You make up after a row in different ways. Try smaller repairs, more often.");
+  if (health.Protection < 62) add("Pause + Return", "You differ most on what keeps you safe in a heated moment. Agree now what you’ll each do when it gets there.");
 
   if (diff(a.scores.privacyNeed, b.scores.closenessNeed) > 18 || diff(b.scores.privacyNeed, a.scores.closenessNeed) > 18) {
     add("Pause + Return", "You need different amounts of space and closeness: one of you may take space as rejection, and the other may feel closeness as pressure.");
@@ -266,37 +266,37 @@ export function generateCoupleReport(profileA: Profile, profileB: Profile): Coup
       domain: "Privacy / closeness",
       diverges: diff(a.closenessNeed - a.privacyNeed, b.closenessNeed - b.privacyNeed) > 24,
       risk: "Space may be read as rejection; closeness may be read as pressure.",
-      summary: "The main thing to work with here is how much space and how much closeness you each need.",
+      summary: "How much space and how much closeness do you each need? Talk about that first.",
     },
     {
       domain: "How care lands",
       diverges: (a.structureNeed > a.warmthNeed) !== (b.structureNeed > b.warmthNeed),
       risk: "One of you may be caring in a way the other doesn’t feel as care.",
-      summary: "The main thing to work with here is how you each show care, and how you each notice it.",
+      summary: "Notice how each of you shows care, and what each of you counts as care.",
     },
     {
       domain: "Repair speed",
       diverges: diff(a.repairSpeed, b.repairSpeed) > 24,
       risk: "Making up fast can feel like pressure; making up slowly can feel like being left.",
-      summary: "The main thing to work with here is timing: one of you wants to make up sooner than the other.",
+      summary: "It’s about timing: one of you wants to make up sooner than the other.",
     },
     {
       domain: "Proof / trust",
       diverges: diff(a.proofOrientation, b.proofOrientation) > 24,
       risk: "One of you may trust warm words while the other needs to see it.",
-      summary: "The main thing to work with here is what makes trust feel real: warm words for one of you, things you can see for the other.",
+      summary: "Trust feels real in different ways: warm words for one of you, things you can see for the other.",
     },
     {
       domain: "How heated is too heated",
       diverges: diff(a.heatTolerance, b.heatTolerance) > 24,
       risk: "If one of you can take more heat than the other, that can build a Reach–Recoil loop (one reaches, the other pulls back).",
-      summary: "The main thing to work with here is how heated a conversation can get before one of you needs to stop.",
+      summary: "Agree how heated a conversation can get before one of you needs to stop.",
     },
     {
       domain: "Saying what’s going on",
       diverges: diff(a.transparency, b.transparency) > 24,
       risk: "What one of you leaves unsaid, the other may fill in with a guess.",
-      summary: "The main thing to work with here is how much you each say out loud about what’s going on.",
+      summary: "Work out how much each of you says out loud about what’s going on.",
     },
   ];
 

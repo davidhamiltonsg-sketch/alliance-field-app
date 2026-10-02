@@ -190,7 +190,7 @@ export default function TogetherPage() {
           <p>
             We built this from our own relationship and from research we
             trust, including the minority-stress literature. We didn’t invent
-            the science; we turned it into steps we could use at 11pm. It
+            the science; we turned it into steps you can use when it counts. It
             isn’t therapy and hasn’t been tested in a controlled study.
           </p>
           <p className="text-ink-muted">

@@ -77,7 +77,7 @@ const panels: Panel[] = [
     eyebrow: "Optional",
     icon: "manual",
     title: "Want the full system?",
-    body: "This app is free, and stands on its own. If you want more, the Operating Manual and Field Kit go deeper: full protocols, printable cards, worksheets.",
+    body: "This app is free, and stands on its own. The books and the kit go further, if you want them.",
     diagram: <SystemDiagram />,
   },
 ];

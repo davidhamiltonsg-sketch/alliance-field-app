@@ -24,7 +24,7 @@ export default function WeeklyResetPage() {
         href="/protocols/weekly-reset"
         className="flex min-h-12 items-center justify-between rounded-xl border border-rule/40 bg-white px-4 text-base font-medium text-accent"
       >
-        Weekly Reset protocol card
+        Read the whole card
         <ArrowRight size={16} />
       </Link>
     </div>

@@ -178,7 +178,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Check the load",
-        "detail": "Do you feel supported? Alone? Is it fair? Once a month, this part is the monthly Care Check-in (inside the Weekly Reset).",
+        "detail": "Do you feel supported? Alone? Is it fair? Once a month, this part is the monthly Care Check-in.",
         "kind": "step",
         "badge": "15 min"
       },
