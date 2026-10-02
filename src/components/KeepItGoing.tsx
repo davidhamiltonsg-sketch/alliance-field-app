@@ -84,7 +84,7 @@ export function KeepItGoing({ lead }: { lead?: string }) {
         </p>
       )}
       <p role="status" className="text-sm font-medium text-accent empty:hidden">
-          {added ? "Calendar file downloaded — open it to add both reminders." : ""}
+          {added ? "Saved. Open the file to add both reminders to your calendar." : ""}
         </p>
       </div>
     </section>

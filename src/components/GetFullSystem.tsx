@@ -19,7 +19,7 @@ export function GetFullSystem() {
   const forSale = products.filter((p) => STORE_URLS[p.id]);
   return (
     <section className="space-y-3">
-      <SectionLabel>Get the full system</SectionLabel>
+      <SectionLabel>The books, if you want more.</SectionLabel>
       <div className="card space-y-3 px-4 py-4">
         <p className="text-base leading-normal text-ink">
           The app is free. The Operating Manual and Field Kit — every

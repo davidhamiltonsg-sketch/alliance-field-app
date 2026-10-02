@@ -309,7 +309,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Keep the record short",
-        "detail": "A count or a table — and look at it together at the check-in, where feelings and questions come first; the record is an aid, never the judge.",
+        "detail": "A count or a table — and look at it together at the check-in, where feelings and questions come first.",
         "kind": "step"
       },
       {

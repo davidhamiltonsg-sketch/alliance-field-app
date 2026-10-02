@@ -81,7 +81,7 @@ export const togetherTools = [
   {
     label: "Weekly Reset",
     href: "/weekly-reset",
-    note: "A standing slot to plan for known pressure points — holidays, visits, weddings, moves.",
+    note: "A set time, before the holidays or the next visit, to agree how you’ll handle it.",
   },
   {
     label: "Pause + Return",

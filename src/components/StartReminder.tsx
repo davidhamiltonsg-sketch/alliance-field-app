@@ -62,7 +62,7 @@ export function StartReminder() {
         </p>
       )}
       <p role="status" className="text-sm font-medium text-accent empty:hidden">
-        {added ? "Reminder downloaded — open it to add it to your calendar." : ""}
+        {added ? "Saved. Open the file to add it to your calendar." : ""}
       </p>
     </div>
   );

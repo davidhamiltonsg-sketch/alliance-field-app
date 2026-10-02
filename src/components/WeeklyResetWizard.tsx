@@ -125,7 +125,7 @@ function WeeklyResetWizardClient() {
           </p>
         </div>
         <PrimaryButton onClick={addToCalendar}>
-          {calendarAdded ? "Reminder downloaded ✓" : "Add weekly reminder to calendar"}
+          {calendarAdded ? "Saved. Open the file to add it to your calendar." : "Add weekly reminder to calendar"}
         </PrimaryButton>
         {recent.length > 0 && (
           <div className="card space-y-2 px-4 py-3.5 text-sm leading-normal">
@@ -308,7 +308,7 @@ function WeeklyResetWizardClient() {
         >
           <p className="text-base leading-normal text-ink-muted">
             One specific ask each for next week, from your friction points.
-            Edit below if needed. Requests and next steps share the last 5
+            Change anything that’s wrong. These two parts share the last five
             minutes.
           </p>
           <Field

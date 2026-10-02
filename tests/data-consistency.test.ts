@@ -506,7 +506,9 @@ describe("CANON round 6", () => {
     expect(trust.steps.join(" ")).toContain("the hurt partner’s feelings and questions come first; the record is an aid, never the judge");
     expect(trust.warn).toContain("If you can’t agree that a breach happened, this tool isn’t for it");
     expect(trust.warn).toContain("If refusing the “voluntary” transparency would feel unsafe, it isn’t voluntary");
-    expect(getProtocol("proof-protocol")!.steps.join(" ")).toContain("feelings and questions come first; the record is an aid, never the judge");
+    expect(getProtocol("proof-protocol")!.steps.join(" ")).toContain("look at it together at the check-in, where feelings and questions come first.");
+    // Voice pass 28: the "aid, never the judge" line is said once, in Trust Recovery's check-in step.
+    expect(allCopy.split("the record is an aid, never the judge").length - 1).toBeLessThanOrEqual(2);
     expect(allCopy).not.toMatch(/hypernotic|record first|facts first|right breach/i);
   });
 

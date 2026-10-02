@@ -81,7 +81,7 @@ describe("/privacy", () => {
   });
 });
 
-describe("Get the full system", () => {
+describe("The books, if you want more.", () => {
   it("hides buy links when no store URL is set", async () => {
     const html = await renderWith({ NEXT_PUBLIC_FULL_SYSTEM_URL: "", NEXT_PUBLIC_STORE_URL_MANUAL: "", NEXT_PUBLIC_STORE_URL_KIT: "", NEXT_PUBLIC_STORE_URL_BUNDLE: "" }, store);
     expect(html).not.toMatch(/>Buy/);

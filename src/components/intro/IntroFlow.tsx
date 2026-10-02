@@ -53,7 +53,7 @@ const panels: Panel[] = [
     eyebrow: "The Core 5",
     icon: "tier-core",
     title: "Start with five tools.",
-    body: "One of these fits most hard moments. Learn them first; the rest can wait. The 7-day plan takes about 10 minutes a day.",
+    body: "Pick the one closest to what’s happening. Learn them first; the rest can wait. The 7-day plan takes about 10 minutes a day.",
     diagram: <CoreFiveDiagram />,
   },
   {
