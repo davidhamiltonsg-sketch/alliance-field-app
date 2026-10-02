@@ -309,7 +309,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Record it simply",
-        "detail": "A count or a table — to see and review at the agreed check-in. At the check-in, feelings and questions come first; the record is an aid, never the judge.",
+        "detail": "A count or a table — and look at it together at the check-in, where feelings and questions come first; the record is an aid, never the judge.",
         "kind": "step"
       },
       {
@@ -414,7 +414,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Keep a simple table",
-        "detail": "Just the facts — to see and review at the agreed check-in.",
+        "detail": "Just the facts — and look at it together at the check-in.",
         "kind": "step",
         "badge": "weekly"
       },

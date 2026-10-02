@@ -175,8 +175,8 @@
         "Maintenance, not a trial. Flooded? Pause + Return first."
       ],
       "canonicalPhrases": [
-        "Set a 40-minute timer.",
-        "the monthly Care Check-in (inside the Weekly Reset)"
+        "Set a 40-minute timer",
+        "Once a month, this part is the Care Check-in."
       ],
       "worksheets": [
         "weekly-reset-agenda"
@@ -245,7 +245,7 @@
       },
       "canonical": [
         "Proof = a specific change, evidence you can both see, and a set time window.",
-        "Record it simply, to see and review at the agreed check-in (never 'track'/'verify' the partner)."
+        "Record it simply, and look at it together at the check-in (never 'track'/'verify' the partner)."
       ]
     },
     {
@@ -591,7 +591,7 @@
     "no-script-no": "A “no” needs no script, reason, or substitute offer. No pact or agreement creates an obligation to sex, touch, or disclosure.",
     "if-welcome": "Physical contact is always 'if welcome'.",
     "no-limiting-contact": "No tool is ever used to limit a partner's contact with friends, family, money, phone or movement.",
-    "no-monitoring": "Never 'track'/'verify' the other partner; use 'see and review at the agreed check-in'. Transparency is voluntary, time-limited, never monitoring.",
+    "no-monitoring": "Never 'track'/'verify' the other partner; use 'look at it together at the check-in'. Transparency is voluntary, time-limited, never monitoring.",
     "sexual-pressure": "A no met with pressure once → Green Rule / Trust Recovery conversation; if it happens again, or either of you feels unable to say no → stop and use the Help Lines. If it involved force, threats or fear, it isn't a 'once': go straight to the Help Lines.",
     "misuse-label": "'Abuse' is reserved for abuse; a guardrail about avoidance/misuse of a tool is a 'Misuse guardrail'."
   },
@@ -771,7 +771,7 @@
     },
     {
       "variant": "track / verify (the other partner)",
-      "use": "see and review at the agreed check-in"
+      "use": "look at it together at the check-in"
     },
     {
       "variant": "Micro-Repair windows of 10 minutes or 48 hours",

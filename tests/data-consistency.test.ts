@@ -169,7 +169,7 @@ describe("CANON round 3", () => {
   it("never asks to track or verify the other partner", () => {
     const text = JSON.stringify([getProtocol("trust-recovery"), getProtocol("proof-protocol")]);
     expect(text).not.toMatch(/\btrack(ing)? (the facts|it)\b|\bverify\b/i);
-    expect(text).toContain("see and review at the agreed check-in");
+    expect(text).toContain("look at it together at the check-in");
   });
 
   it("Weekly Reset part 4 is Requests, part 5 is Next steps", () => {
@@ -207,7 +207,9 @@ describe("CANON round 3", () => {
     expect(byId["say-do-gap"].primaryHref).toBe("/protocols/consistency-pact");
     expect(byId["after-fight"].firstMove).toContain("start within minutes if you can; complete within 24 hours");
     expect(byId["intimacy-stall"].firstMove).toMatch(/Help Lines/);
-    expect(byId["weekly-maintenance"].firstMove).toContain("the monthly Care Check-in (inside the Weekly Reset)");
+    // The row stays short; the canonical "(inside the Weekly Reset)" phrase lives on the Weekly Reset card.
+    expect(byId["weekly-maintenance"].firstMove).toContain("Once a month, it includes the Care Check-in.");
+    expect(componentSource("WeeklyResetWizard")).toMatch(/monthly Care Check-in \(inside the Weekly\s+Reset\)/);
     // Amber is for pause only: no row routes to an amber tone except Pause + Return.
     for (const s of situations) expect(s).not.toHaveProperty("warn");
   });
@@ -490,10 +492,11 @@ describe("CANON round 6", () => {
     expect(card.steps.join(" ")).toContain("For drift, no one “caused” it: you both name your part.");
   });
 
-  it("Weekly Reset scope rule names the Monthly Review (in Practise, as on the Kit card; still on the card)", () => {
+  it("Weekly Reset scope rule names the Monthly Review (in What it is, as on the Kit card; still on the card)", () => {
     const card = getProtocol("weekly-reset")!;
     expect(card.concept).toContain("Maintenance, not a trial.");
-    expect(card.activity).toContain(
+    expect(card.activity).toContain("Bigger things go to the Monthly Review.");
+    expect(card.concept).toContain(
       "Only the five parts fit in 40 minutes: anything else (Proof reviews, plans for fun, the bigger picture) goes to the Monthly Review, a 40-minute once-a-month look at how things are going",
     );
   });

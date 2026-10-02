@@ -176,9 +176,10 @@ describe("registry: banned wording", () => {
   it("phrases the Care Check-in as the monthly item inside the Weekly Reset", () => {
     const phrase = registry.concepts["care-check-in"].phrase;
     // The Weekly Reset's own "Check the load" step (card and diagram) is already inside the
-    // Weekly Reset; it uses the Field Kit's shorter wording (voice pass 10), and the card's
-    // activity still carries the full phrase.
-    const mentions = texts.filter((t) => /Care Check-in/.test(t.text) && !/^Care Check-in$/.test(t.text) && !/Is it fair\? Once a month, this part is the Care Check-in\.$/.test(t.text));
+    // Weekly Reset; it uses the Field Kit's shorter wording (voice pass 10), and the
+    // Weekly Reset wizard still carries the full phrase. The Situation Map's weekly row is routed to the
+    // Weekly Reset, so its short line (voice pass 18) says "Once a month, it includes the Care Check-in."
+    const mentions = texts.filter((t) => /Care Check-in/.test(t.text) && !/^Care Check-in$/.test(t.text) && !/Is it fair\? Once a month, this part is the Care Check-in\.$/.test(t.text) && !/^Weekly Reset: about 40 minutes\. Once a month, it includes the Care Check-in\.$/.test(t.text));
     expect(mentions.length).toBeGreaterThan(0);
     for (const m of mentions) {
       expect(m.text.toLowerCase(), `${m.file}: ${m.text}`).toContain(phrase.toLowerCase().replace(/^the /, ""));
