@@ -135,6 +135,12 @@ export function SituationCard({
             ))}
           </div>
         )}
+        {situation.goDeeper && (
+          <p className="relative z-[1] mx-3 border-t border-rule/60 py-2.5 pl-1 text-sm leading-snug text-ink-muted">
+            <span className="font-medium text-ink">Go deeper: </span>
+            {situation.goDeeper}
+          </p>
+        )}
       </div>
     </li>
   );

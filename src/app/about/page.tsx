@@ -164,8 +164,7 @@ export default function AboutPage() {
         <Marker kind="NOTE" label="Feeling far apart?" />
         <p className="mt-2 text-base leading-normal">
           <strong>Not sure if it’s needing space or pulling away?</strong> That’s
-          what the Uninvestment Check is for. If contempt has crept in (the
-          rolled eyes, a mocking tone), stop and get outside support first.
+          what the Uninvestment Check is for.
         </p>
         <Link
           href="/protocols/uninvestment-check"

@@ -381,7 +381,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Revisit every 30 days",
-        "detail": "Revisit the agreement every 30 days. Update it as things change — it’s not a one-time contract, and nobody keeps score in between.",
+        "detail": "Revisit the agreement every 30 days. Update it as things change — it’s not a one-time contract, and there’s no keeping score in between.",
         "kind": "step",
         "badge": "30 days"
       },
@@ -470,7 +470,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "outcome": "One honest look a week at what you say and what you do."
   },
   "full-recovery": {
-    "when": "Use for a repeated fight, or a clear before/after dent in trust, when a normal Weekly Reset can’t hold the topic. Only when you’ve both agreed to sit down for it — never mid-fight, and not in place of a smaller repair.",
+    "when": "Use for a repeated fight, or a dent in trust you can both point to, when a normal Weekly Reset can’t hold the topic. Only when you’ve both agreed to sit down for it — never mid-fight, and not in place of a smaller repair.",
     "steps": [
       {
         "title": "Warm up first",
@@ -511,7 +511,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "outcome": "One agreed change, with a date to check it."
   },
   "uninvestment-check": {
-    "when": "When ordinary moments have gone flat, repairs feel like going through the motions, you’ve stopped planning ahead together, or contempt has replaced frustration.",
+    "when": "When dinner is all logistics and the last real question was weeks ago. Or when contempt has taken the place of frustration: then go straight to step 2.",
     "steps": [
       {
         "title": "Mark the signs alone",

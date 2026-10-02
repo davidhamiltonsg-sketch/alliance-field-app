@@ -208,10 +208,10 @@ function routeTools(a: Profile, b: Profile, health: Record<LayerKey, number>) {
     if (!routes.some((r) => r.tool === tool)) routes.push({ tool, reason });
   };
 
-  if (health.Atmosphere < 62) add("Morning + Evening Rhythm", "Your answers are furthest apart on the warmth between you. Start there: a little warmth each day, before you ask for any change.");
-  if (health.Structure < 62) add("Weekly Reset", "You disagree most about the everyday arrangements: who does what, and when. Begin with a weekly check-in you can both count on.");
+  if (health.Atmosphere < 62) add("Morning + Evening Rhythm", "One place your answers are far apart: the warmth between you. Start there: a little warmth each day, before you ask for any change.");
+  if (health.Structure < 62) add("Weekly Reset", "You see the everyday arrangements differently: who does what, and when. Begin with a weekly check-in you can both count on.");
   if (health.Repair < 62) add("Micro-Repair", "One of you wants to make up fast, the other slowly. Agree one small first step and take it today. If more is needed, book the bigger talk for a set time.");
-  if (health.Protection < 62) add("Pause + Return", "You differ most on what keeps you safe in a heated moment. Agree now what you’ll each do when it gets there.");
+  if (health.Protection < 62) add("Pause + Return", "You each see differently what keeps you safe in a heated moment. Agree now what you’ll each do when it gets there.");
 
   if (diff(a.scores.privacyNeed, b.scores.closenessNeed) > 18 || diff(b.scores.privacyNeed, a.scores.closenessNeed) > 18) {
     add("Pause + Return", "You need different amounts of space and closeness. To one of you, ‘I need a minute’ can sound like being left. Whoever asks for the pause says when they’ll be back.");
@@ -220,7 +220,7 @@ function routeTools(a: Profile, b: Profile, health: Record<LayerKey, number>) {
     add("Care Check-in", "You show care differently. One of you may be giving it in a way the other doesn’t notice as care. Tell each other about one recent moment you felt looked after, and what did it.");
   }
   if (average([a.scores.proofOrientation, b.scores.proofOrientation]) > 64) {
-    add("Consistency Pact", "You both trust what you see someone keep doing, week after week. So pick one small thing each and keep doing it where the other can see.");
+    add("Consistency Pact", "You both trust what you see each other keep doing, week after week. So pick one small thing each and keep doing it where the other can see.");
   }
   if (average([a.scores.deflectionRisk, b.scores.deflectionRisk]) > 62) {
     add("Impact first, then explain", "One of you tends to slide away from hard moments with a joke or an explanation. The repair is designed around one order: impact first, explaining after. So name the impact before anything else.");

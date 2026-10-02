@@ -21,7 +21,7 @@ import {
 export const metadata = {
   title: "Together against outside pressure",
   description:
-    "For interracial, intercultural and other couples facing outside pressure: face it from the same side, with the Unity Anchor.",
+    "For interracial, intercultural and other couples facing outside pressure: face it together, with the Unity Anchor.",
 };
 
 export default function TogetherPage() {

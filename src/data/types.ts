@@ -46,6 +46,8 @@ export interface Situation {
   icon?: string;
   /** Safety row: always first, routes to Help & safety, never to Pause. */
   danger?: boolean;
+  /** Book pointer shown under the row's links ("Go deeper"), kept out of the first move. */
+  goDeeper?: string;
 }
 
 export interface CareAuditRow {
