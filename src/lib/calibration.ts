@@ -271,7 +271,7 @@ export function generateCoupleReport(profileA: Profile, profileB: Profile): Coup
     {
       domain: "How care lands",
       diverges: (a.structureNeed > a.warmthNeed) !== (b.structureNeed > b.warmthNeed),
-      risk: "One of you may be caring in a way the other doesn’t feel as care.",
+      risk: "One of you may be showing care the other doesn’t recognise as care.",
       summary: "Notice how each of you shows care, and what each of you counts as care.",
     },
     {

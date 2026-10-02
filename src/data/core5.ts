@@ -20,7 +20,7 @@ export const coreFive: CoreTool[] = [
   },
   {
     slug: "60-second-reset",
-    why: "One minute, designed to turn a fight to win back into a conversation. Then pick a time.",
+    why: "One minute, still in the room, to stop trying to win and start talking again. Then pick a time.",
   },
   {
     slug: "micro-repair",

@@ -487,8 +487,8 @@ describe("CANON round 6", () => {
     expect(card.steps.join(" ")).toContain("For drift, no one “caused” it: you both name your part.");
   });
 
-  it("Weekly Reset scope rule names the Monthly Review", () => {
-    expect(getProtocol("weekly-reset")!.activity).toContain(
+  it("Weekly Reset scope rule names the Monthly Review (in What it is, as on the Kit card)", () => {
+    expect(getProtocol("weekly-reset")!.concept).toContain(
       "Only the five parts fit in 40 minutes: anything else (Proof reviews, plans for fun, the bigger picture) goes to the Monthly Review, a 40-minute once-a-month look at how things are going",
     );
   });

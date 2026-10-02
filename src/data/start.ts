@@ -23,7 +23,7 @@ export const startDays: StartDay[] = [
   {
     day: 1,
     title: "Safety + Pause defaults",
-    task: "Read the Situation Map, safety row first, and the Green Rule and Pause + Return cards. Set your Pause + Return defaults together: your signal, a 20-minute minimum, 24 hours max, an exact return time. Say the safety sentences aloud once.",
+    task: "Read the Situation Map, safety row first. Cards: Green Rule, Pause + Return. Fill in the Pause + Return Defaults worksheet together: your signal, a 20-minute minimum, 24 hours max, an exact return time. Say the safety sentences aloud once.",
     proof: "Defaults agreed out loud and written down.",
     minutes: 10,
     slug: "green-rule",
@@ -65,7 +65,7 @@ export const startDays: StartDay[] = [
   {
     day: 6,
     title: "Set up the Reset",
-    task: "Read the Weekly Reset card. Book 40 minutes for tomorrow; each of you notes one appreciation and one small friction point.",
+    task: "Read the Weekly Reset card and Agenda. Book 40 minutes for tomorrow; each of you notes one appreciation and one small friction point.",
     proof: "Time booked; agenda drafted.",
     minutes: 10,
     slug: "weekly-reset",

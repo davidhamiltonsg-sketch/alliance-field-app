@@ -14,8 +14,8 @@ export default function StartPage() {
   return (
     <div className="space-y-5">
       <PageHeader eyebrow={<Marker kind="DO" label="Seven days" />} title="Your 7-day plan">
-        About 10 minutes a day. Day 7 is your first Weekly Reset. Miss a day?
-        Just pick up where you left off.
+        If you’re new, this is where we’d start. About 10 minutes a day. Day 7
+        is your first Weekly Reset. Miss a day? Just pick up where you left off.
       </PageHeader>
 
       <StartPlan />

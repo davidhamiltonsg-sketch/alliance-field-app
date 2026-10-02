@@ -194,11 +194,9 @@ export default function AboutPage() {
         <span className="absolute inset-y-0 left-0 w-1 bg-repair" aria-hidden />
         <Marker kind="NOTE" label="Feeling checked out?" />
         <p className="mt-2 text-base leading-normal">
-          <strong>Not sure if it’s needing space or pulling away?</strong> Try the
-          Uninvestment Check. No signs: you’re fine. Keep up the daily
-          floor. 1–2: likely needs
-          space and small repairs. 3 or more: may be pulling away — book a
-          Full Recovery conversation within a week.
+          <strong>Not sure if it’s needing space or pulling away?</strong> We
+          use the Uninvestment Check for that. Contempt means stop and get
+          outside support first.
         </p>
         <Link
           href="/protocols/uninvestment-check"
@@ -214,8 +212,7 @@ export default function AboutPage() {
         <WarnBanner pauseLink={false} safetyLink>
           We built this for couples who are safe with each other. It isn’t
           professional help. It isn’t for situations involving fear, coercion,
-          or any form of abuse. Contempt means stop and get outside support
-          first. Afraid of your
+          or any form of abuse. Afraid of your
           partner, being threatened, or not free to say no? Stop — these tools
           are not for this. Get outside help.
         </WarnBanner>

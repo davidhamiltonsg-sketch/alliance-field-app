@@ -7,7 +7,6 @@ import { QuickAccess } from "@/components/QuickAccess";
 import { ChevronRight } from "@/components/icons";
 import { situations } from "@/data/situations";
 import { WarnBanner } from "@/components/WarnBanner";
-import { withSubtitle } from "@/data/glossary";
 
 /** The three in-the-moment routes. Safety is always first, never routed to Pause. */
 const routes: {
@@ -44,7 +43,7 @@ const practise: { href: string; label: string; sub: string; icon: IconId; tone: 
   { href: "/connect", label: "Connection Cards", sub: "Questions to flip through together", icon: "connection-cards", tone: "connection" },
   { href: "/weekly-reset", label: "Weekly Reset", sub: "Five parts, about 40 minutes", icon: "weekly-reset", tone: "accent" },
   { href: "/start", label: "7-day plan", sub: "About 10 minutes a day", icon: "section-steps", tone: "accent" },
-  { href: "/calibrate", label: "Profile Calibration", sub: withSubtitle("Layer Scan"), icon: "profile-calibration", tone: "accent" },
+  { href: "/calibrate", label: "Profile Calibration", sub: "Where you two differ most", icon: "profile-calibration", tone: "accent" },
 ];
 
 export default function HomePage() {
