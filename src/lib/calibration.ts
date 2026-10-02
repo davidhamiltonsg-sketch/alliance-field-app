@@ -178,7 +178,7 @@ function buildConflictPattern(a: Profile, b: Profile): string {
     return `${b.name} tends to push for an answer while ${a.name} backs off. Left alone, that can become a Reach–Recoil loop (one reaches, the other pulls back). Pause + Return, with an exact return time, is designed to break it.`;
   if (aPursues && bPursues)
     return "Both of you tend to push harder when you don’t get a response. Slow down first, before pushing for reassurance turns into the fight.";
-  return "Both of you tend to back off. Fewer fights can also mean less contact, so keep up the Morning + Evening Rhythm and the Weekly Reset, so the distance can’t build unnoticed.";
+  return "Both of you tend to back off. Fewer fights can also mean less contact, so keep up the Morning + Evening Rhythm and the Weekly Reset, and the distance won’t build unnoticed.";
 }
 
 // Maps a recommendation's concept to a real Field Kit protocol slug.
@@ -208,7 +208,7 @@ function routeTools(a: Profile, b: Profile, health: Record<LayerKey, number>) {
     if (!routes.some((r) => r.tool === tool)) routes.push({ tool, reason });
   };
 
-  if (health.Atmosphere < 62) add("Morning + Evening Rhythm", "Your answers are furthest apart on the warmth between you. Start by bringing it back before you ask for change.");
+  if (health.Atmosphere < 62) add("Morning + Evening Rhythm", "Your answers are furthest apart on the warmth between you. Start there: a little warmth each day, before you ask for any change.");
   if (health.Structure < 62) add("Weekly Reset", "You see the routines and agreements quite differently. A weekly check-in you can both count on is the place to begin.");
   if (health.Repair < 62) add("Micro-Repair", "You make up after a row in different ways. Try smaller repairs, more often.");
   if (health.Protection < 62) add("Pause + Return", "You differ most on what keeps you safe in a heated moment. Agree now what you’ll each do when it gets there.");

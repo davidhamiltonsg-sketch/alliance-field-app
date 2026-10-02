@@ -150,8 +150,9 @@ export default function HelpPage() {
         <div className="card space-y-3 px-4 py-4 text-base leading-normal text-ink">
           <p>
             We built this for couples who are safe with each other. It isn’t
-            professional help. It isn’t for situations involving contempt,
-            fear, coercion, threats, or violence.
+            professional help. It isn’t for situations involving fear,
+            coercion, threats, or violence. Contempt means stop and get outside
+            support first.
           </p>
           <p>
             <strong>Pause + Return is for flooding, never for fear.</strong> If

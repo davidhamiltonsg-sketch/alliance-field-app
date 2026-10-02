@@ -189,7 +189,7 @@ describe("registry: banned wording", () => {
     const sun = texts.filter((t) => /^Sun Memory: /.test(t.text));
     expect(sun).toHaveLength(1);
     expect(sun[0].text).toMatch(/Quick: a few minutes inside one ritual/);
-    expect(sun[0].text).toMatch(/Full: a declared window of 2–24 hours/);
+    expect(sun[0].text).toMatch(/Full: agree a stretch of 2 to 24 hours with no talk about tools or fixes/);
     expect(sun[0].text).toMatch(/either of you can end it by naming a safety concern/);
   });
 });

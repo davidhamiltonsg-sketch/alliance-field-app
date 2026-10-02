@@ -36,7 +36,7 @@ const panels: Panel[] = [
     eyebrow: "Use it tonight",
     icon: "60-second-reset",
     title: "If it’s getting heated: the 60-Second Alliance Reset.",
-    body: "Stop, say it, a touch only if welcome, three breaths, then an exact time to keep talking. About a minute.",
+    body: "Stop, say it, a touch only if it’s welcome, three breaths, then an exact time to keep talking. About a minute.",
     safety: true,
     diagram: <ResetStepsDiagram />,
   },

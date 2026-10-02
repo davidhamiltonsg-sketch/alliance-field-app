@@ -491,7 +491,7 @@ export function ResetStepsDiagram() {
   return (
     <Frame
       viewBox="0 0 340 336"
-      label="60-Second Alliance Reset: stop, say “I want to connect, not fight”, a brief touch only if welcome, three slow breaths, then pick an exact time to keep talking. Afraid, not just flooded? Stop and get help."
+      label="60-Second Alliance Reset: stop, say “I want to connect, not fight”, a brief touch only if it’s welcome, three slow breaths, then pick an exact time to keep talking. Afraid, not just flooded? Stop and get help."
     >
       {steps.map((s, i) => {
         const y = 4 + i * pitch;

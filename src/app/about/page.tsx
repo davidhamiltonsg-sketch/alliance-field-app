@@ -212,8 +212,9 @@ export default function AboutPage() {
         <SectionLabel>When not to use this</SectionLabel>
         <WarnBanner pauseLink={false} safetyLink>
           We built this for couples who are safe with each other. It isn’t
-          professional help. It isn’t for situations involving contempt, fear,
-          coercion, or any form of abuse. Afraid of your
+          professional help. It isn’t for situations involving fear, coercion,
+          or any form of abuse. Contempt means stop and get outside support
+          first. Afraid of your
           partner, being threatened, or not free to say no? Stop — these tools
           are not for this. Get outside help.
         </WarnBanner>
