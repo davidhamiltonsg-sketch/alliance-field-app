@@ -110,7 +110,7 @@ function CalibrationReportClient() {
       </section>
 
       <section className="space-y-2.5">
-        <SectionLabel>Conflict pattern</SectionLabel>
+        <SectionLabel>When you clash</SectionLabel>
         <p className="card px-4 py-3.5 text-base leading-normal text-ink">{report.conflictPattern}</p>
       </section>
 
@@ -139,7 +139,7 @@ function CalibrationReportClient() {
       </section>
 
       <section className="space-y-2.5">
-        <SectionLabel>Strengths</SectionLabel>
+        <SectionLabel>What’s already working</SectionLabel>
         <ul className="card divide-y divide-rule/30 px-4">
           {report.strengths.map((line) => (
             <li key={line} className="py-3 text-base leading-normal text-ink">
@@ -255,7 +255,7 @@ export function SoloProfile({ profile, otherName, preview = false }: { profile: 
       {!preview && (
         <>
           <div className="rounded-2xl border border-accent/20 bg-surface-tool px-4 py-3.5 text-sm leading-normal text-ink-muted">
-            You’ll see the couple report (Layer Scan, conflict pattern and the tools to try first) once {otherName} has answered too.
+            You’ll see the couple report (Layer Scan, how you clash and the tools to try first) once {otherName} has answered too.
           </div>
 
           <PrimaryButton onClick={() => router.push("/calibrate")}>Carry on</PrimaryButton>

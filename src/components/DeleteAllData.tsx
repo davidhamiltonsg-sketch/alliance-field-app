@@ -40,7 +40,7 @@ export function DeleteAllData() {
         history, calibration answers, favourites, 7-day plan ticks — stays on
         this device. The
         app has no account. The only time any data leaves your device is if
-        you choose to submit your email for updates. (While early access is
+        you choose to give us your email for updates. (While early access is
         on, one sign-in cookie remembers the access code; it holds nothing
         about you.){" "}
         <Link href="/privacy" className="font-medium text-accent underline underline-offset-4">

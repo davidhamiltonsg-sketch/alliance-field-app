@@ -177,7 +177,7 @@ function buildConflictPattern(a: Profile, b: Profile): string {
   if (!aPursues && bPursues)
     return `${b.name} tends to push for an answer while ${a.name} backs off. Left alone, that can become a Reach–Recoil loop (one reaches, the other pulls back). Pause + Return, with an exact return time, is designed to break it.`;
   if (aPursues && bPursues)
-    return "Both of you tend to push harder when you don’t get a response. Slow down first, before pushing for reassurance turns into the fight.";
+    return "You both push when you’re worried. Slow down before the asking turns into the fight.";
   return "Both of you tend to back off. Fewer fights can also mean less contact, so keep up the Morning + Evening Rhythm and the Weekly Reset, which are designed to catch the distance early.";
 }
 
@@ -263,51 +263,59 @@ export function generateCoupleReport(profileA: Profile, profileB: Profile): Coup
   const b = profileB.scores;
   const health = layerHealth(a, b);
 
-  type Row = { domain: string; diverges: boolean; risk: string; summary: string };
+  type Row = { domain: string; diverges: boolean; risk: string; summary: string; shared: string };
   const rows: Row[] = [
     {
       domain: "Space and closeness",
       diverges: diff(a.closenessNeed - a.privacyNeed, b.closenessNeed - b.privacyNeed) > 24,
       risk: "Space can read as rejection, and closeness as pressure.",
       summary: "How much space and how much closeness do you each need? Talk about that first.",
+      shared: "You want about the same balance of space and closeness.",
     },
     {
       domain: "How care lands",
       diverges: (a.structureNeed > a.warmthNeed) !== (b.structureNeed > b.warmthNeed),
       risk: "One of you may be showing care the other doesn’t recognise as care.",
       summary: "Notice how each of you shows care, and what each of you counts as care.",
+      shared: "You both count the same kinds of things as care.",
     },
     {
       domain: "Repair speed",
       diverges: diff(a.repairSpeed, b.repairSpeed) > 24,
       risk: "Making up fast can feel like pressure; making up slowly can feel like being left.",
       summary: "It’s about timing: one of you wants to make up sooner than the other.",
+      shared: "You both want to make up at about the same pace.",
     },
     {
       domain: "What makes trust feel real",
       diverges: diff(a.proofOrientation, b.proofOrientation) > 24,
       risk: "One of you tends to trust warm words; the other needs to see it.",
       summary: "Trust feels real in different ways: warm words for one of you, things you can see for the other.",
+      shared: "Trust feels real to both of you in much the same way.",
     },
     {
       domain: "How heated is too heated",
       diverges: diff(a.heatTolerance, b.heatTolerance) > 24,
       risk: "If one of you can take more heat than the other, that can build a Reach–Recoil loop (one reaches, the other pulls back).",
       summary: "Agree how heated a conversation can get before one of you needs to stop.",
+      shared: "You agree, more or less, on how heated a conversation can get.",
     },
     {
       domain: "Saying what’s going on",
       diverges: diff(a.transparency, b.transparency) > 24,
       risk: "What one of you leaves unsaid, the other tends to fill in with a guess.",
       summary: "Work out how much each of you says out loud about what’s going on.",
+      shared: "You each say about as much out loud about what’s going on.",
     },
   ];
 
   const diverging = rows.filter((r) => r.diverges);
   const mismatch = diverging.map((r) => `${r.domain}: ${r.risk}`);
 
+  // Name something the couple’s own answers already agree on, rather than a generic line.
+  const firstShared = rows.find((r) => !r.diverges);
   const strengths = [
-    "These profiles give you shared words for what you each need, so you can talk about it without anyone being in the wrong.",
+    ...(firstShared ? [firstShared.shared] : []),
     average([a.proofOrientation, b.proofOrientation]) > 60
       ? "Your answers both lean towards trusting what you can see, so the Proof Protocol (a change you can both point to) may feel familiar."
       : "Your answers lean more towards warm repairs and a steady daily rhythm than towards keeping a record.",

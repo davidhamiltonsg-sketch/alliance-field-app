@@ -16,7 +16,7 @@ export const STAGE_META: Record<
   },
   curiosity: {
     label: "Curiosity",
-    caption: "Get re-acquainted. What’s changed lately, in them or in you.",
+    caption: "Catch up on each other: what’s changed lately, for either of you.",
   },
   care: {
     label: "Care",

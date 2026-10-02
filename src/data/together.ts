@@ -48,7 +48,7 @@ export const commonMoves: CommonMove[] = [
   {
     move: "Debating whether the comment was “really” racist or rude",
     result: "You end up opponents: one defending, one prosecuting.",
-    alliance: "Name the pressure as external first. Decide what it was later, if ever.",
+    alliance: "Agree first that it came from outside. Decide what it was later, if ever.",
   },
   {
     move: "“Just ignore it”",
@@ -106,6 +106,6 @@ export const togetherFaq = [
   },
   {
     q: "What if one of us doesn’t see what the other sees?",
-    a: "That’s common. The Unity Anchor starts by treating the strain as real and external, so you don’t have to win an argument about each incident before you can support each other.",
+    a: "That’s common. The Unity Anchor starts by treating the strain as real, and as coming from outside, so you don’t have to win an argument about each incident before you can support each other.",
   },
 ];

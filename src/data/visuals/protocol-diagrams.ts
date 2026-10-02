@@ -308,7 +308,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
         "kind": "step"
       },
       {
-        "title": "Record it simply",
+        "title": "Keep the record short",
         "detail": "A count or a table — and look at it together at the check-in, where feelings and questions come first; the record is an aid, never the judge.",
         "kind": "step"
       },
@@ -357,11 +357,11 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "outcome": "A few minutes, twice a day, that are about the two of you."
   },
   "intimacy-pact": {
-    "when": "Set it up in advance, when initiating or declining feels tense, when it’s stalled for weeks, or after a breach that touched this part of the relationship.",
+    "when": "Set it up in advance, when asking or saying no feels tense, when it’s stalled for weeks, or after a breach that touched this part of the relationship.",
     "steps": [
       {
         "title": "Think how it lands",
-        "detail": "Before you initiate, think about how it lands for the other person. If you’re declining, you owe nothing. No is enough.",
+        "detail": "Before you make a move, think about how it will land for the other person. If you’re declining, you owe nothing. No is enough.",
         "kind": "step"
       },
       {
@@ -376,7 +376,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Say what you enjoy",
-        "detail": "Each of you names what you actually enjoy and how you like to be approached: body language can signal interest, but a clear yes is still asked for.",
+        "detail": "Each of you names what you actually enjoy and how you like to be approached: body language can signal interest, but ask, and wait for a clear yes.",
         "kind": "step"
       },
       {
@@ -457,7 +457,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Keep it private",
-        "detail": "Keep it private unless you choose to share it. It’s easier to be honest with yourself when no one’s watching.",
+        "detail": "Keep it private unless you choose to share it. It’s easier to be honest with yourself when it’s for your eyes only.",
         "kind": "note"
       },
       {
@@ -526,13 +526,13 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Likely needs space",
-        "detail": "None of these? Good. Keep up the daily floor. 1–2 signs → likely needs space and small repairs (Micro-Repair, Morning + Evening Rhythm).",
+        "detail": "None of these? Good. Keep up the daily floor. One or two signs: likely needs space and small repairs (Micro-Repair, Morning + Evening Rhythm).",
         "kind": "step",
         "badge": "1–2"
       },
       {
         "title": "May be pulling away",
-        "detail": "3 or more signs → may be pulling away. Book a Full Recovery conversation within a week. For drift, no one “caused” it: you both name your part. (A specific breach of trust goes to Trust Recovery instead.)",
+        "detail": "Three or more signs: may be pulling away. Book a Full Recovery conversation within a week. For drift, no one “caused” it: you both name your part. (A specific breach of trust goes to Trust Recovery instead.)",
         "kind": "repair",
         "badge": "3 or more · within a week"
       },
@@ -555,7 +555,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Trace the source",
-        "detail": "Is this about us, or about their disapproval landing on us? Name it out loud as external: “That’s coming from them, not from us.” Check what’s needed now: reassurance, a plan, or just to vent.",
+        "detail": "Is this about us, or about their disapproval landing on us? Say out loud that it came from outside: “That’s coming from them, not from us.” Check what’s needed now: reassurance, a plan, or just to vent.",
         "kind": "step"
       },
       {

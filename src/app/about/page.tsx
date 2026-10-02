@@ -290,7 +290,7 @@ export default function AboutPage() {
         <p className="px-1 text-sm leading-normal text-ink-muted">
           Private by default: the times you set to come back, your Weekly Reset answers, and
           calibration answers all stay on this device. The only time data
-          leaves it is if you choose to submit your email for updates.{" "}
+          leaves it is if you choose to give us your email for updates.{" "}
           <Link href="/help#your-data" className="font-medium text-accent underline underline-offset-4">
             Delete all my data
           </Link>

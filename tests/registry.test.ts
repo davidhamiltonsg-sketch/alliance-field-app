@@ -189,10 +189,10 @@ describe("registry: banned wording", () => {
     }
   });
 
-  it("Sun Memory: Quick (a few minutes, one ritual) and Full (2–24 hours)", () => {
+  it("Sun Memory: Quick (a few minutes) and Full (2–24 hours)", () => {
     const sun = texts.filter((t) => /^Sun Memory: /.test(t.text));
     expect(sun).toHaveLength(1);
-    expect(sun[0].text).toMatch(/Quick: a few minutes inside one ritual/);
+    expect(sun[0].text).toMatch(/Quick: a few minutes with nothing to fix, only each other/);
     expect(sun[0].text).toMatch(/Full: an agreed stretch of 2 to 24 hours\. Either way, no talk about the tools or what needs fixing/);
     expect(sun[0].text).toMatch(/either of you can end it by naming a safety concern/);
   });

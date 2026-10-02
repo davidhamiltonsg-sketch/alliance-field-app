@@ -82,13 +82,13 @@ describe("CANON numbers and wording", () => {
     expect(minutes.reduce((a, b) => a + b, 0)).toBe(KIT.weeklyResetMinutes);
   });
 
-  it("Uninvestment Check lists 8 signs and the none / 1–2 / 3+ bands (CANON round 6; Kit wording, voice passes 14 and 24)", () => {
+  it("Uninvestment Check lists 8 signs and the none / 1–2 / 3+ bands (CANON round 6; Kit wording, voice passes 14, 24 and 25)", () => {
     const card = getProtocol("uninvestment-check")!;
     expect(card.activity.match(/\(\d\)/g)).toHaveLength(8);
     const steps = card.steps.join(" ");
     expect(steps).toContain("None of these? Good. Keep up the daily floor.");
-    expect(steps).toContain("1–2 signs → likely needs space and small repairs (Micro-Repair, Morning + Evening Rhythm)");
-    expect(steps).toContain("3 or more signs → may be pulling away");
+    expect(steps).toContain("One or two signs: likely needs space and small repairs (Micro-Repair, Morning + Evening Rhythm)");
+    expect(steps).toContain("Three or more signs: may be pulling away");
     expect(steps).not.toContain("0–2");
   });
 
@@ -459,10 +459,10 @@ describe("CANON round 6", () => {
     expect(allCopy).not.toMatch(/roommate/i);
   });
 
-  it("Intimacy Pact steps 1 and 4 use the round 6 consent wording", () => {
+  it("Intimacy Pact steps 1 and 4 keep the consent wording (voice pass 25)", () => {
     const card = getProtocol("intimacy-pact")!;
-    expect(card.steps[0]).toBe("Before you initiate, think about how it lands for the other person. If you’re declining, you owe nothing. No is enough.");
-    expect(card.steps[3]).toContain("body language can signal interest, but a clear yes is still asked for");
+    expect(card.steps[0]).toBe("Before you make a move, think about how it will land for the other person. If you’re declining, you owe nothing. No is enough.");
+    expect(card.steps[3]).toContain("body language can signal interest, but ask, and wait for a clear yes.");
   });
 
   it("Trust Recovery and Proof: feelings and questions first, the record is an aid; disputed and coerced cases stop", () => {
