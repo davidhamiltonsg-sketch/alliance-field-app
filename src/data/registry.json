@@ -461,7 +461,7 @@
       "name": "Sun Memory",
       "icon": "sun-memory",
       "lengths": {
-        "quick": "a few minutes, inside one ritual (stop the checklist, return to ease; formerly 'Checklist Kill-Switch')",
+        "quick": "a few minutes, inside one ritual (stop the checklist, return to ease)",
         "full": "a declared window of 2–24 hours"
       },
       "numbers": {
@@ -472,7 +472,7 @@
         "Pauses system-talk only, never basic communication, safety, childcare/logistics, or a scheduled repair.",
         "Either partner may end it by naming a safety concern.",
         "All Sun Memory safety rules apply to both lengths.",
-        "'Kill-Switch' appears at most once, as '(formerly Kill-Switch)'."
+        "'Kill-Switch' never appears in buyer-facing text (retired in Round 10)."
       ]
     },
     "care-check-in": {
@@ -755,7 +755,7 @@
     {
       "variant": "Kill-Switch / Checklist Kill-Switch",
       "use": "Sun Memory (Quick)",
-      "except": "once, as '(formerly Kill-Switch)'"
+      "except": "never (retired in Round 10)"
     },
     {
       "variant": "minimum 30 minutes (Kill-Switch)",
