@@ -146,7 +146,7 @@ export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
                   {sheets.length === 1 && sheets[0].detail ? ` (${sheets[0].detail})` : ""}
                 </>
               ) : null}
-              , to keep on the fridge.
+              , to keep in the folder.
             </span>
           </li>
           {deeper?.companion && (

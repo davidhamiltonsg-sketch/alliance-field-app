@@ -65,7 +65,7 @@ export const startDays: StartDay[] = [
   {
     day: 6,
     title: "Set up the Reset",
-    task: "Read the Weekly Reset card and Agenda. Book 40 minutes for tomorrow; each of you notes one appreciation and one small friction point.",
+    task: "Card: Weekly Reset + the Weekly Reset Agenda worksheet. Book 40 minutes for tomorrow; each of you notes one appreciation and one small friction point. In the app: the Weekly Reset button.",
     proof: "Time booked; agenda drafted.",
     minutes: 10,
     slug: "weekly-reset",

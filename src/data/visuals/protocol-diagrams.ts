@@ -242,7 +242,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Get proof if you need it",
-        "detail": "A change, evidence it happened, and a set time to check.",
+        "detail": "A specific change, evidence you can both see, and a set time window.",
         "kind": "repair"
       },
       {
@@ -361,7 +361,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "steps": [
       {
         "title": "Think how it lands",
-        "detail": "Before you initiate, think about how it lands for the other person. If you’re declining, you owe nothing: just say no.",
+        "detail": "Before you initiate, think about how it lands for the other person. If you’re declining, you owe nothing. No is enough.",
         "kind": "step"
       },
       {
@@ -371,7 +371,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Warm no",
-        "detail": "If it helps, agree on warm-no wording and an alternative you’d both genuinely enjoy — holding each other, a kiss goodnight, five minutes of talking. Optional, never owed: a no needs no script, reason, or substitute offer.",
+        "detail": "If it helps, agree on warm-no wording and an alternative you’d both genuinely enjoy — holding each other, a kiss goodnight, five minutes of talking. Optional, never owed: a no needs no script, reason, or substitute offer, and the pact never creates an obligation.",
         "kind": "step"
       },
       {
@@ -387,7 +387,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Pressure? Stop here",
-        "detail": "If a no has been met with pressure or guilt-tripping, stop here and have a Green Rule or Trust Recovery conversation first — don’t try to patch intimacy on top of that. If it involved force, threats or fear, it isn’t a ‘once’: go straight to the Help Lines. If it happens again, or either of you feels unable to say no, stop and use the Help Lines.",
+        "detail": "If a no has been met with pressure or guilt-tripping, stop here and have a Green Rule or Trust Recovery conversation first — don’t try to patch intimacy on top of that. If it involved force, threats or fear, it isn’t a ‘once’: go straight to the Help Lines. If it happens again, or either of you feels unable to say no, stop and use the Help Lines. Repeated pressure is never handled with these tools.",
         "kind": "failure"
       }
     ],
@@ -565,7 +565,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Agree your response",
-        "detail": "Decide together, as a team, how the two of you will respond next time — never how much contact your partner has with their own family or friends.",
+        "detail": "Decide together, as a team, how the two of you will respond next time — never how much contact your partner has with their own family, friends, money, phone or movements.",
         "kind": "step"
       }
     ],

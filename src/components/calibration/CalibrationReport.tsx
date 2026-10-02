@@ -52,7 +52,7 @@ function CalibrationReportClient() {
             {state.personA.name} chose to keep their individual answers and profile private on this shared device.
             The couple report unlocks once {otherName} finishes their 44 questions.
           </PageHeader>
-          <PrimaryButton onClick={() => router.push("/calibrate")}>Continue calibration</PrimaryButton>
+          <PrimaryButton onClick={() => router.push("/calibrate")}>Carry on</PrimaryButton>
         </div>
       );
     }
@@ -107,7 +107,7 @@ function CalibrationReportClient() {
 
       {report.coreMismatch.length > 0 && (
         <section className="space-y-2.5">
-          <SectionLabel>Where you diverge</SectionLabel>
+          <SectionLabel>Where you differ</SectionLabel>
           <ul className="card divide-y divide-rule/30 px-4">
             {report.coreMismatch.map((line) => (
               <li key={line} className="py-3 text-base leading-normal text-ink">
@@ -119,7 +119,7 @@ function CalibrationReportClient() {
       )}
 
       <section className="space-y-2.5">
-        <SectionLabel>Likely misreads</SectionLabel>
+        <SectionLabel>Easy to misread</SectionLabel>
         <ul className="card divide-y divide-rule/30 px-4">
           {report.misreadRisks.map((line) => (
             <li key={line} className="py-3 text-base leading-normal text-ink">
@@ -142,7 +142,7 @@ function CalibrationReportClient() {
 
       {report.recommendedTools.length > 0 && (
         <section className="space-y-2.5">
-          <SectionLabel>Recommended tools</SectionLabel>
+          <SectionLabel>Try these first</SectionLabel>
           <ul className="space-y-2.5">
             {report.recommendedTools.map((t) => (
               <li key={t.slug}>
@@ -215,7 +215,7 @@ export function SoloProfile({ profile, otherName, preview = false }: { profile: 
       </section>
 
       <section className="space-y-2.5">
-        <SectionLabel>Privacy &amp; autonomy</SectionLabel>
+        <SectionLabel>Time alone</SectionLabel>
         <p className="card px-4 py-3.5 text-base leading-normal text-ink">{profile.privacyAutonomy}</p>
       </section>
 
@@ -233,7 +233,7 @@ export function SoloProfile({ profile, otherName, preview = false }: { profile: 
       )}
 
       <section className="space-y-2.5">
-        <SectionLabel>Likely misreads</SectionLabel>
+        <SectionLabel>What you might misread</SectionLabel>
         <ul className="card divide-y divide-rule/30 px-4">
           {profile.likelyMisreads.map((line) => (
             <li key={line} className="py-3 text-base leading-normal text-ink">
@@ -246,10 +246,10 @@ export function SoloProfile({ profile, otherName, preview = false }: { profile: 
       {!preview && (
         <>
           <div className="rounded-2xl border border-accent/20 bg-surface-tool px-4 py-3.5 text-sm leading-normal text-ink-muted">
-            The couple report — Layer Scan, conflict pattern, and recommended tools — unlocks once {otherName} finishes their 44 questions.
+            The couple report — Layer Scan, conflict pattern, and the tools to try first — unlocks once {otherName} finishes their 44 questions.
           </div>
 
-          <PrimaryButton onClick={() => router.push("/calibrate")}>Continue calibration</PrimaryButton>
+          <PrimaryButton onClick={() => router.push("/calibrate")}>Carry on</PrimaryButton>
         </>
       )}
     </div>

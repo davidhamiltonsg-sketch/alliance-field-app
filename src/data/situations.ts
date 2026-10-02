@@ -49,7 +49,7 @@ export const situations: Situation[] = [
     label: "Pulling away / uninvestment",
     description: "Warmth missing, repairs on autopilot: several signs of pulling away, not just needing space.",
     firstMove:
-      "Uninvestment Check. No signs: you’re fine. Keep up the daily floor. 1–2: space and small repairs. 3 or more: may be pulling away — book a Full Recovery within a week. Contempt, fear or coercion: stop and get outside support first.",
+      "Uninvestment Check. No signs: you’re fine. Keep up the daily floor. One or two signs: probably needing space, so try small repairs. Three or more: may be pulling away — book a Full Recovery within a week. Contempt, fear or coercion: stop and get outside support first.",
     primaryHref: "/protocols/uninvestment-check",
     secondaryHrefs: [{ label: "Full Recovery", href: "/protocols/full-recovery" }],
   },
@@ -68,7 +68,7 @@ export const situations: Situation[] = [
     id: "after-fight",
     label: "After a fight, or something small stung",
     description: "Still feeling the sting, or leftover friction from a sharp tone or a broken small agreement.",
-    firstMove: "Micro-Repair: start within minutes if you can; complete within 24 hours. Bigger: Full Recovery; changes: Proof Protocol.",
+    firstMove: "Micro-Repair: start within minutes if you can; complete within 24 hours. If it was bigger: Full Recovery. If something needs to change: Proof Protocol.",
     primaryHref: "/protocols/micro-repair",
     secondaryHrefs: [
       { label: "Full Recovery", href: "/protocols/full-recovery" },

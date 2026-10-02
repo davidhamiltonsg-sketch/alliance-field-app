@@ -352,7 +352,8 @@ function PauseTimerClient() {
               <span>Only then: Say what happened → Ask for one thing → Agree on next steps.</span>
             </li>
           </ol>
-          <ul className="space-y-2 pt-1">
+          <p className="pt-1 text-sm text-ink-muted">In your own words, if you like:</p>
+          <ul className="space-y-2">
             <li className="phrase-block phrase text-base leading-snug">I’m back. I’m on your team.</li>
             <li className="phrase-block phrase text-base leading-snug">This isn’t a breakup conversation.</li>
           </ul>

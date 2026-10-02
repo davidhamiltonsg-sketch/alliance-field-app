@@ -20,7 +20,7 @@ const products: { name: string; body: string; cover: Cover }[] = [
   },
   {
     name: "Field Kit",
-    body: "To keep on the fridge: 15 protocol cards (plus Read This First), 7 worksheets and the two-sided Situation Map.",
+    body: "15 protocol cards (plus Read This First) and 7 worksheets for a folder, with the two-sided Situation Map laminated for the fridge.",
     cover: "kit",
   },
   {

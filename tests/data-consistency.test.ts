@@ -448,7 +448,7 @@ describe("CANON round 6", () => {
 
   it("Intimacy Pact steps 1 and 4 use the round 6 consent wording", () => {
     const card = getProtocol("intimacy-pact")!;
-    expect(card.steps[0]).toBe("Before you initiate, think about how it lands for the other person. If you’re declining, you owe nothing: just say no.");
+    expect(card.steps[0]).toBe("Before you initiate, think about how it lands for the other person. If you’re declining, you owe nothing. No is enough.");
     expect(card.steps[3]).toContain("body language can signal interest, but a clear yes is still asked for");
   });
 
@@ -487,8 +487,10 @@ describe("CANON round 6", () => {
     expect(card.steps.join(" ")).toContain("For drift, no one “caused” it: you both name your part.");
   });
 
-  it("Weekly Reset scope rule names the Monthly Review (in What it is, as on the Kit card)", () => {
-    expect(getProtocol("weekly-reset")!.concept).toContain(
+  it("Weekly Reset scope rule names the Monthly Review (in Practise, as on the Kit card; still on the card)", () => {
+    const card = getProtocol("weekly-reset")!;
+    expect(card.concept).toContain("Maintenance, not a trial.");
+    expect(card.activity).toContain(
       "Only the five parts fit in 40 minutes: anything else (Proof reviews, plans for fun, the bigger picture) goes to the Monthly Review, a 40-minute once-a-month look at how things are going",
     );
   });

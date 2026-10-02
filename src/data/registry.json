@@ -238,13 +238,13 @@
       "stepCount": 6,
       "hasSafetyLink": false,
       "appRoute": "/protocols/proof-protocol",
-      "plainEnglishSubtitle": "a small action the other can see",
+      "plainEnglishSubtitle": "a specific change, evidence you can both see, and a set time window",
       "numbers": {
         "steps": 6,
         "exampleWindow": "14 days"
       },
       "canonical": [
-        "Change = specific observable behaviour + evidence you can both see + a set time window.",
+        "Proof = a specific change, evidence you can both see, and a set time window.",
         "Record it simply, to see and review at the agreed check-in (never 'track'/'verify' the partner)."
       ]
     },
