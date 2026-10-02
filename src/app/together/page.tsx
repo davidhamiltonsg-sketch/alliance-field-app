@@ -188,10 +188,10 @@ export default function TogetherPage() {
         <div className="card space-y-3 px-4 py-4 text-base leading-normal text-ink">
           <p>{authorsCoupleLine}</p>
           <p>
-            We built this from our own relationship and from research we
-            trust, including the minority-stress literature. We didn’t invent
-            the science; we turned it into steps you can use when it counts. It
-            isn’t therapy and hasn’t been tested in a controlled study.
+            This page is for the pressure that comes from outside. We wrote it
+            because we know it from the inside. It draws on research we trust,
+            including the minority-stress literature. It isn’t therapy and
+            hasn’t been tested in a controlled study.
           </p>
           <p className="text-ink-muted">
             If you’d like professional support, look for a couples

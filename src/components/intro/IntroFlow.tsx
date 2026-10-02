@@ -61,7 +61,7 @@ const panels: Panel[] = [
     eyebrow: "Pause + Return",
     icon: "pause-and-return",
     title: "Pause, then come back on time.",
-    body: "Give a clock time, 20 minutes to 24 hours. Coming back on time is what makes it a pause, not a disappearance.",
+    body: "Give a clock time, 20 minutes to 24 hours. Coming back on time is what makes the pause feel safe.",
     diagram: <PauseTimelineDiagram />,
   },
   {
@@ -77,7 +77,7 @@ const panels: Panel[] = [
     eyebrow: "Optional",
     icon: "manual",
     title: "Want the full system?",
-    body: "This app is free, and stands on its own. The books and the kit go further, if you want them.",
+    body: "We made this app for the moments when nobody wants to read. It is free, and stands on its own. The books and the kit go further, if you want them.",
     diagram: <SystemDiagram />,
   },
 ];

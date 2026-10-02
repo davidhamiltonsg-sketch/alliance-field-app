@@ -109,9 +109,9 @@ export default function AboutPage() {
           </p>
         </div>
         <p className="text-base leading-normal text-ink">
-          It grew out of our own relationship: how we come back to
-          each other, what we say when things go sideways, what we promise
-          not to do. This app, the Manual, the Field Kit and the Companion
+          The tools grew out of it over the years, in our own relationship:
+          how we come back to each other, what we say when things go
+          sideways, what we promise not to do. This app, the Manual, the Field Kit and the Companion
           Book are that same system, written down so other couples can use it.
         </p>
       </section>

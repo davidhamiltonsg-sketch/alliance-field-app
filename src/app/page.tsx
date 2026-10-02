@@ -26,7 +26,7 @@ const routes: {
   },
   {
     href: "/pause",
-    label: "We’re flooded",
+    label: "One of us is flooded",
     sub: "Pause + Return: set an exact return time first.",
     icon: "pause-and-return",
     className: "bg-pause text-ink",
