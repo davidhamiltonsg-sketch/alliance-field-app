@@ -138,12 +138,12 @@ describe("generateCoupleReport", () => {
     ]);
   });
 
-  it("drops the “next step” line when no difference stands out, so it never points at nothing (voice pass 21)", () => {
+  it("drops the “next step” line when no difference stands out, so it never points at nothing (voice pass 21; wording pass 27)", () => {
     const a = generateProfile("A", { name: "A", answers: all("a") });
     const b = generateProfile("B", { name: "B", answers: all("a") });
     const report = generateCoupleReport(a, b);
     expect(report.executiveSummary).toBe(NO_DIFFERENCE_SUMMARY);
-    expect(report.executiveSummary).toBe("Nothing big stands out. Pick any layer you’d like to talk about (Atmosphere, Structure, Repair, Protection or Insight) and start there.");
+    expect(report.executiveSummary).toBe("You see things much the same way. Pick whatever you’d most like to talk about and start there.");
     expect(report.executiveSummary).not.toMatch(/next step|turn it into/);
   });
 

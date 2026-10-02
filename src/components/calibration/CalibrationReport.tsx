@@ -42,7 +42,7 @@ function CalibrationReportClient() {
     return (
       <div className="space-y-4">
         <PageHeader eyebrow={<Marker kind="NOTE" label="Not ready yet" />} title="Answer the 44 questions first">
-          Answer at least one partner’s 44 questions to see a profile.
+          Answer the 44 questions (one of you is enough to start).
         </PageHeader>
         <PrimaryButton onClick={() => router.push("/calibrate")}>Start the questions</PrimaryButton>
       </div>

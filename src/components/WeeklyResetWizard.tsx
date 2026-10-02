@@ -358,7 +358,7 @@ function WeeklyResetWizardClient() {
       {confirmClear ? (
         <div role="group" aria-label="Clear Weekly Reset data" className="space-y-2 rounded-xl border border-rule/60 bg-white px-3.5 py-3">
           <p className="text-sm leading-normal text-ink-muted">
-            What should be cleared from this device?
+            What would you like to clear from this phone?
           </p>
           <button
             type="button"

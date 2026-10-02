@@ -82,13 +82,14 @@ describe("CANON numbers and wording", () => {
     expect(minutes.reduce((a, b) => a + b, 0)).toBe(KIT.weeklyResetMinutes);
   });
 
-  it("Uninvestment Check lists 8 signs and the none / 1–2 / 3+ bands (CANON round 6; Kit wording, voice passes 14, 24 and 25)", () => {
+  it("Uninvestment Check lists 8 signs and the none / 1–2 / 3+ bands (CANON round 6; Kit wording, voice passes 14, 24, 25 and 27)", () => {
     const card = getProtocol("uninvestment-check")!;
     expect(card.activity.match(/\(\d\)/g)).toHaveLength(8);
     const steps = card.steps.join(" ");
     expect(steps).toContain("None of these? Good. Keep up the daily floor.");
-    expect(steps).toContain("One or two signs: likely needs space and small repairs (Micro-Repair, Morning + Evening Rhythm)");
-    expect(steps).toContain("Three or more signs: may be pulling away");
+    expect(steps).toContain("With one or two signs, it likely needs space and small repairs (Micro-Repair, Morning + Evening Rhythm)");
+    expect(steps).toContain("Three or more signs: one or both of you may be pulling away");
+    expect(steps).toContain("may be pulling away. Book a Full Recovery conversation within a week.");
     expect(steps).not.toContain("0–2");
   });
 
@@ -535,11 +536,11 @@ describe("CANON round 6", () => {
     expect(card.steps.join(" ")).toContain("For drift, no one “caused” it: you both name your part.");
   });
 
-  it("Weekly Reset scope rule names the Monthly Review (in When to use, as on the Kit card; still on the card)", () => {
+  it("Weekly Reset scope rule names the Monthly Review (in Practise, as on the Kit card since pass 27; still on the card)", () => {
     const card = getProtocol("weekly-reset")!;
     expect(card.concept).toContain("Maintenance, not a trial. Ours happens at home, on a Sunday.");
-    expect(card.activity).toContain("Bigger things go to the Monthly Review.");
-    expect(card.whenToUse).toContain(
+    expect(card.whenToUse).toContain("Same day and time each week; also after travel, stress, or distance.");
+    expect(card.activity).toContain(
       "Forty minutes is enough for the five parts and nothing else. Bigger things (checking a Proof item, planning something fun, where you’re heading) wait for the Monthly Review, a 40-minute once-a-month look at how things are going",
     );
   });

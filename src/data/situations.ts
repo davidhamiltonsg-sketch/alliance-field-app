@@ -40,7 +40,7 @@ export const situations: Situation[] = [
     id: "trust-breach",
     label: "Trust breach",
     description: "Lying, infidelity or a broken agreement.",
-    firstMove: "Safety first, then Trust Recovery + Proof. Look at the record together at the check-in.",
+    firstMove: "Safety first, then Trust Recovery + Proof. Agree one change you’ll both see, and look at it together at a set check-in.",
     primaryHref: "/protocols/trust-recovery",
     secondaryHrefs: [{ label: "Proof Protocol", href: "/protocols/proof-protocol" }],
   },
@@ -49,7 +49,7 @@ export const situations: Situation[] = [
     label: "Pulling away / uninvestment",
     description: "Warmth missing, repairs on autopilot: several signs of pulling away, not just needing space.",
     firstMove:
-      "Uninvestment Check: count the signs together. Three or more: book a Full Recovery within a week. Contempt, fear or coercion: stop and get outside support first.",
+      "Uninvestment Check: each of you marks the signs on your own, then compare. Three or more: book a Full Recovery within a week. Contempt, fear or coercion: stop and get outside support first.",
     primaryHref: "/protocols/uninvestment-check",
     secondaryHrefs: [{ label: "Full Recovery", href: "/protocols/full-recovery" }],
   },
@@ -78,7 +78,7 @@ export const situations: Situation[] = [
   {
     id: "attachment-clash",
     label: "We keep clashing the same way",
-    description: "Reach–Recoil (one reaches, the other pulls back), the same ask on repeat, or out of sync on timing (Pace Mismatch).",
+    description: "Reach–Recoil (one reaches, the other pulls back), the same ask on repeat, or one of you always wanting to talk sooner than the other.",
     firstMove: "Name the loop out loud: ‘I think we’re doing the thing again.’ Then try Profile Calibration together to see where you differ.",
     primaryHref: "/calibrate",
     icon: "profile-calibration",
@@ -104,7 +104,7 @@ export const situations: Situation[] = [
     id: "daily-drift",
     label: "We feel like housemates",
     description: "Conversations are just logistics; the connection feels thin.",
-    firstMove: "Morning + Evening Rhythm. Feels like a chore? Take a night off fixing (a Sun Memory); see the Sensory Comfort Inventory. Two weeks flat? Try the Drift Check.",
+    firstMove: "Morning + Evening Rhythm. Feels like a chore? Take a night off fixing things. Two weeks flat? Try the Drift Check.",
     primaryHref: "/protocols/morning-evening-rhythm",
   },
   {

@@ -142,7 +142,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Make it safe",
-        "detail": "The relationship isn’t at risk in this moment.",
+        "detail": "Say out loud that the relationship isn’t at risk tonight.",
         "kind": "step"
       },
       {
@@ -168,7 +168,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "outcome": "Hard conversations end somewhere, not in “always” and “never”."
   },
   "weekly-reset": {
-    "when": "Same day and time each week; also after travel, stress, or distance. Forty minutes is enough for the five parts and nothing else. Bigger things (checking a Proof item, planning something fun, where you’re heading) wait for the Monthly Review, a 40-minute once-a-month look at how things are going. Not for hashing out a fight — if either of you is flooded, take a Pause + Return first.",
+    "when": "Same day and time each week; also after travel, stress, or distance. Not for hashing out a fight — if either of you is flooded, take a Pause + Return first.",
     "steps": [
       {
         "title": "Appreciation",
@@ -299,7 +299,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Decide what counts",
-        "detail": "What does met, partial, and missed look like?",
+        "detail": "Agree what ‘kept’, ‘partly kept’ and ‘missed’ will look like.",
         "kind": "step"
       },
       {
@@ -526,13 +526,13 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Likely needs space",
-        "detail": "None of these? Good. Keep up the daily floor. One or two signs: likely needs space and small repairs (Micro-Repair, Morning + Evening Rhythm).",
+        "detail": "None of these? Good. Keep up the daily floor. With one or two signs, it likely needs space and small repairs (Micro-Repair, Morning + Evening Rhythm).",
         "kind": "step",
         "badge": "1–2"
       },
       {
         "title": "May be pulling away",
-        "detail": "Three or more signs: may be pulling away. Book a Full Recovery conversation within a week. For drift, no one “caused” it: you both name your part. (A specific breach of trust goes to Trust Recovery instead.)",
+        "detail": "Three or more signs: one or both of you may be pulling away. Book a Full Recovery conversation within a week. For drift, no one “caused” it: you both name your part. (A specific breach of trust goes to Trust Recovery instead.)",
         "kind": "repair",
         "badge": "3 or more · within a week"
       },

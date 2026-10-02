@@ -12,7 +12,7 @@ export interface CoreTool {
 export const coreFive: CoreTool[] = [
   {
     slug: "green-rule",
-    why: "Safety first: honesty can’t be punished. If it’s fear, not flooding, stop and get help.",
+    why: "Honesty is never punished here. If it’s fear, not flooding, stop and get help.",
   },
   {
     slug: "pause-and-return",
