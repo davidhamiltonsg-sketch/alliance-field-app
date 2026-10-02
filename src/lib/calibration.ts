@@ -178,7 +178,7 @@ function buildConflictPattern(a: Profile, b: Profile): string {
     return `${b.name} tends to push for an answer while ${a.name} backs off. Left alone, that can become a Reach–Recoil loop (one reaches, the other pulls back). Pause + Return, with an exact return time, is designed to break it.`;
   if (aPursues && bPursues)
     return "You both push when you’re worried. Slow down before the asking turns into the fight.";
-  return "Both of you tend to back off. Fewer fights can also mean less contact, so keep up the Morning + Evening Rhythm and the Weekly Reset, which are designed to catch the distance early.";
+  return "You both tend to back off. That can mean fewer fights, and less contact. The Morning + Evening Rhythm and the Weekly Reset are designed to catch the distance early.";
 }
 
 // Maps a recommendation's concept to a real Field Kit protocol slug.
@@ -296,7 +296,7 @@ export function generateCoupleReport(profileA: Profile, profileB: Profile): Coup
     {
       domain: "How heated is too heated",
       diverges: diff(a.heatTolerance, b.heatTolerance) > 24,
-      risk: "When one of you can stay in a heated talk longer than the other, one tends to push and the other to pull back.",
+      risk: "If one of you can stay in a heated talk longer, one tends to push while the other pulls back.",
       summary: "Your limits for a heated conversation aren’t the same. Agree the signal that means ‘stop here’, before you need it.",
       shared: "You agree, more or less, on how heated a conversation can get.",
     },

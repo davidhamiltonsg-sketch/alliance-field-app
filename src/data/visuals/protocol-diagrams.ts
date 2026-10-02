@@ -314,7 +314,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Check in",
-        "detail": "Decide together whether to extend it, adjust it or close it out.",
+        "detail": "Decide together whether to keep going, change it, or call it done.",
         "kind": "repair"
       },
       {
@@ -420,7 +420,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Check in",
-        "detail": "The hurt partner’s feelings and questions come first; the record is an aid, never the judge. Then decide together whether to extend it, adjust it or close it out.",
+        "detail": "The hurt partner’s feelings and questions come first; the record is an aid, never the judge. Then decide together whether to keep going, change it, or call it done.",
         "kind": "repair"
       },
       {

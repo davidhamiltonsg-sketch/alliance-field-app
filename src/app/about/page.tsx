@@ -121,7 +121,7 @@ export default function AboutPage() {
           </li>
         </ul>
         <p className="text-sm leading-normal text-ink-muted">
-          The system as a whole has not been tested in a controlled study.
+          We haven’t tested the whole set of tools in a controlled study.
           It is a practical toolkit, not therapy, and not a substitute for
           professional help.
         </p>
@@ -288,8 +288,9 @@ export default function AboutPage() {
         </ul>
         <p className="px-1 text-sm leading-normal text-ink-muted">
           Private by default: the times you set to come back, your Weekly Reset answers, and
-          calibration answers all stay on your phone. The only time data
-          leaves it is if you choose to give us your email for updates.{" "}
+          your answers to the 44 questions stay on your phone. Nothing you save
+          in the app leaves it. Your email address is sent only if you choose
+          to give it to us for updates.{" "}
           <Link href="/help#your-data" className="font-medium text-accent underline underline-offset-4">
             Delete all my data
           </Link>

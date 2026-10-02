@@ -12,7 +12,7 @@ export const STAGE_META: Record<
 > = {
   warmth: {
     label: "Warmth",
-    caption: "Nothing heavy here. Use when you’re distant or just back from a pause.",
+    caption: "Nothing heavy. For when you feel far apart, or you’ve just come back from a pause.",
   },
   curiosity: {
     label: "Curiosity",
