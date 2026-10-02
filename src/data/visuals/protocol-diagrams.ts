@@ -122,7 +122,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Repair the break",
-        "detail": "Put it right: whoever pushed back finishes with the repair line you agreed while calm, so the honest thing is easier to say next time.",
+        "detail": "Put it right: whoever pushed back finishes with the repair line you agreed in advance, so the honest thing is easier to say next time.",
         "kind": "repair"
       }
     ],

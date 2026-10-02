@@ -269,7 +269,7 @@ export function generateCoupleReport(profileA: Profile, profileB: Profile): Coup
       domain: "Space and closeness",
       diverges: diff(a.closenessNeed - a.privacyNeed, b.closenessNeed - b.privacyNeed) > 24,
       risk: "Space can read as rejection, and closeness as pressure.",
-      summary: "One of you wants more time together; the other, more time alone. Each of you say how much time together, and how much alone, feels like enough.",
+      summary: "One of you wants more time together; the other, more time alone. Each of you, say how much time together and how much time alone feels like enough.",
       shared: "You want about the same balance of space and closeness.",
     },
     {
