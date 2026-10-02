@@ -85,7 +85,7 @@ describe("Get the full system", () => {
   it("hides buy links when no store URL is set", async () => {
     const html = await renderWith({ NEXT_PUBLIC_FULL_SYSTEM_URL: "", NEXT_PUBLIC_STORE_URL_MANUAL: "", NEXT_PUBLIC_STORE_URL_KIT: "", NEXT_PUBLIC_STORE_URL_BUNDLE: "" }, store);
     expect(html).not.toMatch(/>Buy/);
-    expect(text(html)).toContain("Coming soon.");
+    expect(text(html)).toContain("The books aren’t on sale yet.");
     expect(text(html)).toContain("Digital PDF + HTML");
     // Sign-up isn't live, so the card doesn't promise it.
     expect(text(html)).not.toContain("sign up below");

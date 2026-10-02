@@ -168,7 +168,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "outcome": "Hard conversations end somewhere, not in “always” and “never”."
   },
   "weekly-reset": {
-    "when": "Same day and time each week; also after travel, stress, or distance. Not for hashing out a fight — if either of you is flooded, take a Pause + Return first.",
+    "when": "Same day and time each week; also after travel, stress, or distance. Forty minutes holds the five parts and nothing more. Save Proof reviews, plans for fun and the bigger picture for the Monthly Review, a 40-minute once-a-month look at how things are going. Not for hashing out a fight — if either of you is flooded, take a Pause + Return first.",
     "steps": [
       {
         "title": "Appreciation",
@@ -506,7 +506,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     ],
     "note": {
       "kind": "failure",
-      "text": "Never mid-fight, and never sprung on someone."
+      "text": "Never mid-fight, and never sprung on each other."
     },
     "outcome": "One agreed change, with a date to check it."
   },

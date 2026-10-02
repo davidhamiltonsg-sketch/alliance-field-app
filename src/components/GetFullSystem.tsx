@@ -22,7 +22,7 @@ export function GetFullSystem() {
       <SectionLabel>Get the full system</SectionLabel>
       <div className="card space-y-3 px-4 py-4">
         <p className="text-base leading-normal text-ink">
-          This app is free, always. The Operating Manual and Field Kit — every
+          The app is free. The Operating Manual and Field Kit — every
           protocol in full, the printable cards, the worksheets — are a
           one-time purchase. Digital PDF + HTML.
         </p>
@@ -51,7 +51,9 @@ export function GetFullSystem() {
           </ul>
         ) : (
           <p className="flex min-h-12 w-full items-center justify-center rounded-xl border border-dashed border-accent/35 px-4 text-center text-base font-medium text-accent">
-            {SIGNUP_ACTIVE ? "Coming soon — sign up below to hear first." : "Coming soon."}
+            {SIGNUP_ACTIVE
+              ? "The books aren’t on sale yet; leave your email and we’ll tell you when they are."
+              : "The books aren’t on sale yet."}
           </p>
         )}
 

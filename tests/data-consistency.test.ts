@@ -419,7 +419,7 @@ describe("contact and store links", () => {
     expect(httpsUrlOrNull("http://example.com")).toBeNull();
     expect(httpsUrlOrNull("javascript:alert(1)")).toBeNull();
     expect(httpsUrlOrNull("https://store.example/p")).toBe("https://store.example/p");
-    expect(componentSource("GetFullSystem")).toMatch(/Coming soon/);
+    expect(componentSource("GetFullSystem")).toMatch(/The books aren’t on sale yet/);
     for (const f of ["src/app/privacy/page.tsx", "src/app/terms/page.tsx", "src/components/SignupForm.tsx", "src/lib/links.ts"]) {
       expect(readFileSync(join(__dirname, "..", f), "utf8"), f).not.toMatch(/hello@/);
     }
@@ -492,11 +492,11 @@ describe("CANON round 6", () => {
     expect(card.steps.join(" ")).toContain("For drift, no one “caused” it: you both name your part.");
   });
 
-  it("Weekly Reset scope rule names the Monthly Review (in What it is, as on the Kit card; still on the card)", () => {
+  it("Weekly Reset scope rule names the Monthly Review (in When to use, as on the Kit card; still on the card)", () => {
     const card = getProtocol("weekly-reset")!;
-    expect(card.concept).toContain("Maintenance, not a trial.");
+    expect(card.concept).toContain("Maintenance, not a trial. Ours happens at home, on a Sunday.");
     expect(card.activity).toContain("Bigger things go to the Monthly Review.");
-    expect(card.concept).toContain(
+    expect(card.whenToUse).toContain(
       "Forty minutes holds the five parts and nothing more. Save Proof reviews, plans for fun and the bigger picture for the Monthly Review, a 40-minute once-a-month look at how things are going",
     );
   });

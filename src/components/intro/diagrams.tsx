@@ -468,7 +468,7 @@ export function ConnectionCardsDiagram() {
       </g>
       <AdvisoryStrip kind="connection" x={0} y={246} w={340} h={32} {...a("dg-rise", 3000)}>
         <text x={42} y={266.5} fontSize={13.5} fill={V.ink}>
-          No wrong answers — flip a card, go deeper.
+          Pick one, ask it, and hear the whole answer.
         </text>
       </AdvisoryStrip>
     </Frame>

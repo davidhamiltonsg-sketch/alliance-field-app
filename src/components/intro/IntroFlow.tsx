@@ -69,15 +69,15 @@ const panels: Panel[] = [
     eyebrow: "Connection Cards",
     icon: "connection-cards",
     title: "For when things are fine, too.",
-    body: "Flip through 35 questions of five kinds — Warmth, Curiosity, Care, Repair, Alliance. No protocol needed, just five minutes together.",
+    body: "Flip through 35 questions of five kinds — Warmth, Curiosity, Care, Repair, Alliance. No protocol. Five minutes, together.",
     diagram: <ConnectionCardsDiagram />,
   },
   {
     id: "system",
     eyebrow: "Optional",
     icon: "manual",
-    title: "Want the full system?",
-    body: "We made this app for when it’s actually happening and there’s no time to look anything up. It is free, and stands on its own. The books and the kit go further, if you want them.",
+    title: "The app, and the books.",
+    body: "We made this app for when it’s actually happening and there’s no time to look anything up. Free, and complete on its own. The books go further if you want them.",
     diagram: <SystemDiagram />,
   },
 ];

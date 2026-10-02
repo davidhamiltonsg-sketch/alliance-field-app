@@ -12,29 +12,6 @@ export const metadata = { title: "About" };
 
 type Cover = "manual" | "kit" | "companion" | "app";
 
-const products: { name: string; body: string; cover: Cover }[] = [
-  {
-    name: "Operating Manual",
-    body: "The reference: every protocol in full, with the reasoning and the harder cases.",
-    cover: "manual",
-  },
-  {
-    name: "Field Kit",
-    body: "15 protocol cards (plus Read This First) and 7 worksheets for a folder, with the two-sided Situation Map laminated for the fridge.",
-    cover: "kit",
-  },
-  {
-    name: "Companion Book",
-    body: "The why: the stories and thinking behind the tools, with “The Third Voice” narrated by David.",
-    cover: "companion",
-  },
-  {
-    name: "Complete Bundle",
-    body: "Manual + Field Kit + Companion Book together. The Field App stays free.",
-    cover: "manual",
-  },
-];
-
 /** Product cover colours (CANON round 5: covers only). */
 const coverBg: Record<Cover, string> = {
   manual: "bg-cover-manual",
@@ -163,28 +140,20 @@ export default function AboutPage() {
       <Testimonials />
 
       <section id="product-line" className="scroll-mt-20 space-y-3">
-        <SectionLabel>What we make</SectionLabel>
-        <ul className="space-y-2.5">
-          {products.map((p) => (
-            <li key={p.name} className="card flex items-center gap-3.5 p-2.5 pr-4">
-              <CoverThumb cover={p.cover} />
-              <div className="min-w-0">
-                <p className="display text-lg leading-snug">{p.name}</p>
-                <p className="mt-0.5 text-sm leading-snug text-ink-muted">{p.body}</p>
-              </div>
-            </li>
-          ))}
-          <li className="card flex items-center gap-3.5 border-accent/20 bg-surface-tool p-2.5 pr-4">
-            <CoverThumb cover="app" />
-            <div className="min-w-0">
-              <p className="display text-lg leading-snug">Field App</p>
-              <p className="mt-0.5 text-sm leading-snug text-ink-muted">
-                Free, to act in the moment: the Situation Map, exact phrases,
-                the Pause + Return timer, Weekly Reset and Profile Calibration.
-              </p>
-            </div>
-          </li>
-        </ul>
+        <SectionLabel>What the app is for</SectionLabel>
+        <div className="card flex items-center gap-3.5 border-accent/20 bg-surface-tool p-2.5 pr-4">
+          <CoverThumb cover="app" />
+          <div className="min-w-0">
+            <p className="display text-lg leading-snug">Field App</p>
+            <p className="mt-0.5 text-sm leading-snug text-ink-muted">
+              Free, for the moment it’s happening: the Situation Map, exact phrases,
+              the Pause + Return timer, Weekly Reset and Profile Calibration.
+            </p>
+          </div>
+        </div>
+        <p className="text-base leading-normal text-ink">
+          The Manual, the Field Kit and the Companion Book go further, if you want them.
+        </p>
       </section>
 
       <section
