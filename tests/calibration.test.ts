@@ -143,7 +143,7 @@ describe("generateCoupleReport", () => {
     const b = generateProfile("B", { name: "B", answers: all("a") });
     const report = generateCoupleReport(a, b);
     expect(report.executiveSummary).toBe(NO_DIFFERENCE_SUMMARY);
-    expect(report.executiveSummary).toBe("Nothing big stands out. Pick any layer you’d like to talk about and start there.");
+    expect(report.executiveSummary).toBe("Nothing big stands out. Pick any layer you’d like to talk about (Atmosphere, Structure, Repair, Protection or Insight) and start there.");
     expect(report.executiveSummary).not.toMatch(/next step|turn it into/);
   });
 

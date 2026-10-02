@@ -256,7 +256,7 @@ function buildSequence(tools: RecommendedTool[]): string[] {
 }
 
 /** Shown when no difference stands out, so there’s nothing for a “next step” to refer to. */
-export const NO_DIFFERENCE_SUMMARY = "Nothing big stands out. Pick any layer you’d like to talk about and start there.";
+export const NO_DIFFERENCE_SUMMARY = "Nothing big stands out. Pick any layer you’d like to talk about (Atmosphere, Structure, Repair, Protection or Insight) and start there.";
 
 export function generateCoupleReport(profileA: Profile, profileB: Profile): CoupleReport {
   const a = profileA.scores;

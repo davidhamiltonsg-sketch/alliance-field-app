@@ -6,6 +6,7 @@ import { SectionLabel } from "@/components/SectionLabel";
 import { WarnBanner } from "@/components/WarnBanner";
 import { ArrowLeft, ArrowRight, ChevronRight } from "@/components/icons";
 import { authorsCoupleLine } from "@/data/authors";
+import { HELP_LINES_POINTER } from "@/data/help";
 import { getProtocol } from "@/data/protocols";
 import {
   TOGETHER_CITATION,
@@ -112,7 +113,7 @@ export default function TogetherPage() {
 
       <section aria-labelledby="moves-heading" className="space-y-3">
         <SectionLabel>
-          <span id="moves-heading">Common moves, and the alliance move</span>
+          <span id="moves-heading">What usually happens, and what to try instead</span>
         </SectionLabel>
         <ul className="space-y-2.5">
           {commonMoves.map((m) => (
@@ -120,7 +121,7 @@ export default function TogetherPage() {
               <h3 className="display text-lg leading-snug">{m.move}</h3>
               <p className="mt-1 text-sm leading-snug text-ink-muted">{m.result}</p>
               <p className="mt-2 text-base leading-normal text-ink">
-                <span className="font-medium text-accent">Alliance move: </span>
+                <span className="font-medium text-accent">Try instead: </span>
                 {m.alliance}
               </p>
             </li>
@@ -176,8 +177,8 @@ export default function TogetherPage() {
         </ul>
         <WarnBanner pauseLink={false} safetyLink>
           Afraid of your partner, being threatened, or not free to say no?
-          Stop. These tools are not for this. Get outside help — Help Lines for
-          the US, UK, Australia and Singapore are on the Help page.
+          Stop. These tools are not for this. Get outside help.{" "}
+          {HELP_LINES_POINTER}
         </WarnBanner>
       </section>
 

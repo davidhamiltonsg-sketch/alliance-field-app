@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 import { aboutAuthors, authorNames, authorsCoupleLine } from "@/data/authors";
 import { coreFive, coreFiveSlugs } from "@/data/core5";
 import { KIT } from "@/data/kit";
-import { emergencyNumbers, helpRegions } from "@/data/help";
+import { ELSEWHERE_LINE, HELP_LINES_POINTER, HELP_LINES_REGIONS, emergencyNumbers, helpRegions } from "@/data/help";
 import { getProtocol, protocolSlugs, protocols } from "@/data/protocols";
 import { situations } from "@/data/situations";
 import registry from "@/data/registry.json";
@@ -241,6 +241,41 @@ describe("safety routing", () => {
     }
     for (const line of [...emergencyNumbers, ...helpRegions.flatMap((r) => r.lines)]) {
       expect(line.href).toMatch(/^(tel|sms):\d/);
+    }
+  });
+
+  it("every Help Lines surface lists the same regions, including the EU and elsewhere", () => {
+    const regions = helpRegions.map((r) => r.region);
+    expect(HELP_LINES_REGIONS).toEqual([...regions, "Elsewhere"]);
+    for (const r of ["US", "UK", "Australia", "Singapore", "EU"]) expect(regions).toContain(r);
+
+    // /help renders every region from the shared data, then the elsewhere line.
+    const help = pageSource("help");
+    expect(help).toContain("helpRegions.map(");
+    expect(help).toContain("{ELSEWHERE_LINE}");
+    expect(ELSEWHERE_LINE.startsWith("Elsewhere:")).toBe(true);
+
+    // The pointer used on other pages names every region and says what to do anywhere else.
+    for (const r of helpRegions) expect(HELP_LINES_POINTER).toContain(r.inProse);
+    expect(HELP_LINES_POINTER).toMatch(/Anywhere else, call your local emergency number or national helpline\./);
+
+    // /together uses the shared pointer, not its own (shorter) list.
+    const together = pageSource("together");
+    expect(together).toContain("{HELP_LINES_POINTER}");
+
+    // The printed list in the registry covers the same regions (the EU via 112) and elsewhere.
+    const printed = registry.concepts["help-safety"].helpLines.join(" ");
+    for (const r of regions) expect(printed).toMatch(new RegExp(`\\b${r}\\b`));
+    expect(registry.concepts["help-safety"].helpLines.at(-1)).toBe(ELSEWHERE_LINE);
+
+    // No page or component hard-codes a partial region list.
+    const partial = /\b(US|UK)\b, (the )?(UK|US)\b, Australia and Singapore\b/;
+    for (const dir of ["app", "components"]) {
+      const root = join(__dirname, "../src", dir);
+      for (const f of readdirSync(root, { recursive: true }) as string[]) {
+        if (!/\.tsx?$/.test(f)) continue;
+        expect(readFileSync(join(root, f), "utf8"), f).not.toMatch(partial);
+      }
     }
   });
 

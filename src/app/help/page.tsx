@@ -166,9 +166,9 @@ export default function HelpPage() {
             contact with friends, family, money, phone or movement.
           </p>
           <p className="text-ink-muted">
-            These protocols assume two people acting in good faith towards each
-            other. They are not designed for, and should not be used to manage,
-            an unsafe relationship.
+            Everything here assumes you’re both acting in good faith. If the
+            relationship isn’t safe, these tools aren’t the answer: use the
+            Help Lines.
           </p>
         </div>
       </section>
