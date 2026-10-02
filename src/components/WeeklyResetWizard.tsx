@@ -212,8 +212,8 @@ function WeeklyResetWizardClient() {
                 className="rounded-xl border border-rule/35 bg-surface-activity px-3 py-3"
               >
                 <p className="text-base font-medium">{careDomainLabel(row.domain)}</p>
-                <div className="mt-2 flex flex-wrap items-center gap-2" role="group" aria-label={`${careDomainLabel(row.domain)}: load`}>
-                  <span className="w-20 text-sm text-ink-muted" aria-hidden>Load</span>
+                <div className="mt-2 flex flex-wrap items-center gap-2" role="group" aria-label={`${careDomainLabel(row.domain)}: even or lopsided?`}>
+                  <span className="w-28 text-sm text-ink-muted" aria-hidden>Even / Lopsided</span>
                   {(["balanced", "skewed"] as const).map((b) => (
                     <button
                       key={b}
@@ -230,8 +230,8 @@ function WeeklyResetWizardClient() {
                     </button>
                   ))}
                 </div>
-                <div className="mt-2 flex flex-wrap items-center gap-2" role="group" aria-label={`${careDomainLabel(row.domain)}: rebalance?`}>
-                  <span className="w-20 text-sm text-ink-muted" aria-hidden>Rebalance?</span>
+                <div className="mt-2 flex flex-wrap items-center gap-2" role="group" aria-label={`${careDomainLabel(row.domain)}: change it?`}>
+                  <span className="w-28 text-sm text-ink-muted" aria-hidden>Change it?</span>
                   {(["yes", "no"] as const).map((r) => (
                     <button
                       key={r}

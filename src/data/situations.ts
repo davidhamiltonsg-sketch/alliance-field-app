@@ -56,7 +56,7 @@ export const situations: Situation[] = [
   {
     id: "conflict-starting",
     label: "A fight is starting",
-    description: "Tone is rising; it’s starting to feel like a courtroom, not a conversation.",
+    description: "Voices are rising and you’re both building a case.",
     firstMove: "Start with the Green Rule, then use the System Overlay and the Conflict Protocol. If either of you floods partway through, switch to Pause + Return.",
     primaryHref: "/protocols/system-overlay",
     secondaryHrefs: [
@@ -104,7 +104,7 @@ export const situations: Situation[] = [
     id: "daily-drift",
     label: "We feel like housemates",
     description: "Conversations are just logistics; the connection feels thin.",
-    firstMove: "Morning + Evening Rhythm. Feels like a chore? Take a night off fixing: call a Sun Memory (Sensory Comfort Inventory). Flat after two weeks? Drift Check.",
+    firstMove: "Morning + Evening Rhythm. Feels like a chore? Take a night off fixing: call a Sun Memory (ideas: Sensory Comfort Inventory). Flat after two weeks? Drift Check.",
     primaryHref: "/protocols/morning-evening-rhythm",
   },
   {

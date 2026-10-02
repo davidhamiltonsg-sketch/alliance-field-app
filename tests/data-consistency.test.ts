@@ -497,7 +497,7 @@ describe("CANON round 6", () => {
     expect(card.concept).toContain("Maintenance, not a trial.");
     expect(card.activity).toContain("Bigger things go to the Monthly Review.");
     expect(card.concept).toContain(
-      "Only the five parts fit in 40 minutes: anything else (Proof reviews, plans for fun, the bigger picture) goes to the Monthly Review, a 40-minute once-a-month look at how things are going",
+      "Forty minutes holds the five parts and nothing more. Save Proof reviews, plans for fun and the bigger picture for the Monthly Review, a 40-minute once-a-month look at how things are going",
     );
   });
 

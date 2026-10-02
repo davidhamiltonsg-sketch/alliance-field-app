@@ -34,10 +34,10 @@ function CalibrationReportClient() {
   if (!aDone && !bDone) {
     return (
       <div className="space-y-4">
-        <PageHeader eyebrow={<Marker kind="NOTE" label="Not ready yet" />} title="Finish calibration first">
+        <PageHeader eyebrow={<Marker kind="NOTE" label="Not ready yet" />} title="Answer the 44 questions first">
           Answer at least one partner’s 44 questions to see a profile.
         </PageHeader>
-        <PrimaryButton onClick={() => router.push("/calibrate")}>Start calibration</PrimaryButton>
+        <PrimaryButton onClick={() => router.push("/calibrate")}>Start the questions</PrimaryButton>
       </div>
     );
   }
@@ -50,7 +50,7 @@ function CalibrationReportClient() {
         <div className="space-y-4">
           <PageHeader eyebrow={<Marker kind="NOTE" label="Private" />} title={`${state.personA.name}’s profile is private`}>
             {state.personA.name} chose to keep their individual answers and profile private on this shared device.
-            The couple report unlocks once {otherName} finishes their 44 questions.
+            You’ll see the couple report once {otherName} has answered too.
           </PageHeader>
           <PrimaryButton onClick={() => router.push("/calibrate")}>Carry on</PrimaryButton>
         </div>
@@ -66,7 +66,7 @@ function CalibrationReportClient() {
 
   return (
     <div className="space-y-6">
-      <PageHeader eyebrow={<Marker kind="TOOL" label="Layer Scan" icon="profile-calibration" />} title="Your couple profile">
+      <PageHeader eyebrow={<Marker kind="TOOL" label="Layer Scan" icon="profile-calibration" />} title="Where you two stand">
         You’ve both finished. No trophy, just the report. {report.executiveSummary}
       </PageHeader>
 
@@ -188,7 +188,7 @@ function CalibrationReportClient() {
 
 /**
  * Shown once a single partner has finished — their own profile, with a note
- * that the couple report unlocks once the other partner finishes. `preview`
+ * that the couple report appears once the other partner has answered too. `preview`
  * renders just the profile (used on the hand-over screen).
  */
 export function SoloProfile({ profile, otherName, preview = false }: { profile: Profile; otherName: string; preview?: boolean }) {
@@ -246,7 +246,7 @@ export function SoloProfile({ profile, otherName, preview = false }: { profile: 
       {!preview && (
         <>
           <div className="rounded-2xl border border-accent/20 bg-surface-tool px-4 py-3.5 text-sm leading-normal text-ink-muted">
-            The couple report — Layer Scan, conflict pattern, and the tools to try first — unlocks once {otherName} finishes their 44 questions.
+            You’ll see the couple report (Layer Scan, conflict pattern and the tools to try first) once {otherName} has answered too.
           </div>
 
           <PrimaryButton onClick={() => router.push("/calibrate")}>Carry on</PrimaryButton>
