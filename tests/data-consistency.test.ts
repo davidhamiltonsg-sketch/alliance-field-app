@@ -475,7 +475,7 @@ describe("CANON round 6", () => {
 
   it("Weekly Reset scope rule names the Monthly Review", () => {
     expect(getProtocol("weekly-reset")!.activity).toContain(
-      "Only the five parts fit in 40 minutes: anything else (Proof reviews, plans for fun, the bigger picture) goes to the Monthly Review, a longer once-a-month look",
+      "Only the five parts fit in 40 minutes: anything else (Proof reviews, plans for fun, the bigger picture) goes to the Monthly Review, a 40-minute once-a-month look at how things are going",
     );
   });
 

@@ -162,10 +162,9 @@ describe("registry: banned wording", () => {
     expect(hits).toEqual([]);
   });
 
-  it("says 'Kill-Switch' at most once, as '(formerly Kill-Switch)'", () => {
+  it("never shows the retired name 'Kill-Switch' (CANON Round 10)", () => {
     const all = texts.map((t) => t.text).join("\n");
-    expect((all.match(/Kill-?Switch/gi) ?? []).length).toBeLessThanOrEqual(1);
-    expect((all.match(/\(formerly Kill-Switch\)/g) ?? []).length).toBeLessThanOrEqual(1);
+    expect(all).not.toMatch(/Kill-?Switch/i);
   });
 
   it("names Morning + Evening Rhythm one way only", () => {
@@ -184,7 +183,7 @@ describe("registry: banned wording", () => {
   });
 
   it("Sun Memory: Quick (a few minutes, one ritual) and Full (2–24 hours)", () => {
-    const sun = texts.filter((t) => /Sun Memory \(formerly/.test(t.text));
+    const sun = texts.filter((t) => /^Sun Memory: /.test(t.text));
     expect(sun).toHaveLength(1);
     expect(sun[0].text).toMatch(/Quick: a few minutes inside one ritual/);
     expect(sun[0].text).toMatch(/Full: a declared window of 2–24 hours/);

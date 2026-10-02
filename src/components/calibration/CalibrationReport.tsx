@@ -78,7 +78,7 @@ function CalibrationReportClient() {
 
       <section className="space-y-3">
         <SectionLabel>Layer Scan</SectionLabel>
-        <p className="px-1 text-sm text-ink-muted">Where each of you sits on the profile.</p>
+        <p className="px-1 text-sm text-ink-muted">How closely you two match, layer by layer.</p>
         <div className="card space-y-3.5 px-4 py-4">
           {LAYER_ORDER.map((layer) => (
             <div key={layer} className="space-y-1.5">

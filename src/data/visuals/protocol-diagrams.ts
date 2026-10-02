@@ -59,7 +59,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       "kind": "failure",
       "text": "“Later” is not a return time. Always give a clock time."
     },
-    "outcome": "Space without disappearing."
+    "outcome": "Time apart, and a time you both know you’ll be back."
   },
   "60-second-reset": {
     "when": "Co-present, and the conversation has become about winning. Both willing to stop for one minute.",
@@ -95,7 +95,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       "kind": "failure",
       "text": "Always pair stop with return. A reset with no return time is withdrawal."
     },
-    "outcome": "The fight stops within a minute, and the real talk has a time."
+    "outcome": "The winning stops, and the real talk gets a time."
   },
   "green-rule": {
     "when": "Always, especially when honesty feels costly, or ultimatums, stonewalling, or retaliation appear.",
@@ -106,8 +106,8 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
         "kind": "step"
       },
       {
-        "title": "Stop the topic",
-        "detail": "Immediately. No proving.",
+        "title": "Pause the topic right away",
+        "detail": "Right away. Don’t try to prove your point first.",
         "kind": "failure"
       },
       {
@@ -205,7 +205,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       "kind": "pause",
       "text": "If either partner is flooded: Pause + Return first, then reschedule."
     },
-    "outcome": "Small things stay small. Forty minutes, then done."
+    "outcome": "Forty minutes, then the rest of the week is yours."
   },
   "conflict-protocol": {
     "when": "Active conflict or recurring loops, when warmth is still possible, or after a pause has brought you back to calm.",
@@ -252,19 +252,19 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       }
     ],
     "note": null,
-    "outcome": "The fight stops repeating, and nobody ends up on trial."
+    "outcome": "One clear path through the fight, and nobody ends up on trial."
   },
   "micro-repair": {
     "when": "Tone sharpens, small hurts start to pile up. A full repair feels like too much, but waiting will make it worse.",
     "steps": [
       {
         "title": "Soften your tone",
-        "detail": "Soften your tone on purpose: “Soft reset, my tone.”",
+        "detail": "Soften your tone on purpose: “That came out sharp. Let me try again.”",
         "kind": "repair"
       },
       {
         "title": "Do one small thing",
-        "detail": "2% behavioural and/or 2% ownership: “2%: I can own ___.”",
+        "detail": "One small action, or own one small part: “One small thing: I can own ___.”",
         "kind": "repair"
       },
       {
@@ -287,7 +287,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       "kind": "note",
       "text": "Start within minutes if you can; complete within 24 hours."
     },
-    "outcome": "Small stings clear before they harden."
+    "outcome": "A sharp moment, owned and cleared within a day."
   },
   "proof-protocol": {
     "when": "After any meaningful change request; when “I promise” appears without a plan; instead of just hoping.",
@@ -354,7 +354,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       }
     ],
     "note": null,
-    "outcome": "You stay in touch every day, so drift stays small."
+    "outcome": "A few minutes, twice a day, that are about the two of you."
   },
   "intimacy-pact": {
     "when": "Initiating or declining feels tense; when it’s stalled; after a dent in trust; or to set it up in advance.",
@@ -430,7 +430,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       }
     ],
     "note": null,
-    "outcome": "The evidence builds, and things begin to feel calmer."
+    "outcome": "Evidence you can both see, looked at together when you agreed."
   },
   "consistency-pact": {
     "when": "A weekly check on your own follow-through; after a promise that mattered; alongside shared Proof during rebuild.",
@@ -467,7 +467,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       }
     ],
     "note": null,
-    "outcome": "The gap between what you say and what you do gets smaller."
+    "outcome": "One honest look a week at what you say and what you do."
   },
   "full-recovery": {
     "when": "A repeated fight or a clear before/after dent in trust that a Weekly Reset can’t hold. Calm, agreed, scheduled — never mid-fight.",
@@ -508,7 +508,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       "kind": "failure",
       "text": "Not during active conflict. Never sprung on someone."
     },
-    "outcome": "A real new agreement and a set time to prove it."
+    "outcome": "One agreed change, with a date to check it."
   },
   "uninvestment-check": {
     "when": "Warmth missing in ordinary moments, routine repairs, no future plans, or contempt replacing frustration.",
@@ -543,7 +543,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       }
     ],
     "note": null,
-    "outcome": "You know which repair to reach for, instead of hoping."
+    "outcome": "Space or pulling away: you name which, and book the right next step."
   },
   "unity-anchor": {
     "when": "Family disapproval, discrimination, or outside judgement is landing on the two of you. Pressure from your partner isn’t this: Green Rule first.",

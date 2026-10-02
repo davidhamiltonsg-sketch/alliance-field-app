@@ -28,7 +28,7 @@ export const coreFive: CoreTool[] = [
   },
   {
     slug: "weekly-reset",
-    why: "Five parts, about 40 minutes, once a week. Maintenance, not a trial.",
+    why: "Five parts, about 40 minutes, once a week, appreciation first.",
   },
 ];
 

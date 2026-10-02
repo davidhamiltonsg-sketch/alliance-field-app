@@ -16,7 +16,7 @@ export default function WeeklyResetPage() {
       <WeeklyResetWizard />
       <p className="px-1 text-sm leading-normal text-ink-muted">
         Only the five parts fit in 40 minutes. Anything else (Proof reviews,
-        plans for fun, the bigger picture) goes to the Monthly Review, a longer
+        plans for fun, the bigger picture) goes to the Monthly Review, a 40-minute
         once-a-month look at how things are going.
       </p>
       <KeepItGoing />

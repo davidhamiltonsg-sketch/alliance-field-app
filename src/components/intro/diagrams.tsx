@@ -124,7 +124,7 @@ export function SystemDiagram() {
   return (
     <Frame
       viewBox="0 0 340 338"
-      label="Manual, Field Kit and Field App work as one system: find the situation, pull the protocol, practise it."
+      label="Manual, Field Kit and Field App work as one system: find the situation, open the tool, practise it."
     >
       {cards.map((c, i) => (
         <g key={c.title} {...a("dg-rise", 80 + i * 140)}>

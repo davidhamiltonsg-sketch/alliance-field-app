@@ -15,7 +15,7 @@
       "dots": 2,
       "glyph": "●●",
       "icon": "tier-situational",
-      "meaning": "Pulled when the Situation Map routes you."
+      "meaning": "Pulled when the Situation Map sends you there."
     },
     "build": {
       "label": "Build",
@@ -577,7 +577,7 @@
   "plainEnglishSubtitles": {
     "System Overlay": "a five-step order for hard conversations",
     "Circuit": "a repeating loop between you",
-    "Layer Scan": "where each of you sits on the profile",
+    "Layer Scan": "how closely you two match, layer by layer",
     "Reach–Recoil": "one reaches, the other pulls back",
     "One-Handed Alliance": "one partner carrying the relationship work",
     "Proof": "a specific change, evidence you can both see, and a set time window",

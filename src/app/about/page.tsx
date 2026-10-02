@@ -96,7 +96,7 @@ export default function AboutPage() {
           href="#product-line"
           className="inline-flex min-h-11 items-center gap-1.5 text-base font-medium text-accent"
         >
-          Explore the product line
+          The books and the kit
           <ArrowRight size={16} />
         </a>
       </section>
@@ -122,7 +122,7 @@ export default function AboutPage() {
           <span id="lineage-heading">Where these tools come from</span>
         </SectionLabel>
         <p className="text-base leading-normal text-ink">
-          Alliance Protocols is our own synthesis, written by the authors. It is
+          Alliance Protocols is our own synthesis. It is
           informed by research and clinical frameworks, adapted into named
           tools:
         </p>
@@ -164,7 +164,7 @@ export default function AboutPage() {
       <Testimonials />
 
       <section id="product-line" className="scroll-mt-20 space-y-3">
-        <SectionLabel>The product line</SectionLabel>
+        <SectionLabel>What we make</SectionLabel>
         <ul className="space-y-2.5">
           {products.map((p) => (
             <li key={p.name} className="card flex items-center gap-3.5 p-2.5 pr-4">
@@ -198,7 +198,7 @@ export default function AboutPage() {
           <strong>Not sure if it’s space or withdrawal?</strong> Try the
           Uninvestment Check. 0 signs: nothing to fix. 1–2: likely needs
           space and small repairs. 3 or more: may be pulling away — book a
-          Full Recovery conversation within a week. Hope isn’t a plan.
+          Full Recovery conversation within a week.
         </p>
         <Link
           href="/protocols/uninvestment-check"
@@ -289,7 +289,7 @@ export default function AboutPage() {
               <span className="flex flex-col py-2.5">
                 Profile Calibration
                 <span className="text-sm font-normal text-ink-muted">
-                  44 questions each — a Layer Scan (where each of you sits on the profile) and a couple report
+                  44 questions each — a Layer Scan (how closely you two match, layer by layer) and a couple report
                 </span>
               </span>
               <ChevronRight size={18} className="shrink-0 text-ink-muted/50" />
