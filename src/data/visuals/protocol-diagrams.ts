@@ -299,7 +299,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Decide what counts",
-        "detail": "Agree what ‘kept’, ‘partly kept’ and ‘missed’ will look like.",
+        "detail": "Agree what ‘met’, ‘partial’ and ‘missed’ will look like.",
         "kind": "step"
       },
       {
