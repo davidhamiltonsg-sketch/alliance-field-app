@@ -11,20 +11,20 @@ export interface ManualChapter {
 }
 
 export const manualChapters = {
-  I: { num: "I", title: "Executive Summary" },
-  II: { num: "II", title: "Fast Start Guide" },
-  IV: { num: "IV", title: "Nervous System Orientation" },
-  IX: { num: "IX", title: "Core Foundation: Team Over Self" },
-  X: { num: "X", title: "Profiles: Strategic & Atmospheric" },
+  I: { num: "I", title: "The Short Version" },
+  II: { num: "II", title: "Fast Start" },
+  IV: { num: "IV", title: "When Your Body Takes Over" },
+  IX: { num: "IX", title: "Team Over Self" },
+  X: { num: "X", title: "Two Ways of Caring" },
   XI: { num: "XI", title: "Daily Rhythm" },
   XII: { num: "XII", title: "Weekly Reset" },
-  XIII: { num: "XIII", title: "Response & Conflict Protocol" },
+  XIII: { num: "XIII", title: "Conflict Protocol" },
   "XIII-A": { num: "XIII-A", title: "Micro-Repairs" },
   "XIII-B": { num: "XIII-B", title: "Full Recovery" },
-  "XIII-D": { num: "XIII-D", title: "Detachment, Uninvestment, and Emotional Withdrawal" },
+  "XIII-D": { num: "XIII-D", title: "When One of You Pulls Away" },
   XIV: { num: "XIV", title: "The Intimacy Pact" },
   XV: { num: "XV", title: "Proof Over Promises" },
-  XVI: { num: "XVI", title: "Trust Recovery Protocol" },
+  XVI: { num: "XVI", title: "Trust Recovery" },
   XVII: { num: "XVII", title: "Consistency Pact" },
   "XVIII-A": { num: "XVIII-A", title: "The Sun Memory Protocol" },
 } as const satisfies Record<string, ManualChapter>;

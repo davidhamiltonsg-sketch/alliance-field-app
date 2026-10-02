@@ -531,7 +531,7 @@
         {
           "id": "attachment-clash",
           "label": "We keep clashing the same way",
-          "route": "Circuit Library / Failure Mode Diagnostic (+ Profile Calibration)"
+          "route": "Circuit Library / Drift Check (+ Profile Calibration)"
         },
         {
           "id": "intimacy-stall",
@@ -617,7 +617,7 @@
     },
     {
       "id": "sensory-baseline-inventory",
-      "name": "Sensory Baseline Inventory",
+      "name": "Sensory Comfort Inventory",
       "protocols": []
     },
     {
@@ -634,12 +634,12 @@
     },
     {
       "id": "failure-mode-diagnostic",
-      "name": "Failure Mode Diagnostic",
+      "name": "Drift Check",
       "protocols": [
         "system-overlay"
       ],
       "parts": [
-        "Failure Mode Diagnostic",
+        "Drift Check",
         "Circuit Spotter"
       ]
     },

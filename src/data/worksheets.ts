@@ -17,7 +17,7 @@ export const worksheets: Worksheet[] = [
   { id: "pause-and-return-defaults", name: "Pause + Return Defaults", protocols: ["pause-and-return"] },
   { id: "weekly-reset-agenda", name: "Weekly Reset Agenda", protocols: ["weekly-reset"] },
   { id: "profile-calibration", name: "Profile Calibration", protocols: [] },
-  { id: "sensory-baseline-inventory", name: "Sensory Baseline Inventory", protocols: [] },
+  { id: "sensory-baseline-inventory", name: "Sensory Comfort Inventory", protocols: [] },
   {
     id: "pacts-worksheet",
     name: "Pacts Worksheet",
@@ -27,9 +27,9 @@ export const worksheets: Worksheet[] = [
   },
   {
     id: "failure-mode-diagnostic",
-    name: "Failure Mode Diagnostic",
+    name: "Drift Check",
     protocols: ["system-overlay"],
-    parts: ["Failure Mode Diagnostic", "Circuit Spotter"],
+    parts: ["Drift Check", "Circuit Spotter"],
     detail: "with the Circuit Spotter: a circuit is a repeating loop between you",
   },
   { id: "uninvestment-check-worksheet", name: "Uninvestment Check Worksheet", protocols: ["uninvestment-check"] },

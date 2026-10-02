@@ -228,16 +228,16 @@ describe("registry: worksheets", () => {
 describe("Go deeper pointers", () => {
   // Chapter numbers and titles from the Operating Manual's table of contents.
   const MANUAL = new Map<string, string>([
-    ["I", "Executive Summary"], ["II", "Fast Start Guide"], ["III", "Introduction"],
-    ["IV", "Nervous System Orientation"], ["V-A", "Attachment Styles in Partnership"],
-    ["V-B", "Deflection and Impact Erasure"], ["VI", "Alliance Lifecycle"], ["VII", "Alliance Failure Modes"],
-    ["VIII", "Attachment Translation"], ["IX", "Core Foundation: Team Over Self"],
-    ["X", "Profiles: Strategic & Atmospheric"], ["XI", "Daily Rhythm"], ["XI-A", "Sensory Baseline"],
-    ["XII", "Weekly Reset"], ["XIII", "Response & Conflict Protocol"], ["XIII-A", "Micro-Repairs"],
-    ["XIII-B", "Full Recovery"], ["XIII-C", "The Psychology Behind the Tools"],
-    ["XIII-D", "Detachment, Uninvestment, and Emotional Withdrawal"], ["XIV", "The Intimacy Pact"],
-    ["XV", "Proof Over Promises"], ["XVI", "Trust Recovery Protocol"], ["XVII", "Consistency Pact"],
-    ["XVIII", "Alliance Enrichment"], ["XVIII-A", "The Sun Memory Protocol"], ["XIX", "Alliance Governance"],
+    ["I", "The Short Version"], ["II", "Fast Start"], ["III", "Introduction"],
+    ["IV", "When Your Body Takes Over"], ["V-A", "How Each of You Reaches for Closeness"],
+    ["V-B", "When Hurt Gets Explained Away"], ["VI", "The Four Phases"], ["VII", "How Couples Drift"],
+    ["VIII", "Hearing the Need Underneath"], ["IX", "Team Over Self"],
+    ["X", "Two Ways of Caring"], ["XI", "Daily Rhythm"], ["XI-A", "Sensory Comfort"],
+    ["XII", "Weekly Reset"], ["XIII", "Conflict Protocol"], ["XIII-A", "Micro-Repairs"],
+    ["XIII-B", "Full Recovery"], ["XIII-C", "Why the Tools Are Built This Way"],
+    ["XIII-D", "When One of You Pulls Away"], ["XIV", "The Intimacy Pact"],
+    ["XV", "Proof Over Promises"], ["XVI", "Trust Recovery"], ["XVII", "Consistency Pact"],
+    ["XVIII", "Making Room for Joy"], ["XVIII-A", "The Sun Memory Protocol"], ["XIX", "Regular Reviews"],
   ]);
 
   it("names a real Manual chapter (and Companion chapter) for every protocol", async () => {

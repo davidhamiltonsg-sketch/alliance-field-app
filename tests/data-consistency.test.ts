@@ -291,7 +291,14 @@ describe("About the authors", () => {
     expect(aboutAuthors).toContain("David");
     expect(aboutAuthors).toContain("Dami");
     expect(aboutAuthors).not.toMatch(/\[\[/);
-    expect(aboutAuthors).toContain("a regional Chief Administrative Officer and Chief Operating Officer (CAO/COO) in banking");
+    expect(aboutAuthors).toContain("They first used these protocols in their own relationship.");
+  });
+
+  it("stays anonymous: no employers, job titles, institutions, places or pets", () => {
+    for (const text of [aboutAuthors, authorsCoupleLine]) {
+      expect(text).not.toMatch(/\b(bank|banking|CAO|COO|consultant|ETH|Zurich|Singapore|Hong Kong|Australia|Troy|Bean)\b/i);
+      expect(text).not.toMatch(/\btested\b/i);
+    }
   });
 });
 
