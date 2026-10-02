@@ -546,7 +546,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "outcome": "Space or pulling away: you name which, and book the right next step."
   },
   "unity-anchor": {
-    "when": "When disapproval, discrimination, or judgement from outside (family, community, strangers) is putting pressure on the two of you, and it’s starting to look like a problem between you instead of a problem coming from outside. If the pressure comes from your partner, this isn’t a Unity Anchor situation: use the Green Rule (Safety Gate), and the safety line below.",
+    "when": "When disapproval, discrimination, or judgement from outside (family, friends, community, strangers) is putting pressure on the two of you, and it’s starting to look like a problem between you instead of a problem coming from outside. If the pressure comes from your partner, this isn’t a Unity Anchor situation: use the Green Rule (Safety Gate), and the safety line below.",
     "steps": [
       {
         "title": "Pause before reacting",
