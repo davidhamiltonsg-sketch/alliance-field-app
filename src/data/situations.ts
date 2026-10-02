@@ -31,7 +31,7 @@ export const situations: Situation[] = [
     id: "outside-pressure",
     label: "Outside pressure or disapproval from family, friends or strangers",
     description:
-      "Family disapproval, discrimination or judgement from others is landing on the two of you. Pressure from your partner isn’t this row: Green Rule, or row 1.",
+      "Family disapproval, discrimination or judgement from others is landing on the two of you. If the pressure is coming from your partner, this isn’t the right tool. Go to the Green Rule, or to Help if you’re afraid.",
     firstMove: "Unity Anchor: decide together how the couple responds. Never limit a partner’s contact with anyone.",
     primaryHref: "/protocols/unity-anchor",
     secondaryHrefs: [{ label: "Together under pressure", href: "/together" }],
@@ -104,7 +104,7 @@ export const situations: Situation[] = [
     id: "daily-drift",
     label: "We feel like housemates",
     description: "Conversations are just logistics; the connection feels thin.",
-    firstMove: "Morning + Evening Rhythm. Feels like a chore? Take a night off fixing: call a Sun Memory (ideas: Sensory Comfort Inventory). Flat after two weeks? Drift Check.",
+    firstMove: "Morning + Evening Rhythm. Feels like a chore? Take a night off fixing (a Sun Memory; ideas: Sensory Comfort Inventory). Still flat after two weeks? Drift Check.",
     primaryHref: "/protocols/morning-evening-rhythm",
   },
   {

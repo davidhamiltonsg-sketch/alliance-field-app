@@ -54,11 +54,10 @@ export default function TogetherPage() {
             {outsideExamples.at(-1)}.
           </p>
           <p>
-            Researchers call the second kind <strong className="font-medium">minority stress</strong>:
-            extra strain that comes from how others treat a relationship, not
-            from the relationship itself. A recent review looks at how that
-            outside strain can reach into couples’ lives. The protocols
-            draw on that literature; they don’t claim to settle it.
+            There’s a name for this: <strong className="font-medium">minority stress</strong>,
+            the strain that comes from how other people treat your
+            relationship. These tools draw on the research about it; they
+            don’t settle it.
           </p>
           <p className="text-sm leading-normal text-ink-muted">
             {TOGETHER_CITATION.text}{" "}
@@ -101,8 +100,9 @@ export default function TogetherPage() {
         <PhraseBlock phrases={anchor.phrases.slice(0, 2)} />
         <div className="card px-4 py-3.5 text-base leading-normal text-ink">
           <p>
-            <strong className="font-medium">Built-in safeguard.</strong> The
-            Unity Anchor is there to help you two decide how to respond to
+            <strong className="font-medium">If the pressure is coming from your
+            partner, this isn’t the right tool.</strong> Go to the Green Rule,
+            or to Help if you’re afraid. The Unity Anchor is there to help you two decide how to respond to
             outside pressure — never how much access a relative gets to your partner.
             No tool is ever used to limit a partner’s contact with
             friends, family, money, phone or movement.
@@ -188,9 +188,9 @@ export default function TogetherPage() {
         <div className="card space-y-3 px-4 py-4 text-base leading-normal text-ink">
           <p>{authorsCoupleLine}</p>
           <p>
-            This page is for the pressure that comes from outside. We wrote it
-            because we know it from the inside. It draws on research we trust,
-            including the minority-stress literature. It isn’t therapy and
+            This page is for the pressure that comes from outside. It draws on
+            published studies, including the minority-stress research cited
+            above. It isn’t therapy and
             hasn’t been tested in a controlled study.
           </p>
           <p className="text-ink-muted">

@@ -98,8 +98,8 @@ export default function AboutPage() {
           <span id="lineage-heading">Where these tools come from</span>
         </SectionLabel>
         <p className="text-base leading-normal text-ink">
-          We built this from our own relationship and from research we
-          trust. We didn’t invent the science; we turned it into steps we
+          We built this from our own relationship and from published
+          research. We didn’t invent the science; we turned it into steps we
           could use halfway through a hard evening. The named tools draw on:
         </p>
         <ul className="space-y-1.5 pl-4 text-base leading-normal text-ink-muted">

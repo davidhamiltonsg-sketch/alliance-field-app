@@ -201,9 +201,8 @@ function WeeklyResetWizardClient() {
           onNext={() => setStep(3)}
         >
           <p className="text-sm leading-normal text-ink-muted">
-            Each week, talk through who’s carrying what. In the first Reset of
-            the month, this step is the monthly Care Check-in (inside the Weekly
-            Reset): mark each area below.
+            Each week, talk through who’s carrying what. First Sunday of the
+            month? Use the Care Check-in table below for this part.
           </p>
           <ul className="space-y-3">
             {draft.careAudit.map((row, i) => (

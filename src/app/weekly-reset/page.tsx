@@ -15,9 +15,10 @@ export default function WeeklyResetPage() {
       </PageHeader>
       <WeeklyResetWizard />
       <p className="px-1 text-sm leading-normal text-ink-muted">
-        Forty minutes holds the five parts and nothing more. Save Proof reviews,
-        plans for fun and the bigger picture for the Monthly Review, a 40-minute
-        once-a-month look at how things are going.
+        Forty minutes is enough for the five parts and nothing else. Bigger
+        things (checking a Proof item, planning something fun, where you’re
+        heading) wait for the Monthly Review, a 40-minute once-a-month look at
+        how things are going.
       </p>
       <KeepItGoing />
       <Link

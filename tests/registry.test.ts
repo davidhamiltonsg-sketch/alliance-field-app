@@ -177,10 +177,13 @@ describe("registry: banned wording", () => {
     const phrase = registry.concepts["care-check-in"].phrase;
     // The Weekly Reset's own "Check the load" step (card and diagram) is already inside the
     // Weekly Reset; it uses the Field Kit's shorter wording (voice pass 10), and the
-    // Weekly Reset wizard still carries the full phrase. The Situation Map's weekly row is routed to the
+    // Weekly Reset wizard's step 2 is also inside the Weekly Reset, so (voice pass 22) it points at the
+    // Care Check-in table in short; the monthly calendar reminder carries the full phrase (once per product).
+    // The Situation Map's weekly row is routed to the
     // Weekly Reset, so its short line (voice pass 18) says "Once a month, it includes the Care Check-in."
-    const mentions = texts.filter((t) => /Care Check-in/.test(t.text) && !/^Care Check-in$/.test(t.text) && !/Is it fair\? Once a month, this part is the Care Check-in\.$/.test(t.text) && !/^Weekly Reset: about 40 minutes\. Once a month, it includes the Care Check-in\.$/.test(t.text));
+    const mentions = texts.filter((t) => /Care Check-in/.test(t.text) && !/^Care Check-in$/.test(t.text) && !/Is it fair\? Once a month, this part is the Care Check-in\.$/.test(t.text) && !/^Weekly Reset: about 40 minutes\. Once a month, it includes the Care Check-in\.$/.test(t.text) && !/^Each week, talk through who’s carrying what\. First Sunday of the month\? Use the Care Check-in table below for this part\.$/.test(t.text));
     expect(mentions.length).toBeGreaterThan(0);
+    expect(mentions.some((m) => m.file.endsWith("lib/ics.ts") && m.text.includes(phrase.replace(/^the /, "")))).toBe(true);
     for (const m of mentions) {
       expect(m.text.toLowerCase(), `${m.file}: ${m.text}`).toContain(phrase.toLowerCase().replace(/^the /, ""));
     }

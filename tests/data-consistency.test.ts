@@ -210,7 +210,10 @@ describe("CANON round 3", () => {
     expect(byId["intimacy-stall"].firstMove).toMatch(/Help Lines/);
     // The row stays short; the canonical "(inside the Weekly Reset)" phrase lives on the Weekly Reset card.
     expect(byId["weekly-maintenance"].firstMove).toContain("Once a month, it includes the Care Check-in.");
-    expect(componentSource("WeeklyResetWizard")).toMatch(/monthly Care Check-in \(inside the Weekly\s+Reset\)/);
+    // Voice pass 22: the wizard step (already inside the Weekly Reset) points at the Care Check-in table;
+    // the full canonical phrase stays once in the app, on the monthly calendar reminder.
+    expect(componentSource("WeeklyResetWizard")).toContain("Use the Care Check-in table below for this part.");
+    expect(readFileSync(join(process.cwd(), "src/lib/ics.ts"), "utf8")).toContain("monthly Care Check-in (inside the Weekly Reset)");
     // Amber is for pause only: no row routes to an amber tone except Pause + Return.
     for (const s of situations) expect(s).not.toHaveProperty("warn");
   });
@@ -498,7 +501,7 @@ describe("CANON round 6", () => {
     expect(card.concept).toContain("Maintenance, not a trial. Ours happens at home, on a Sunday.");
     expect(card.activity).toContain("Bigger things go to the Monthly Review.");
     expect(card.whenToUse).toContain(
-      "Forty minutes holds the five parts and nothing more. Save Proof reviews, plans for fun and the bigger picture for the Monthly Review, a 40-minute once-a-month look at how things are going",
+      "Forty minutes is enough for the five parts and nothing else. Bigger things (checking a Proof item, planning something fun, where you’re heading) wait for the Monthly Review, a 40-minute once-a-month look at how things are going",
     );
   });
 

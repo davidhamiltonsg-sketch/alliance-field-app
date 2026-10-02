@@ -49,8 +49,7 @@ export function KeepItGoing({ lead }: { lead?: string }) {
           </li>
           <li className="list-disc">
             <strong className="font-medium text-ink">Care Check-in</strong> —
-            once a month, inside the Weekly Reset (first Sunday). Not an extra
-            meeting.
+            once a month, inside the Weekly Reset (first Sunday).
           </li>
         </ul>
         <div className="flex items-end gap-2">

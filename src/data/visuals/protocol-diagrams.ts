@@ -122,7 +122,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Repair the break",
-        "detail": "Repair the safety break with a phrase you’ve both agreed on.",
+        "detail": "Put it right with a line you agreed in advance, so the honest thing feels safe to say next time.",
         "kind": "repair"
       }
     ],
@@ -168,7 +168,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "outcome": "Hard conversations end somewhere, not in “always” and “never”."
   },
   "weekly-reset": {
-    "when": "Same day and time each week; also after travel, stress, or distance. Forty minutes holds the five parts and nothing more. Save Proof reviews, plans for fun and the bigger picture for the Monthly Review, a 40-minute once-a-month look at how things are going. Not for hashing out a fight — if either of you is flooded, take a Pause + Return first.",
+    "when": "Same day and time each week; also after travel, stress, or distance. Forty minutes is enough for the five parts and nothing else. Bigger things (checking a Proof item, planning something fun, where you’re heading) wait for the Monthly Review, a 40-minute once-a-month look at how things are going. Not for hashing out a fight — if either of you is flooded, take a Pause + Return first.",
     "steps": [
       {
         "title": "Appreciation",
@@ -319,7 +319,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "If it keeps getting missed",
-        "detail": "If it keeps getting missed without anyone owning it, that’s worth raising.",
+        "detail": "Missed twice and nobody’s said so? Raise it at the next check-in.",
         "kind": "failure"
       }
     ],

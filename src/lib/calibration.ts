@@ -229,7 +229,7 @@ function routeTools(a: Profile, b: Profile, health: Record<LayerKey, number>) {
     average([a.scores.withdrawalUnderStress, b.scores.withdrawalUnderStress]) > 60 &&
     average([a.scores.reassuranceNeed, b.scores.reassuranceNeed, a.scores.signalSensitivity, b.scores.signalSensitivity]) > 55
   ) {
-    add("Uninvestment Check", "You both tend to pull back when things are hard, and to notice when the other does. Do the check together to tell needing space from pulling away, instead of guessing.");
+    add("Uninvestment Check", "You both tend to pull back when things are hard, and to notice when the other does. Do the Uninvestment Check together to tell needing space from pulling away, instead of guessing.");
   }
   if (!routes.length) {
     add("Morning + Evening Rhythm", "Keep a little daily contact you can both count on.");

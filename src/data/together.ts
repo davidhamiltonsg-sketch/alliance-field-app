@@ -71,7 +71,7 @@ export const togetherTools = [
   {
     label: "Unity Anchor",
     href: "/protocols/unity-anchor",
-    note: "The step-by-step routine for outside pressure.",
+    note: "What to say and do when someone else’s comment lands on you both.",
   },
   {
     label: "Situation Map",
