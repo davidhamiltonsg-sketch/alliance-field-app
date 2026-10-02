@@ -40,7 +40,7 @@ export const startDays: StartDay[] = [
   {
     day: 3,
     title: "A first Micro-Repair",
-    task: "Clear up one small thing that stung: soften your tone and own your small part of it. No “but”. Start within minutes if you can; complete within 24 hours.",
+    task: "Clear up one small thing that stung: soften your tone and own your part of it. No “but”. Start within minutes if you can; complete within 24 hours.",
     proof: "One micro-repair made.",
     minutes: 10,
     slug: "micro-repair",

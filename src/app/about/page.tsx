@@ -117,7 +117,7 @@ export default function AboutPage() {
           </li>
           <li className="list-disc">
             <strong className="font-medium text-ink">Minority-stress research</strong> —
-            how outside pressure lands on a couple.
+            how outside pressure hits a couple.
           </li>
         </ul>
         <p className="text-sm leading-normal text-ink-muted">

@@ -168,7 +168,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "outcome": "Hard conversations end somewhere, not in “always” and “never”."
   },
   "weekly-reset": {
-    "when": "Same day and time each week; also after travel, stress, or distance. Not for hashing out a fight — if either of you is flooded, take a Pause + Return first.",
+    "when": "Same day and time each week; also after travel or a hard stretch. Not for a fight: flooded? Pause + Return first.",
     "steps": [
       {
         "title": "Appreciation",
@@ -208,7 +208,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "outcome": "Forty minutes, then the rest of the week is yours."
   },
   "conflict-protocol": {
-    "when": "When a fight has started, or it’s one you keep having, and you can both still be warm with each other (or once a Pause + Return has brought you back to calm).",
+    "when": "When a fight has started, or it’s one you keep having, and you can both still be kind to each other (or once a Pause + Return has brought you back to calm).",
     "steps": [
       {
         "title": "Check if you’re calm",
@@ -462,7 +462,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Not a substitute",
-        "detail": "This doesn’t replace being accountable to your partner on a real breach.",
+        "detail": "If you broke something you agreed, tell your partner. This pact doesn’t replace that.",
         "kind": "failure"
       }
     ],
@@ -511,7 +511,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "outcome": "One agreed change, with a date to check it."
   },
   "uninvestment-check": {
-    "when": "When warmth is missing even in ordinary moments, repairs feel like going through the motions, you’ve stopped planning ahead together, or contempt has replaced frustration.",
+    "when": "When ordinary moments have gone flat, repairs feel like going through the motions, you’ve stopped planning ahead together, or contempt has replaced frustration.",
     "steps": [
       {
         "title": "Mark the signs alone",

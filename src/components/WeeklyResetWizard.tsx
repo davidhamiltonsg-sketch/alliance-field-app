@@ -308,7 +308,7 @@ function WeeklyResetWizardClient() {
         >
           <p className="text-base leading-normal text-ink-muted">
             One specific ask each for next week, from your friction points.
-            Change anything that’s wrong. These two parts share the last five
+            Edit anything that doesn’t sound right. These two parts share the last five
             minutes.
           </p>
           <Field

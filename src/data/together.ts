@@ -71,7 +71,7 @@ export const togetherTools = [
   {
     label: "Unity Anchor",
     href: "/protocols/unity-anchor",
-    note: "What to say and do when someone else’s comment lands on you both.",
+    note: "What to say and do when someone else’s comment hits you both.",
   },
   {
     label: "Situation Map",
@@ -91,7 +91,7 @@ export const togetherTools = [
   {
     label: "Micro-Repair",
     href: "/protocols/micro-repair",
-    note: "Small repairs after a comment has landed badly at home.",
+    note: "Small repairs after a comment has stung at home.",
   },
 ];
 
