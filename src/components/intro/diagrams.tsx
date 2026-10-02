@@ -223,7 +223,7 @@ export function SituationMapDiagram() {
       label="Situation Map: answer yes or no from the top. Afraid, threatened, or not free to say no: stop and get outside help. Flooded or shut down but safe: Pause + Return. Outside pressure or disapproval from family, friends or strangers: Unity Anchor. Trust breach: Trust Recovery plus Proof. Pulling away: Uninvestment Check."
     >
       <text x={2} y={13} fontSize={13.5} fill={V.muted} {...a("dg-fade", 0)}>
-        Follow the first match, top to bottom.
+        Take the first row that fits, top to bottom.
       </text>
       {rows.map((r, i) => {
         const y = top + i * pitch;

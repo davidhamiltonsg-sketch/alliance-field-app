@@ -21,7 +21,7 @@ export const outsideExamples = [
   "a parent who won’t say your partner’s name",
   "a relative’s “joke” at a holiday dinner",
   "the bill handed to the “obvious” person",
-  "a stranger asking where your partner is really from",
+  "a shop assistant asking if you two are “together”",
   "forms and customs that assume you’re a different kind of couple",
 ];
 
@@ -48,7 +48,7 @@ export const commonMoves: CommonMove[] = [
   {
     move: "Debating whether the comment was “really” racist or rude",
     result: "You end up opponents: one defending, one prosecuting.",
-    alliance: "Agree first that it came from outside. Decide what it was later, if ever.",
+    alliance: "Agree you’re on the same side before you work out what it was. After a cousin’s remark at a wedding, one of you might say: “That was about them, not us.” The other: “Agreed. We can talk about what it meant on the drive home, or not at all.”",
   },
   {
     move: "“Just ignore it”",

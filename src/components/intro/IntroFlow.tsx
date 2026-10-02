@@ -44,7 +44,7 @@ const panels: Panel[] = [
     id: "situation-map",
     eyebrow: "Situation Map",
     icon: "situation-map",
-    title: "Not sure what to do? Follow the first match.",
+    title: "Not sure what to do? Take the first row that fits.",
     body: "Safety comes first: if you’re afraid, threatened, or not free to say no, stop and get outside help. Otherwise, read top to bottom and take the first row that fits.",
     diagram: <SituationMapDiagram />,
   },

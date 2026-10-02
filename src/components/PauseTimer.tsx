@@ -328,8 +328,8 @@ function PauseTimerClient() {
       <div className="space-y-4">
         {live}
         <WarnBanner pauseLink={false} safetyLink>
-          You’re back. Don’t pick up “where you left off.” If you’re afraid,
-          not just flooded, don’t return — get help.
+          You’re back. Don’t pick up “where you left off.” If being back feels
+          unsafe, not just hard, stop here and get help.
         </WarnBanner>
         <section
           id="restart-cue"

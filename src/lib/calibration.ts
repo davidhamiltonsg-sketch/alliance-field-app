@@ -223,7 +223,7 @@ function routeTools(a: Profile, b: Profile, health: Record<LayerKey, number>) {
     add("Consistency Pact", "For you two, trust grows from things you can both see, kept up over a set time.");
   }
   if (average([a.scores.deflectionRisk, b.scores.deflectionRisk]) > 62) {
-    add("Impact first, then explain", "One of you tends to slide away from hard moments with a joke or an explanation. Name the impact first, then explain what you meant, so the repair lands.");
+    add("Impact first, then explain", "One of you tends to slide away from hard moments with a joke or an explanation. Name the impact first, then explain what you meant, which is designed to help the repair land.");
   }
   if (
     average([a.scores.withdrawalUnderStress, b.scores.withdrawalUnderStress]) > 60 &&

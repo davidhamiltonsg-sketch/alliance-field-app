@@ -3,7 +3,7 @@ import type { Situation } from "./types";
 /**
  * The Situation Map: the one 12-row list, in the exact order every map uses
  * (CANON round 5; registry concepts.situation-map.rowsCanonical):
- * follow the first match, top to bottom. Safety routing always comes first;
+ * take the first row that fits, top to bottom. Safety routing always comes first;
  * never route "unsafe" to Pause + Return.
  */
 export const situations: Situation[] = [
@@ -110,7 +110,7 @@ export const situations: Situation[] = [
   {
     id: "weekly-maintenance",
     label: "Time for our weekly check-in",
-    description: "A short, scheduled catch-up — not a trial.",
+    description: "A short catch-up at a set time, to keep small things small.",
     firstMove: "Weekly Reset: about 40 minutes. Once a month, it includes the Care Check-in.",
     primaryHref: "/weekly-reset",
     secondaryHrefs: [{ label: "Weekly Reset card", href: "/protocols/weekly-reset" }],
