@@ -100,7 +100,7 @@ export default function AboutPage() {
         <p className="text-base leading-normal text-ink">
           We built this from our own relationship and from research we
           trust. We didn’t invent the science; we turned it into steps we
-          could use at 11pm. The named tools draw on:
+          could use halfway through a hard evening. The named tools draw on:
         </p>
         <ul className="space-y-1.5 pl-4 text-base leading-normal text-ink-muted">
           <li className="list-disc">

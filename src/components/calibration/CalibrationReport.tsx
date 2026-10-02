@@ -25,6 +25,13 @@ export function CalibrationReport() {
 
 const LAYER_ORDER: LayerKey[] = ["Atmosphere", "Structure", "Repair", "Protection", "Insight"];
 
+/** Plain words for a layer's bar, for screen readers (no numbers on screen). */
+function apartWords(health: number): string {
+  if (health >= 85) return "close together";
+  if (health >= 62) return "a little apart";
+  return "far apart";
+}
+
 function CalibrationReportClient() {
   const router = useRouter();
   const state = readCalibration();
@@ -78,25 +85,27 @@ function CalibrationReportClient() {
 
       <section className="space-y-3">
         <SectionLabel>Layer Scan</SectionLabel>
-        <p className="px-1 text-sm text-ink-muted">Where you two differ most, layer by layer.</p>
+        <p className="px-1 text-sm text-ink-muted">How far apart you are, layer by layer.</p>
         <div className="card space-y-3.5 px-4 py-4">
+          <p className="text-xs font-medium uppercase tracking-wide text-ink-muted">How far apart</p>
           {LAYER_ORDER.map((layer) => (
             <div key={layer} className="space-y-1.5">
-              <div className="flex items-baseline justify-between">
-                <span className="text-sm font-medium text-ink">{layer}</span>
-                <span className="tabular text-sm text-ink-muted">{report.layerHealth[layer]}</span>
-              </div>
-              <div className="h-2 w-full overflow-hidden rounded-full bg-accent/10">
+              <span className="block text-sm font-medium text-ink">{layer}</span>
+              <div
+                className="h-2 w-full overflow-hidden rounded-full bg-accent/10"
+                role="img"
+                aria-label={`${layer}: ${apartWords(report.layerHealth[layer])}`}
+              >
                 <div
                   className="h-full rounded-full bg-accent"
-                  style={{ width: `${report.layerHealth[layer]}%` }}
+                  style={{ width: `${100 - report.layerHealth[layer]}%` }}
                 />
               </div>
             </div>
           ))}
         </div>
         <p className="px-1 text-sm leading-normal text-ink-muted">
-          Lower means the two of you differ more in that layer. Worth steadying first. It isn’t a score for the relationship.
+          A longer bar means the two of you are further apart in that layer. Worth steadying first. It isn’t a score for the relationship.
         </p>
       </section>
 

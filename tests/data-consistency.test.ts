@@ -120,9 +120,10 @@ describe("CANON round 3", () => {
     const card = getProtocol("uninvestment-check")!;
     expect(card.activity).toContain("(4) doing more on your own in place of shared time (time apart is healthy)");
     const contempt = "If contempt is one of your signs, skip the count: contempt means stop and get outside support first.";
-    // Voice pass 17: the full rule lives in the steps and the safety warning; the
-    // Practise text points back to it instead of repeating it a third time.
-    expect(card.activity).toContain("contempt never goes into the count (see step 2)");
+    // Voice pass 21: the Practise text is short sentences with no worksheet
+    // reference, and still carries the contempt rule in full.
+    expect(card.activity).toContain("Contempt never goes into the count: contempt means stop and get outside support first.");
+    expect(card.activity).not.toMatch(/worksheet/i);
     expect(card.steps[1]).toContain(contempt);
     expect(card.steps.join(" ")).toContain(contempt);
     expect(card.warn).toContain(contempt);

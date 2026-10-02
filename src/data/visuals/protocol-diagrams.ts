@@ -133,7 +133,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "outcome": "Honest things stay safe to say."
   },
   "system-overlay": {
-    "when": "Any sensitive conversation, request for change, repair, or decision you’re making together. Use it as a checklist when you’re stuck, going in circles, or things have escalated.",
+    "when": "Any sensitive conversation, request for change, repair, or decision you’re making together. Going in circles? Find the step you skipped and go back to it.",
     "steps": [
       {
         "title": "Warm up",
@@ -208,7 +208,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "outcome": "Forty minutes, then the rest of the week is yours."
   },
   "conflict-protocol": {
-    "when": "Use during an active conflict, or a fight you keep having, as long as you can still be warm with each other (or once a Pause + Return has brought you back to calm).",
+    "when": "When a fight has started, or it’s one you keep having, and you can both still be warm with each other (or once a Pause + Return has brought you back to calm).",
     "steps": [
       {
         "title": "Check if you’re calm",
@@ -242,7 +242,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Get proof if you need it",
-        "detail": "A specific change, evidence you can both see, and a set time window.",
+        "detail": "Turn it into a Proof item (Proof Protocol card).",
         "kind": "repair"
       },
       {

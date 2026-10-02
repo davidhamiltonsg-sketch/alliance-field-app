@@ -85,7 +85,7 @@ function playChime() {
 
 const NOTIFY_TITLE = "Time to come back";
 const NOTIFY_OPTIONS: NotificationOptions = {
-  body: "It’s your return time. Read the restart cue before you speak.",
+  body: "It’s time. Before you pick the topic back up: warm up and check it’s safe.",
   tag: "alliance-pause-return",
   icon: "/icon-192.png",
 };
@@ -412,7 +412,7 @@ function PauseTimerClient() {
           {shareCopied ? "Copied ✓" : "Share my return time"}
         </PrimaryButton>
         <PrimaryButton variant="secondary" onClick={addToCalendar}>
-          Add return time to calendar (.ics)
+          Add your return time to your calendar
         </PrimaryButton>
         <p role="status" className="text-center text-sm font-medium text-accent empty:hidden">
           {calendarAdded ? "Calendar file downloaded — open it to add the alarm." : ""}
@@ -510,7 +510,7 @@ function PauseTimerClient() {
             </p>
           ) : (
             <p id="custom-minutes-hint" className="text-sm text-ink-muted">
-              Whole minutes, 20 to 1,440 (24 hours)
+              Anywhere from 20 minutes to 24 hours
             </p>
           )}
         </div>

@@ -80,12 +80,12 @@ function scorePerson(answers: PersonAnswers): Scores {
 
 function detectPatterns(scores: Scores, name: string): string[] {
   const patterns: string[] = [];
-  if (high(scores.closenessNeed) && high(scores.withdrawalUnderStress)) patterns.push(`When things get hard, ${name} may reach out, then pull back.`);
+  if (high(scores.closenessNeed) && high(scores.withdrawalUnderStress)) patterns.push(`When things get hard, ${name} tends to reach out, then pull back.`);
   if (high(scores.structureNeed) && high(scores.warmthNeed)) patterns.push(`${name} does best when the warmth and the plan arrive together.`);
   if (high(scores.accountabilityOrientation) && scores.repairSpeed <= 42) patterns.push(`${name} would rather see things change over a few weeks than get a quick fix.`);
   if (high(scores.privacyNeed) && high(scores.careVisibility)) patterns.push(`${name} tends to show care quietly, in small private ways.`);
   if (high(scores.signalSensitivity) && scores.transparency <= 42) patterns.push(`${name} notices small signals, and doesn’t always say so.`);
-  if (high(scores.deflectionRisk)) patterns.push(`When ${name} feels exposed, a joke, a fact or a change of subject may come out first.`);
+  if (high(scores.deflectionRisk)) patterns.push(`When ${name} feels exposed, a joke, a fact or a change of subject often comes out first.`);
   if (high(scores.proofOrientation)) patterns.push(`${name} trusts what someone does more than what they say.`);
   if (high(scores.privacyNeed) && high(scores.autonomyProtection)) patterns.push(`${name} needs time alone, and it isn’t a sign of distance.`);
   if (high(scores.reassuranceNeed) && high(scores.signalSensitivity)) patterns.push(`${name} feels steadier when reassurance is said out loud, or shown.`);
@@ -114,7 +114,7 @@ export function generateProfile(person: PersonKey, input: PersonInput): Profile 
 
   const conflictResponse =
     high(scores.withdrawalUnderStress) && high(scores.conflictActivation)
-      ? `When it gets heated, ${name} may swing between pushing for an answer and going quiet. Slowing down helps.`
+      ? `When it gets heated, ${name} can swing between pushing for an answer and going quiet. Slowing down helps.`
       : high(scores.withdrawalUnderStress)
         ? `When it gets heated, ${name} is likely to go quiet or ask for time to settle.`
         : high(scores.conflictActivation)
@@ -130,11 +130,11 @@ export function generateProfile(person: PersonKey, input: PersonInput): Profile 
       ? `${name} may read silence, a slow reply or a cooler tone as pulling away.`
       : `${name} may miss small cues until someone says them out loud.`,
     high(scores.structureNeed)
-      ? `${name} may hear a vague plan as a promise that won’t be kept.`
-      : `${name} may hear a lot of planning as pressure.`,
+      ? `To ${name}, a vague plan can sound like a promise that won’t be kept.`
+      : `To ${name}, a lot of planning can feel like pressure.`,
     high(scores.privacyNeed)
-      ? `${name} may feel questions as prying when things are already heated.`
-      : `${name} may take time apart as rejection unless it comes with some reassurance.`,
+      ? `When things are already heated, questions can feel like prying to ${name}.`
+      : `Time apart can feel like rejection to ${name}, unless it comes with some reassurance.`,
   ];
 
   return {
@@ -214,7 +214,7 @@ function routeTools(a: Profile, b: Profile, health: Record<LayerKey, number>) {
   if (health.Protection < 62) add("Pause + Return", "You differ most on what keeps you safe in a heated moment. Agree now what you’ll each do when it gets there.");
 
   if (diff(a.scores.privacyNeed, b.scores.closenessNeed) > 18 || diff(b.scores.privacyNeed, a.scores.closenessNeed) > 18) {
-    add("Pause + Return", "You need different amounts of space and closeness: one of you may take space as rejection, and the other may feel closeness as pressure.");
+    add("Pause + Return", "You need different amounts of space and closeness: one of you can take space as rejection, while the other feels closeness as pressure.");
   }
   if (diff(a.scores.careVisibility, b.scores.careVisibility) > 14 || diff(a.scores.warmthNeed, b.scores.structureNeed) > 18 || diff(b.scores.warmthNeed, a.scores.structureNeed) > 18) {
     add("Care Check-in", "You show care differently — one of you may be caring in a way the other doesn’t feel.");
@@ -255,6 +255,9 @@ function buildSequence(tools: RecommendedTool[]): string[] {
   return Array.from(new Set(sequence));
 }
 
+/** Shown when no difference stands out, so there’s nothing for a “next step” to refer to. */
+export const NO_DIFFERENCE_SUMMARY = "Nothing big stands out. Pick any layer you’d like to talk about and start there.";
+
 export function generateCoupleReport(profileA: Profile, profileB: Profile): CoupleReport {
   const a = profileA.scores;
   const b = profileB.scores;
@@ -265,7 +268,7 @@ export function generateCoupleReport(profileA: Profile, profileB: Profile): Coup
     {
       domain: "Privacy / closeness",
       diverges: diff(a.closenessNeed - a.privacyNeed, b.closenessNeed - b.privacyNeed) > 24,
-      risk: "Space may be read as rejection; closeness may be read as pressure.",
+      risk: "Space can read as rejection, and closeness as pressure.",
       summary: "How much space and how much closeness do you each need? Talk about that first.",
     },
     {
@@ -283,7 +286,7 @@ export function generateCoupleReport(profileA: Profile, profileB: Profile): Coup
     {
       domain: "Proof / trust",
       diverges: diff(a.proofOrientation, b.proofOrientation) > 24,
-      risk: "One of you may trust warm words while the other needs to see it.",
+      risk: "One of you tends to trust warm words; the other needs to see it.",
       summary: "Trust feels real in different ways: warm words for one of you, things you can see for the other.",
     },
     {
@@ -295,7 +298,7 @@ export function generateCoupleReport(profileA: Profile, profileB: Profile): Coup
     {
       domain: "Saying what’s going on",
       diverges: diff(a.transparency, b.transparency) > 24,
-      risk: "What one of you leaves unsaid, the other may fill in with a guess.",
+      risk: "What one of you leaves unsaid, the other tends to fill in with a guess.",
       summary: "Work out how much each of you says out loud about what’s going on.",
     },
   ];
@@ -314,7 +317,9 @@ export function generateCoupleReport(profileA: Profile, profileB: Profile): Coup
   const recommendedTools = toRecommendedTools(routes);
 
   return {
-    executiveSummary: `${diverging[0]?.summary ?? "No one difference stands out yet, so there’s no single thing to work on first."} A good next step: turn it into one small agreement, try it, and look at how it went at your next check-in, rather than arguing again about what anyone meant.`,
+    executiveSummary: diverging.length
+      ? `${diverging[0].summary} A good next step: turn it into one small agreement, try it, and look at how it went at your next check-in, rather than arguing again about what anyone meant.`
+      : NO_DIFFERENCE_SUMMARY,
     strengths,
     coreMismatch: mismatch.length ? mismatch.slice(0, 4) : ["No one difference stands out yet. Keep using the tools and come back to this in a few weeks."],
     conflictPattern: buildConflictPattern(profileA, profileB),

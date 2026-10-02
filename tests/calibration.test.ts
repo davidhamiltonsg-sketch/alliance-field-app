@@ -12,6 +12,7 @@ import {
   generateCoupleReport,
   generateProfile,
   isComplete,
+  NO_DIFFERENCE_SUMMARY,
   readCalibration,
   writeCalibration,
 } from "@/lib/calibration";
@@ -135,6 +136,32 @@ describe("generateCoupleReport", () => {
     expect(report.coreMismatch).toEqual([
       "No one difference stands out yet. Keep using the tools and come back to this in a few weeks.",
     ]);
+  });
+
+  it("drops the “next step” line when no difference stands out, so it never points at nothing (voice pass 21)", () => {
+    const a = generateProfile("A", { name: "A", answers: all("a") });
+    const b = generateProfile("B", { name: "B", answers: all("a") });
+    const report = generateCoupleReport(a, b);
+    expect(report.executiveSummary).toBe(NO_DIFFERENCE_SUMMARY);
+    expect(report.executiveSummary).toBe("Nothing big stands out. Pick any layer you’d like to talk about and start there.");
+    expect(report.executiveSummary).not.toMatch(/next step|turn it into/);
+  });
+
+  it("offers the next step only when a difference exists", () => {
+    const report = generateCoupleReport(
+      generateProfile("A", { name: "Sam", answers: all("a") }),
+      generateProfile("B", { name: "Alex", answers: all("b") }),
+    );
+    expect(report.executiveSummary).toContain("A good next step: turn it into one small agreement");
+    expect(report.executiveSummary).not.toContain(NO_DIFFERENCE_SUMMARY);
+  });
+
+  it("keeps each profile to one “may” line (voice pass 21)", () => {
+    for (const choice of ["a", "b"] as const) {
+      const p = generateProfile("A", { name: "Sam", answers: all(choice) });
+      const lines = [...p.patterns, p.safetyLogic, p.careStyle, p.conflictResponse, p.privacyAutonomy, ...p.likelyMisreads];
+      expect(lines.join(" ").match(/\bmay\b/g)?.length ?? 0, choice).toBeLessThanOrEqual(1);
+    }
   });
 
   it("lowers layer health and names divergences for opposite profiles", () => {
