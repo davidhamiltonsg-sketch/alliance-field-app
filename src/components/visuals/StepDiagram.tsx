@@ -51,14 +51,19 @@ function escapeRe(s: string) {
 /** Card wording without a repeated lead word ("Signal: …" → "…"). */
 function detailFor(step: DiagramStep, cardText: string | undefined) {
   if (!cardText) return step.detail;
-  const lead = new RegExp(
-    `^${escapeRe(step.title.replace(/,.*$/, ""))}\\s*(\\([^)]*\\))?\\s*(:|—|–)\\s*`,
-    "i",
-  );
-  const m = cardText.match(lead);
-  if (!m) return cardText;
-  const rest = cardText.slice(m[0].length);
-  return rest.charAt(0).toUpperCase() + rest.slice(1);
+  // Try the full title first ("Explain, if asked — …"), then the part before
+  // any comma. A title that ends in "?" needs no separator after it.
+  const candidates = [step.title, step.title.replace(/,.*$/, "")];
+  for (const title of candidates) {
+    const sep = /[?]$/.test(title) ? "(:|—|–|,|\\.)?" : "(:|—|–|,|\\.)";
+    const lead = new RegExp(`^${escapeRe(title)}\\s*(\\([^)]*\\))?\\s*${sep}\\s*`, "i");
+    const m = cardText.match(lead);
+    if (!m) continue;
+    const rest = cardText.slice(m[0].length);
+    if (!rest) return cardText;
+    return rest.charAt(0).toUpperCase() + rest.slice(1);
+  }
+  return cardText;
 }
 
 /** Forest arch medallion with a fine rim and serif italic numeral. */

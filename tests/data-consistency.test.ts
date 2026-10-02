@@ -38,6 +38,14 @@ describe("protocol cards", () => {
     }
   });
 
+  it("diagram step titles use the card's step names (voice pass 38)", () => {
+    for (const p of protocols) {
+      protocolDiagrams[p.slug].steps.forEach((s, i) => {
+        expect(p.steps[i].startsWith(s.title), `${p.slug} step ${i + 1}: “${s.title}”`).toBe(true);
+      });
+    }
+  });
+
   it("has no diagram without a card", () => {
     for (const slug of Object.keys(protocolDiagrams)) expect(protocolSlugs).toContain(slug);
   });

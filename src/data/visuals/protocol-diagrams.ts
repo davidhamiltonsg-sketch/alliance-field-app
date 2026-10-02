@@ -111,18 +111,18 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
         "kind": "failure"
       },
       {
-        "title": "Pause + Return",
-        "detail": "Take a Pause + Return, with an exact time to come back. If it’s fear, threats, coercion or violence — not just flooding — don’t return at the set time: leave safely and use the Help Lines.",
+        "title": "Take a Pause + Return",
+        "detail": "With an exact time to come back. If it’s fear, threats, coercion or violence — not just flooding — don’t return at the set time: leave safely and use the Help Lines.",
         "kind": "pause"
       },
       {
-        "title": "Warm up again",
-        "detail": "When you’re back, warm up and make sure it’s safe again before you return to the topic.",
+        "title": "When you’re back",
+        "detail": "Warm up and make sure it’s safe again before you return to the topic.",
         "kind": "repair"
       },
       {
-        "title": "Repair the break",
-        "detail": "Put it right: whoever pushed back finishes with the repair line you agreed in advance, so the honest thing is easier to say next time.",
+        "title": "Put it right",
+        "detail": "Whoever pushed back finishes with the repair line you agreed in advance, so the honest thing is easier to say next time.",
         "kind": "repair"
       }
     ],
@@ -268,7 +268,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
         "kind": "repair"
       },
       {
-        "title": "Side by side",
+        "title": "Sit side by side",
         "detail": "Sit side by side instead of face to face if that’s easier.",
         "kind": "step"
       },
@@ -318,8 +318,8 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
         "kind": "repair"
       },
       {
-        "title": "If it keeps getting missed",
-        "detail": "Missed twice and nobody’s said so? Raise it at the next check-in.",
+        "title": "Missed twice and nobody’s said so?",
+        "detail": "Raise it at the next check-in.",
         "kind": "failure"
       }
     ],
@@ -347,8 +347,8 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
         "kind": "step"
       },
       {
-        "title": "Note it",
-        "detail": "Note yes or no for each of you for a week; adjust the timing, not how much you’re doing.",
+        "title": "Note yes or no",
+        "detail": "For each of you for a week; adjust the timing, not how much you’re doing.",
         "kind": "step",
         "badge": "7 days"
       }
@@ -360,33 +360,33 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "when": "Set it up in advance, when asking or saying no feels tense, when it’s stalled for weeks, or after a breach that touched this part of the relationship.",
     "steps": [
       {
-        "title": "Think how it lands",
-        "detail": "Asking? Think first about how it will land for the other person tonight. If you’re declining, you owe nothing. No is enough.",
+        "title": "Asking?",
+        "detail": "Think first about how it will land for the other person tonight. If you’re declining, you owe nothing. No is enough.",
         "kind": "step"
       },
       {
-        "title": "No penalty",
-        "detail": "Say out loud: neither of you will punish, sulk, or guilt-trip the other for declining. A no costs nothing and needs no reason.",
+        "title": "Say out loud",
+        "detail": "Neither of you will punish, sulk, or guilt-trip the other for declining. A no costs nothing and needs no reason.",
         "kind": "step"
       },
       {
-        "title": "Warm no",
+        "title": "If it helps, agree on warm-no wording",
         "detail": "If it helps, agree on warm-no wording and an alternative you’d both genuinely enjoy — holding each other, a kiss goodnight, five minutes of talking. Optional, never owed: a no needs no script, reason, or substitute offer, and the pact never creates an obligation.",
         "kind": "step"
       },
       {
-        "title": "Say what you enjoy",
+        "title": "Each of you names what you actually enjoy",
         "detail": "Each of you names what you actually enjoy and how you like to be approached: body language can signal interest, but ask, and wait for a clear yes.",
         "kind": "step"
       },
       {
-        "title": "Revisit every 30 days",
-        "detail": "Revisit the agreement every 30 days. Update it as things change — it’s not a one-time contract, and there’s no keeping score in between.",
+        "title": "Revisit the agreement every 30 days",
+        "detail": "Update it as things change — it’s not a one-time contract, and there’s no keeping score in between.",
         "kind": "step",
         "badge": "30 days"
       },
       {
-        "title": "Pressure? Stop here",
+        "title": "If a no has been met with pressure or guilt-tripping, stop here",
         "detail": "If a no has been met with pressure or guilt-tripping, stop here and have a Green Rule or Trust Recovery conversation first — don’t try to patch intimacy on top of that. If it involved force, threats or fear, it isn’t a ‘once’: go straight to the Help Lines. If it happens again, or either of you feels unable to say no, stop and use the Help Lines. Repeated pressure is never handled with these tools.",
         "kind": "failure"
       }
@@ -399,17 +399,17 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "steps": [
       {
         "title": "Name what happened",
-        "detail": "Name what happened, clearly, without deflecting. The partner who broke trust names it and acknowledges the impact; the hurt partner is never asked to confess in return.",
+        "detail": "Clearly, without deflecting. The partner who broke trust names it and acknowledges the impact; the hurt partner is never asked to confess in return.",
         "kind": "step"
       },
       {
-        "title": "One specific change",
-        "detail": "Decide on one specific, observable change. Any transparency is offered voluntarily by the partner who broke trust, for a set time — it never becomes monitoring.",
+        "title": "Decide on one specific, observable change",
+        "detail": "Any transparency is offered voluntarily by the partner who broke trust, for a set time — it never becomes monitoring.",
         "kind": "step"
       },
       {
-        "title": "Set a time window",
-        "detail": "Set a real time window, with dates to check in.",
+        "title": "Set a real time window",
+        "detail": "With dates to check in.",
         "kind": "step"
       },
       {
@@ -461,7 +461,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
         "kind": "note"
       },
       {
-        "title": "Not a substitute",
+        "title": "Not a substitute for repairing a real breach",
         "detail": "If you broke something you agreed, tell your partner. This pact doesn’t replace that.",
         "kind": "failure"
       }
@@ -499,8 +499,8 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
         "badge": "by a set date"
       },
       {
-        "title": "Say it out loud",
-        "detail": "Say it out loud, only if it’s true for both of you — “We made it through this. We’re still here.”",
+        "title": "Say it out loud, only if it’s true for both of you",
+        "detail": "“We made it through this. We’re still here.”",
         "kind": "repair"
       }
     ],
@@ -514,25 +514,25 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "when": "When dinner is all logistics and the last real question was weeks ago. Or when contempt has taken the place of frustration: then go straight to step 2.",
     "steps": [
       {
-        "title": "Mark the signs alone",
-        "detail": "Each of you marks, on your own, which of the eight signs (listed under Practise) you’ve noticed, then share. Describe behaviour you’ve seen — don’t claim to know the other person’s intent.",
+        "title": "Each of you marks, on your own",
+        "detail": "Which of the eight signs (listed under Practise) you’ve noticed, then share. Describe behaviour you’ve seen — don’t claim to know the other person’s intent.",
         "kind": "step",
         "badge": "8 signs"
       },
       {
-        "title": "Contempt? Skip the count",
-        "detail": "If contempt is one of your signs, skip the count: contempt means stop and get outside support first. The same goes for fear or coercion at any count.",
+        "title": "If contempt is one of your signs, skip the count",
+        "detail": "Contempt means stop and get outside support first. The same goes for fear or coercion at any count.",
         "kind": "failure"
       },
       {
-        "title": "Likely needs space",
-        "detail": "None of these? Good. Keep up the daily floor. One or two signs: you likely need some space and a few small repairs (Micro-Repair, Morning + Evening Rhythm).",
+        "title": "None of these?",
+        "detail": "Good. Keep up the daily floor. One or two signs: you likely need some space and a few small repairs (Micro-Repair, Morning + Evening Rhythm).",
         "kind": "step",
         "badge": "1–2"
       },
       {
-        "title": "May be pulling away",
-        "detail": "Three or more signs: one or both of you may be pulling away. Book a Full Recovery conversation within a week. Drift is nobody’s fault, so you each name your part. A specific breach of trust goes to Trust Recovery.",
+        "title": "Three or more signs",
+        "detail": "One or both of you may be pulling away. Book a Full Recovery conversation within a week. Drift is nobody’s fault, so you each name your part. A specific breach of trust goes to Trust Recovery.",
         "kind": "repair",
         "badge": "3 or more · within a week"
       },

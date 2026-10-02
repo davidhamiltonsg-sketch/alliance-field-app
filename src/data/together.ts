@@ -98,7 +98,7 @@ export const togetherTools = [
 export const togetherFaq = [
   {
     q: "Is this only for interracial couples?",
-    a: "No. Every protocol is for any couple. This page gathers the parts that deal with outside pressure, which interracial and other minority-stress couples often meet more of.",
+    a: "No. Every protocol is for any couple. This page gathers the parts that deal with outside pressure, which interracial couples, and others who stand out, often meet more of.",
   },
   {
     q: "Does it tell me how to handle my partner’s family?",

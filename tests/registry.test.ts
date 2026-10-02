@@ -192,9 +192,11 @@ describe("registry: banned wording", () => {
   it("Sun Memory: Quick (a few minutes) and Full (2–24 hours)", () => {
     const sun = texts.filter((t) => /^Sun Memory: /.test(t.text));
     expect(sun).toHaveLength(1);
-    expect(sun[0].text).toMatch(/Quick: a few minutes with nothing to fix, only each other/);
-    expect(sun[0].text).toMatch(/Full: an agreed stretch of 2 to 24 hours\. Either way, no talk about the tools or what needs fixing/);
-    expect(sun[0].text).toMatch(/either of you can end it by naming a safety concern/);
+    // Kit wording, mirrored word for word (voice pass 38).
+    expect(sun[0].text).toMatch(/Quick: a few minutes inside one ritual, to put the to-do list down\./);
+    expect(sun[0].text).toMatch(/Full: 2–24 hours with no talk about the tools\./);
+    expect(sun[0].text).toMatch(/Life still runs as normal: safety, childcare, logistics, any repair you’ve booked\./);
+    expect(sun[0].text).toMatch(/[Ee]ither of you can end it by naming a safety concern/);
   });
 });
 
