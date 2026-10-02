@@ -210,7 +210,7 @@ function routeTools(a: Profile, b: Profile, health: Record<LayerKey, number>) {
 
   if (health.Atmosphere < 62) add("Morning + Evening Rhythm", "Your answers are furthest apart on the warmth between you. Start there: a little warmth each day, before you ask for any change.");
   if (health.Structure < 62) add("Weekly Reset", "You disagree most about the everyday arrangements: who does what, and when. A weekly check-in you can both count on is the place to begin.");
-  if (health.Repair < 62) add("Micro-Repair", "One of you wants to make up fast, the other slowly. Agree a small first step that suits both, then the real talk later.");
+  if (health.Repair < 62) add("Micro-Repair", "One of you wants to make up fast, the other slowly. Agree one small first step you can both live with, and save the real talk for later.");
   if (health.Protection < 62) add("Pause + Return", "You differ most on what keeps you safe in a heated moment. Agree now what you’ll each do when it gets there.");
 
   if (diff(a.scores.privacyNeed, b.scores.closenessNeed) > 18 || diff(b.scores.privacyNeed, a.scores.closenessNeed) > 18) {

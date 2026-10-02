@@ -151,8 +151,8 @@ export default function HelpPage() {
           <p>
             We built this for couples who are safe with each other. It isn’t
             professional help. It isn’t for situations involving fear,
-            coercion, threats, or violence. Contempt means stop and get outside
-            support first.
+            coercion, threats, or violence. If contempt has crept in (the rolled eyes, the mocking tone), stop
+            and get outside support first.
           </p>
           <p>
             <strong>Pause + Return is for flooding, never for fear.</strong> If

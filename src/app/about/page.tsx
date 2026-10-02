@@ -181,8 +181,8 @@ export default function AboutPage() {
         <WarnBanner pauseLink={false} safetyLink>
           We built this for couples who are safe with each other. It isn’t
           professional help. It isn’t for situations involving fear, coercion,
-          or any form of abuse. Contempt means stop and get outside support
-          first. Afraid of your
+          or any form of abuse. If contempt has crept in (the rolled eyes, the mocking tone), stop
+          and get outside support first. Afraid of your
           partner, being threatened, or not free to say no? Stop — these tools
           are not for this. Get outside help.
         </WarnBanner>

@@ -27,9 +27,9 @@ const LAYER_ORDER: LayerKey[] = ["Atmosphere", "Structure", "Repair", "Protectio
 
 /** Word band for how far apart you are in a layer (no numbers on screen). */
 function apartWords(health: number): string {
-  if (health >= 85) return "close";
-  if (health >= 62) return "some distance";
-  return "far apart";
+  if (health >= 85) return "answers close";
+  if (health >= 62) return "answers some distance apart";
+  return "answers far apart";
 }
 
 function CalibrationReportClient() {
@@ -41,7 +41,7 @@ function CalibrationReportClient() {
   if (!aDone && !bDone) {
     return (
       <div className="space-y-4">
-        <PageHeader eyebrow={<Marker kind="NOTE" label="Not ready yet" />} title="Answer the 44 questions first">
+        <PageHeader eyebrow={<Marker kind="NOTE" label="Not ready yet" />} title="Not yet">
           Answer the 44 questions (one of you is enough to start).
         </PageHeader>
         <PrimaryButton onClick={() => router.push("/calibrate")}>Start the questions</PrimaryButton>

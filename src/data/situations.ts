@@ -11,7 +11,7 @@ export const situations: Situation[] = [
     id: "unsafe",
     label: "I’m afraid, being threatened, or not free to say no",
     description:
-      "Afraid of your partner, threats, pressure or control — not just a hard conversation. This includes jealousy that leads to checking, restricting, or accusing.",
+      "You’re afraid of your partner, or being threatened, pressured or controlled, and it’s more than a hard conversation. This includes jealousy that leads to checking, restricting, or accusing.",
     firstMove: "Stop. These tools are not for this. Get outside help (see Help Lines).",
     primaryHref: "/help",
     danger: true,
@@ -79,7 +79,7 @@ export const situations: Situation[] = [
     id: "attachment-clash",
     label: "We keep clashing the same way",
     description: "Reach–Recoil (one reaches, the other pulls back), the same ask on repeat, or one of you always wanting to talk sooner than the other.",
-    firstMove: "Name the loop out loud (‘I think we’re doing the thing again.’), then find it in the Circuit Library (Manual Appendix A). Clashing on timing? Manual Ch\u00a0X. To see where you two differ, try Profile Calibration together.",
+    firstMove: "Name it out loud: “I think we’re doing the thing again.” Later, when you’re calm, find it in the Circuit Library. To see where you two differ, try Profile Calibration together. The Circuit Library is Manual Appendix A; for timing clashes, see Manual Ch\u00a0X.",
     primaryHref: "/calibrate",
     icon: "profile-calibration",
     secondaryHrefs: [{ label: "System Overlay", href: "/protocols/system-overlay" }],

@@ -215,8 +215,11 @@ describe("CANON round 3", () => {
     expect(byId["intimacy-stall"].firstMove).toMatch(/Help Lines/);
     // The row stays short; the canonical "(inside the Weekly Reset)" phrase lives on the Weekly Reset card.
     expect(byId["weekly-maintenance"].firstMove).toContain("Once a month, it includes the Care Check-in.");
-    // Row 8 sends people where the Kit does (voice pass 33): the Circuit Library first.
-    expect(byId["attachment-clash"].firstMove).toContain("then find it in the Circuit Library (Manual Appendix A)");
+    // Row 8 sends people where the Kit does (voice pass 34): the do-now line first, word for word
+    // with the Kit, then the Circuit Library; the book pointer comes after the do-now line.
+    const row8 = byId["attachment-clash"].firstMove;
+    expect(row8.startsWith("Name it out loud: “I think we’re doing the thing again.” Later, when you’re calm, find it in the Circuit Library.")).toBe(true);
+    expect(row8.indexOf("Manual Appendix A")).toBeGreaterThan(row8.indexOf("find it in the Circuit Library"));
     // Voice pass 22: the wizard step (already inside the Weekly Reset) points at the Care Check-in table;
     // the full canonical phrase stays once in the app, on the monthly calendar reminder.
     expect(componentSource("WeeklyResetWizard")).toContain("Use the Care Check-in table below for this part.");
