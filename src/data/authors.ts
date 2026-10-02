@@ -5,7 +5,7 @@
 export const authorNames = ["David Hamilton", "Dr Zhongming Shi"] as const;
 
 export const aboutAuthors =
-  "David Hamilton and Dr Zhongming Shi (known to everyone as Dami) are a biracial couple, and neither is a therapist. The relational science comes from the research the Manual cites; what they add is the system. Dami, an architect by training with a doctorate, designs systems that hold up under load. David has spent his career running operations that hold up under pressure. They first used these protocols in their own relationship.";
+  "David Hamilton and Dr Zhongming Shi (known to everyone as Dami) are a biracial couple, and neither is a therapist. The relational science comes from the research the Manual cites; what they add is the structure. Dami’s background is in design, David’s in operations. They first used these protocols in their own relationship.";
 
 /** Short line for pages that speak to intercultural / minority-stress couples (/together). */
 export const authorsCoupleLine =
