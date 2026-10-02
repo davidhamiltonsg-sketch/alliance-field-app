@@ -210,17 +210,17 @@ function routeTools(a: Profile, b: Profile, health: Record<LayerKey, number>) {
 
   if (health.Atmosphere < 62) add("Morning + Evening Rhythm", "Your answers are furthest apart on the warmth between you. Start there: a little warmth each day, before you ask for any change.");
   if (health.Structure < 62) add("Weekly Reset", "You disagree most about the everyday arrangements: who does what, and when. A weekly check-in you can both count on is the place to begin.");
-  if (health.Repair < 62) add("Micro-Repair", "You make up after a row in different ways. Try smaller repairs, more often.");
+  if (health.Repair < 62) add("Micro-Repair", "One of you wants to make up fast, the other slowly. Agree a small first step that suits both, then the real talk later.");
   if (health.Protection < 62) add("Pause + Return", "You differ most on what keeps you safe in a heated moment. Agree now what you’ll each do when it gets there.");
 
   if (diff(a.scores.privacyNeed, b.scores.closenessNeed) > 18 || diff(b.scores.privacyNeed, a.scores.closenessNeed) > 18) {
-    add("Pause + Return", "You need different amounts of space and closeness. One of you hears ‘I need a minute’ as a door closing.");
+    add("Pause + Return", "You need different amounts of space and closeness. To one of you, ‘I need a minute’ can sound like being left.");
   }
   if (diff(a.scores.careVisibility, b.scores.careVisibility) > 14 || diff(a.scores.warmthNeed, b.scores.structureNeed) > 18 || diff(b.scores.warmthNeed, a.scores.structureNeed) > 18) {
     add("Care Check-in", "You show care differently. One of you may be giving it in a way the other doesn’t notice as care.");
   }
   if (average([a.scores.proofOrientation, b.scores.proofOrientation]) > 64) {
-    add("Consistency Pact", "You both trust what you can see, kept up week after week.");
+    add("Consistency Pact", "You both trust what you see someone keep doing, week after week.");
   }
   if (average([a.scores.deflectionRisk, b.scores.deflectionRisk]) > 62) {
     add("Impact first, then explain", "One of you tends to slide away from hard moments with a joke or an explanation. Try naming the impact first. Explaining can come after; the repair is designed around that order.");
@@ -269,42 +269,42 @@ export function generateCoupleReport(profileA: Profile, profileB: Profile): Coup
       domain: "Space and closeness",
       diverges: diff(a.closenessNeed - a.privacyNeed, b.closenessNeed - b.privacyNeed) > 24,
       risk: "Space can read as rejection, and closeness as pressure.",
-      summary: "How much space and how much closeness do you each need? Talk about that first.",
+      summary: "One of you wants more time together; the other, more time alone. Each say what ‘enough’ of each looks like for you.",
       shared: "You want about the same balance of space and closeness.",
     },
     {
       domain: "How care lands",
       diverges: (a.structureNeed > a.warmthNeed) !== (b.structureNeed > b.warmthNeed),
       risk: "One of you may be showing care the other doesn’t recognise as care.",
-      summary: "Notice how each of you shows care, and what each of you counts as care.",
+      summary: "One of you feels cared for when things get sorted; the other, when there’s warmth. Each tell the other one thing that lands as care for you.",
       shared: "You both count the same kinds of things as care.",
     },
     {
       domain: "Repair speed",
       diverges: diff(a.repairSpeed, b.repairSpeed) > 24,
       risk: "Making up fast can feel like pressure; making up slowly can feel like being left.",
-      summary: "It’s about timing: one of you wants to make up sooner than the other.",
+      summary: "One of you wants to make it up tonight; the other needs until morning. Agree how long is long enough, and one kind thing to say in the meantime.",
       shared: "You both want to make up at about the same pace.",
     },
     {
       domain: "What makes trust feel real",
       diverges: diff(a.proofOrientation, b.proofOrientation) > 24,
       risk: "One of you tends to trust warm words; the other needs to see it.",
-      summary: "Trust feels real in different ways: warm words for one of you, things you can see for the other.",
+      summary: "One of you believes warm words; the other waits to see what happens next. Pick one small promise and keep it where you can both see it.",
       shared: "Trust feels real to both of you in much the same way.",
     },
     {
       domain: "How heated is too heated",
       diverges: diff(a.heatTolerance, b.heatTolerance) > 24,
       risk: "If one of you can take more heat than the other, that can build a Reach–Recoil loop (one reaches, the other pulls back).",
-      summary: "Agree how heated a conversation can get before one of you needs to stop.",
+      summary: "One of you can stay in a heated conversation longer than the other. Agree the signal that means ‘stop here’, before you need it.",
       shared: "You agree, more or less, on how heated a conversation can get.",
     },
     {
       domain: "Saying what’s going on",
       diverges: diff(a.transparency, b.transparency) > 24,
       risk: "What one of you leaves unsaid, the other tends to fill in with a guess.",
-      summary: "Work out how much each of you says out loud about what’s going on.",
+      summary: "One of you thinks out loud; the other mostly doesn’t. Say which is which.",
       shared: "You each say about as much out loud about what’s going on.",
     },
   ];
@@ -326,7 +326,7 @@ export function generateCoupleReport(profileA: Profile, profileB: Profile): Coup
 
   return {
     executiveSummary: diverging.length
-      ? `${diverging[0].summary} A good next step: turn it into one small agreement, try it, and look at how it went at your next check-in, rather than arguing again about what anyone meant.`
+      ? `${diverging[0].summary} Try it for a week, then look at how it went at your next check-in, rather than arguing again about what anyone meant.`
       : NO_DIFFERENCE_SUMMARY,
     strengths,
     coreMismatch: mismatch.length ? mismatch.slice(0, 4) : ["No one difference stands out yet. Keep using the tools and come back to this in a few weeks."],

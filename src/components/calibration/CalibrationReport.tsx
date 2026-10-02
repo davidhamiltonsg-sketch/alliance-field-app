@@ -74,7 +74,7 @@ function CalibrationReportClient() {
   return (
     <div className="space-y-6">
       <PageHeader eyebrow={<Marker kind="TOOL" label="Layer Scan" icon="profile-calibration" />} title="Where you two stand">
-        You’ve both finished. No trophy, just the report. {report.executiveSummary}
+        You’ve both finished. Here’s where your answers line up, and where they don’t. {report.executiveSummary}
       </PageHeader>
 
       {state.aPrivate && (

@@ -532,7 +532,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "May be pulling away",
-        "detail": "Three or more signs: one or both of you may be pulling away. Book a Full Recovery conversation within a week. For drift, no one “caused” it: you both name your part. (A specific breach of trust goes to Trust Recovery instead.)",
+        "detail": "Three or more signs: one or both of you may be pulling away. Book a Full Recovery conversation within a week. Drift is nobody’s fault, so you each name your part. A specific breach of trust goes to Trust Recovery.",
         "kind": "repair",
         "badge": "3 or more · within a week"
       },

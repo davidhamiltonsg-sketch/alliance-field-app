@@ -48,7 +48,7 @@ export const commonMoves: CommonMove[] = [
   {
     move: "Debating whether the comment was “really” racist or rude",
     result: "You end up opponents: one defending, one prosecuting.",
-    alliance: "Agree you’re on the same side before you work out what it was. After a cousin’s remark at a wedding, one of you might say: “That was about them, not us.” The other: “Agreed. We can talk about what it meant on the drive home, or not at all.”",
+    alliance: "Agree you’re on the same side before you work out what it was. After a cousin’s remark at a wedding, one of you might say: “That was about them, not us.” The other: “Agreed. We can talk about what it meant once we’re home, or not at all.”",
   },
   {
     move: "“Just ignore it”",

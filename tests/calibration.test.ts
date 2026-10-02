@@ -144,7 +144,7 @@ describe("generateCoupleReport", () => {
     const report = generateCoupleReport(a, b);
     expect(report.executiveSummary).toBe(NO_DIFFERENCE_SUMMARY);
     expect(report.executiveSummary).toBe("You see things much the same way. Pick whatever you’d most like to talk about and start there.");
-    expect(report.executiveSummary).not.toMatch(/next step|turn it into/);
+    expect(report.executiveSummary).not.toMatch(/next step|turn it into|next check-in/);
   });
 
   it("offers the next step only when a difference exists", () => {
@@ -152,7 +152,7 @@ describe("generateCoupleReport", () => {
       generateProfile("A", { name: "Sam", answers: all("a") }),
       generateProfile("B", { name: "Alex", answers: all("b") }),
     );
-    expect(report.executiveSummary).toContain("A good next step: turn it into one small agreement");
+    expect(report.executiveSummary).toContain("look at how it went at your next check-in");
     expect(report.executiveSummary).not.toContain(NO_DIFFERENCE_SUMMARY);
   });
 
