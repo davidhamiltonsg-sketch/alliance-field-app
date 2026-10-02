@@ -103,7 +103,7 @@ function ConnectionDeck({ shuffled }: { shuffled: boolean }) {
   return (
     <div className="space-y-4">
       <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1">
-        {chip("All stages", "all")}
+        {chip("All five", "all")}
         {STAGE_ORDER.map((s) => chip(STAGE_META[s].label, s))}
       </div>
 
@@ -114,7 +114,7 @@ function ConnectionDeck({ shuffled }: { shuffled: boolean }) {
             onClick={() => setFlipped((f) => !f)}
             role="button"
             tabIndex={0}
-            aria-label={flipped ? "Card revealed. Tap to show the stage again." : "Tap to reveal the question."}
+            aria-label={flipped ? "Card revealed. Tap to show the kind of question again." : "Tap to reveal the question."}
             onKeyDown={(e) => {
               if (e.key === "Enter" || e.key === " ") {
                 e.preventDefault();
@@ -172,7 +172,7 @@ function ConnectionDeck({ shuffled }: { shuffled: boolean }) {
         </>
       ) : (
         <p className="py-10 text-center text-base text-ink-muted">
-          No cards in this stage yet.
+          No cards of this kind yet.
         </p>
       )}
     </div>

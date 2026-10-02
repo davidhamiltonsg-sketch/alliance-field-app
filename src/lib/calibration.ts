@@ -208,13 +208,13 @@ function routeTools(a: Profile, b: Profile, health: Record<LayerKey, number>) {
     if (!routes.some((r) => r.tool === tool)) routes.push({ tool, reason });
   };
 
-  if (health.Atmosphere < 62) add("Morning + Evening Rhythm", "Atmosphere is running low — bring the warmth back before asking for change.");
-  if (health.Structure < 62) add("Weekly Reset", "Structure is running low — set a weekly check-in you can count on.");
-  if (health.Repair < 62) add("Micro-Repair", "Repair is running low — make smaller repairs, more often.");
-  if (health.Protection < 62) add("Pause + Return", "Protection is running low — agree what you’ll each do when things get heated.");
+  if (health.Atmosphere < 62) add("Morning + Evening Rhythm", "You answer most differently on Atmosphere — start there: bring the warmth back before asking for change.");
+  if (health.Structure < 62) add("Weekly Reset", "You answer most differently on Structure — start there: set a weekly check-in you can count on.");
+  if (health.Repair < 62) add("Micro-Repair", "You answer most differently on Repair — start there: make smaller repairs, more often.");
+  if (health.Protection < 62) add("Pause + Return", "You answer most differently on Protection — start there: agree what you’ll each do when things get heated.");
 
   if (diff(a.scores.privacyNeed, b.scores.closenessNeed) > 18 || diff(b.scores.privacyNeed, a.scores.closenessNeed) > 18) {
-    add("Pause + Return", "You need different amounts of space and closeness, enough to be misread as rejection or pressure.");
+    add("Pause + Return", "You need different amounts of space and closeness, enough that one of you may read space as rejection, and the other may read closeness as pressure.");
   }
   if (diff(a.scores.careVisibility, b.scores.careVisibility) > 14 || diff(a.scores.warmthNeed, b.scores.structureNeed) > 18 || diff(b.scores.warmthNeed, a.scores.structureNeed) > 18) {
     add("Care Check-in", "You show care differently — one of you may be caring in a way the other doesn’t feel.");

@@ -69,7 +69,7 @@ const panels: Panel[] = [
     eyebrow: "Connection Cards",
     icon: "connection-cards",
     title: "For when things are fine, too.",
-    body: "Flip through 35 questions across five stages — Warmth, Curiosity, Care, Repair, Alliance. No protocol needed, just five minutes together.",
+    body: "Flip through 35 questions of five kinds — Warmth, Curiosity, Care, Repair, Alliance. No protocol needed, just five minutes together.",
     diagram: <ConnectionCardsDiagram />,
   },
   {

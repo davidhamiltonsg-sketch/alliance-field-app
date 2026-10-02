@@ -396,7 +396,7 @@ export function PauseTimelineDiagram() {
 }
 
 /* ------------------------------------------------------------------ */
-/* 6. Connection Cards: woven ring, five stages, 35 questions           */
+/* 6. Connection Cards: woven ring, five kinds, 35 questions            */
 /* ------------------------------------------------------------------ */
 export function ConnectionCardsDiagram() {
   const cx = 78,
@@ -424,7 +424,7 @@ export function ConnectionCardsDiagram() {
   return (
     <Frame
       viewBox="0 0 340 280"
-      label="Connection Cards: five stages, Warmth, Curiosity, Care, Repair, Alliance. Thirty-five questions to flip through, alone or together."
+      label="Connection Cards: five kinds of question, Warmth, Curiosity, Care, Repair, Alliance. Thirty-five questions to flip through, alone or together."
     >
       <g {...a("dg-fade", 150, 900)}>
         <path d={`M${ros.join("L")}Z`} fill="none" stroke={V.rim} strokeWidth={0.5} strokeOpacity={0.65} />

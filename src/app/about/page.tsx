@@ -195,7 +195,7 @@ export default function AboutPage() {
         <span className="absolute inset-y-0 left-0 w-1 bg-repair" aria-hidden />
         <Marker kind="NOTE" label="Feeling checked out?" />
         <p className="mt-2 text-base leading-normal">
-          <strong>Not sure if it’s space or withdrawal?</strong> Try the
+          <strong>Not sure if it’s needing space or pulling away?</strong> Try the
           Uninvestment Check. 0 signs: nothing to fix. 1–2: likely needs
           space and small repairs. 3 or more: may be pulling away — book a
           Full Recovery conversation within a week.
@@ -289,7 +289,7 @@ export default function AboutPage() {
               <span className="flex flex-col py-2.5">
                 Profile Calibration
                 <span className="text-sm font-normal text-ink-muted">
-                  44 questions each — a Layer Scan (how closely you two match, layer by layer) and a couple report
+                  44 questions each — a Layer Scan (where you two differ most, layer by layer) and a couple report
                 </span>
               </span>
               <ChevronRight size={18} className="shrink-0 text-ink-muted/50" />

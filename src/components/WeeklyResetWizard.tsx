@@ -252,12 +252,12 @@ function WeeklyResetWizardClient() {
             ))}
           </ul>
           <Field
-            label="Felt supported when"
+            label="I felt supported when"
             value={draft.supportedWhen}
             onChange={(v) => update({ supportedWhen: v })}
           />
           <Field
-            label="Felt alone when"
+            label="I felt alone when"
             value={draft.aloneWhen}
             onChange={(v) => update({ aloneWhen: v })}
           />

@@ -79,7 +79,7 @@ export const situations: Situation[] = [
     id: "attachment-clash",
     label: "We keep clashing the same way",
     description: "Reach–Recoil (one reaches, the other pulls back), the same ask on repeat, or out of sync on timing (Pace Mismatch).",
-    firstMove: "Pace Mismatch: Manual Ch X. Circuit Library: Manual Appendix A. Drift Check (in the Manual and Field Kit), plus Profile Calibration here.",
+    firstMove: "Name the loop out loud, then find it in the Circuit Library (Manual Appendix A). Clashing on timing? Manual Ch X. Here: Profile Calibration.",
     primaryHref: "/calibrate",
     icon: "profile-calibration",
     secondaryHrefs: [{ label: "System Overlay", href: "/protocols/system-overlay" }],

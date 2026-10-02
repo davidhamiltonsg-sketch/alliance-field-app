@@ -42,7 +42,7 @@ export const STAGE_ORDER: ConnectionStage[] = [
 
 /**
  * Connection Cards — a flip-card deck for coming back to each other, organised
- * by the five stages of the Alliance arc (Warmth → Curiosity → Care → Repair →
+ * by five kinds of question along the Alliance arc (Warmth → Curiosity → Care → Repair →
  * Alliance). Concrete, specific questions in everyday words.
  */
 export const connectionCards: ConnectionCard[] = [
@@ -84,7 +84,7 @@ export const connectionCards: ConnectionCard[] = [
 
   // Alliance
   { id: "a1", stage: "alliance", question: "What’s one thing we’re building right now that you’re genuinely excited about?" },
-  { id: "a2", stage: "alliance", question: "If we’re doing this right, what does a random Tuesday look like a year from now?" },
+  { id: "a2", stage: "alliance", question: "If we’re doing this right, what does an ordinary weeknight look like a year from now?" },
   { id: "a3", stage: "alliance", question: "What’s one of our habits that’s really working and worth keeping?" },
   { id: "a4", stage: "alliance", question: "What’s one way we could back each other up more visibly, in front of other people?" },
   { id: "a5", stage: "alliance", question: "What’s something you want us to be known for, as a team?" },
