@@ -2,7 +2,7 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import { questions, scoreKeys } from "@/data/calibration/questions";
 import type { ChoiceKey, PersonAnswers } from "@/data/calibration/types";
-import { protocolSlugs } from "@/data/protocols";
+import { getProtocol, protocolSlugs } from "@/data/protocols";
 import { KIT } from "@/data/kit";
 import {
   CALIBRATION_KEY,
@@ -133,7 +133,7 @@ describe("generateCoupleReport", () => {
     const report = generateCoupleReport(a, b);
     expect(Object.values(report.layerHealth)).toEqual([100, 100, 100, 100, 100]);
     expect(report.coreMismatch).toEqual([
-      "No single mismatch dominates yet — keep using the tools and revisit this in a few weeks.",
+      "No one difference stands out yet. Keep using the tools and come back to this in a few weeks.",
     ]);
   });
 
@@ -146,6 +146,15 @@ describe("generateCoupleReport", () => {
     expect(report.coreMismatch.length).toBeLessThanOrEqual(4);
     expect(report.misreadRisks.length).toBeLessThanOrEqual(5);
     expect(report.conflictPattern).toMatch(/Sam|Alex|Both of you/);
+  });
+
+  it("uses the System Overlay card’s Say This lines, word for word", () => {
+    const report = generateCoupleReport(
+      generateProfile("A", { name: "A", answers: all("a") }),
+      generateProfile("B", { name: "B", answers: all("b") }),
+    );
+    expect(report.scriptPack).toEqual(getProtocol("system-overlay")!.phrases.map((p) => p.text));
+    expect(report.scriptPack.length).toBeGreaterThan(0);
   });
 
   it("is symmetric in layer health", () => {

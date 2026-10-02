@@ -188,10 +188,10 @@ export default function TogetherPage() {
         <div className="card space-y-3 px-4 py-4 text-base leading-normal text-ink">
           <p>{authorsCoupleLine}</p>
           <p>
-            Alliance Protocols is informed by research and clinical frameworks,
-            including the minority-stress literature, adapted by the authors.
-            It isn’t therapy and hasn’t been tested in a controlled
-            study.
+            We built this from our own relationship and from research we
+            trust, including the minority-stress literature. We didn’t invent
+            the science; we turned it into steps we could use at 11pm. It
+            isn’t therapy and hasn’t been tested in a controlled study.
           </p>
           <p className="text-ink-muted">
             If you’d like professional support, look for a couples

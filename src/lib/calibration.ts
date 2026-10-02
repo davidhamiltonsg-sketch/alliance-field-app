@@ -78,63 +78,63 @@ function scorePerson(answers: PersonAnswers): Scores {
   return raw;
 }
 
-function detectPatterns(scores: Scores): string[] {
+function detectPatterns(scores: Scores, name: string): string[] {
   const patterns: string[] = [];
-  if (high(scores.closenessNeed) && high(scores.withdrawalUnderStress)) patterns.push("Under stress, may reach out, then pull back");
-  if (high(scores.structureNeed) && high(scores.warmthNeed)) patterns.push("Feels safest with both warmth and a clear plan");
-  if (high(scores.accountabilityOrientation) && scores.repairSpeed <= 42) patterns.push("Would rather see change over time than get a quick fix");
-  if (high(scores.privacyNeed) && high(scores.careVisibility)) patterns.push("Tends to show care quietly, in small private ways");
-  if (high(scores.signalSensitivity) && scores.transparency <= 42) patterns.push("Notices small signals, but doesn’t always say so");
-  if (high(scores.deflectionRisk)) patterns.push("When it feels exposed, may reach for a joke, a fact or a new subject");
-  if (high(scores.proofOrientation)) patterns.push("Trusts what someone does more than what they say");
-  if (high(scores.privacyNeed) && high(scores.autonomyProtection)) patterns.push("Needs time alone, and it isn’t a sign of distance");
-  if (high(scores.reassuranceNeed) && high(scores.signalSensitivity)) patterns.push("Feels steadier when reassurance is said out loud or shown");
+  if (high(scores.closenessNeed) && high(scores.withdrawalUnderStress)) patterns.push(`When things get hard, ${name} may reach out, then pull back.`);
+  if (high(scores.structureNeed) && high(scores.warmthNeed)) patterns.push(`${name} does best when the warmth and the plan arrive together.`);
+  if (high(scores.accountabilityOrientation) && scores.repairSpeed <= 42) patterns.push(`${name} would rather see things change over a few weeks than get a quick fix.`);
+  if (high(scores.privacyNeed) && high(scores.careVisibility)) patterns.push(`${name} tends to show care quietly, in small private ways.`);
+  if (high(scores.signalSensitivity) && scores.transparency <= 42) patterns.push(`${name} notices small signals, and doesn’t always say so.`);
+  if (high(scores.deflectionRisk)) patterns.push(`When ${name} feels exposed, a joke, a fact or a change of subject may come out first.`);
+  if (high(scores.proofOrientation)) patterns.push(`${name} trusts what someone does more than what they say.`);
+  if (high(scores.privacyNeed) && high(scores.autonomyProtection)) patterns.push(`${name} needs time alone, and it isn’t a sign of distance.`);
+  if (high(scores.reassuranceNeed) && high(scores.signalSensitivity)) patterns.push(`${name} feels steadier when reassurance is said out loud, or shown.`);
   if (!patterns.length) patterns.push("No one pattern stands out yet.");
   return Array.from(new Set(patterns)).slice(0, 5);
 }
 
 export function generateProfile(person: PersonKey, input: PersonInput): Profile {
   const scores = scorePerson(input.answers);
-  const patterns = detectPatterns(scores);
   const name = input.name?.trim() || (person === "A" ? "Partner A" : "Partner B");
+  const patterns = detectPatterns(scores, name);
 
   const safetyLogic =
     high(scores.structureNeed) && high(scores.warmthNeed)
-      ? `${name} needs both felt warmth and clear structure before a hard conversation can land.`
+      ? `${name} needs warmth and a clear plan before a hard conversation can land.`
       : high(scores.structureNeed)
-        ? `${name} builds safety through clarity, reliability, and visible follow-through.`
+        ? `${name} feels safest when plans are clear and kept.`
         : high(scores.warmthNeed)
-          ? `${name} builds safety through tone, warmth, and emotional presence.`
-          : `${name} feels safe through a mix: some warmth, some structure, and the full picture before anyone draws conclusions.`;
+          ? `${name} feels safest when the tone between you is warm.`
+          : `${name} feels safest with a bit of both: some warmth, a rough plan, and the whole story before anyone decides what it meant.`;
 
   const careStyle =
     high(scores.proofOrientation) || high(scores.structureNeed)
-      ? `Care lands for ${name} through reliability, action, and follow-through more than words.`
-      : `Care lands for ${name} through warmth, presence, and being told, not just shown.`;
+      ? `${name} feels most cared for when promises are kept and things get done.`
+      : `${name} feels most cared for through warmth, time together, and hearing it said out loud.`;
 
   const conflictResponse =
     high(scores.withdrawalUnderStress) && high(scores.conflictActivation)
-      ? `Under stress, ${name} may swing between pushing for resolution and going quiet. Pacing matters.`
+      ? `When it gets heated, ${name} may swing between pushing for an answer and going quiet. Slowing down helps.`
       : high(scores.withdrawalUnderStress)
-        ? `Under stress, ${name} is likely to go quiet or ask for space to settle.`
+        ? `When it gets heated, ${name} is likely to go quiet or ask for time to settle.`
         : high(scores.conflictActivation)
-          ? `Under stress, ${name} is likely to go straight to the issue and want an answer.`
-          : `Under stress, ${name} can usually keep talking as long as warmth is still in the room.`;
+          ? `When it gets heated, ${name} is likely to go straight to the problem and want an answer.`
+          : `When it gets heated, ${name} can usually keep talking, as long as it still feels warm between you.`;
 
   const privacyAutonomy = high(scores.privacyNeed)
-    ? `Needs plenty of privacy: space works best with a return time, so it doesn’t read as distance.`
-    : `Some need for privacy: you can usually agree how close to be, as long as the warmth stays.`;
+    ? `${name} needs plenty of privacy. Time apart works best with a return time, so it doesn’t feel like distance.`
+    : `${name} needs some privacy, and the two of you can usually agree how close to be while things stay warm.`;
 
   const likelyMisreads = [
     high(scores.signalSensitivity)
-      ? `${name} may read silence, delay, or a cooler tone as disconnection.`
-      : `${name} may miss small cues until they’re named directly.`,
+      ? `${name} may read silence, a slow reply or a cooler tone as pulling away.`
+      : `${name} may miss small cues until someone says them out loud.`,
     high(scores.structureNeed)
-      ? `${name} may hear vagueness as unreliability.`
-      : `${name} may hear too much structure as pressure.`,
+      ? `${name} may hear a vague plan as a promise that won’t be kept.`
+      : `${name} may hear a lot of planning as pressure.`,
     high(scores.privacyNeed)
-      ? `${name} may find questions intrusive when things are already heated.`
-      : `${name} may feel space as rejection if it doesn’t come with reassurance.`,
+      ? `${name} may feel questions as prying when things are already heated.`
+      : `${name} may take time apart as rejection unless it comes with some reassurance.`,
   ];
 
   return {
@@ -177,8 +177,8 @@ function buildConflictPattern(a: Profile, b: Profile): string {
   if (!aPursues && bPursues)
     return `${b.name} tends to push for an answer while ${a.name} backs off. Left alone, that can become a Reach–Recoil loop (one reaches, the other pulls back). Pause + Return, with an exact return time, is designed to break it.`;
   if (aPursues && bPursues)
-    return "Both of you tend to push harder to get a response. The first move is to slow down, before the push for reassurance becomes the fight.";
-  return "Both of you tend to back off. Fewer fights can still mean less contact: keep up the Morning + Evening Rhythm and the Weekly Reset so distance doesn’t build quietly.";
+    return "Both of you tend to push harder when you don’t get a response. Slow down first, before pushing for reassurance turns into the fight.";
+  return "Both of you tend to back off. Fewer fights can also mean less contact, so keep up the Morning + Evening Rhythm and the Weekly Reset and the distance doesn’t build quietly.";
 }
 
 // Maps a recommendation's concept to a real Field Kit protocol slug.
@@ -214,26 +214,26 @@ function routeTools(a: Profile, b: Profile, health: Record<LayerKey, number>) {
   if (health.Protection < 62) add("Pause + Return", "You answer most differently on Protection — start there: agree what you’ll each do when things get heated.");
 
   if (diff(a.scores.privacyNeed, b.scores.closenessNeed) > 18 || diff(b.scores.privacyNeed, a.scores.closenessNeed) > 18) {
-    add("Pause + Return", "You need different amounts of space and closeness, enough that one of you may read space as rejection, and the other may read closeness as pressure.");
+    add("Pause + Return", "You need different amounts of space and closeness: one of you may take space as rejection, and the other may feel closeness as pressure.");
   }
   if (diff(a.scores.careVisibility, b.scores.careVisibility) > 14 || diff(a.scores.warmthNeed, b.scores.structureNeed) > 18 || diff(b.scores.warmthNeed, a.scores.structureNeed) > 18) {
     add("Care Check-in", "You show care differently — one of you may be caring in a way the other doesn’t feel.");
   }
   if (average([a.scores.proofOrientation, b.scores.proofOrientation]) > 64) {
-    add("Consistency Pact", "Trust here needs actions you can both see, over a set time, not just words.");
+    add("Consistency Pact", "For you two, trust grows from things you can both see, kept up over a set time.");
   }
   if (average([a.scores.deflectionRisk, b.scores.deflectionRisk]) > 62) {
-    add("Impact before explanation (Full Recovery)", "One of you tends to deflect — name the impact before explaining what you meant, so the repair doesn’t slide off.");
+    add("Impact before explanation (Full Recovery)", "One of you tends to slide away from hard moments with a joke or an explanation. Name the impact first, then explain what you meant, so the repair lands.");
   }
   if (
     average([a.scores.withdrawalUnderStress, b.scores.withdrawalUnderStress]) > 60 &&
     average([a.scores.reassuranceNeed, b.scores.reassuranceNeed, a.scores.signalSensitivity, b.scores.signalSensitivity]) > 55
   ) {
-    add("Uninvestment Check", "Pulling back under stress is common here, and so is noticing it. Do the check together to tell needing space from pulling away, rather than assuming either.");
+    add("Uninvestment Check", "You both tend to pull back when things are hard, and to notice when the other does. Do the check together to tell needing space from pulling away, instead of guessing.");
   }
   if (!routes.length) {
-    add("Morning + Evening Rhythm", "Keep daily contact predictable.");
-    add("Weekly Reset", "Keep the weekly check-in going before drift sets in.");
+    add("Morning + Evening Rhythm", "Keep a little daily contact you can both count on.");
+    add("Weekly Reset", "Keep a weekly check-in going, so small things get said while they’re small.");
   }
 
   return routes.slice(0, 6);
@@ -277,13 +277,13 @@ export function generateCoupleReport(profileA: Profile, profileB: Profile): Coup
     {
       domain: "Repair speed",
       diverges: diff(a.repairSpeed, b.repairSpeed) > 24,
-      risk: "Fast repair can feel like pressure; slow repair can feel like abandonment.",
+      risk: "Making up fast can feel like pressure; making up slowly can feel like being left.",
       summary: "The main thing to work with here is timing: one of you wants to make up sooner than the other.",
     },
     {
       domain: "Proof / trust",
       diverges: diff(a.proofOrientation, b.proofOrientation) > 24,
-      risk: "One of you may trust warmth while the other needs evidence they can see.",
+      risk: "One of you may trust warm words while the other needs to see it.",
       summary: "The main thing to work with here is what makes trust feel real: warm words for one of you, things you can see for the other.",
     },
     {
@@ -304,34 +304,29 @@ export function generateCoupleReport(profileA: Profile, profileB: Profile): Coup
   const mismatch = diverging.map((r) => `${r.domain}: ${r.risk}`);
 
   const strengths = [
-    "Both profiles can become shared words for what you each need, not verdicts about who’s right.",
+    "These profiles give you shared words for what you each need, so you can talk about it without anyone being in the wrong.",
     average([a.proofOrientation, b.proofOrientation]) > 60
-      ? "You both respond to evidence, so rebuilding trust through change you can both see (the Proof Protocol) suits you."
-      : "Here, repairing warmly first and keeping a daily rhythm are likely to matter more than keeping a record.",
+      ? "You both trust what you can see, so rebuilding trust through change you can both point to (the Proof Protocol) suits you."
+      : "For you two, warm repairs and a steady daily rhythm will probably matter more than keeping a record.",
   ];
 
   const routes = routeTools(profileA, profileB, health);
   const recommendedTools = toRecommendedTools(routes);
 
   return {
-    executiveSummary: `${diverging[0]?.summary ?? "No one difference stands out yet, so there’s no single thing to work on first."} A good next step is to turn the pattern into a small, low-stakes agreement, then look at how it went at the agreed check-in, instead of re-arguing what anyone meant.`,
+    executiveSummary: `${diverging[0]?.summary ?? "No one difference stands out yet, so there’s no single thing to work on first."} A good next step: turn it into one small agreement, try it, and look at how it went at your next check-in, rather than arguing again about what anyone meant.`,
     strengths,
-    coreMismatch: mismatch.length ? mismatch.slice(0, 4) : ["No single mismatch dominates yet — keep using the tools and revisit this in a few weeks."],
+    coreMismatch: mismatch.length ? mismatch.slice(0, 4) : ["No one difference stands out yet. Keep using the tools and come back to this in a few weeks."],
     conflictPattern: buildConflictPattern(profileA, profileB),
     misreadRisks: Array.from(new Set([...profileA.likelyMisreads, ...profileB.likelyMisreads])).slice(0, 5),
     layerHealth: health,
     recommendedTools,
     recommendedSequence: buildSequence(recommendedTools),
-    scriptPack: [
-      "Warm up: “I’m on your team, even though this is hard.”",
-      "Make it safe: “The relationship isn’t on trial in this conversation.”",
-      "Say what happened: “When this happens, I read it as distance. I know that might not be what you mean.”",
-      "Ask for one thing: “When one of us needs space, can we say so and give a return time?”",
-      "Agree on next steps: “Let’s try this for one week and check in on Sunday.”",
-    ],
+    // The System Overlay card’s Say This lines, word for word.
+    scriptPack: (getProtocol("system-overlay")?.phrases ?? []).map((p) => p.text),
     evidenceLimitations: [
-      "This is a starting map, not a diagnosis — it’s built from how you each answered 44 questions, not from what either of you does over time.",
-      "The scoring draws on research that skews heterosexual and Western. The Manual folds in research on same-sex, interracial and intercultural couples, but treat any single suggestion here as a starting point, not a verdict.",
+      "This is a starting map, built from how you each answered 44 questions. It can’t see what either of you does day to day, and it isn’t a diagnosis.",
+      "The scoring draws on research that skews heterosexual and Western. The Manual folds in research on same-sex, interracial and intercultural couples, but treat any one suggestion here as a place to start, not a verdict.",
     ],
   };
 }

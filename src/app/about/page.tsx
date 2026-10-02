@@ -109,7 +109,7 @@ export default function AboutPage() {
           </p>
         </div>
         <p className="text-base leading-normal text-ink">
-          We built it from our own relationship — how we come back to
+          It grew out of our own relationship: how we come back to
           each other, what we say when things go sideways, what we promise
           not to do. This app, the Manual, the Field Kit and the Companion
           Book are that same system, written down so other couples can use it.
@@ -121,9 +121,9 @@ export default function AboutPage() {
           <span id="lineage-heading">Where these tools come from</span>
         </SectionLabel>
         <p className="text-base leading-normal text-ink">
-          Alliance Protocols is our own synthesis. It is
-          informed by research and clinical frameworks, adapted into named
-          tools:
+          We built this from our own relationship and from research we
+          trust. We didn’t invent the science; we turned it into steps we
+          could use at 11pm. The named tools draw on:
         </p>
         <ul className="space-y-1.5 pl-4 text-base leading-normal text-ink-muted">
           <li className="list-disc">

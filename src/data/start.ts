@@ -23,8 +23,8 @@ export const startDays: StartDay[] = [
   {
     day: 1,
     title: "Safety + Pause defaults",
-    task: "Read the Situation Map, safety row first, and the Green Rule and Pause + Return cards. Set your Pause + Return defaults together: your signal, a 20-minute minimum, an exact return time. Say the safety sentences aloud once.",
-    proof: "Defaults written and initialled.",
+    task: "Read the Situation Map, safety row first, and the Green Rule and Pause + Return cards. Set your Pause + Return defaults together: your signal, a 20-minute minimum, 24 hours max, an exact return time. Say the safety sentences aloud once.",
+    proof: "Defaults agreed, out loud, by both of you.",
     minutes: 10,
     slug: "green-rule",
     tool: { label: "Situation Map", href: "/#situation-map" },

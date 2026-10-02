@@ -94,7 +94,7 @@ export function TimerDisplay({
       </div>
       {expired && !idle && (
         <p className="mt-2 text-base font-medium text-failure">
-          Return time passed — reconnect now
+          It’s time. Go back, even for two minutes.
         </p>
       )}
     </div>
