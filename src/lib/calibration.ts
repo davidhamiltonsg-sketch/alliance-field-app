@@ -296,7 +296,7 @@ export function generateCoupleReport(profileA: Profile, profileB: Profile): Coup
     {
       domain: "How heated is too heated",
       diverges: diff(a.heatTolerance, b.heatTolerance) > 24,
-      risk: "When one of you can stay in a heated talk longer than the other, that one tends to push and the other to pull back.",
+      risk: "When one of you can stay in a heated talk longer, that one tends to push, and the other to pull back.",
       summary: "Your limits for a heated conversation aren’t the same. Agree the signal that means ‘stop here’, before you need it.",
       shared: "You agree, more or less, on how heated a conversation can get.",
     },
@@ -317,7 +317,7 @@ export function generateCoupleReport(profileA: Profile, profileB: Profile): Coup
   const strengths = [
     ...(firstShared ? [firstShared.shared] : []),
     average([a.proofOrientation, b.proofOrientation]) > 60
-      ? "You both trust what you can see, so the Proof Protocol (a change you can both point to) may feel familiar."
+      ? "You both trust what you can see. So agree one small change each and look at it together at your next Weekly Reset."
       : "You two lean on warmth and daily habits more than on keeping a record. Keep your morning and evening check-ins going, and add one small habit at your next Weekly Reset.",
   ];
 

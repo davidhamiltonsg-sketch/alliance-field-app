@@ -370,8 +370,8 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
         "kind": "step"
       },
       {
-        "title": "If it helps, agree on warm-no wording",
-        "detail": "If it helps, agree on warm-no wording and an alternative you’d both genuinely enjoy — such as holding each other, a kiss goodnight or five minutes of talking. It’s optional and never owed: a no needs no script, reason, or substitute offer, and the pact never creates an obligation.",
+        "title": "If it helps, agree how you’ll each say a warm no",
+        "detail": "If it helps, agree how you’ll each say a warm no, and on an alternative you’d both genuinely enjoy — such as holding each other, a kiss goodnight or five minutes of talking. It’s optional and never owed: a no needs no script, reason, or substitute offer, and the pact never creates an obligation.",
         "kind": "step"
       },
       {

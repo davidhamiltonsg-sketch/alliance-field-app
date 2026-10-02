@@ -33,7 +33,7 @@ describe("/terms", () => {
     const t = text(await renderWith({ NEXT_PUBLIC_CONTACT_EMAIL: "" }, terms));
     expect(t).toContain("Alliance Protocols, by David Hamilton and Dr Zhongming Shi, Singapore");
     expect(t).toMatch(/not therapy/);
-    expect(t).toMatch(/provided as they are/);
+    expect(t).toMatch(/We offer the site and app as they are/);
     expect(t).toMatch(/Please don’t/);
     expect(t).toMatch(/limit their contact with friends, family, money, phone or movement/);
     expect(t).toMatch(/statutory rights are not affected/i);
