@@ -126,7 +126,7 @@ export function weeklyResetIcsText(fromDate = new Date()): string {
     text("SUMMARY", "Weekly Reset (Alliance Protocols)"),
     text(
       "DESCRIPTION",
-      "Scheduled maintenance meeting (about 40 minutes) — appreciation, check the load, one friction point, requests, next steps. Not a fight forum: if either partner is flooded, Pause + Return and reschedule."
+      "Your weekly check-in (about 40 minutes): appreciation, check the load, one friction point, requests, next steps. Not the place to have the fight: if either of you is flooded, Pause + Return and pick another time."
     ),
     "RRULE:FREQ=WEEKLY;INTERVAL=1",
     "END:VEVENT",
@@ -224,7 +224,7 @@ export function keepGoingIcsText(time = "19:00", fromDate = new Date()): string 
       weekly,
       WEEKLY_RESET_RRULE,
       "Weekly Reset (Alliance Protocols)",
-      "Five parts, about 40 minutes — appreciation, check the load, one friction point, requests, next steps. Not a fight forum: if either partner is flooded, Pause + Return and reschedule."
+      "Five parts, about 40 minutes: appreciation, check the load, one friction point, requests, next steps. Not the place to have the fight: if either of you is flooded, Pause + Return and pick another time."
     ),
     ...event(
       "alliance-keep-going-care-checkin",

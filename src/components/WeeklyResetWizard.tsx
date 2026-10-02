@@ -51,7 +51,7 @@ function WeeklyResetWizardClient() {
   const [confirmClear, setConfirmClear] = useState(false);
   const doneHeading = useRef<HTMLHeadingElement>(null);
 
-  // L10: after "Complete reset" the step that had focus is gone; move focus
+  // L10: after "Finish reset" the step that had focus is gone; move focus
   // to the result's heading so keyboard and screen-reader users land there.
   useEffect(() => {
     if (!done) return;
@@ -109,7 +109,7 @@ function WeeklyResetWizardClient() {
       <div data-wizard-root className="scroll-mt-20 space-y-4">
         <Marker kind="OK" label="Complete" />
         <h2 ref={doneHeading} tabIndex={-1} className="focus-target display text-xl leading-tight">
-          Reset locked
+          Reset done
         </h2>
         <p className="text-sm leading-normal text-ink-muted">
           Forty minutes, five parts, done. Same time next week.
@@ -163,7 +163,7 @@ function WeeklyResetWizardClient() {
   return (
     <div data-wizard-root className="scroll-mt-20 space-y-4">
       <WarnBanner pauseLink>
-        If either of you is flooded, take a Pause + Return and reschedule.
+        If either of you is flooded, take a Pause + Return and pick another time.
       </WarnBanner>
 
       {step === 1 && (
@@ -250,12 +250,12 @@ function WeeklyResetWizardClient() {
             ))}
           </ul>
           <Field
-            label="Supported when"
+            label="Felt supported when"
             value={draft.supportedWhen}
             onChange={(v) => update({ supportedWhen: v })}
           />
           <Field
-            label="Alone when"
+            label="Felt alone when"
             value={draft.aloneWhen}
             onChange={(v) => update({ aloneWhen: v })}
           />
@@ -272,23 +272,23 @@ function WeeklyResetWizardClient() {
           onNext={() => setStep(4)}
         >
           <Field
-            label="A friction"
+            label="Partner A: friction"
             value={draft.frictionA}
             onChange={(v) => update({ frictionA: v })}
           />
           <Field
-            label="A ask"
+            label="Partner A: ask"
             value={draft.askA}
             onChange={(v) => update({ askA: v })}
             placeholder="One specific ask…"
           />
           <Field
-            label="B friction"
+            label="Partner B: friction"
             value={draft.frictionB}
             onChange={(v) => update({ frictionB: v })}
           />
           <Field
-            label="B ask"
+            label="Partner B: ask"
             value={draft.askB}
             onChange={(v) => update({ askB: v })}
             placeholder="One specific ask…"
@@ -336,7 +336,7 @@ function WeeklyResetWizardClient() {
             setHistory(next);
             setDone(true);
           }}
-          nextLabel="Complete reset"
+          nextLabel="Finish reset"
         >
           <Field
             label="Next step"

@@ -39,7 +39,7 @@ export function KeepItGoing({ lead }: { lead?: string }) {
       </SectionLabel>
       <div className="card space-y-3 px-4 py-4">
         <p className="text-base leading-normal text-ink">
-          {lead ?? "The system works when it’s on the calendar."} One file adds
+          {lead ?? "Put it in the calendar, so it doesn’t rely on remembering."} One file adds
           two repeating reminders:
         </p>
         <ul className="space-y-1.5 pl-4 text-sm leading-snug text-ink-muted">

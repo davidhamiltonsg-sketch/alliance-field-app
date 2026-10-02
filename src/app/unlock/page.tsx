@@ -21,7 +21,7 @@ export default async function UnlockPage({
   return (
     <div className="space-y-6">
       <PageHeader title="Coming soon">
-        Alliance Protocols is getting ready to launch. If you have an early-access code, enter it below.
+        We’re nearly ready to open the doors. If we’ve given you an early-access code, enter it below.
       </PageHeader>
 
       <form method="post" action="/unlock" className="card space-y-4 px-4 py-5">
@@ -44,7 +44,7 @@ export default async function UnlockPage({
           />
           {wrong && (
             <p id="code-error" role="alert" className="text-sm font-medium text-failure">
-              That code didn’t work. Check it and try again.
+              That code didn’t match. Check it and try again.
             </p>
           )}
         </div>

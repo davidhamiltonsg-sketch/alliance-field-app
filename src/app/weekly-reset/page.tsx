@@ -11,13 +11,13 @@ export default function WeeklyResetPage() {
   return (
     <div className="space-y-5">
       <PageHeader eyebrow={<Marker kind="DO" label="Weekly" icon="weekly-reset" />} title="Weekly Reset">
-        Five parts, about 40 minutes. A maintenance meeting, not a trial. Your answers save on this device.
+        Five parts, about 40 minutes. Maintenance, not a trial. Your answers stay on this device.
       </PageHeader>
       <WeeklyResetWizard />
       <p className="px-1 text-sm leading-normal text-ink-muted">
         Only the five parts fit in 40 minutes. Anything else (Proof reviews,
         enrichment picks, governance) goes to the Monthly Review, a longer
-        once-a-month check on how the system is working.
+        once-a-month look at how things are going.
       </p>
       <KeepItGoing />
       <Link

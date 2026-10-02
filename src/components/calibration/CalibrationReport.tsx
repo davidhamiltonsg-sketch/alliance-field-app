@@ -66,8 +66,8 @@ function CalibrationReportClient() {
 
   return (
     <div className="space-y-6">
-      <PageHeader eyebrow={<Marker kind="TOOL" label="Layer Scan" icon="profile-calibration" />} title="Your operating profile">
-        Both of you finished — no trophy, just the report. {report.executiveSummary}
+      <PageHeader eyebrow={<Marker kind="TOOL" label="Layer Scan" icon="profile-calibration" />} title="Your couple profile">
+        You’ve both finished. No trophy, just the report. {report.executiveSummary}
       </PageHeader>
 
       {state.aPrivate && (
@@ -96,7 +96,7 @@ function CalibrationReportClient() {
           ))}
         </div>
         <p className="px-1 text-sm leading-normal text-ink-muted">
-          Lower means the two of you diverge more in that layer — worth stabilising first, not a verdict on the relationship.
+          Lower means the two of you differ more in that layer. Worth steadying first; not a verdict on the relationship.
         </p>
       </section>
 
@@ -167,7 +167,7 @@ function CalibrationReportClient() {
       <PhraseBlock phrases={report.scriptPack.map((text) => ({ text }))} />
 
       <section className="space-y-2">
-        <SectionLabel>Evidence limitations</SectionLabel>
+        <SectionLabel>What this can’t tell you</SectionLabel>
         {report.evidenceLimitations.map((line) => (
           <p key={line} className="text-sm leading-normal text-ink-muted">
             {line}
@@ -180,7 +180,7 @@ function CalibrationReportClient() {
         onClick={() => router.push("/calibrate")}
         className="w-full min-h-12 rounded-xl border border-rule/60 text-base font-medium text-ink"
       >
-        Recalibrate
+        Start again
       </button>
     </div>
   );
@@ -195,7 +195,7 @@ export function SoloProfile({ profile, otherName, preview = false }: { profile: 
   const router = useRouter();
   return (
     <div className="space-y-6">
-      <PageHeader eyebrow={<Marker kind="TOOL" label="Solo profile" icon="profile-calibration" />} title={`${profile.name}'s operating profile`}>
+      <PageHeader eyebrow={<Marker kind="TOOL" label="Solo profile" icon="profile-calibration" />} title={`${profile.name}’s profile`}>
         {profile.primaryPattern}
       </PageHeader>
 
