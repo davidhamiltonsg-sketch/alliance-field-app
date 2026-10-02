@@ -56,8 +56,8 @@ function CalibrationReportClient() {
       return (
         <div className="space-y-4">
           <PageHeader eyebrow={<Marker kind="NOTE" label="Private" />} title={`${state.personA.name}’s profile is private`}>
-            {state.personA.name} chose to keep their individual answers and profile private on this shared device.
-            You’ll see the couple report once {otherName} has answered too.
+            {state.personA.name} has kept their own answers private, so you’ll see the couple report only.
+            It appears once {otherName} has answered too.
           </PageHeader>
           <PrimaryButton onClick={() => router.push("/calibrate")}>Carry on</PrimaryButton>
         </div>

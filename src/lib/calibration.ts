@@ -210,20 +210,20 @@ function routeTools(a: Profile, b: Profile, health: Record<LayerKey, number>) {
 
   if (health.Atmosphere < 62) add("Morning + Evening Rhythm", "One place your answers are far apart: the warmth between you. Start there: a little warmth each day, before you ask for any change.");
   if (health.Structure < 62) add("Weekly Reset", "You see the everyday arrangements differently: who does what, and when. Begin with a weekly check-in you can both count on.");
-  if (health.Repair < 62) add("Micro-Repair", "One of you wants to make up fast, the other slowly. Agree one small first step and take it today. If more is needed, book the bigger talk for a set time.");
+  if (health.Repair < 62) add("Micro-Repair", "Whoever’s ready first makes one small move today, like a kind word or a cup of tea, and the bigger talk waits for a time you both agree.");
   if (health.Protection < 62) add("Pause + Return", "You don’t agree on what keeps a heated moment safe. Agree now what you’ll each do when it gets there.");
 
   if (diff(a.scores.privacyNeed, b.scores.closenessNeed) > 18 || diff(b.scores.privacyNeed, a.scores.closenessNeed) > 18) {
     add("Pause + Return", "You need different amounts of space and closeness. To one of you, ‘I need a minute’ can sound like being left. Whoever asks for the pause says when they’ll be back.");
   }
   if (diff(a.scores.careVisibility, b.scores.careVisibility) > 14 || diff(a.scores.warmthNeed, b.scores.structureNeed) > 18 || diff(b.scores.warmthNeed, a.scores.structureNeed) > 18) {
-    add("Care Check-in", "You show care differently. One of you may be giving it in a way the other doesn’t notice as care. Tell each other about one recent moment you felt looked after, and what did it.");
+    add("Care Check-in", "You show care differently, so some of what you give may be going unnoticed. Tell each other about one recent moment you felt looked after, and what did it.");
   }
   if (average([a.scores.proofOrientation, b.scores.proofOrientation]) > 64) {
     add("Consistency Pact", "You both trust what keeps happening more than what gets said. Pick one small thing each and do it where the other can see.");
   }
   if (average([a.scores.deflectionRisk, b.scores.deflectionRisk]) > 62) {
-    add("Impact first, then explain", "One of you tends to slide away from hard moments with a joke or an explanation. The repair is designed around one order: impact first, explaining after. So name the impact before anything else.");
+    add("Impact first, then explain", "When a moment gets hard, a joke or an explanation tends to arrive first. So keep one order: say how it landed first, explain after.");
   }
   if (
     average([a.scores.withdrawalUnderStress, b.scores.withdrawalUnderStress]) > 60 &&
@@ -251,7 +251,7 @@ function toRecommendedTools(routes: { tool: string; reason: string }[]): Recomme
 }
 
 function buildSequence(tools: RecommendedTool[]): string[] {
-  const sequence = ["One warm, true sentence", ...tools.slice(0, 4).map((t) => t.title), "Look back at the Weekly Reset"];
+  const sequence = ["One warm, true sentence", ...tools.slice(0, 4).map((t) => t.title), "Check how last week’s Reset went"];
   return Array.from(new Set(sequence));
 }
 
@@ -269,42 +269,42 @@ export function generateCoupleReport(profileA: Profile, profileB: Profile): Coup
       domain: "Space and closeness",
       diverges: diff(a.closenessNeed - a.privacyNeed, b.closenessNeed - b.privacyNeed) > 24,
       risk: "Space can read as rejection, and closeness as pressure.",
-      summary: "One of you wants more time together; the other, more time alone. Each of you, say how much time together and how much time alone feels like enough.",
+      summary: "You want different amounts of time together and time alone. Each of you, say how much of each feels like enough.",
       shared: "You want about the same balance of space and closeness.",
     },
     {
       domain: "How care lands",
       diverges: (a.structureNeed > a.warmthNeed) !== (b.structureNeed > b.warmthNeed),
-      risk: "One of you may be showing care the other doesn’t recognise as care.",
-      summary: "One of you feels cared for when things get sorted; the other, when there’s warmth. Each of you name one thing that feels like care to you.",
+      risk: "Care may be getting shown in a way that isn’t recognised as care.",
+      summary: "For one of you, care looks like things getting sorted; for the other, it looks like warmth. Each of you name one thing that feels like care to you.",
       shared: "You both count the same kinds of things as care.",
     },
     {
       domain: "Repair speed",
       diverges: diff(a.repairSpeed, b.repairSpeed) > 24,
       risk: "Making up fast can feel like pressure; making up slowly can feel like being left.",
-      summary: "One of you wants to make it up tonight; the other needs until morning. Agree how long is long enough, and one kind thing to say in the meantime.",
+      summary: "You make up at different speeds: tonight would suit one of you, morning the other. Agree how long is long enough, and one kind thing to say in the meantime.",
       shared: "You both want to make up at about the same pace.",
     },
     {
       domain: "What makes trust feel real",
       diverges: diff(a.proofOrientation, b.proofOrientation) > 24,
-      risk: "One of you tends to trust warm words; the other needs to see it.",
-      summary: "One of you believes warm words; the other waits to see what happens next. Pick one small promise and keep it where you can both see it.",
+      risk: "Trust may come from what’s said for one of you, and from what’s done for the other.",
+      summary: "Warm words are enough for one of you, while the other waits to see what happens next. Pick one small promise and keep it where you can both see it.",
       shared: "Trust feels real to both of you in much the same way.",
     },
     {
       domain: "How heated is too heated",
       diverges: diff(a.heatTolerance, b.heatTolerance) > 24,
       risk: "If one of you can take more heat than the other, that can build a Reach–Recoil loop (one reaches, the other pulls back).",
-      summary: "One of you can stay in a heated conversation longer than the other. Agree the signal that means ‘stop here’, before you need it.",
+      summary: "Your limits for a heated conversation aren’t the same. Agree the signal that means ‘stop here’, before you need it.",
       shared: "You agree, more or less, on how heated a conversation can get.",
     },
     {
       domain: "Saying what’s going on",
       diverges: diff(a.transparency, b.transparency) > 24,
       risk: "What one of you leaves unsaid, the other tends to fill in with a guess.",
-      summary: "One of you thinks out loud; the other mostly doesn’t. Tell each other which you are, so silence isn’t read as a verdict.",
+      summary: "Thinking out loud comes easily to one of you and less to the other. Tell each other which you are, so silence isn’t read as a verdict.",
       shared: "You both say about as much out loud as each other.",
     },
   ];
@@ -318,7 +318,7 @@ export function generateCoupleReport(profileA: Profile, profileB: Profile): Coup
     ...(firstShared ? [firstShared.shared] : []),
     average([a.proofOrientation, b.proofOrientation]) > 60
       ? "Your answers both lean towards trusting what you can see, so the Proof Protocol (a change you can both point to) may feel familiar."
-      : "Your answers lean more towards warm repairs and a steady daily rhythm than towards keeping a record.",
+      : "You two lean on warmth and daily habits more than on keeping a record. Build from there.",
   ];
 
   const routes = routeTools(profileA, profileB, health);

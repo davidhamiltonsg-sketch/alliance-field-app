@@ -64,7 +64,7 @@ describe("CANON numbers and wording", () => {
   it("Pause + Return is 20 minutes to 24 hours", () => {
     const badge = protocolDiagrams["pause-and-return"].steps.find((s) => s.title === "Set a time")?.badge;
     expect(badge).toBe("20 min – 24 h");
-    expect(getProtocol("pause-and-return")!.steps.join(" ")).toContain("20 minutes minimum, 24 hours max");
+    expect(getProtocol("pause-and-return")!.steps.join(" ")).toContain("at least 20 minutes and at most 24 hours away");
     expect(KIT.pauseMinMinutes).toBe(20);
     expect(KIT.pauseMaxMinutes).toBe(1440);
   });
@@ -544,8 +544,10 @@ describe("CANON round 6", () => {
   });
 
   it("Pause + Return flooding signs leave out contempt", () => {
-    const signs = "racing heart, tunnel vision, can’t think straight";
-    expect(getProtocol("pause-and-return")!.whenToUse).toContain(signs);
+    // All four CANON flooding signs, in the Kit's sentence form (voice pass 39).
+    for (const sign of ["heart is racing", "tunnel vision", "can’t think straight", "flee or to win"]) {
+      expect(getProtocol("pause-and-return")!.whenToUse).toContain(sign);
+    }
     expect(getProtocol("pause-and-return")!.whenToUse).not.toMatch(/contempt/i);
     expect(protocolDiagrams["pause-and-return"].when).not.toMatch(/contempt/i);
     expect(byId["flooded"].description).not.toMatch(/contempt/i);

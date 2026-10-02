@@ -200,7 +200,7 @@ describe("generateCoupleReport", () => {
       expect(report.recommendedTools.length).toBeGreaterThan(0);
       for (const t of report.recommendedTools) expect(protocolSlugs).toContain(t.slug);
       expect(report.recommendedSequence[0]).toBe("One warm, true sentence");
-      expect(report.recommendedSequence.at(-1)).toBe("Look back at the Weekly Reset");
+      expect(report.recommendedSequence.at(-1)).toBe("Check how last week’s Reset went");
       expect(new Set(report.recommendedSequence).size).toBe(report.recommendedSequence.length);
     }
   });

@@ -480,10 +480,10 @@ export function ConnectionCardsDiagram() {
 /* ------------------------------------------------------------------ */
 export function ResetStepsDiagram() {
   const steps = [
-    { title: "Stop", sub: "Quit trying to win or solve it." },
+    { title: "Stop", sub: "Let go of winning or solving it for now." },
     { title: "Say it", sub: "“I want to connect, not fight.”" },
-    { title: "Touch (only if welcome)", sub: "A brief touch, nothing more." },
-    { title: "Breathe", sub: "Three slow breaths together." },
+    { title: "Touch (only if welcome)", sub: "Keep it brief and leave it at that." },
+    { title: "Breathe", sub: "Take three slow breaths together." },
     { title: "Return", sub: "Pick an exact time to keep talking." },
   ];
   const pitch = 56,

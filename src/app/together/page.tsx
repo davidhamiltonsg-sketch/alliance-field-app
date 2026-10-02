@@ -57,8 +57,9 @@ export default function TogetherPage() {
           <p>
             There’s a name for this: <strong className="font-medium">minority stress</strong>,
             the strain that comes from how other people treat your
-            relationship. These tools draw on the research about it; they
-            don’t settle it.
+            relationship. The tools draw on that research. They can’t make the
+            comments stop; they’re designed to stop them turning into a fight
+            between you.
           </p>
           <p className="text-sm leading-normal text-ink-muted">
             {TOGETHER_CITATION.text}{" "}

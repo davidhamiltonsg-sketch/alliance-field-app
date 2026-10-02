@@ -181,7 +181,7 @@ describe("registry: banned wording", () => {
     // Care Check-in table in short; the monthly calendar reminder carries the full phrase (once per product).
     // The Situation Map's weekly row is routed to the
     // Weekly Reset, so its short line (voice pass 18) says "Once a month, it includes the Care Check-in."
-    const mentions = texts.filter((t) => /Care Check-in/.test(t.text) && !/^Care Check-in$/.test(t.text) && !/Is it fair\? Once a month, this part is the Care Check-in\.$/.test(t.text) && !/^Weekly Reset: about 40 minutes\. Once a month, it includes the Care Check-in\.$/.test(t.text) && !/^Each week, talk through who’s carrying what\. First Sunday of the month\? Use the Care Check-in table below for this part\.$/.test(t.text));
+    const mentions = texts.filter((t) => /Care Check-in/.test(t.text) && !/^Care Check-in$/.test(t.text) && !/whether the load feels fair\. Once a month, this part is the Care Check-in\.$/.test(t.text) && !/^Weekly Reset: about 40 minutes\. Once a month, it includes the Care Check-in\.$/.test(t.text) && !/^Each week, talk through who’s carrying what\. First Sunday of the month\? Use the Care Check-in table below for this part\.$/.test(t.text));
     expect(mentions.length).toBeGreaterThan(0);
     expect(mentions.some((m) => m.file.endsWith("lib/ics.ts") && m.text.includes(phrase.replace(/^the /, "")))).toBe(true);
     for (const m of mentions) {
