@@ -92,7 +92,7 @@ export function SystemDiagram() {
     {
       x: 0,
       title: "Manual",
-      sub: [`${KIT.manualChapters} chapters,`, "three parts"],
+      sub: [`${KIT.manualChapters} chapters,`, "four parts"],
       fill: V.white,
       iconId: "manual" as IconId,
     },

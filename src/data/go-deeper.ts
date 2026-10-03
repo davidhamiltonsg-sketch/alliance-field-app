@@ -5,28 +5,26 @@
  * are registry names (CANON round 5).
  */
 export interface ManualChapter {
-  /** Roman chapter number as printed, e.g. "XIII-A". */
+  /** Chapter number as printed, e.g. "14". */
   num: string;
   title: string;
 }
 
 export const manualChapters = {
-  I: { num: "I", title: "The Short Version" },
-  II: { num: "II", title: "Fast Start" },
-  IV: { num: "IV", title: "When Your Body Takes Over" },
-  IX: { num: "IX", title: "Team Over Self" },
-  X: { num: "X", title: "Two Ways of Caring" },
-  XI: { num: "XI", title: "Daily Rhythm" },
-  XII: { num: "XII", title: "Weekly Reset" },
-  XIII: { num: "XIII", title: "Conflict Protocol" },
-  "XIII-A": { num: "XIII-A", title: "Micro-Repairs" },
-  "XIII-B": { num: "XIII-B", title: "Full Recovery" },
-  "XIII-D": { num: "XIII-D", title: "When One of You Pulls Away" },
-  XIV: { num: "XIV", title: "The Intimacy Pact" },
-  XV: { num: "XV", title: "Proof Over Promises" },
-  XVI: { num: "XVI", title: "Trust Recovery" },
-  XVII: { num: "XVII", title: "Consistency Pact" },
-  "XVIII-A": { num: "XVIII-A", title: "The Sun Memory Protocol" },
+  "2": { num: "2", title: "The Short Version" },
+  "3": { num: "3", title: "When Your Body Takes Over" },
+  "4": { num: "4", title: "Getting Started" },
+  "9": { num: "9", title: "Team Over Self" },
+  "12": { num: "12", title: "Daily Rhythm" },
+  "13": { num: "13", title: "Weekly Reset" },
+  "14": { num: "14", title: "Micro-Repairs" },
+  "15": { num: "15", title: "Conflict Protocol" },
+  "16": { num: "16", title: "Full Recovery" },
+  "18": { num: "18", title: "Proof Over Promises" },
+  "19": { num: "19", title: "Trust Recovery" },
+  "20": { num: "20", title: "Consistency Pact" },
+  "21": { num: "21", title: "When One of You Pulls Away" },
+  "22": { num: "22", title: "The Intimacy Pact" },
 } as const satisfies Record<string, ManualChapter>;
 
 type ChapterKey = keyof typeof manualChapters;
@@ -38,24 +36,24 @@ type ChapterKey = keyof typeof manualChapters;
  * note, not a numbered chapter.
  */
 export const goDeeper: Record<string, { chapter: ChapterKey; companion?: string }> = {
-  "green-rule": { chapter: "I", companion: "Companion Ch I" },
-  "pause-and-return": { chapter: "IV", companion: "Companion Ch II" },
-  "60-second-reset": { chapter: "II", companion: "Companion Ch II" },
-  "micro-repair": { chapter: "XIII-A", companion: "Companion Ch I" },
-  "weekly-reset": { chapter: "XII", companion: "Companion Ch V" },
-  "system-overlay": { chapter: "I", companion: "Companion: The Third Voice" },
-  "conflict-protocol": { chapter: "XIII", companion: "Companion Ch II" },
-  "proof-protocol": { chapter: "XV", companion: "Companion Ch VI" },
-  "trust-recovery": { chapter: "XVI", companion: "Companion Ch VI" },
-  "full-recovery": { chapter: "XIII-B", companion: "Companion Ch IV" },
-  "uninvestment-check": { chapter: "XIII-D", companion: "Companion Ch V" },
-  "unity-anchor": { chapter: "IX" },
-  "morning-evening-rhythm": { chapter: "XI", companion: "Companion Ch V" },
-  "intimacy-pact": { chapter: "XIV" },
-  "consistency-pact": { chapter: "XVII" },
+  "green-rule": { chapter: "2", companion: "Companion Ch I" },
+  "pause-and-return": { chapter: "3", companion: "Companion Ch II" },
+  "60-second-reset": { chapter: "4", companion: "Companion Ch II" },
+  "micro-repair": { chapter: "14", companion: "Companion Ch I" },
+  "weekly-reset": { chapter: "13", companion: "Companion Ch V" },
+  "system-overlay": { chapter: "2", companion: "Companion: The Third Voice" },
+  "conflict-protocol": { chapter: "15", companion: "Companion Ch II" },
+  "proof-protocol": { chapter: "18", companion: "Companion Ch VI" },
+  "trust-recovery": { chapter: "19", companion: "Companion Ch VI" },
+  "full-recovery": { chapter: "16", companion: "Companion Ch IV" },
+  "uninvestment-check": { chapter: "21", companion: "Companion Ch V" },
+  "unity-anchor": { chapter: "9" },
+  "morning-evening-rhythm": { chapter: "12", companion: "Companion Ch V" },
+  "intimacy-pact": { chapter: "22" },
+  "consistency-pact": { chapter: "20" },
 };
 
-/** "Chapter XIII-A, Micro-Repairs" */
+/** "Chapter 14, Micro-Repairs" */
 export function chapterLabel(key: ChapterKey): string {
   const c = manualChapters[key];
   return `Chapter ${c.num}, ${c.title}`;

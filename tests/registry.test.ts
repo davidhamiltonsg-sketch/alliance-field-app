@@ -237,16 +237,14 @@ describe("registry: worksheets", () => {
 describe("Go deeper pointers", () => {
   // Chapter numbers and titles from the Operating Manual's table of contents.
   const MANUAL = new Map<string, string>([
-    ["I", "The Short Version"], ["II", "Fast Start"], ["III", "Introduction"],
-    ["IV", "When Your Body Takes Over"], ["V-A", "How Each of You Reaches for Closeness"],
-    ["V-B", "When Hurt Gets Explained Away"], ["VI", "The Four Phases"], ["VII", "How Couples Drift"],
-    ["VIII", "Hearing the Need Underneath"], ["IX", "Team Over Self"],
-    ["X", "Two Ways of Caring"], ["XI", "Daily Rhythm"], ["XI-A", "Sensory Comfort"],
-    ["XII", "Weekly Reset"], ["XIII", "Conflict Protocol"], ["XIII-A", "Micro-Repairs"],
-    ["XIII-B", "Full Recovery"], ["XIII-C", "Why the Tools Are Built This Way"],
-    ["XIII-D", "When One of You Pulls Away"], ["XIV", "The Intimacy Pact"],
-    ["XV", "Proof Over Promises"], ["XVI", "Trust Recovery"], ["XVII", "Consistency Pact"],
-    ["XVIII", "Making Room for Joy"], ["XVIII-A", "The Sun Memory Protocol"], ["XIX", "Regular Reviews"],
+    ["1", "Why a Relationship Needs a Plan"], ["2", "The Short Version"], ["3", "When Your Body Takes Over"],
+    ["4", "Getting Started"], ["5", "How Each of You Reaches for Closeness"], ["6", "Hearing the Need Underneath"],
+    ["7", "Two Ways of Caring"], ["8", "When Hurt Gets Explained Away"], ["9", "Team Over Self"],
+    ["10", "How Couples Drift"], ["11", "The Four Phases"], ["12", "Daily Rhythm"], ["13", "Weekly Reset"],
+    ["14", "Micro-Repairs"], ["15", "Conflict Protocol"], ["16", "Full Recovery"],
+    ["17", "Why the Tools Are Built This Way"], ["18", "Proof Over Promises"], ["19", "Trust Recovery"],
+    ["20", "Consistency Pact"], ["21", "When One of You Pulls Away"], ["22", "The Intimacy Pact"],
+    ["23", "Making Room for Joy"], ["24", "The Sun Memory Protocol"], ["25", "Sensory Comfort"], ["26", "Regular Reviews"],
   ]);
 
   it("names a real Manual chapter (and Companion chapter) for every protocol", async () => {
