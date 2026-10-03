@@ -124,7 +124,7 @@ export function SystemDiagram() {
   return (
     <Frame
       viewBox="0 0 340 338"
-      label="Manual, Field Kit and Field App work as one system: find the situation, pull the protocol, practise it."
+      label="Same tools, same words, wherever you are."
     >
       {cards.map((c, i) => (
         <g key={c.title} {...a("dg-rise", 80 + i * 140)}>
@@ -187,7 +187,7 @@ export function SystemDiagram() {
         {/* flood gate: pause advisory strip */}
         <AdvisoryStrip x={0} y={272} w={340} h={32} {...a("dg-rise", 2100)}>
           <text x={42} y={292.5} fontSize={13.5} fill={V.ink}>
-            Flooded? Pause + Return or Green Rule first.
+            Flooded? Pause + Return or the 60-Second Reset.
           </text>
         </AdvisoryStrip>
       </g>
@@ -223,7 +223,7 @@ export function SituationMapDiagram() {
       label="Situation Map: answer yes or no from the top. Afraid, threatened, or not free to say no: stop and get outside help. Flooded or shut down but safe: Pause + Return. Outside pressure or disapproval from family, friends or strangers: Unity Anchor. Trust breach: Trust Recovery plus Proof. Pulling away: Uninvestment Check."
     >
       <text x={2} y={13} fontSize={13.5} fill={V.muted} {...a("dg-fade", 0)}>
-        Follow the first match, top to bottom.
+        Take the first row that fits, top to bottom.
       </text>
       {rows.map((r, i) => {
         const y = top + i * pitch;
@@ -396,7 +396,7 @@ export function PauseTimelineDiagram() {
 }
 
 /* ------------------------------------------------------------------ */
-/* 6. Connection Cards: woven ring, five stages, 35 questions           */
+/* 6. Connection Cards: woven ring, five kinds, 35 questions            */
 /* ------------------------------------------------------------------ */
 export function ConnectionCardsDiagram() {
   const cx = 78,
@@ -407,7 +407,7 @@ export function ConnectionCardsDiagram() {
     { title: "Curiosity", sub: "What’s changed lately" },
     { title: "Care", sub: "What they’re carrying" },
     { title: "Repair", sub: "No re-arguing it" },
-    { title: "Alliance", sub: "On purpose, together" },
+    { title: "Alliance", sub: "Looking ahead, together" },
   ];
   const seg = 72,
     gapDeg = 15;
@@ -424,7 +424,7 @@ export function ConnectionCardsDiagram() {
   return (
     <Frame
       viewBox="0 0 340 280"
-      label="Connection Cards: five stages, Warmth, Curiosity, Care, Repair, Alliance. Thirty-five questions to flip through, alone or together."
+      label="Connection Cards: five kinds of question, Warmth, Curiosity, Care, Repair, Alliance. Thirty-five questions to ask each other."
     >
       <g {...a("dg-fade", 150, 900)}>
         <path d={`M${ros.join("L")}Z`} fill="none" stroke={V.rim} strokeWidth={0.5} strokeOpacity={0.65} />
@@ -468,7 +468,7 @@ export function ConnectionCardsDiagram() {
       </g>
       <AdvisoryStrip kind="connection" x={0} y={246} w={340} h={32} {...a("dg-rise", 3000)}>
         <text x={42} y={266.5} fontSize={13.5} fill={V.ink}>
-          No wrong answers — flip a card, go deeper.
+          Pick one, ask it, and hear the whole answer.
         </text>
       </AdvisoryStrip>
     </Frame>
@@ -480,10 +480,10 @@ export function ConnectionCardsDiagram() {
 /* ------------------------------------------------------------------ */
 export function ResetStepsDiagram() {
   const steps = [
-    { title: "Stop", sub: "Quit trying to win or solve it." },
+    { title: "Stop", sub: "Let go of winning or solving it for now." },
     { title: "Say it", sub: "“I want to connect, not fight.”" },
-    { title: "Touch (only if welcome)", sub: "A brief touch is enough." },
-    { title: "Breathe", sub: "Three slow breaths together." },
+    { title: "Touch (only if welcome)", sub: "Keep it brief and leave it at that." },
+    { title: "Breathe", sub: "Take three slow breaths together." },
     { title: "Return", sub: "Pick an exact time to keep talking." },
   ];
   const pitch = 56,
@@ -491,7 +491,7 @@ export function ResetStepsDiagram() {
   return (
     <Frame
       viewBox="0 0 340 336"
-      label="60-Second Alliance Reset: stop, say “I want to connect, not fight”, a brief touch only if welcome, three slow breaths, then pick an exact time to keep talking. Afraid, not just flooded? Stop and get help."
+      label="60-Second Alliance Reset: stop, say “I want to connect, not fight”, a brief touch only if it’s welcome, three slow breaths, then pick an exact time to keep talking. Afraid, not just flooded? Stop and get help."
     >
       {steps.map((s, i) => {
         const y = 4 + i * pitch;
@@ -525,7 +525,7 @@ export function CoreFiveDiagram() {
   const tools: { slug: IconId; title: string; sub: string; color: string }[] = [
     { slug: "green-rule", title: "Green Rule (Safety Gate)", sub: "Honesty is never punished.", color: V.safety },
     { slug: "pause-and-return", title: "Pause + Return", sub: "20 min – 24 h, exact return time.", color: V.pause },
-    { slug: "60-second-reset", title: "60-Second Alliance Reset", sub: "Stop a fight to win.", color: V.pause },
+    { slug: "60-second-reset", title: "60-Second Alliance Reset", sub: "When it’s become a fight to win.", color: V.pause },
     { slug: "micro-repair", title: "Micro-Repair", sub: "Small repairs, early.", color: V.repair },
     { slug: "weekly-reset", title: "Weekly Reset", sub: "Five parts, about 40 minutes.", color: V.accent },
   ];

@@ -132,7 +132,7 @@ export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
             <li className="flex items-center gap-2">
               <ApIcon id="manual" size={20} className="text-accent" />
               <span>
-                Operating Manual: <span className="text-ink">{chapterLabel(deeper.chapter)}</span>, for the reasoning and edge cases.
+                Operating Manual: <span className="text-ink">{chapterLabel(deeper.chapter)}</span>, for the reasoning and the harder cases.
               </span>
             </li>
           )}
@@ -146,14 +146,14 @@ export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
                   {sheets.length === 1 && sheets[0].detail ? ` (${sheets[0].detail})` : ""}
                 </>
               ) : null}
-              , to keep on the fridge.
+              , to keep in the folder.
             </span>
           </li>
           {deeper?.companion && (
             <li className="flex items-center gap-2">
               <ApIcon id="companion" size={20} className="text-accent" />
               <span>
-                <span className="text-ink">{deeper.companion}</span>, for why it works.
+                <span className="text-ink">{deeper.companion}</span>, for the why behind it.
               </span>
             </li>
           )}

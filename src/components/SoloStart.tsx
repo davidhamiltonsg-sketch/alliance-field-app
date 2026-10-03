@@ -33,7 +33,7 @@ export function SoloStart() {
         </li>
         <li className="list-disc">
           <strong className="font-medium text-ink">Invite, don’t assign</strong>{" "}
-          — “I found something I’d like us to try” works better than homework.
+          — “I found something I’d like us to try.” Ask; don’t hand it over like homework.
         </li>
       </ul>
       <p className="mt-2.5 text-base font-medium leading-normal text-ink">

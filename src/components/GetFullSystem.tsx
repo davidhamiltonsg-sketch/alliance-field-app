@@ -4,7 +4,7 @@ import { SituationMapDownload } from "./SituationMapDownload";
 import { POSITIONING_LINE, SIGNUP_ACTIVE, STORE_URLS, type StoreProduct } from "@/lib/links";
 
 const products: { id: StoreProduct; name: string; note: string }[] = [
-  { id: "manual", name: "Operating Manual", note: "The reference: every protocol in full" },
+  { id: "manual", name: "Operating Manual", note: "Every protocol in full, for when you want the why." },
   { id: "kit", name: "Field Kit", note: "Printable cards, worksheets and the Situation Map" },
   { id: "bundle", name: "Complete Bundle", note: "Manual + Field Kit + Companion Book" },
 ];
@@ -19,12 +19,12 @@ export function GetFullSystem() {
   const forSale = products.filter((p) => STORE_URLS[p.id]);
   return (
     <section className="space-y-3">
-      <SectionLabel>Get the full system</SectionLabel>
+      <SectionLabel>The books, if you want more.</SectionLabel>
       <div className="card space-y-3 px-4 py-4">
         <p className="text-base leading-normal text-ink">
-          This app is free, always. The Operating Manual and Field Kit — every
-          protocol in full, the printable cards, the worksheets — are a
-          one-time purchase. Digital PDF + HTML.
+          The app is free. For the Operating Manual and Field Kit, pay once
+          for the whole set: every protocol in full, plus the cards and
+          worksheets to print. Digital PDF + HTML.
         </p>
         <p className="text-base font-medium leading-normal text-accent">{POSITIONING_LINE}</p>
         {forSale.length > 0 ? (
@@ -51,7 +51,9 @@ export function GetFullSystem() {
           </ul>
         ) : (
           <p className="flex min-h-12 w-full items-center justify-center rounded-xl border border-dashed border-accent/35 px-4 text-center text-base font-medium text-accent">
-            {SIGNUP_ACTIVE ? "Coming soon — sign up below to hear first." : "Coming soon."}
+            {SIGNUP_ACTIVE
+              ? "The books aren’t on sale yet; leave your email and we’ll tell you when they are."
+              : "The books aren’t on sale yet."}
           </p>
         )}
 

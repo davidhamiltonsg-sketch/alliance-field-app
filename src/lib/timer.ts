@@ -60,7 +60,7 @@ export function parseCustomMinutes(input: string): Checked<{ minutes: number }> 
   if (!/^\d+$/.test(t)) return { ok: false, error: "Enter a whole number of minutes, 20 to 1440." };
   const minutes = Number(t);
   if (minutes < PAUSE_MIN_MINUTES) {
-    return { ok: false, error: "A pause needs at least 20 minutes to calm down. Pick 20 or more." };
+    return { ok: false, error: "A pause needs at least 20 minutes to get calm. Pick 20 or more." };
   }
   if (minutes > PAUSE_MAX_MINUTES) {
     return { ok: false, error: "24 hours (1440 minutes) is the maximum. Pick a shorter pause." };
@@ -80,8 +80,8 @@ export function clockReturnTarget(hhmm: string, now: Date): Checked<{ target: Da
   target.setHours(Number(m[1]), Number(m[2]), 0, 0);
   if (target.getTime() <= now.getTime()) target.setDate(target.getDate() + 1);
   const delta = target.getTime() - now.getTime();
-  if (delta < PAUSE_MIN_MINUTES * MINUTE) return { ok: false, error: "That’s less than 20 minutes away — pick a later time." };
-  if (delta > PAUSE_MAX_MINUTES * MINUTE) return { ok: false, error: "That’s more than 24 hours away — pick a sooner time." };
+  if (delta < PAUSE_MIN_MINUTES * MINUTE) return { ok: false, error: "That’s less than 20 minutes away. Pick a later time." };
+  if (delta > PAUSE_MAX_MINUTES * MINUTE) return { ok: false, error: "That’s more than 24 hours away. Pick a sooner time." };
   return { ok: true, target };
 }
 

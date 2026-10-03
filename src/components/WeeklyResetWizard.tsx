@@ -5,6 +5,8 @@ import Link from "next/link";
 import type { WorksheetDraft } from "@/data/types";
 import {
   appendWeeklyHistory,
+  CARE_BALANCE_LABELS,
+  careDomainLabel,
   clearKey,
   clearWeeklyHistory,
   emptyWeeklyDraft,
@@ -123,7 +125,7 @@ function WeeklyResetWizardClient() {
           </p>
         </div>
         <PrimaryButton onClick={addToCalendar}>
-          {calendarAdded ? "Reminder downloaded ✓" : "Add weekly reminder to calendar"}
+          {calendarAdded ? "Saved. Open the file to add it to your calendar." : "Add weekly reminder to calendar"}
         </PrimaryButton>
         {recent.length > 0 && (
           <div className="card space-y-2 px-4 py-3.5 text-sm leading-normal">
@@ -199,9 +201,8 @@ function WeeklyResetWizardClient() {
           onNext={() => setStep(3)}
         >
           <p className="text-sm leading-normal text-ink-muted">
-            Each week, talk through who’s carrying what. In the first Reset of
-            the month, this step is the monthly Care Check-in (inside the Weekly
-            Reset): mark each area below.
+            Each week, talk through who’s carrying what. First Sunday of the
+            month? Use the Care Check-in table below for this part.
           </p>
           <ul className="space-y-3">
             {draft.careAudit.map((row, i) => (
@@ -209,9 +210,9 @@ function WeeklyResetWizardClient() {
                 key={row.domain}
                 className="rounded-xl border border-rule/35 bg-surface-activity px-3 py-3"
               >
-                <p className="text-base font-medium">{row.domain}</p>
-                <div className="mt-2 flex flex-wrap items-center gap-2" role="group" aria-label={`${row.domain}: load`}>
-                  <span className="w-20 text-sm text-ink-muted" aria-hidden>Load</span>
+                <p className="text-base font-medium">{careDomainLabel(row.domain)}</p>
+                <div className="mt-2 flex flex-wrap items-center gap-2" role="group" aria-label={`${careDomainLabel(row.domain)}: even or lopsided?`}>
+                  <span className="w-28 text-sm text-ink-muted" aria-hidden>Even / Lopsided</span>
                   {(["balanced", "skewed"] as const).map((b) => (
                     <button
                       key={b}
@@ -224,12 +225,12 @@ function WeeklyResetWizardClient() {
                           : "border border-rule/60 bg-white text-ink"
                       }`}
                     >
-                      {b}
+                      {CARE_BALANCE_LABELS[b]}
                     </button>
                   ))}
                 </div>
-                <div className="mt-2 flex flex-wrap items-center gap-2" role="group" aria-label={`${row.domain}: rebalance?`}>
-                  <span className="w-20 text-sm text-ink-muted" aria-hidden>Rebalance?</span>
+                <div className="mt-2 flex flex-wrap items-center gap-2" role="group" aria-label={`${careDomainLabel(row.domain)}: change it?`}>
+                  <span className="w-28 text-sm text-ink-muted" aria-hidden>Change it?</span>
                   {(["yes", "no"] as const).map((r) => (
                     <button
                       key={r}
@@ -250,12 +251,12 @@ function WeeklyResetWizardClient() {
             ))}
           </ul>
           <Field
-            label="Felt supported when"
+            label="I felt supported when"
             value={draft.supportedWhen}
             onChange={(v) => update({ supportedWhen: v })}
           />
           <Field
-            label="Felt alone when"
+            label="I felt alone when"
             value={draft.aloneWhen}
             onChange={(v) => update({ aloneWhen: v })}
           />
@@ -272,23 +273,23 @@ function WeeklyResetWizardClient() {
           onNext={() => setStep(4)}
         >
           <Field
-            label="Partner A: friction"
+            label="A’s friction point"
             value={draft.frictionA}
             onChange={(v) => update({ frictionA: v })}
           />
           <Field
-            label="Partner A: ask"
+            label="A asks for…"
             value={draft.askA}
             onChange={(v) => update({ askA: v })}
             placeholder="One specific ask…"
           />
           <Field
-            label="Partner B: friction"
+            label="B’s friction point"
             value={draft.frictionB}
             onChange={(v) => update({ frictionB: v })}
           />
           <Field
-            label="Partner B: ask"
+            label="B asks for…"
             value={draft.askB}
             onChange={(v) => update({ askB: v })}
             placeholder="One specific ask…"
@@ -306,17 +307,17 @@ function WeeklyResetWizardClient() {
           onNext={() => setStep(5)}
         >
           <p className="text-base leading-normal text-ink-muted">
-            Confirm one specific ask each for next week (from friction). Edit
-            below if needed. Requests and next steps share the last 5
-            minutes.
+            One specific ask each for next week (start from your friction points).
+            Requests and next steps share the last five minutes. Edit anything
+            that doesn’t sound right.
           </p>
           <Field
-            label="Partner A request"
+            label="A asks for…"
             value={draft.askA}
             onChange={(v) => update({ askA: v })}
           />
           <Field
-            label="Partner B request"
+            label="B asks for…"
             value={draft.askB}
             onChange={(v) => update({ askB: v })}
           />
@@ -355,9 +356,9 @@ function WeeklyResetWizardClient() {
       )}
 
       {confirmClear ? (
-        <div role="group" aria-label="Clear Weekly Reset data" className="space-y-2 rounded-xl border border-rule/60 bg-white px-3.5 py-3">
+        <div role="group" aria-label="Clear this week’s notes" className="space-y-2 rounded-xl border border-rule/60 bg-white px-3.5 py-3">
           <p className="text-sm leading-normal text-ink-muted">
-            What should be cleared from this device?
+            What would you like to clear from this phone?
           </p>
           <button
             type="button"

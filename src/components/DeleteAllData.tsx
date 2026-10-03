@@ -36,11 +36,11 @@ export function DeleteAllData() {
   return (
     <div className="card space-y-3 px-4 py-4">
       <p className="text-base leading-normal text-ink">
-        Everything you enter — pause return times, Weekly Reset answers and
+        Everything you enter — the times you set to come back, your Weekly Reset answers and
         history, calibration answers, favourites, 7-day plan ticks — stays on
-        this device. The
-        app has no account. The only time any data leaves your device is if
-        you choose to submit your email for updates. (While early access is
+        your phone. The
+        app has no account. The only time any data leaves your phone is if
+        you choose to give us your email for updates. (While early access is
         on, one sign-in cookie remembers the access code; it holds nothing
         about you.){" "}
         <Link href="/privacy" className="font-medium text-accent underline underline-offset-4">
@@ -100,7 +100,7 @@ export function DeleteAllData() {
         className="focus-target text-base font-medium text-accent empty:hidden"
       >
         {status === "done"
-          ? "Deleted. Your saved answers and the offline copy are gone from this browser. Next time you open or reload the app, it downloads a fresh offline copy, with none of your old answers. The early-access cookie, if you have one, isn’t touched; it holds nothing about you and expires on its own."
+          ? "Deleted. Everything you saved is gone from this phone. Next time you open the app, it starts fresh."
           : ""}
       </p>
     </div>

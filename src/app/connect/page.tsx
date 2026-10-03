@@ -13,8 +13,8 @@ export default function ConnectPage() {
         eyebrow={<Marker kind="TOOL" label="Connection Cards" icon="connection-cards" />}
         title="Connection Cards"
       >
-        Five stages, one flip at a time — Warmth, Curiosity, Care, Repair,
-        Alliance. Pick a stage, or draw from all five.
+        Five kinds of question, one flip at a time — Warmth, Curiosity, Care,
+        Repair, Alliance. Pick one kind, or draw from all five.
       </PageHeader>
       <ConnectionCards />
       <Link

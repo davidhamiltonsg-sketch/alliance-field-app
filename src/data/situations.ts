@@ -3,7 +3,7 @@ import type { Situation } from "./types";
 /**
  * The Situation Map: the one 12-row list, in the exact order every map uses
  * (CANON round 5; registry concepts.situation-map.rowsCanonical):
- * follow the first match, top to bottom. Safety routing always comes first;
+ * take the first row that fits, top to bottom. Safety routing always comes first;
  * never route "unsafe" to Pause + Return.
  */
 export const situations: Situation[] = [
@@ -11,7 +11,7 @@ export const situations: Situation[] = [
     id: "unsafe",
     label: "I’m afraid, being threatened, or not free to say no",
     description:
-      "Afraid of your partner, threats, pressure or control — not just a hard conversation. This includes jealousy that leads to checking, restricting, or accusing.",
+      "You’re afraid of your partner, or being threatened, pressured or controlled, and it’s more than a hard conversation. This includes jealousy that leads to checking, restricting, or accusing.",
     firstMove: "Stop. These tools are not for this. Get outside help (see Help Lines).",
     primaryHref: "/help",
     danger: true,
@@ -31,7 +31,7 @@ export const situations: Situation[] = [
     id: "outside-pressure",
     label: "Outside pressure or disapproval from family, friends or strangers",
     description:
-      "Family disapproval, discrimination or judgement from others is landing on the two of you. Pressure from your partner isn’t this row: Green Rule, or row 1.",
+      "Family disapproval, discrimination or judgement from others is landing on the two of you. If the pressure is coming from your partner, this isn’t the right tool. Go to the Green Rule, or to Help if you’re afraid.",
     firstMove: "Unity Anchor: decide together how the couple responds. Never limit a partner’s contact with anyone.",
     primaryHref: "/protocols/unity-anchor",
     secondaryHrefs: [{ label: "Together under pressure", href: "/together" }],
@@ -40,7 +40,7 @@ export const situations: Situation[] = [
     id: "trust-breach",
     label: "Trust breach",
     description: "Lying, infidelity or a broken agreement.",
-    firstMove: "Safety first, then Trust Recovery + Proof. Review the record at the agreed check-in.",
+    firstMove: "Safety first, then Trust Recovery + Proof. Agree one change you’ll both see, and look at it together at a set check-in.",
     primaryHref: "/protocols/trust-recovery",
     secondaryHrefs: [{ label: "Proof Protocol", href: "/protocols/proof-protocol" }],
   },
@@ -49,15 +49,15 @@ export const situations: Situation[] = [
     label: "Pulling away / uninvestment",
     description: "Warmth missing, repairs on autopilot: several signs of pulling away, not just needing space.",
     firstMove:
-      "Uninvestment Check. 0 signs: nothing to fix. 1–2: space and small repairs. 3 or more: may be pulling away — book a Full Recovery within a week. Contempt, fear or coercion: outside support first.",
+      "Uninvestment Check: each of you marks the signs on your own, then compare. Three or more: book a Full Recovery within a week. Contempt, fear or coercion: stop and get outside support first.",
     primaryHref: "/protocols/uninvestment-check",
     secondaryHrefs: [{ label: "Full Recovery", href: "/protocols/full-recovery" }],
   },
   {
     id: "conflict-starting",
     label: "A fight is starting",
-    description: "Tone is rising; it’s starting to feel like a courtroom, not a conversation.",
-    firstMove: "System Overlay · Conflict Protocol. Green Rule first; flooded midway → Pause + Return.",
+    description: "Voices are rising and you’re both building a case.",
+    firstMove: "Check it’s safe to speak (Green Rule). Then take it in order: System Overlay, then the Conflict Protocol if it runs long. If either of you floods partway through, switch to Pause + Return.",
     primaryHref: "/protocols/system-overlay",
     secondaryHrefs: [
       { label: "Conflict Protocol", href: "/protocols/conflict-protocol" },
@@ -67,8 +67,8 @@ export const situations: Situation[] = [
   {
     id: "after-fight",
     label: "After a fight, or something small stung",
-    description: "Still feeling the sting, or leftover friction from a sharp tone or a broken small agreement.",
-    firstMove: "Micro-Repair: start within minutes if you can; complete within 24 hours. Bigger: Full Recovery; changes: Proof Protocol.",
+    description: "Something sharp was said, or a small promise slipped, and it’s still sitting there.",
+    firstMove: "Micro-Repair: start within minutes if you can; complete within 24 hours. Bigger hurts go to Full Recovery.",
     primaryHref: "/protocols/micro-repair",
     secondaryHrefs: [
       { label: "Full Recovery", href: "/protocols/full-recovery" },
@@ -78,8 +78,9 @@ export const situations: Situation[] = [
   {
     id: "attachment-clash",
     label: "We keep clashing the same way",
-    description: "Reach–Recoil (one reaches, the other pulls back), the same ask on repeat, or out of sync on timing (Pace Mismatch).",
-    firstMove: "Circuit Library / Failure Mode Diagnostic (in the Manual and Field Kit), plus Profile Calibration here.",
+    description: "Reach–Recoil (one reaches, the other pulls back), the same ask on repeat, or one of you always wanting to talk sooner than the other.",
+    firstMove: "Name it out loud: “I think we’re doing the thing again.” Later, when you’re calm, find it in the Circuit Library. To see where you two differ, try Profile Calibration together.",
+    goDeeper: "The Circuit Library is Manual Appendix A; for timing clashes, see Manual Ch\u00a0X.",
     primaryHref: "/calibrate",
     icon: "profile-calibration",
     secondaryHrefs: [{ label: "System Overlay", href: "/protocols/system-overlay" }],
@@ -87,8 +88,8 @@ export const situations: Situation[] = [
   {
     id: "intimacy-stall",
     label: "Intimacy feels stuck",
-    description: "Initiating or declining feels tense; things have gone cold.",
-    firstMove: "Intimacy Pact. Pressure after a no → Green Rule talk; again, or either of you can’t say no → Help Lines.",
+    description: "Asking or saying no feels tense; things have gone cold.",
+    firstMove: "Intimacy Pact. Pressure after a no: stop and have a Green Rule talk. Again, or either of you can’t say no: stop and use the Help Lines.",
     primaryHref: "/protocols/intimacy-pact",
     secondaryHrefs: [{ label: "Help Lines", href: "/help" }],
   },
@@ -104,14 +105,14 @@ export const situations: Situation[] = [
     id: "daily-drift",
     label: "We feel like housemates",
     description: "Conversations are just logistics; the connection feels thin.",
-    firstMove: "Morning + Evening Rhythm. Rituals feel like a checklist? Sun Memory.",
+    firstMove: "Morning + Evening Rhythm. Feels like a chore? Take a night off fixing: a Sun Memory.",
     primaryHref: "/protocols/morning-evening-rhythm",
   },
   {
     id: "weekly-maintenance",
     label: "Time for our weekly check-in",
-    description: "A short, scheduled catch-up — not a trial.",
-    firstMove: "Weekly Reset: about 40 minutes, with the monthly Care Check-in (inside the Weekly Reset).",
+    description: "A short catch-up at a set time, to keep small things small.",
+    firstMove: "Weekly Reset: about 40 minutes. Once a month, it includes the Care Check-in.",
     primaryHref: "/weekly-reset",
     secondaryHrefs: [{ label: "Weekly Reset card", href: "/protocols/weekly-reset" }],
   },

@@ -6,6 +6,7 @@ import { SectionLabel } from "@/components/SectionLabel";
 import { WarnBanner } from "@/components/WarnBanner";
 import { ArrowLeft, ArrowRight, ChevronRight } from "@/components/icons";
 import { authorsCoupleLine } from "@/data/authors";
+import { HELP_LINES_POINTER } from "@/data/help";
 import { getProtocol } from "@/data/protocols";
 import {
   TOGETHER_CITATION,
@@ -20,7 +21,7 @@ import {
 export const metadata = {
   title: "Together against outside pressure",
   description:
-    "For interracial, intercultural and other couples facing outside pressure: face it from the same side, with the Unity Anchor.",
+    "For interracial, intercultural and other couples facing outside pressure: face it together, with the Unity Anchor.",
 };
 
 export default function TogetherPage() {
@@ -54,11 +55,11 @@ export default function TogetherPage() {
             {outsideExamples.at(-1)}.
           </p>
           <p>
-            Researchers call the second kind <strong className="font-medium">minority stress</strong>:
-            extra strain that comes from how others treat a relationship, not
-            from the relationship itself. A recent review looks at how that
-            outside strain can reach into couples’ lives. The protocols
-            draw on that literature; they don’t claim to settle it.
+            There’s a name for this: <strong className="font-medium">minority stress</strong>,
+            the strain that comes from how other people treat your
+            relationship. The tools draw on that research. They can’t make the
+            comments stop; they’re designed to keep them from turning into a fight
+            between you.
           </p>
           <p className="text-sm leading-normal text-ink-muted">
             {TOGETHER_CITATION.text}{" "}
@@ -101,9 +102,10 @@ export default function TogetherPage() {
         <PhraseBlock phrases={anchor.phrases.slice(0, 2)} />
         <div className="card px-4 py-3.5 text-base leading-normal text-ink">
           <p>
-            <strong className="font-medium">Built-in safeguard.</strong> The
-            Unity Anchor decides how the two of you respond to outside
-            pressure — never how much access a relative gets to your partner.
+            <strong className="font-medium">If the pressure is coming from your
+            partner, this isn’t the right tool.</strong> Go to the Green Rule,
+            or to Help if you’re afraid. The Unity Anchor is there to help you two decide how to respond to
+            outside pressure — never how much access a relative gets to your partner.
             No tool is ever used to limit a partner’s contact with
             friends, family, money, phone or movement.
           </p>
@@ -112,7 +114,7 @@ export default function TogetherPage() {
 
       <section aria-labelledby="moves-heading" className="space-y-3">
         <SectionLabel>
-          <span id="moves-heading">Common moves, and the alliance move</span>
+          <span id="moves-heading">What usually happens, and what to try instead</span>
         </SectionLabel>
         <ul className="space-y-2.5">
           {commonMoves.map((m) => (
@@ -120,7 +122,7 @@ export default function TogetherPage() {
               <h3 className="display text-lg leading-snug">{m.move}</h3>
               <p className="mt-1 text-sm leading-snug text-ink-muted">{m.result}</p>
               <p className="mt-2 text-base leading-normal text-ink">
-                <span className="font-medium text-accent">Alliance move: </span>
+                <span className="font-medium text-accent">Try instead: </span>
                 {m.alliance}
               </p>
             </li>
@@ -176,8 +178,8 @@ export default function TogetherPage() {
         </ul>
         <WarnBanner pauseLink={false} safetyLink>
           Afraid of your partner, being threatened, or not free to say no?
-          Stop. These tools are not for this. Get outside help — help lines for
-          the US, UK, Australia and Singapore are on the Help page.
+          Stop. These tools are not for this. Get outside help.{" "}
+          {HELP_LINES_POINTER}
         </WarnBanner>
       </section>
 
@@ -188,10 +190,10 @@ export default function TogetherPage() {
         <div className="card space-y-3 px-4 py-4 text-base leading-normal text-ink">
           <p>{authorsCoupleLine}</p>
           <p>
-            Alliance Protocols is informed by research and clinical frameworks,
-            including the minority-stress literature, adapted by the authors.
-            It isn’t therapy and hasn’t been tested in a controlled
-            study.
+            This page is for the pressure that comes from outside. It draws on
+            published studies, including the minority-stress research cited
+            above. It isn’t therapy and
+            hasn’t been tested in a controlled study.
           </p>
           <p className="text-ink-muted">
             If you’d like professional support, look for a couples

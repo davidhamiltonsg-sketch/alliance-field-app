@@ -2,7 +2,7 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import { questions, scoreKeys } from "@/data/calibration/questions";
 import type { ChoiceKey, PersonAnswers } from "@/data/calibration/types";
-import { protocolSlugs } from "@/data/protocols";
+import { getProtocol, protocolSlugs } from "@/data/protocols";
 import { KIT } from "@/data/kit";
 import {
   CALIBRATION_KEY,
@@ -12,6 +12,7 @@ import {
   generateCoupleReport,
   generateProfile,
   isComplete,
+  NO_DIFFERENCE_SUMMARY,
   readCalibration,
   writeCalibration,
 } from "@/lib/calibration";
@@ -101,7 +102,7 @@ describe("generateProfile", () => {
     const profile = generateProfile("B", { name: "", answers: {} });
     expect(new Set(Object.values(profile.scores))).toEqual(new Set([50]));
     expect(profile.name).toBe("Partner B");
-    expect(profile.primaryPattern).toBe("Balanced profile — no single pattern stands out");
+    expect(profile.primaryPattern).toBe("No one pattern stands out yet.");
   });
 
   it("reports at most five distinct patterns and uses the name in the narrative", () => {
@@ -133,8 +134,34 @@ describe("generateCoupleReport", () => {
     const report = generateCoupleReport(a, b);
     expect(Object.values(report.layerHealth)).toEqual([100, 100, 100, 100, 100]);
     expect(report.coreMismatch).toEqual([
-      "No single mismatch dominates yet — keep using the tools and revisit this in a few weeks.",
+      "No one difference stands out yet. Keep using the tools and come back to this in a few weeks.",
     ]);
+  });
+
+  it("drops the “next step” line when no difference stands out, so it never points at nothing (voice pass 21; wording pass 27)", () => {
+    const a = generateProfile("A", { name: "A", answers: all("a") });
+    const b = generateProfile("B", { name: "B", answers: all("a") });
+    const report = generateCoupleReport(a, b);
+    expect(report.executiveSummary).toBe(NO_DIFFERENCE_SUMMARY);
+    expect(report.executiveSummary).toBe("You see things much the same way. Pick whatever you’d most like to talk about and start there.");
+    expect(report.executiveSummary).not.toMatch(/next step|turn it into|next check-in/);
+  });
+
+  it("offers the next step only when a difference exists", () => {
+    const report = generateCoupleReport(
+      generateProfile("A", { name: "Sam", answers: all("a") }),
+      generateProfile("B", { name: "Alex", answers: all("b") }),
+    );
+    expect(report.executiveSummary).toContain("look at how it went at your next check-in");
+    expect(report.executiveSummary).not.toContain(NO_DIFFERENCE_SUMMARY);
+  });
+
+  it("keeps each profile to one “may” line (voice pass 21)", () => {
+    for (const choice of ["a", "b"] as const) {
+      const p = generateProfile("A", { name: "Sam", answers: all(choice) });
+      const lines = [...p.patterns, p.safetyLogic, p.careStyle, p.conflictResponse, p.privacyAutonomy, ...p.likelyMisreads];
+      expect(lines.join(" ").match(/\bmay\b/g)?.length ?? 0, choice).toBeLessThanOrEqual(1);
+    }
   });
 
   it("lowers layer health and names divergences for opposite profiles", () => {
@@ -146,6 +173,15 @@ describe("generateCoupleReport", () => {
     expect(report.coreMismatch.length).toBeLessThanOrEqual(4);
     expect(report.misreadRisks.length).toBeLessThanOrEqual(5);
     expect(report.conflictPattern).toMatch(/Sam|Alex|Both of you/);
+  });
+
+  it("uses the System Overlay card’s Say This lines, word for word", () => {
+    const report = generateCoupleReport(
+      generateProfile("A", { name: "A", answers: all("a") }),
+      generateProfile("B", { name: "B", answers: all("b") }),
+    );
+    expect(report.scriptPack).toEqual(getProtocol("system-overlay")!.phrases.map((p) => p.text));
+    expect(report.scriptPack.length).toBeGreaterThan(0);
   });
 
   it("is symmetric in layer health", () => {
@@ -163,8 +199,8 @@ describe("generateCoupleReport", () => {
       );
       expect(report.recommendedTools.length).toBeGreaterThan(0);
       for (const t of report.recommendedTools) expect(protocolSlugs).toContain(t.slug);
-      expect(report.recommendedSequence[0]).toBe("Warmth signal");
-      expect(report.recommendedSequence.at(-1)).toBe("Review at Weekly Reset");
+      expect(report.recommendedSequence[0]).toBe("One warm, true sentence");
+      expect(report.recommendedSequence.at(-1)).toBe("Check how last week’s Reset went");
       expect(new Set(report.recommendedSequence).size).toBe(report.recommendedSequence.length);
     }
   });

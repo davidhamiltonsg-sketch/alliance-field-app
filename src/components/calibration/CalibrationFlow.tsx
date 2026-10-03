@@ -120,7 +120,7 @@ function CalibrationFlowClient() {
           </div>
         </div>
         <p className="text-sm leading-normal text-ink-muted">
-          One question at a time. Answer for yourself, then hand the device over for your partner’s turn.
+          One question at a time. Answer for yourself, then pass the phone to your partner.
         </p>
         <PrimaryButton onClick={() => setPhase("quiz")}>Begin — {state.personA.name}’s turn</PrimaryButton>
       </div>
@@ -131,9 +131,9 @@ function CalibrationFlowClient() {
     return (
       <div className="space-y-4 text-center">
         <div className="card space-y-2 px-4 py-6">
-          <p className="display text-lg leading-tight">{state.personA.name}’s profile is calibrated.</p>
+          <p className="display text-lg leading-tight">{state.personA.name}’s answers are in.</p>
           <p className="text-base leading-normal text-ink-muted">
-            Hand the device to {state.personB.name}. Same 44 questions, answered for themself.
+            Pass the phone to {state.personB.name}. Same 44 questions, answered for themselves.
           </p>
         </div>
         <fieldset className="card space-y-2.5 px-4 py-4 text-left">

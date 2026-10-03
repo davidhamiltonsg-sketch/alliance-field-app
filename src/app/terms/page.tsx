@@ -23,7 +23,7 @@ export default function TermsPage() {
     <div className="space-y-6">
       <PageHeader eyebrow={<Marker kind="NOTE" label="Plain English" />} title="Website terms">
         The rules for using this site and the free Field App, in plain words.
-        Using the site means you accept them.
+        If you use the site, these are the rules you’re agreeing to.
       </PageHeader>
 
       <section aria-labelledby="who-runs-heading" className="space-y-3">
@@ -53,12 +53,12 @@ export default function TermsPage() {
             your partner, being threatened, or not free to say no, these tools
             are not for this:{" "}
             <Link href="/help" className="font-medium text-failure underline underline-offset-4">
-              use the help lines
+              use the Help Lines
             </Link>
             .
           </p>
           <p>
-            The site and app are provided as they are. We work to keep them
+            We offer the site and app as they are. We work to keep them
             accurate and available, but we don’t promise that they will suit
             your situation, be free of errors, or always be online.
           </p>

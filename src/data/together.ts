@@ -21,7 +21,7 @@ export const outsideExamples = [
   "a parent who won’t say your partner’s name",
   "a relative’s “joke” at a holiday dinner",
   "the bill handed to the “obvious” person",
-  "a stranger asking where your partner is really from",
+  "a shop assistant asking if you two are “together”",
   "forms and customs that assume you’re a different kind of couple",
 ];
 
@@ -29,7 +29,7 @@ export const whoFor = [
   "Interracial, intercultural and interfaith couples.",
   "Couples facing disapproval because of age gap, class, nationality, migration status, or sexual or gender identity.",
   "Couples where one partner is new to a country, a language or a family’s customs.",
-  "Couples where only one of you is ready to start. The Unity Anchor works best together, but one person can begin by saying: “That’s coming from them, not from us.”",
+  "Couples where only one of you is ready to start. The Unity Anchor is meant for the two of you, but one person can begin by saying: “That’s coming from them, not from us.”",
 ];
 
 export const notFor = [
@@ -47,22 +47,22 @@ export interface CommonMove {
 export const commonMoves: CommonMove[] = [
   {
     move: "Debating whether the comment was “really” racist or rude",
-    result: "You end up opponents — one defending, one prosecuting.",
-    alliance: "Name the pressure as external first. Decide what it was later, if ever.",
+    result: "You end up opponents: one defending, one prosecuting.",
+    alliance: "Agree you’re a team on this before you work out what it was. After a cousin’s remark at a wedding, one of you might say: “That was about them, not us.” The other: “Agreed. We can talk about what it meant once we’re home, or not at all.”",
   },
   {
     move: "“Just ignore it”",
-    result: "One partner carries it alone.",
-    alliance: "Ask: reassurance, a plan, or just to vent?",
+    result: "One of you ends up carrying it alone.",
+    alliance: "Ask what each of you needs: reassurance, a plan, or a chance to vent.",
   },
   {
     move: "The partner whose family it is handles it alone",
-    result: "Resentment on both sides.",
-    alliance: "Decide the response as a team. Each partner handles their own family, with the plan agreed together.",
+    result: "You both end up resenting it.",
+    alliance: "Agree the response together, so neither of you is deciding alone.",
   },
   {
     move: "Re-arguing it after every visit",
-    result: "The same argument every holiday.",
+    result: "You have the same argument every holiday.",
     alliance: "Agree your response together before the next visit, not after it.",
   },
 ];
@@ -71,7 +71,7 @@ export const togetherTools = [
   {
     label: "Unity Anchor",
     href: "/protocols/unity-anchor",
-    note: "The step-by-step routine for outside pressure.",
+    note: "What to say and do when someone else’s comment hits you both.",
   },
   {
     label: "Situation Map",
@@ -81,7 +81,7 @@ export const togetherTools = [
   {
     label: "Weekly Reset",
     href: "/weekly-reset",
-    note: "A standing slot to plan for known pressure points — holidays, visits, weddings, moves.",
+    note: "A set time, before the holidays or the next visit, to agree how you’ll handle it.",
   },
   {
     label: "Pause + Return",
@@ -91,14 +91,14 @@ export const togetherTools = [
   {
     label: "Micro-Repair",
     href: "/protocols/micro-repair",
-    note: "Small repairs after a comment has landed badly at home.",
+    note: "Small repairs after a comment has stung at home.",
   },
 ];
 
 export const togetherFaq = [
   {
     q: "Is this only for interracial couples?",
-    a: "No. Every protocol is for any couple. This page gathers the parts that deal with outside pressure, which interracial and other minority-stress couples often meet more of.",
+    a: "No. Every protocol is for any couple. This page gathers the parts that deal with outside pressure, which interracial couples, and others who stand out, often meet more of.",
   },
   {
     q: "Does it tell me how to handle my partner’s family?",
@@ -106,6 +106,6 @@ export const togetherFaq = [
   },
   {
     q: "What if one of us doesn’t see what the other sees?",
-    a: "That’s common. The Unity Anchor starts by treating the strain as real and external, so you don’t have to win an argument about each incident before you can support each other.",
+    a: "That’s common. The Unity Anchor starts by treating the strain as real, and as coming from outside, so you don’t have to win an argument about each incident before you can support each other.",
   },
 ];

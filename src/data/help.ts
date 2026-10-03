@@ -13,6 +13,8 @@ export interface HelpNumber {
 
 export interface HelpRegion {
   region: string;
+  /** How the region reads inside a sentence ("the US"). */
+  inProse: string;
   lines: HelpNumber[];
 }
 
@@ -29,6 +31,7 @@ export const emergencyNumbers: HelpNumber[] = [
 export const helpRegions: HelpRegion[] = [
   {
     region: "US",
+    inProse: "the US",
     lines: [
       { label: "National Domestic Violence Hotline", display: "1-800-799-7233", href: "tel:18007997233" },
       { label: "National Domestic Violence Hotline (text START)", display: "88788", href: "sms:88788?body=START" },
@@ -37,6 +40,7 @@ export const helpRegions: HelpRegion[] = [
   },
   {
     region: "UK",
+    inProse: "the UK",
     lines: [
       { label: "National Domestic Abuse Helpline (Refuge)", display: "0808 2000 247", href: "tel:08082000247" },
       { label: "Samaritans", display: "116 123", href: "tel:116123" },
@@ -45,6 +49,7 @@ export const helpRegions: HelpRegion[] = [
   },
   {
     region: "Australia",
+    inProse: "Australia",
     lines: [
       { label: "1800RESPECT", display: "1800 737 732", href: "tel:1800737732" },
       { label: "Lifeline", display: "13 11 14", href: "tel:131114" },
@@ -52,6 +57,7 @@ export const helpRegions: HelpRegion[] = [
   },
   {
     region: "Singapore",
+    inProse: "Singapore",
     lines: [
       { label: "National Anti-Violence & Sexual Harassment Helpline", display: "1800 777 0000", href: "tel:18007770000" },
       { label: "SOS", display: "1767", href: "tel:1767" },
@@ -61,6 +67,7 @@ export const helpRegions: HelpRegion[] = [
   },
   {
     region: "EU",
+    inProse: "the EU",
     lines: [
       { label: "Helpline for women experiencing violence, where available", display: "116 016", href: "tel:116016" },
     ],
@@ -96,3 +103,22 @@ export const lgbtqLines: (HelpNumber & { region: string })[] = [
 ];
 
 export const ELSEWHERE_LINE = "Elsewhere: your local emergency number or national helpline.";
+
+/**
+ * Every Help Lines region, in order, plus "elsewhere". Any surface that
+ * lists or names the Help Lines regions must use this (or helpRegions and
+ * ELSEWHERE_LINE), so no page can drop a region.
+ */
+export const HELP_LINES_REGIONS: string[] = [...helpRegions.map((r) => r.region), "Elsewhere"];
+
+function proseList(items: string[]): string {
+  return items.length < 2 ? items.join("") : `${items.slice(0, -1).join(", ")} and ${items.at(-1)}`;
+}
+
+/**
+ * One sentence pointing to the Help page that names every region and says
+ * what to do anywhere else. Built from helpRegions, so it can't fall behind.
+ */
+export const HELP_LINES_POINTER = `The Help page has Help Lines for ${proseList(
+  helpRegions.map((r) => r.inProse),
+)}. Anywhere else, call your local emergency number or national helpline.`;

@@ -33,7 +33,7 @@ describe("/terms", () => {
     const t = text(await renderWith({ NEXT_PUBLIC_CONTACT_EMAIL: "" }, terms));
     expect(t).toContain("Alliance Protocols, by David Hamilton and Dr Zhongming Shi, Singapore");
     expect(t).toMatch(/not therapy/);
-    expect(t).toMatch(/provided as they are/);
+    expect(t).toMatch(/We offer the site and app as they are/);
     expect(t).toMatch(/Please don’t/);
     expect(t).toMatch(/limit their contact with friends, family, money, phone or movement/);
     expect(t).toMatch(/statutory rights are not affected/i);
@@ -81,11 +81,11 @@ describe("/privacy", () => {
   });
 });
 
-describe("Get the full system", () => {
+describe("The books, if you want more.", () => {
   it("hides buy links when no store URL is set", async () => {
     const html = await renderWith({ NEXT_PUBLIC_FULL_SYSTEM_URL: "", NEXT_PUBLIC_STORE_URL_MANUAL: "", NEXT_PUBLIC_STORE_URL_KIT: "", NEXT_PUBLIC_STORE_URL_BUNDLE: "" }, store);
     expect(html).not.toMatch(/>Buy/);
-    expect(text(html)).toContain("Coming soon.");
+    expect(text(html)).toContain("The books aren’t on sale yet.");
     expect(text(html)).toContain("Digital PDF + HTML");
     // Sign-up isn't live, so the card doesn't promise it.
     expect(text(html)).not.toContain("sign up below");
@@ -124,7 +124,7 @@ describe("email sign-up", () => {
 describe("About", () => {
   it("uses the new line and marks the wordmark ™ once", () => {
     const src = readFileSync(join(__dirname, "../src/app/about/page.tsx"), "utf8");
-    expect(src).toContain("A shared system for hard moments");
+    expect(src).toContain("What we use when it goes wrong, written down so you can use it too.");
     expect(src).not.toMatch(/relationship operating system/i);
     expect(src.match(/™/g)).toHaveLength(1);
     expect(src).toContain("ALLIANCE PROTOCOLS™");

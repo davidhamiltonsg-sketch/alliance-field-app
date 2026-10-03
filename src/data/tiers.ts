@@ -5,7 +5,7 @@ import type { Protocol, Tier } from "./types";
 export const tierInfo: Record<Tier, { label: string; dots: number; icon: IconId; meaning: string }> = {
   core: { label: "Core", dots: 1, icon: "tier-core", meaning: "Learn these first." },
   situational: { label: "Situational", dots: 2, icon: "tier-situational", meaning: "For when the Situation Map sends you there." },
-  build: { label: "Build", dots: 3, icon: "tier-build", meaning: "Habits you keep going." },
+  build: { label: "Build", dots: 3, icon: "tier-build", meaning: "Ongoing practices to add once the Core feels familiar." },
 };
 
 export const tierOrder: Tier[] = ["core", "situational", "build"];

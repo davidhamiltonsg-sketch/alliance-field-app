@@ -36,7 +36,7 @@ const DEFAULT_TAGLINE = "Built for precision. Designed for connection.";
 // Shown on its own line above the first-visit tagline.
 const ALLIANCE_LINE = "We are an alliance.";
 const RETURN_TAGLINES = [
-  "Still precise. Still here.",
+  "Still here.",
   "On time, as promised.",
   "Back again. That’s the whole point.",
 ];
@@ -170,7 +170,7 @@ export function Splash() {
         href="/help"
         onClick={(e) => e.stopPropagation()}
         className="absolute right-2 top-[calc(env(safe-area-inset-top)+4px)] z-[1] inline-flex h-12 items-center rounded-full px-3 text-sm font-semibold text-failure"
-        aria-label="Help and safety: help lines"
+        aria-label="Help and safety: Help Lines"
       >
         Help
       </a>

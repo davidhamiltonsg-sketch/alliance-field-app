@@ -49,8 +49,7 @@ export function KeepItGoing({ lead }: { lead?: string }) {
           </li>
           <li className="list-disc">
             <strong className="font-medium text-ink">Care Check-in</strong> —
-            the monthly Care Check-in (inside the Weekly Reset), on the first
-            Sunday of each month. Not an extra meeting.
+            once a month, inside the Weekly Reset (first Sunday).
           </li>
         </ul>
         <div className="flex items-end gap-2">
@@ -85,7 +84,7 @@ export function KeepItGoing({ lead }: { lead?: string }) {
         </p>
       )}
       <p role="status" className="text-sm font-medium text-accent empty:hidden">
-          {added ? "Calendar file downloaded — open it to add both reminders." : ""}
+          {added ? "Saved. Open the file to add both reminders to your calendar." : ""}
         </p>
       </div>
     </section>

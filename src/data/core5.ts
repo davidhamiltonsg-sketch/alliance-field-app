@@ -12,15 +12,15 @@ export interface CoreTool {
 export const coreFive: CoreTool[] = [
   {
     slug: "green-rule",
-    why: "Safety first: honesty can’t be punished. If it’s fear, not flooding, stop and get help.",
+    why: "Either of you can say the honest thing without paying for it. If it’s fear, not flooding, stop and get help.",
   },
   {
     slug: "pause-and-return",
-    why: "Space with an exact return time — 20 minutes to 24 hours.",
+    why: "Time apart that ends when you said it would: 20 minutes to 24 hours.",
   },
   {
     slug: "60-second-reset",
-    why: "One minute to stop a fight to win, then book a time to talk.",
+    why: "One minute, still in the room, to stop trying to win and start talking again. Then pick a time.",
   },
   {
     slug: "micro-repair",
@@ -28,7 +28,7 @@ export const coreFive: CoreTool[] = [
   },
   {
     slug: "weekly-reset",
-    why: "Five parts, about 40 minutes, once a week. Maintenance, not a trial.",
+    why: "Forty minutes once a week, appreciation first: designed so small things get said before they pile up.",
   },
 ];
 

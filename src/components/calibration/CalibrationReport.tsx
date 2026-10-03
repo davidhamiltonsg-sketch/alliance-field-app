@@ -25,6 +25,13 @@ export function CalibrationReport() {
 
 const LAYER_ORDER: LayerKey[] = ["Atmosphere", "Structure", "Repair", "Protection", "Insight"];
 
+/** Word band for how far apart you are in a layer (no numbers on screen). */
+function apartWords(health: number): string {
+  if (health >= 85) return "answers close";
+  if (health >= 62) return "answers some distance apart";
+  return "answers far apart";
+}
+
 function CalibrationReportClient() {
   const router = useRouter();
   const state = readCalibration();
@@ -34,10 +41,10 @@ function CalibrationReportClient() {
   if (!aDone && !bDone) {
     return (
       <div className="space-y-4">
-        <PageHeader eyebrow={<Marker kind="NOTE" label="Not ready yet" />} title="Finish calibration first">
-          Answer at least one partner’s 44 questions to see a profile.
+        <PageHeader eyebrow={<Marker kind="NOTE" label="Not ready yet" />} title="Not yet">
+          Answer the 44 questions (one of you is enough to start).
         </PageHeader>
-        <PrimaryButton onClick={() => router.push("/calibrate")}>Start calibration</PrimaryButton>
+        <PrimaryButton onClick={() => router.push("/calibrate")}>Start the questions</PrimaryButton>
       </div>
     );
   }
@@ -49,10 +56,10 @@ function CalibrationReportClient() {
       return (
         <div className="space-y-4">
           <PageHeader eyebrow={<Marker kind="NOTE" label="Private" />} title={`${state.personA.name}’s profile is private`}>
-            {state.personA.name} chose to keep their individual answers and profile private on this shared device.
-            The couple report unlocks once {otherName} finishes their 44 questions.
+            {state.personA.name} has kept their own answers private, so you’ll see the couple report only.
+            It appears once {otherName} has answered too.
           </PageHeader>
-          <PrimaryButton onClick={() => router.push("/calibrate")}>Continue calibration</PrimaryButton>
+          <PrimaryButton onClick={() => router.push("/calibrate")}>Carry on</PrimaryButton>
         </div>
       );
     }
@@ -66,8 +73,8 @@ function CalibrationReportClient() {
 
   return (
     <div className="space-y-6">
-      <PageHeader eyebrow={<Marker kind="TOOL" label="Layer Scan" icon="profile-calibration" />} title="Your couple profile">
-        You’ve both finished. No trophy, just the report. {report.executiveSummary}
+      <PageHeader eyebrow={<Marker kind="TOOL" label="Layer Scan" icon="profile-calibration" />} title="Where you two stand">
+        You’ve both finished. Here’s where your answers line up, and where they don’t. {report.executiveSummary}
       </PageHeader>
 
       {state.aPrivate && (
@@ -78,36 +85,30 @@ function CalibrationReportClient() {
 
       <section className="space-y-3">
         <SectionLabel>Layer Scan</SectionLabel>
-        <p className="px-1 text-sm text-ink-muted">Where each of you sits on the profile.</p>
-        <div className="card space-y-3.5 px-4 py-4">
-          {LAYER_ORDER.map((layer) => (
-            <div key={layer} className="space-y-1.5">
-              <div className="flex items-baseline justify-between">
+        <div className="card px-4 py-1">
+          <h3 className="pt-3 text-sm font-semibold text-ink">Where you two see things most differently</h3>
+          <ul className="divide-y divide-rule/30">
+            {LAYER_ORDER.map((layer) => (
+              <li key={layer} className="flex items-baseline justify-between gap-3 py-3">
                 <span className="text-sm font-medium text-ink">{layer}</span>
-                <span className="tabular text-sm text-ink-muted">{report.layerHealth[layer]}</span>
-              </div>
-              <div className="h-2 w-full overflow-hidden rounded-full bg-accent/10">
-                <div
-                  className="h-full rounded-full bg-accent"
-                  style={{ width: `${report.layerHealth[layer]}%` }}
-                />
-              </div>
-            </div>
-          ))}
+                <span className="text-sm text-ink-muted">{apartWords(report.layerHealth[layer])}</span>
+              </li>
+            ))}
+          </ul>
         </div>
         <p className="px-1 text-sm leading-normal text-ink-muted">
-          Lower means the two of you differ more in that layer. Worth steadying first; not a verdict on the relationship.
+          Start with the layer where you’re furthest apart. It isn’t a score for the relationship.
         </p>
       </section>
 
       <section className="space-y-2.5">
-        <SectionLabel>Conflict pattern</SectionLabel>
+        <SectionLabel>When you clash</SectionLabel>
         <p className="card px-4 py-3.5 text-base leading-normal text-ink">{report.conflictPattern}</p>
       </section>
 
       {report.coreMismatch.length > 0 && (
         <section className="space-y-2.5">
-          <SectionLabel>Where you diverge</SectionLabel>
+          <SectionLabel>Where you differ</SectionLabel>
           <ul className="card divide-y divide-rule/30 px-4">
             {report.coreMismatch.map((line) => (
               <li key={line} className="py-3 text-base leading-normal text-ink">
@@ -119,7 +120,7 @@ function CalibrationReportClient() {
       )}
 
       <section className="space-y-2.5">
-        <SectionLabel>Likely misreads</SectionLabel>
+        <SectionLabel>Easy to misread</SectionLabel>
         <ul className="card divide-y divide-rule/30 px-4">
           {report.misreadRisks.map((line) => (
             <li key={line} className="py-3 text-base leading-normal text-ink">
@@ -130,7 +131,7 @@ function CalibrationReportClient() {
       </section>
 
       <section className="space-y-2.5">
-        <SectionLabel>Strengths</SectionLabel>
+        <SectionLabel>What’s already working</SectionLabel>
         <ul className="card divide-y divide-rule/30 px-4">
           {report.strengths.map((line) => (
             <li key={line} className="py-3 text-base leading-normal text-ink">
@@ -142,7 +143,7 @@ function CalibrationReportClient() {
 
       {report.recommendedTools.length > 0 && (
         <section className="space-y-2.5">
-          <SectionLabel>Recommended tools</SectionLabel>
+          <SectionLabel>Try these first</SectionLabel>
           <ul className="space-y-2.5">
             {report.recommendedTools.map((t) => (
               <li key={t.slug}>
@@ -188,7 +189,7 @@ function CalibrationReportClient() {
 
 /**
  * Shown once a single partner has finished — their own profile, with a note
- * that the couple report unlocks once the other partner finishes. `preview`
+ * that the couple report appears once the other partner has answered too. `preview`
  * renders just the profile (used on the hand-over screen).
  */
 export function SoloProfile({ profile, otherName, preview = false }: { profile: Profile; otherName: string; preview?: boolean }) {
@@ -200,12 +201,12 @@ export function SoloProfile({ profile, otherName, preview = false }: { profile: 
       </PageHeader>
 
       <section className="space-y-2.5">
-        <SectionLabel>How safety builds</SectionLabel>
+        <SectionLabel>What helps you feel safe</SectionLabel>
         <p className="card px-4 py-3.5 text-base leading-normal text-ink">{profile.safetyLogic}</p>
       </section>
 
       <section className="space-y-2.5">
-        <SectionLabel>How care lands</SectionLabel>
+        <SectionLabel>What feels like care</SectionLabel>
         <p className="card px-4 py-3.5 text-base leading-normal text-ink">{profile.careStyle}</p>
       </section>
 
@@ -215,7 +216,7 @@ export function SoloProfile({ profile, otherName, preview = false }: { profile: 
       </section>
 
       <section className="space-y-2.5">
-        <SectionLabel>Privacy &amp; autonomy</SectionLabel>
+        <SectionLabel>Time alone</SectionLabel>
         <p className="card px-4 py-3.5 text-base leading-normal text-ink">{profile.privacyAutonomy}</p>
       </section>
 
@@ -233,7 +234,7 @@ export function SoloProfile({ profile, otherName, preview = false }: { profile: 
       )}
 
       <section className="space-y-2.5">
-        <SectionLabel>Likely misreads</SectionLabel>
+        <SectionLabel>What you might misread</SectionLabel>
         <ul className="card divide-y divide-rule/30 px-4">
           {profile.likelyMisreads.map((line) => (
             <li key={line} className="py-3 text-base leading-normal text-ink">
@@ -246,10 +247,10 @@ export function SoloProfile({ profile, otherName, preview = false }: { profile: 
       {!preview && (
         <>
           <div className="rounded-2xl border border-accent/20 bg-surface-tool px-4 py-3.5 text-sm leading-normal text-ink-muted">
-            The couple report — Layer Scan, conflict pattern, and recommended tools — unlocks once {otherName} finishes their 44 questions.
+            You’ll see the couple report (Layer Scan, how you clash and the tools to try first) once {otherName} has answered too.
           </div>
 
-          <PrimaryButton onClick={() => router.push("/calibrate")}>Continue calibration</PrimaryButton>
+          <PrimaryButton onClick={() => router.push("/calibrate")}>Carry on</PrimaryButton>
         </>
       )}
     </div>

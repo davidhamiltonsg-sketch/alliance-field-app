@@ -7,8 +7,8 @@ export const metadata = { title: "Profile Calibration" };
 export default function CalibratePage() {
   return (
     <div className="space-y-5">
-      <PageHeader eyebrow={<Marker kind="TOOL" label="Profile Calibration" icon="profile-calibration" />} title="Calibrate your profiles">
-        44 questions each. Answers stay on this device and build the Layer Scan (where each of you sits on the profile) and a couple report.
+      <PageHeader eyebrow={<Marker kind="TOOL" label="Profile Calibration" icon="profile-calibration" />} title="How each of you leans">
+        Each of you answers 44 questions. Your answers stay on your phone, and from them you get the Layer Scan and a short report for the two of you.
       </PageHeader>
       <CalibrationFlow />
     </div>

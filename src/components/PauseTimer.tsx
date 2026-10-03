@@ -85,7 +85,7 @@ function playChime() {
 
 const NOTIFY_TITLE = "Time to come back";
 const NOTIFY_OPTIONS: NotificationOptions = {
-  body: "It’s your return time. Read the restart cue before you speak.",
+  body: "It’s time. Before you pick the topic back up: warm up and check it’s safe.",
   tag: "alliance-pause-return",
   icon: "/icon-192.png",
 };
@@ -328,8 +328,8 @@ function PauseTimerClient() {
       <div className="space-y-4">
         {live}
         <WarnBanner pauseLink={false} safetyLink>
-          You’re back. Don’t pick up “where you left off.” If you’re afraid,
-          not just flooded, don’t return — get help.
+          You’re back. Don’t pick up “where you left off.” If being back feels
+          unsafe, not just hard, stop here and get help.
         </WarnBanner>
         <section
           id="restart-cue"
@@ -345,14 +345,15 @@ function PauseTimerClient() {
             </li>
             <li className="flex gap-3">
               <span className="tabular flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent text-sm font-medium text-paper">2</span>
-              <span><strong>Make it safe</strong> — the relationship isn’t at risk in this moment.</span>
+              <span><strong>Make it safe</strong> — say out loud that the relationship isn’t at risk tonight.</span>
             </li>
             <li className="flex gap-3">
               <span className="tabular flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent text-sm font-medium text-paper">3</span>
               <span>Only then: Say what happened → Ask for one thing → Agree on next steps.</span>
             </li>
           </ol>
-          <ul className="space-y-2 pt-1">
+          <p className="pt-1 text-sm text-ink-muted">In your own words, if you like:</p>
+          <ul className="space-y-2">
             <li className="phrase-block phrase text-base leading-snug">I’m back. I’m on your team.</li>
             <li className="phrase-block phrase text-base leading-snug">This isn’t a breakup conversation.</li>
           </ul>
@@ -408,13 +409,13 @@ function PauseTimerClient() {
           I’m back
         </PrimaryButton>
         <PrimaryButton variant="secondary" onClick={shareReturnTime}>
-          {shareCopied ? "Copied ✓" : "Share my return time"}
+          {shareCopied ? "Copied." : "Share my return time"}
         </PrimaryButton>
         <PrimaryButton variant="secondary" onClick={addToCalendar}>
-          Add return time to calendar (.ics)
+          Add your return time to your calendar
         </PrimaryButton>
         <p role="status" className="text-center text-sm font-medium text-accent empty:hidden">
-          {calendarAdded ? "Calendar file downloaded — open it to add the alarm." : ""}
+          {calendarAdded ? "Saved. Open the file to add the alarm to your calendar." : ""}
         </p>
         <p className="rounded-xl bg-surface-warn px-3.5 py-2.5 text-sm leading-snug text-ink">
           <strong className="font-medium">Keep this screen open</strong> —
@@ -425,7 +426,7 @@ function PauseTimerClient() {
           Cancel pause
         </PrimaryButton>
         <p className="text-center text-sm text-ink-muted">
-          Step away · calm down · don’t rehearse the argument.
+          Step away · get calm · don’t rehearse the argument.
         </p>
       </div>
     );
@@ -509,7 +510,7 @@ function PauseTimerClient() {
             </p>
           ) : (
             <p id="custom-minutes-hint" className="text-sm text-ink-muted">
-              Whole minutes · Min 20 · Max 1440 (24h)
+              Anywhere from 20 minutes to 24 hours
             </p>
           )}
         </div>
@@ -547,7 +548,7 @@ function PauseTimerClient() {
             </p>
           ) : (
             <p id="clock-time-hint" className="text-sm text-ink-muted">
-              Min 20 min · Max 24h away
+              20 minutes to 24 hours away
             </p>
           )}
         </div>
@@ -666,7 +667,7 @@ function CalmPause({
                 ? "Breathe slowly: in for a count of four, out for six."
                 : "Breathe in as it grows, out as it settles."}
           </p>
-          <p className="mt-1.5 text-sm text-ink-muted">Step away · calm down · don’t rehearse the argument.</p>
+          <p className="mt-1.5 text-sm text-ink-muted">Step away · get calm · don’t rehearse the argument.</p>
         </div>
 
         <div className="space-y-3">

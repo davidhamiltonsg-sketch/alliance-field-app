@@ -12,29 +12,6 @@ export const metadata = { title: "About" };
 
 type Cover = "manual" | "kit" | "companion" | "app";
 
-const products: { name: string; body: string; cover: Cover }[] = [
-  {
-    name: "Operating Manual",
-    body: "The reference: every protocol in full, with the reasoning and edge cases.",
-    cover: "manual",
-  },
-  {
-    name: "Field Kit",
-    body: "To keep on the fridge: 15 protocol cards (plus Read This First), 7 worksheets and the two-sided Situation Map.",
-    cover: "kit",
-  },
-  {
-    name: "Companion Book",
-    body: "Why it works: the stories and thinking behind the tools, with “The Third Voice” narrated by David.",
-    cover: "companion",
-  },
-  {
-    name: "Complete Bundle",
-    body: "Manual + Field Kit + Companion Book together. The Field App stays free.",
-    cover: "manual",
-  },
-];
-
 /** Product cover colours (CANON round 5: covers only). */
 const coverBg: Record<Cover, string> = {
   manual: "bg-cover-manual",
@@ -86,8 +63,7 @@ export default function AboutPage() {
 
       <section className="space-y-2">
         <p className="text-base leading-normal text-ink">
-          A shared system for hard moments: named tools and clear protocols,
-          not pep talks.
+          What we use when it goes wrong, written down so you can use it too.
         </p>
         <p className="text-base leading-normal text-ink-muted">
           The scripts are training wheels. Use your own words as soon as you can.
@@ -96,7 +72,7 @@ export default function AboutPage() {
           href="#product-line"
           className="inline-flex min-h-11 items-center gap-1.5 text-base font-medium text-accent"
         >
-          Explore the product line
+          The books and the kit
           <ArrowRight size={16} />
         </a>
       </section>
@@ -110,9 +86,9 @@ export default function AboutPage() {
           </p>
         </div>
         <p className="text-base leading-normal text-ink">
-          Dami and I built it from our own relationship — how we come back to
-          each other, what we say when things go sideways, what we promise
-          not to do. This app, the Manual, the Field Kit and the Companion
+          The tools grew out of it over the years, in our own relationship:
+          how we come back to each other, what we say when things go
+          sideways, what we promise not to do. This app, the Manual, the Field Kit and the Companion
           Book are that same system, written down so other couples can use it.
         </p>
       </section>
@@ -122,9 +98,9 @@ export default function AboutPage() {
           <span id="lineage-heading">Where these tools come from</span>
         </SectionLabel>
         <p className="text-base leading-normal text-ink">
-          Alliance Protocols is our own synthesis, written by the authors. It is
-          informed by research and clinical frameworks, adapted into named
-          tools:
+          We built this from our own relationship and from published
+          research. We didn’t invent the science; we turned it into steps we
+          could use halfway through a hard evening. The named tools draw on:
         </p>
         <ul className="space-y-1.5 pl-4 text-base leading-normal text-ink-muted">
           <li className="list-disc">
@@ -141,11 +117,11 @@ export default function AboutPage() {
           </li>
           <li className="list-disc">
             <strong className="font-medium text-ink">Minority-stress research</strong> —
-            how outside pressure lands on a couple.
+            how outside pressure hits a couple.
           </li>
         </ul>
         <p className="text-sm leading-normal text-ink-muted">
-          The system as a whole has not been tested in a controlled study.
+          We haven’t tested the whole set of tools in a controlled study.
           It is a practical toolkit, not therapy, and not a substitute for
           professional help.
         </p>
@@ -164,28 +140,20 @@ export default function AboutPage() {
       <Testimonials />
 
       <section id="product-line" className="scroll-mt-20 space-y-3">
-        <SectionLabel>The product line</SectionLabel>
-        <ul className="space-y-2.5">
-          {products.map((p) => (
-            <li key={p.name} className="card flex items-center gap-3.5 p-2.5 pr-4">
-              <CoverThumb cover={p.cover} />
-              <div className="min-w-0">
-                <p className="display text-lg leading-snug">{p.name}</p>
-                <p className="mt-0.5 text-sm leading-snug text-ink-muted">{p.body}</p>
-              </div>
-            </li>
-          ))}
-          <li className="card flex items-center gap-3.5 border-accent/20 bg-surface-tool p-2.5 pr-4">
-            <CoverThumb cover="app" />
-            <div className="min-w-0">
-              <p className="display text-lg leading-snug">Field App</p>
-              <p className="mt-0.5 text-sm leading-snug text-ink-muted">
-                Free, to act in the moment: the Situation Map, exact phrases,
-                the Pause + Return timer, Weekly Reset and Profile Calibration.
-              </p>
-            </div>
-          </li>
-        </ul>
+        <SectionLabel>What the app is for</SectionLabel>
+        <div className="card flex items-center gap-3.5 border-accent/20 bg-surface-tool p-2.5 pr-4">
+          <CoverThumb cover="app" />
+          <div className="min-w-0">
+            <p className="display text-lg leading-snug">Field App</p>
+            <p className="mt-0.5 text-sm leading-snug text-ink-muted">
+              Free, for the moment it’s happening: the Situation Map, exact phrases,
+              the Pause + Return timer, Weekly Reset and Profile Calibration.
+            </p>
+          </div>
+        </div>
+        <p className="text-base leading-normal text-ink">
+          The Manual, the Field Kit and the Companion Book go further, if you want them.
+        </p>
       </section>
 
       <section
@@ -193,12 +161,10 @@ export default function AboutPage() {
         className="relative scroll-mt-20 overflow-hidden rounded-2xl border border-repair/25 bg-surface-tool px-4 py-3.5"
       >
         <span className="absolute inset-y-0 left-0 w-1 bg-repair" aria-hidden />
-        <Marker kind="NOTE" label="Feeling checked out?" />
+        <Marker kind="NOTE" label="Feeling far apart?" />
         <p className="mt-2 text-base leading-normal">
-          <strong>Not sure if it’s space or withdrawal?</strong> Try the
-          Uninvestment Check. 0 signs: nothing to fix. 1–2: likely needs
-          space and small repairs. 3 or more: may be pulling away — book a
-          Full Recovery conversation within a week. Hope isn’t a plan.
+          <strong>Not sure if it’s needing space or pulling away?</strong> That’s
+          what the Uninvestment Check is for.
         </p>
         <Link
           href="/protocols/uninvestment-check"
@@ -212,9 +178,10 @@ export default function AboutPage() {
       <section id="safety" className="scroll-mt-20 space-y-2">
         <SectionLabel>When not to use this</SectionLabel>
         <WarnBanner pauseLink={false} safetyLink>
-          This app is a communication and repair tool. It is not a substitute
-          for professional help, and it is not built for situations involving
-          contempt, fear, coercion, or any form of abuse. Afraid of your
+          We built this for couples who are safe with each other. It isn’t
+          professional help, and it isn’t for fear, coercion or any form of
+          abuse. If there’s contempt between you, stop and get outside support
+          first. Afraid of your
           partner, being threatened, or not free to say no? Stop — these tools
           are not for this. Get outside help.
         </WarnBanner>
@@ -233,7 +200,7 @@ export default function AboutPage() {
               <span className="flex flex-col py-2.5">
                 Help &amp; safety
                 <span className="text-sm font-normal text-ink-muted">
-                  Help lines and when not to use this app
+                  Help Lines and when not to use this app
                 </span>
               </span>
               <ChevronRight size={18} className="shrink-0 text-ink-muted/50" />
@@ -289,7 +256,7 @@ export default function AboutPage() {
               <span className="flex flex-col py-2.5">
                 Profile Calibration
                 <span className="text-sm font-normal text-ink-muted">
-                  44 questions each — a Layer Scan (where each of you sits on the profile) and a couple report
+                  44 questions each, then a short report on where you two see things differently
                 </span>
               </span>
               <ChevronRight size={18} className="shrink-0 text-ink-muted/50" />
@@ -303,7 +270,7 @@ export default function AboutPage() {
               <span className="flex flex-col py-2.5">
                 Connection Cards
                 <span className="text-sm font-normal text-ink-muted">
-                  A flip-card game for reconnecting on purpose
+                  A deck of question cards for coming back to each other
                 </span>
               </span>
               <ChevronRight size={18} className="shrink-0 text-ink-muted/50" />
@@ -320,9 +287,10 @@ export default function AboutPage() {
           </li>
         </ul>
         <p className="px-1 text-sm leading-normal text-ink-muted">
-          Private by default: pause return times, Weekly Reset answers, and
-          calibration answers all stay on this device. The only time data
-          leaves it is if you choose to submit your email for updates.{" "}
+          Private by default: the times you set to come back, your Weekly Reset answers, and
+          your answers to the 44 questions stay on your phone. Nothing you save
+          in the app leaves it. Your email address is sent only if you choose
+          to give it to us for updates.{" "}
           <Link href="/help#your-data" className="font-medium text-accent underline underline-offset-4">
             Delete all my data
           </Link>

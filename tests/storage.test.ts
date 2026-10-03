@@ -1,7 +1,9 @@
 // @vitest-environment jsdom
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
+  CARE_BALANCE_LABELS,
   CARE_DOMAINS,
+  careDomainLabel,
   FAVORITES_KEY,
   MAX_RECENT,
   MAX_WEEKLY_HISTORY,
@@ -57,6 +59,21 @@ describe("weekly reset", () => {
   it("repairs a draft whose care rows don't match the current domains", () => {
     writeJson(WEEKLY_KEY, { ...emptyWeeklyDraft(), careAudit: [] });
     expect(readWeekly().careAudit.map((r) => r.domain)).toEqual([...CARE_DOMAINS]);
+  });
+
+  it("keeps answers saved under the old Care Check-in names, shown with the new labels", () => {
+    const old = ["Emotional attunement & check-ins", "Logistics & household", "Social coordination", "Financial planning", "Conflict initiation & repair"];
+    writeJson(WEEKLY_KEY, {
+      ...emptyWeeklyDraft(),
+      careAudit: old.map((domain, i) => ({ domain, balance: i % 2 ? "skewed" : "balanced", rebalance: "yes" })),
+    });
+    const rows = readWeekly().careAudit;
+    expect(rows.map((r) => r.domain)).toEqual([...CARE_DOMAINS]);
+    expect(rows.map((r) => r.balance)).toEqual(["balanced", "skewed", "balanced", "skewed", "balanced"]);
+    expect(rows.every((r) => r.rebalance === "yes")).toBe(true);
+    expect(old.map(careDomainLabel)).toEqual([...CARE_DOMAINS]);
+    expect(CARE_DOMAINS).toEqual(["Noticing each other & check-ins", "Logistics & household", "Social plans", "Money planning", "Raising problems & repairing"]);
+    expect(CARE_BALANCE_LABELS).toEqual({ balanced: "Even", skewed: "Lopsided" });
   });
 
   it("keeps history newest first and capped", () => {

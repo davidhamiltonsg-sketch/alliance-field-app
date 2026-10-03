@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 import { aboutAuthors, authorNames, authorsCoupleLine } from "@/data/authors";
 import { coreFive, coreFiveSlugs } from "@/data/core5";
 import { KIT } from "@/data/kit";
-import { emergencyNumbers, helpRegions } from "@/data/help";
+import { ELSEWHERE_LINE, HELP_LINES_POINTER, HELP_LINES_REGIONS, emergencyNumbers, helpRegions } from "@/data/help";
 import { getProtocol, protocolSlugs, protocols } from "@/data/protocols";
 import { situations } from "@/data/situations";
 import registry from "@/data/registry.json";
@@ -38,6 +38,14 @@ describe("protocol cards", () => {
     }
   });
 
+  it("diagram step titles use the card's step names (voice pass 38)", () => {
+    for (const p of protocols) {
+      protocolDiagrams[p.slug].steps.forEach((s, i) => {
+        expect(p.steps[i].startsWith(s.title), `${p.slug} step ${i + 1}: “${s.title}”`).toBe(true);
+      });
+    }
+  });
+
   it("has no diagram without a card", () => {
     for (const slug of Object.keys(protocolDiagrams)) expect(protocolSlugs).toContain(slug);
   });
@@ -56,7 +64,7 @@ describe("CANON numbers and wording", () => {
   it("Pause + Return is 20 minutes to 24 hours", () => {
     const badge = protocolDiagrams["pause-and-return"].steps.find((s) => s.title === "Set a time")?.badge;
     expect(badge).toBe("20 min – 24 h");
-    expect(getProtocol("pause-and-return")!.steps.join(" ")).toContain("20 minutes minimum, 24 hours max");
+    expect(getProtocol("pause-and-return")!.steps.join(" ")).toContain("at least 20 minutes and at most 24 hours away");
     expect(KIT.pauseMinMinutes).toBe(20);
     expect(KIT.pauseMaxMinutes).toBe(1440);
   });
@@ -82,13 +90,14 @@ describe("CANON numbers and wording", () => {
     expect(minutes.reduce((a, b) => a + b, 0)).toBe(KIT.weeklyResetMinutes);
   });
 
-  it("Uninvestment Check lists 8 signs and the 0 / 1–2 / 3+ bands (CANON round 6)", () => {
+  it("Uninvestment Check lists 8 signs and the none / 1–2 / 3+ bands (CANON round 6; Kit wording, voice passes 14, 24, 25 and 27)", () => {
     const card = getProtocol("uninvestment-check")!;
     expect(card.activity.match(/\(\d\)/g)).toHaveLength(8);
     const steps = card.steps.join(" ");
-    expect(steps).toContain("0 signs → nothing to fix");
-    expect(steps).toContain("1–2 signs → likely needs space and small repairs (Micro-Repair, Morning + Evening Rhythm)");
-    expect(steps).toContain("3 or more signs → may be pulling away");
+    expect(steps).toContain("None of these? Good. Keep up the daily floor.");
+    expect(steps).toContain("One or two signs: you likely need some space and a few small repairs (Micro-Repair, Morning + Evening Rhythm)");
+    expect(steps).toContain("Three or more signs: one or both of you may be pulling away");
+    expect(steps).toContain("may be pulling away. Book a Full Recovery conversation within a week.");
     expect(steps).not.toContain("0–2");
   });
 
@@ -120,7 +129,15 @@ describe("CANON round 3", () => {
     const card = getProtocol("uninvestment-check")!;
     expect(card.activity).toContain("(4) doing more on your own in place of shared time (time apart is healthy)");
     const contempt = "If contempt is one of your signs, skip the count: contempt means stop and get outside support first.";
+    // Voice pass 21: the Practise text is short sentences with no worksheet
+    // reference, and still carries the contempt rule in full. Voice pass 24:
+    // the counting rules live once, in the steps; the Practise text lists the
+    // eight signs and carries the contempt stop rule verbatim.
     expect(card.activity).toContain(contempt);
+    expect(card.activity).toContain("Mark the signs on your own, then compare.");
+    expect(card.activity).not.toMatch(/1–2|3 or more/);
+    expect(card.activity).not.toMatch(/worksheet/i);
+    expect(card.steps[1]).toContain(contempt);
     expect(card.steps.join(" ")).toContain(contempt);
     expect(card.warn).toContain(contempt);
     expect(card.steps.join(" ")).toContain("Full Recovery conversation within a week");
@@ -149,10 +166,24 @@ describe("CANON round 3", () => {
     expect(card.safetyLink).toBe(true);
   });
 
+  it("Intimacy Pact sends force, threats or fear straight to the Help Lines", () => {
+    const FORCE = "If it involved force, threats or fear, it isn’t a ‘once’: go straight to the Help Lines.";
+    const last = getProtocol("intimacy-pact")!.steps.at(-1)!;
+    expect(last).toContain(FORCE);
+    expect(last.indexOf(FORCE)).toBeGreaterThan(last.indexOf("Green Rule or Trust Recovery"));
+    expect(JSON.stringify(protocolDiagrams["intimacy-pact"])).toContain(FORCE);
+    const warn = getProtocol("intimacy-pact")!.warn!;
+    const ONCE = "If a no is met with pressure once, stop and have a Green Rule or Trust Recovery conversation before anything else.";
+    expect(warn).toContain(ONCE);
+    expect(warn).toContain(FORCE);
+    expect(warn.indexOf(FORCE)).toBeGreaterThan(warn.indexOf(ONCE));
+    expect(warn.indexOf("feels unable to say no")).toBeGreaterThan(warn.indexOf(FORCE));
+  });
+
   it("never asks to track or verify the other partner", () => {
     const text = JSON.stringify([getProtocol("trust-recovery"), getProtocol("proof-protocol")]);
     expect(text).not.toMatch(/\btrack(ing)? (the facts|it)\b|\bverify\b/i);
-    expect(text).toContain("see and review at the agreed check-in");
+    expect(text).toContain("look at it together at the check-in");
   });
 
   it("Weekly Reset part 4 is Requests, part 5 is Next steps", () => {
@@ -190,7 +221,21 @@ describe("CANON round 3", () => {
     expect(byId["say-do-gap"].primaryHref).toBe("/protocols/consistency-pact");
     expect(byId["after-fight"].firstMove).toContain("start within minutes if you can; complete within 24 hours");
     expect(byId["intimacy-stall"].firstMove).toMatch(/Help Lines/);
-    expect(byId["weekly-maintenance"].firstMove).toContain("the monthly Care Check-in (inside the Weekly Reset)");
+    // The row stays short; the canonical "(inside the Weekly Reset)" phrase lives on the Weekly Reset card.
+    expect(byId["weekly-maintenance"].firstMove).toContain("Once a month, it includes the Care Check-in.");
+    // Row 8 sends people where the Kit does (voice pass 34): the do-now line first, word for word
+    // with the Kit, then the Circuit Library. Voice pass 37: the first move ends on the move
+    // (Profile Calibration); the book pointer to the Circuit Library lives in the row's Go deeper.
+    const row8 = byId["attachment-clash"].firstMove;
+    expect(row8.startsWith("Name it out loud: “I think we’re doing the thing again.” Later, when you’re calm, find it in the Circuit Library.")).toBe(true);
+    expect(row8.endsWith("try Profile Calibration together.")).toBe(true);
+    expect(row8).not.toContain("Manual Appendix A");
+    expect(byId["attachment-clash"].goDeeper).toContain("The Circuit Library is Manual Appendix A");
+    expect(componentSource("SituationCard")).toContain("situation.goDeeper");
+    // Voice pass 22: the wizard step (already inside the Weekly Reset) points at the Care Check-in table;
+    // the full canonical phrase stays once in the app, on the monthly calendar reminder.
+    expect(componentSource("WeeklyResetWizard")).toContain("Use the Care Check-in table below for this part.");
+    expect(readFileSync(join(process.cwd(), "src/lib/ics.ts"), "utf8")).toContain("monthly Care Check-in (inside the Weekly Reset)");
     // Amber is for pause only: no row routes to an amber tone except Pause + Return.
     for (const s of situations) expect(s).not.toHaveProperty("warn");
   });
@@ -214,6 +259,41 @@ describe("safety routing", () => {
     }
     for (const line of [...emergencyNumbers, ...helpRegions.flatMap((r) => r.lines)]) {
       expect(line.href).toMatch(/^(tel|sms):\d/);
+    }
+  });
+
+  it("every Help Lines surface lists the same regions, including the EU and elsewhere", () => {
+    const regions = helpRegions.map((r) => r.region);
+    expect(HELP_LINES_REGIONS).toEqual([...regions, "Elsewhere"]);
+    for (const r of ["US", "UK", "Australia", "Singapore", "EU"]) expect(regions).toContain(r);
+
+    // /help renders every region from the shared data, then the elsewhere line.
+    const help = pageSource("help");
+    expect(help).toContain("helpRegions.map(");
+    expect(help).toContain("{ELSEWHERE_LINE}");
+    expect(ELSEWHERE_LINE.startsWith("Elsewhere:")).toBe(true);
+
+    // The pointer used on other pages names every region and says what to do anywhere else.
+    for (const r of helpRegions) expect(HELP_LINES_POINTER).toContain(r.inProse);
+    expect(HELP_LINES_POINTER).toMatch(/Anywhere else, call your local emergency number or national helpline\./);
+
+    // /together uses the shared pointer, not its own (shorter) list.
+    const together = pageSource("together");
+    expect(together).toContain("{HELP_LINES_POINTER}");
+
+    // The printed list in the registry covers the same regions (the EU via 112) and elsewhere.
+    const printed = registry.concepts["help-safety"].helpLines.join(" ");
+    for (const r of regions) expect(printed).toMatch(new RegExp(`\\b${r}\\b`));
+    expect(registry.concepts["help-safety"].helpLines.at(-1)).toBe(ELSEWHERE_LINE);
+
+    // No page or component hard-codes a partial region list.
+    const partial = /\b(US|UK)\b, (the )?(UK|US)\b, Australia and Singapore\b/;
+    for (const dir of ["app", "components"]) {
+      const root = join(__dirname, "../src", dir);
+      for (const f of readdirSync(root, { recursive: true }) as string[]) {
+        if (!/\.tsx?$/.test(f)) continue;
+        expect(readFileSync(join(root, f), "utf8"), f).not.toMatch(partial);
+      }
     }
   });
 
@@ -258,8 +338,8 @@ describe("Core 5 and the 7-day start plan", () => {
     expect(last.slug).toBe("weekly-reset");
     expect(last.task).toContain("40-minute timer");
     for (const slug of coreFiveSlugs) expect(startDays.map((d) => d.slug)).toContain(slug);
-    // About 10 minutes a day; the Pause + Return drill includes 20 minutes apart,
-    // and Daily anchors is the Manual's two check-ins (≤5 + about 10) across the day.
+    // About 10 minutes a day; the Pause + Return practice includes 20 minutes apart,
+    // and the morning and evening check-ins are the Manual's two check-ins (≤5 + about 10) across the day.
     for (const d of startDays.slice(0, -1).filter((d) => d.slug !== "pause-and-return" && d.slug !== "morning-evening-rhythm")) expect(d.minutes).toBeLessThanOrEqual(10);
     expect(startDays.find((d) => d.day === 5)!.task).toMatch(/morning check-in \(5 minutes or less\) and an evening check-in \(about 10 minutes\)/);
   });
@@ -267,10 +347,10 @@ describe("Core 5 and the 7-day start plan", () => {
   it("is the Field Kit's “The First Week”, day for day (CANON round 5: one plan)", () => {
     expect(startDays.map((d) => d.title)).toEqual([
       "Safety + Pause defaults",
-      "60-Second Reset drill",
-      "Micro-Repair muscle",
-      "Pause + Return drill",
-      "Daily anchors",
+      "Practise the 60-Second Alliance Reset",
+      "A first Micro-Repair",
+      "Practise Pause + Return",
+      "Morning and evening check-ins",
       "Set up the Reset",
       "Weekly Reset #1",
     ]);
@@ -291,7 +371,14 @@ describe("About the authors", () => {
     expect(aboutAuthors).toContain("David");
     expect(aboutAuthors).toContain("Dami");
     expect(aboutAuthors).not.toMatch(/\[\[/);
-    expect(aboutAuthors).toContain("a regional Chief Administrative Officer and Chief Operating Officer (CAO/COO) in banking");
+    expect(aboutAuthors).toContain("They first used these protocols in their own relationship.");
+  });
+
+  it("stays anonymous: no employers, job titles, institutions, places or pets", () => {
+    for (const text of [aboutAuthors, authorsCoupleLine]) {
+      expect(text).not.toMatch(/\b(bank|banking|CAO|COO|consultant|ETH|Zurich|Singapore|Hong Kong|Australia|Troy|Bean)\b/i);
+      expect(text).not.toMatch(/\btested\b/i);
+    }
   });
 });
 
@@ -330,6 +417,9 @@ describe("/privacy", () => {
     expect(src).toMatch(/30 days/);
     expect(src).not.toMatch(/analytics, cookies or trackers|and no\s+cookies/i);
     expect(componentSource("DeleteAllData")).toMatch(/cookie/);
+    // Delete-all can't clear the httpOnly cookie; the Privacy page says so.
+    expect(src).toMatch(/Delete all my data[\s\S]{0,80}doesn’t\s+remove it/);
+    expect(src).toMatch(/expires on its\s+own/);
   });
 
   it("is linked from the email signup, Help (Your data) and About", () => {
@@ -393,7 +483,7 @@ describe("contact and store links", () => {
     expect(httpsUrlOrNull("http://example.com")).toBeNull();
     expect(httpsUrlOrNull("javascript:alert(1)")).toBeNull();
     expect(httpsUrlOrNull("https://store.example/p")).toBe("https://store.example/p");
-    expect(componentSource("GetFullSystem")).toMatch(/Coming soon/);
+    expect(componentSource("GetFullSystem")).toMatch(/The books aren’t on sale yet/);
     for (const f of ["src/app/privacy/page.tsx", "src/app/terms/page.tsx", "src/components/SignupForm.tsx", "src/lib/links.ts"]) {
       expect(readFileSync(join(__dirname, "..", f), "utf8"), f).not.toMatch(/hello@/);
     }
@@ -425,10 +515,10 @@ describe("CANON round 6", () => {
     expect(allCopy).not.toMatch(/roommate/i);
   });
 
-  it("Intimacy Pact steps 1 and 4 use the round 6 consent wording", () => {
+  it("Intimacy Pact steps 1 and 4 keep the consent wording (voice pass 25)", () => {
     const card = getProtocol("intimacy-pact")!;
-    expect(card.steps[0]).toBe("Before you initiate, think about how it lands for the other person. If you’re declining, you owe nothing: just say no.");
-    expect(card.steps[3]).toContain("body language can signal interest, but a clear yes is still asked for");
+    expect(card.steps[0]).toBe("Asking? Think first about how it will land for the other person tonight. If you’re declining, you owe nothing. No is enough.");
+    expect(card.steps[3]).toContain("body language can signal interest, but ask, and wait for a clear yes.");
   });
 
   it("Trust Recovery and Proof: feelings and questions first, the record is an aid; disputed and coerced cases stop", () => {
@@ -436,7 +526,9 @@ describe("CANON round 6", () => {
     expect(trust.steps.join(" ")).toContain("the hurt partner’s feelings and questions come first; the record is an aid, never the judge");
     expect(trust.warn).toContain("If you can’t agree that a breach happened, this tool isn’t for it");
     expect(trust.warn).toContain("If refusing the “voluntary” transparency would feel unsafe, it isn’t voluntary");
-    expect(getProtocol("proof-protocol")!.steps.join(" ")).toContain("feelings and questions come first; the record is an aid, never the judge");
+    expect(getProtocol("proof-protocol")!.steps.join(" ")).toContain("look at it together at the check-in, where feelings and questions come first.");
+    // Voice pass 28: the "aid, never the judge" line is said once, in Trust Recovery's check-in step.
+    expect(allCopy.split("the record is an aid, never the judge").length - 1).toBeLessThanOrEqual(2);
     expect(allCopy).not.toMatch(/hypernotic|record first|facts first|right breach/i);
   });
 
@@ -452,8 +544,10 @@ describe("CANON round 6", () => {
   });
 
   it("Pause + Return flooding signs leave out contempt", () => {
-    const signs = "racing heart, tunnel vision, can’t think straight";
-    expect(getProtocol("pause-and-return")!.whenToUse).toContain(signs);
+    // All four CANON flooding signs, in the Kit's sentence form (voice pass 39).
+    for (const sign of ["heart is racing", "tunnel vision", "can’t think straight", "flee or to win"]) {
+      expect(getProtocol("pause-and-return")!.whenToUse).toContain(sign);
+    }
     expect(getProtocol("pause-and-return")!.whenToUse).not.toMatch(/contempt/i);
     expect(protocolDiagrams["pause-and-return"].when).not.toMatch(/contempt/i);
     expect(byId["flooded"].description).not.toMatch(/contempt/i);
@@ -462,14 +556,28 @@ describe("CANON round 6", () => {
   it("Uninvestment Check: within a week, and no one caused drift", () => {
     const card = getProtocol("uninvestment-check")!;
     expect(JSON.stringify(card)).not.toMatch(/before you leave the conversation/);
-    expect(card.activity).toContain("book a Full Recovery conversation within a week");
-    expect(card.steps.join(" ")).toContain("For drift, no one “caused” it: you both name your part.");
+    expect(card.steps.join(" ")).toContain("Book a Full Recovery conversation within a week");
+    expect(card.steps.join(" ")).toContain("Drift is nobody’s fault, so you each name your part.");
   });
 
-  it("Weekly Reset scope rule names the Monthly Review", () => {
-    expect(getProtocol("weekly-reset")!.activity).toContain(
-      "Only the five parts fit in 40 minutes: anything else (Proof reviews, enrichment picks, governance) goes to the Monthly Review, a longer once-a-month look",
-    );
+  it("Weekly Reset scope rule names the Monthly Review (short What it is, as on the Kit card since pass 40; once on the card; gloss off the card)", () => {
+    const card = getProtocol("weekly-reset")!;
+    const scope =
+      "Anything bigger (checking a Proof item, planning something fun, where you’re heading) waits for the Monthly Review";
+    const gloss = "a 40-minute once-a-month look at how things are going";
+    expect(card.concept).toContain("Maintenance, not a trial. Ours happens at home, on a Sunday.");
+    expect(card.whenToUse).toContain("Same day and time each week; also after travel or a hard stretch. Not for a fight: flooded? Pause + Return first.");
+    expect(card.concept).toContain(`${scope}. Maintenance, not a trial.`);
+    expect(card.whenToUse).not.toContain(scope);
+    expect(JSON.stringify(card).split(scope).length - 1).toBe(1);
+    expect(JSON.stringify(card)).not.toContain(gloss);
+    expect(card.activity).toContain("Book the next three weeks. Set a 40-minute timer; stop when it rings. Anything bigger waits for the Monthly Review.");
+  });
+
+  it("the Monthly Review gloss is defined once in the app, on the Weekly Reset page", () => {
+    const gloss = "the Monthly Review, a 40-minute once-a-month look at how things are going";
+    const page = readFileSync(join(process.cwd(), "src/app/weekly-reset/page.tsx"), "utf8").replace(/\s+/g, " ");
+    expect(page.split(gloss).length - 1).toBe(1);
   });
 
   it("/together points at the live Situation Map row", () => {

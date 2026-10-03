@@ -36,7 +36,7 @@ const panels: Panel[] = [
     eyebrow: "Use it tonight",
     icon: "60-second-reset",
     title: "If it’s getting heated: the 60-Second Alliance Reset.",
-    body: "Stop, say it, a touch only if welcome, three breaths, then an exact time to keep talking. About a minute.",
+    body: "Stop, say it, a touch only if it’s welcome, three breaths, then an exact time to keep talking. About a minute.",
     safety: true,
     diagram: <ResetStepsDiagram />,
   },
@@ -44,8 +44,8 @@ const panels: Panel[] = [
     id: "situation-map",
     eyebrow: "Situation Map",
     icon: "situation-map",
-    title: "Not sure what to do? Follow the first match.",
-    body: "Safety comes first: if you’re afraid, threatened, or not free to say no, stop and get outside help. Otherwise, read top to bottom and take the first row that fits.",
+    title: "Not sure what to do? Take the first row that fits.",
+    body: "Safety comes first: if you’re afraid, threatened, or not free to say no, stop and get outside help. Otherwise, start at the top and read down.",
     diagram: <SituationMapDiagram />,
   },
   {
@@ -53,7 +53,7 @@ const panels: Panel[] = [
     eyebrow: "The Core 5",
     icon: "tier-core",
     title: "Start with five tools.",
-    body: "Most hard moments start with one of these. Learn them first; the rest can wait. The 7-day plan takes about 10 minutes a day.",
+    body: "Learn these five first; the rest can wait. The 7-day plan sets them up in about 10 minutes on most days.",
     diagram: <CoreFiveDiagram />,
   },
   {
@@ -61,7 +61,7 @@ const panels: Panel[] = [
     eyebrow: "Pause + Return",
     icon: "pause-and-return",
     title: "Pause, then come back on time.",
-    body: "Give a clock time, 20 minutes to 24 hours. Coming back on time is what makes it a pause, not a disappearance.",
+    body: "Give a clock time, 20 minutes to 24 hours. Coming back on time is what makes it a pause, not a walk-out.",
     diagram: <PauseTimelineDiagram />,
   },
   {
@@ -69,15 +69,15 @@ const panels: Panel[] = [
     eyebrow: "Connection Cards",
     icon: "connection-cards",
     title: "For when things are fine, too.",
-    body: "Flip through 35 questions across five stages — Warmth, Curiosity, Care, Repair, Alliance. No protocol needed, just five minutes together.",
+    body: "Thirty-five questions to flip through together, light to deep. Nothing to fix. Five minutes.",
     diagram: <ConnectionCardsDiagram />,
   },
   {
     id: "system",
     eyebrow: "Optional",
     icon: "manual",
-    title: "Want the full system?",
-    body: "This app is free, and stands on its own. If you want more, the Operating Manual and Field Kit go deeper: full protocols, printable cards, worksheets.",
+    title: "The app, and the books.",
+    body: "We made this app for when it’s actually happening and there’s no time to look anything up. Free, and complete on its own. The books go further if you want them.",
     diagram: <SystemDiagram />,
   },
 ];
@@ -178,7 +178,7 @@ export function IntroFlow() {
           <Link
             href="/help"
             className="inline-flex min-h-11 items-center rounded-full px-3 text-sm font-semibold text-failure transition-colors hover:bg-failure/10"
-            aria-label="Help and safety: help lines"
+            aria-label="Help and safety: Help Lines"
           >
             Help
           </Link>

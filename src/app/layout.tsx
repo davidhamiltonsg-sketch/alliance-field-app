@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Source_Serif_4 } from "next/font/google";
+import localFont from "next/font/local";
 import { AppHeader } from "@/components/AppHeader";
 import { AppNav } from "@/components/AppNav";
 import { ChromeGate } from "@/components/ChromeGate";
@@ -9,17 +9,28 @@ import { ServiceWorkerRegister } from "@/components/ServiceWorkerRegister";
 import launchScreenList from "@/data/launch-screens.json";
 import "./globals.css";
 
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
+// Self-hosted (OFL, licences alongside) so builds never depend on
+// fetching from Google Fonts.
+const inter = localFont({
+  src: "./fonts/inter-latin-wght-normal.woff2",
+  weight: "400 600",
   variable: "--font-inter",
   display: "swap",
 });
 
-const sourceSerif = Source_Serif_4({
-  subsets: ["latin"],
-  weight: ["400", "600"],
-  style: ["normal", "italic"],
+const sourceSerif = localFont({
+  src: [
+    {
+      path: "./fonts/source-serif-4-latin-wght-normal.woff2",
+      weight: "400 600",
+      style: "normal",
+    },
+    {
+      path: "./fonts/source-serif-4-latin-wght-italic.woff2",
+      weight: "400 600",
+      style: "italic",
+    },
+  ],
   variable: "--font-source-serif",
   display: "swap",
 });

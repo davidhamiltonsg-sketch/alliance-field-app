@@ -162,10 +162,9 @@ describe("registry: banned wording", () => {
     expect(hits).toEqual([]);
   });
 
-  it("says 'Kill-Switch' at most once, as '(formerly Kill-Switch)'", () => {
+  it("never shows the retired name 'Kill-Switch' (CANON Round 10)", () => {
     const all = texts.map((t) => t.text).join("\n");
-    expect((all.match(/Kill-?Switch/gi) ?? []).length).toBeLessThanOrEqual(1);
-    expect((all.match(/\(formerly Kill-Switch\)/g) ?? []).length).toBeLessThanOrEqual(1);
+    expect(all).not.toMatch(/Kill-?Switch/i);
   });
 
   it("names Morning + Evening Rhythm one way only", () => {
@@ -176,19 +175,29 @@ describe("registry: banned wording", () => {
 
   it("phrases the Care Check-in as the monthly item inside the Weekly Reset", () => {
     const phrase = registry.concepts["care-check-in"].phrase;
-    const mentions = texts.filter((t) => /Care Check-in/.test(t.text) && !/^Care Check-in$/.test(t.text));
+    // The Weekly Reset's own "Check the load" step (card and diagram) is already inside the
+    // Weekly Reset; it uses the Field Kit's shorter wording (voice pass 10), and the
+    // Weekly Reset wizard's step 2 is also inside the Weekly Reset, so (voice pass 22) it points at the
+    // Care Check-in table in short; the monthly calendar reminder carries the full phrase (once per product).
+    // The Situation Map's weekly row is routed to the
+    // Weekly Reset, so its short line (voice pass 18) says "Once a month, it includes the Care Check-in."
+    const mentions = texts.filter((t) => /Care Check-in/.test(t.text) && !/^Care Check-in$/.test(t.text) && !/whether the load feels fair\. Once a month, this part is the Care Check-in\.$/.test(t.text) && !/^Weekly Reset: about 40 minutes\. Once a month, it includes the Care Check-in\.$/.test(t.text) && !/^Each week, talk through who’s carrying what\. First Sunday of the month\? Use the Care Check-in table below for this part\.$/.test(t.text));
     expect(mentions.length).toBeGreaterThan(0);
+    expect(mentions.some((m) => m.file.endsWith("lib/ics.ts") && m.text.includes(phrase.replace(/^the /, "")))).toBe(true);
     for (const m of mentions) {
       expect(m.text.toLowerCase(), `${m.file}: ${m.text}`).toContain(phrase.toLowerCase().replace(/^the /, ""));
     }
   });
 
-  it("Sun Memory: Quick (a few minutes, one ritual) and Full (2–24 hours)", () => {
-    const sun = texts.filter((t) => /Sun Memory \(formerly/.test(t.text));
+  it("Sun Memory: Quick (a few minutes) and Full (2–24 hours)", () => {
+    const sun = texts.filter((t) => /^Sun Memory: /.test(t.text));
     expect(sun).toHaveLength(1);
-    expect(sun[0].text).toMatch(/Quick: a few minutes inside one ritual/);
-    expect(sun[0].text).toMatch(/Full: a declared window of 2–24 hours/);
-    expect(sun[0].text).toMatch(/either of you can end it by naming a safety concern/);
+    // Kit wording, mirrored word for word (voice pass 38).
+    expect(sun[0].text).toMatch(/Quick: a few minutes inside one ritual, to put the to-do list down\./);
+    // Voice pass 43: the Kit's new wording, still literally "2–24 hours".
+    expect(sun[0].text).toMatch(/Full: 2–24 hours with no talk about the tools\./);
+    expect(sun[0].text).toMatch(/Everything else carries on: safety, childcare, the shopping, any repair you’ve already booked\./);
+    expect(sun[0].text).toMatch(/[Ee]ither of you can end it by naming a safety concern/);
   });
 });
 
@@ -228,16 +237,16 @@ describe("registry: worksheets", () => {
 describe("Go deeper pointers", () => {
   // Chapter numbers and titles from the Operating Manual's table of contents.
   const MANUAL = new Map<string, string>([
-    ["I", "Executive Summary"], ["II", "Fast Start Guide"], ["III", "Introduction"],
-    ["IV", "Nervous System Orientation"], ["V-A", "Attachment Styles in Partnership"],
-    ["V-B", "Deflection and Impact Erasure"], ["VI", "Alliance Lifecycle"], ["VII", "Alliance Failure Modes"],
-    ["VIII", "Attachment Translation"], ["IX", "Core Foundation: Team Over Self"],
-    ["X", "Profiles: Strategic & Atmospheric"], ["XI", "Daily Rhythm"], ["XI-A", "Sensory Baseline"],
-    ["XII", "Weekly Reset"], ["XIII", "Response & Conflict Protocol"], ["XIII-A", "Micro-Repairs"],
-    ["XIII-B", "Full Recovery"], ["XIII-C", "The Psychology Behind the Tools"],
-    ["XIII-D", "Detachment, Uninvestment, and Emotional Withdrawal"], ["XIV", "The Intimacy Pact"],
-    ["XV", "Proof Over Promises"], ["XVI", "Trust Recovery Protocol"], ["XVII", "Consistency Pact"],
-    ["XVIII", "Alliance Enrichment"], ["XVIII-A", "The Sun Memory Protocol"], ["XIX", "Alliance Governance"],
+    ["I", "The Short Version"], ["II", "Fast Start"], ["III", "Introduction"],
+    ["IV", "When Your Body Takes Over"], ["V-A", "How Each of You Reaches for Closeness"],
+    ["V-B", "When Hurt Gets Explained Away"], ["VI", "The Four Phases"], ["VII", "How Couples Drift"],
+    ["VIII", "Hearing the Need Underneath"], ["IX", "Team Over Self"],
+    ["X", "Two Ways of Caring"], ["XI", "Daily Rhythm"], ["XI-A", "Sensory Comfort"],
+    ["XII", "Weekly Reset"], ["XIII", "Conflict Protocol"], ["XIII-A", "Micro-Repairs"],
+    ["XIII-B", "Full Recovery"], ["XIII-C", "Why the Tools Are Built This Way"],
+    ["XIII-D", "When One of You Pulls Away"], ["XIV", "The Intimacy Pact"],
+    ["XV", "Proof Over Promises"], ["XVI", "Trust Recovery"], ["XVII", "Consistency Pact"],
+    ["XVIII", "Making Room for Joy"], ["XVIII-A", "The Sun Memory Protocol"], ["XIX", "Regular Reviews"],
   ]);
 
   it("names a real Manual chapter (and Companion chapter) for every protocol", async () => {

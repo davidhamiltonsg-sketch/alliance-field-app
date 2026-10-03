@@ -14,8 +14,8 @@ export default function StartPage() {
   return (
     <div className="space-y-5">
       <PageHeader eyebrow={<Marker kind="DO" label="Seven days" />} title="Your 7-day plan">
-        About 10 minutes a day. Day 7 is your first Weekly Reset. Miss a day?
-        Just pick up where you left off.
+        If you’re new, this is where we’d start. About 10 minutes a day. Day 7
+        is your first Weekly Reset. Miss a day? Pick up where you left off.
       </PageHeader>
 
       <StartPlan />
@@ -28,7 +28,7 @@ export default function StartPage() {
 
       <WarnBanner pauseLink={false} safetyLink>
         If either of you gets flooded during a practice day, stop and use
-        Pause + Return. If it’s fear, threats or coercion — not just
+        Pause + Return. If it’s fear, threats, coercion or violence — not just
         flooding — these tools are not for this. Get outside help.
       </WarnBanner>
 
