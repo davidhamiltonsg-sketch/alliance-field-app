@@ -100,41 +100,41 @@ export function generateProfile(person: PersonKey, input: PersonInput): Profile 
 
   const safetyLogic =
     high(scores.structureNeed) && high(scores.warmthNeed)
-      ? `${name} needs warmth and a clear plan before a hard conversation can be heard.`
+      ? `A hard conversation lands better with ${name} when it starts warm and comes with a plan. Agree both before you begin.`
       : high(scores.structureNeed)
-        ? `${name} feels safest when plans are clear and kept.`
+        ? `Clear plans, kept, help ${name} feel safe. Say what you’ll each do and when, then do it.`
         : high(scores.warmthNeed)
-          ? `${name} feels safest when the tone between you is warm.`
-          : `${name} feels safest with a bit of both: some warmth, a rough plan, and the full story heard before anyone decides what it meant.`;
+          ? `A warm tone helps ${name} feel safe. Get warm first, then raise the hard thing.`
+          : `A bit of both helps ${name} feel safe: some warmth, a rough plan, and the full story heard before either of you decides what it meant.`;
 
   const careStyle =
     high(scores.proofOrientation) || high(scores.structureNeed)
-      ? `${name} feels most cared for when promises are kept and things get done.`
-      : `${name} feels most cared for through warmth, time together, and hearing it said out loud.`;
+      ? `Promises kept and jobs done feel like care to ${name}. When one gets done, say so out loud.`
+      : `Warmth, time together and hearing it said feel like care to ${name}. Make room for one of those each day.`;
 
   const conflictResponse =
     high(scores.withdrawalUnderStress) && high(scores.conflictActivation)
-      ? `When it gets heated, ${name} can swing between pushing for an answer and going quiet. Slowing down helps.`
+      ? `When it gets heated, ${name} can swing between pushing for an answer and going quiet. Slow down together, and agree a pause signal before you need it.`
       : high(scores.withdrawalUnderStress)
-        ? `When it gets heated, ${name} is likely to go quiet or ask for time to settle.`
+        ? `When it gets heated, ${name} is likely to go quiet or ask for time to settle. Agree when you’ll pick it up again.`
         : high(scores.conflictActivation)
-          ? `When it gets heated, ${name} is likely to go straight to the problem and want an answer.`
-          : `When it gets heated, ${name} can usually keep talking, as long as it still feels warm between you.`;
+          ? `When it gets heated, ${name} is likely to go straight to the problem and want an answer. Agree when the answer will come, even if it isn’t tonight.`
+          : `When it gets heated, ${name} can usually keep talking, as long as it still feels warm between you. Keep your tone soft, then take the topic.`;
 
   const privacyAutonomy = high(scores.privacyNeed)
-    ? `${name} needs plenty of privacy. Time apart works best with a return time, so it doesn’t feel like distance.`
-    : `${name} needs some privacy, and the two of you can usually agree how close to be while things stay warm.`;
+    ? `Time alone matters a lot to ${name}. Agree a return time, so the time apart has an end you both know.`
+    : `Some time alone suits ${name}. While things are warm, agree together how much.`;
 
   const likelyMisreads = [
     high(scores.signalSensitivity)
-      ? `${name} may read silence, a slow reply or a cooler tone as pulling away.`
-      : `${name} may miss small cues until someone says them out loud.`,
+      ? `A slow reply can feel like distance to ${name}. Say when you’re just busy.`
+      : `Small cues can slip past ${name}. Say the ones that matter out loud.`,
     high(scores.structureNeed)
-      ? `To ${name}, a vague plan can sound like a promise that won’t be kept.`
-      : `To ${name}, a lot of planning can feel like pressure.`,
+      ? `To ${name}, a vague plan can sound like a promise that won’t be kept. Put a day or a time on it.`
+      : `To ${name}, a lot of planning can feel like pressure. Keep the plan short and leave some room.`,
     high(scores.privacyNeed)
-      ? `When things are already heated, questions can feel like prying to ${name}.`
-      : `Time apart can feel like rejection to ${name}, unless it comes with some reassurance.`,
+      ? `When things are already heated, questions can feel like prying to ${name}. Ask one, then leave some space.`
+      : `Time apart can feel like rejection to ${name}. Whoever steps away, say when you’ll be back.`,
   ];
 
   return {
@@ -208,7 +208,7 @@ function routeTools(a: Profile, b: Profile, health: Record<LayerKey, number>) {
     if (!routes.some((r) => r.tool === tool)) routes.push({ tool, reason });
   };
 
-  if (health.Atmosphere < 62) add("Morning + Evening Rhythm", "One place your answers are far apart: the warmth between you. Start there: a little warmth each day, before you ask for any change.");
+  if (health.Atmosphere < 62) add("Morning + Evening Rhythm", "Your answers are far apart on warmth. Start there, with a little each day, before either of you asks for a change.");
   if (health.Structure < 62) add("Weekly Reset", "You see the everyday arrangements differently: who does what, and when. Begin with a weekly check-in you can both count on.");
   if (health.Repair < 62) add("Micro-Repair", "Whoever’s ready first makes one small move today, like a kind word or a cup of tea, and the bigger talk waits for a time you both agree.");
   if (health.Protection < 62) add("Pause + Return", "You don’t agree on what keeps a heated moment safe. Agree now what you’ll each do when it gets there.");
@@ -220,7 +220,7 @@ function routeTools(a: Profile, b: Profile, health: Record<LayerKey, number>) {
     add("Care Check-in", "You show care differently, so some of what you give may be going unnoticed. Tell each other about one recent moment you felt looked after, and what did it.");
   }
   if (average([a.scores.proofOrientation, b.scores.proofOrientation]) > 64) {
-    add("Consistency Pact", "You both trust what keeps happening more than what gets said. Pick one small thing each and do it where the other can see.");
+    add("Consistency Pact", "Pick one small thing each and do it where the other can see. Look at it together at your next Weekly Reset.");
   }
   if (average([a.scores.deflectionRisk, b.scores.deflectionRisk]) > 62) {
     add("Impact first, then explain", "When a moment gets hard, a joke or an explanation tends to arrive first. So keep one order: say how it landed first, explain after.");
@@ -312,17 +312,21 @@ export function generateCoupleReport(profileA: Profile, profileB: Profile): Coup
   const diverging = rows.filter((r) => r.diverges);
   const mismatch = diverging.map((r) => `${r.domain}: ${r.risk}`);
 
+  const routes = routeTools(profileA, profileB, health);
+  const recommendedTools = toRecommendedTools(routes);
+
   // Name something the couple’s own answers already agree on, rather than a generic line.
+  // One trust line per report: when the Consistency Pact is recommended, its reason carries the move.
   const firstShared = rows.find((r) => !r.diverges);
+  const pactRecommended = recommendedTools.some((t) => t.slug === "consistency-pact");
   const strengths = [
     ...(firstShared ? [firstShared.shared] : []),
     average([a.proofOrientation, b.proofOrientation]) > 60
-      ? "You both trust what you can see. So agree one small change each and look at it together at your next Weekly Reset."
+      ? pactRecommended
+        ? "You both trust what you can see. The Consistency Pact below builds on that."
+        : "You both trust what you can see. So agree one small change each and look at it together at your next Weekly Reset."
       : "You two lean on warmth and daily habits more than on keeping a record. Keep your morning and evening check-ins going, and add one small habit at your next Weekly Reset.",
   ];
-
-  const routes = routeTools(profileA, profileB, health);
-  const recommendedTools = toRecommendedTools(routes);
 
   return {
     executiveSummary: diverging.length

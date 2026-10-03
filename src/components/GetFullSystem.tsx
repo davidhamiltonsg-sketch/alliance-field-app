@@ -4,7 +4,7 @@ import { SituationMapDownload } from "./SituationMapDownload";
 import { POSITIONING_LINE, SIGNUP_ACTIVE, STORE_URLS, type StoreProduct } from "@/lib/links";
 
 const products: { id: StoreProduct; name: string; note: string }[] = [
-  { id: "manual", name: "Operating Manual", note: "The reference: every protocol in full" },
+  { id: "manual", name: "Operating Manual", note: "Every protocol in full, for when you want the why." },
   { id: "kit", name: "Field Kit", note: "Printable cards, worksheets and the Situation Map" },
   { id: "bundle", name: "Complete Bundle", note: "Manual + Field Kit + Companion Book" },
 ];

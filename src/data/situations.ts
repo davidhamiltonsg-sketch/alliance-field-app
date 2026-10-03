@@ -57,7 +57,7 @@ export const situations: Situation[] = [
     id: "conflict-starting",
     label: "A fight is starting",
     description: "Voices are rising and you’re both building a case.",
-    firstMove: "Start with the Green Rule, then use the System Overlay and the Conflict Protocol. If either of you floods partway through, switch to Pause + Return.",
+    firstMove: "Check it’s safe to speak (Green Rule). Then take it in order: System Overlay, then the Conflict Protocol if it runs long. If either of you floods partway through, switch to Pause + Return.",
     primaryHref: "/protocols/system-overlay",
     secondaryHrefs: [
       { label: "Conflict Protocol", href: "/protocols/conflict-protocol" },
@@ -67,7 +67,7 @@ export const situations: Situation[] = [
   {
     id: "after-fight",
     label: "After a fight, or something small stung",
-    description: "Still feeling the sting, or leftover friction from a sharp tone or a broken small agreement.",
+    description: "Something sharp was said, or a small promise slipped, and it’s still sitting there.",
     firstMove: "Micro-Repair: start within minutes if you can; complete within 24 hours. Bigger hurts go to Full Recovery.",
     primaryHref: "/protocols/micro-repair",
     secondaryHrefs: [
