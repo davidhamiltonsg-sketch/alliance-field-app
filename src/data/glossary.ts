@@ -8,7 +8,7 @@ export const plainEnglish: Record<string, string> = {
   Circuit: "a repeating loop between you",
   "Layer Scan": "where you two differ most, layer by layer",
   "Reach–Recoil": "one reaches, the other pulls back",
-  "One-Handed Alliance": "one partner carrying the relationship work",
+  "Carrying It Alone": "one partner carrying the relationship work",
   Proof: "a specific change, evidence you can both see, and a set time window",
 };
 

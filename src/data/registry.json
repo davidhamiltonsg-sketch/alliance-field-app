@@ -569,7 +569,7 @@
     "Circuit": "a repeating loop between you",
     "Layer Scan": "where you two differ most, layer by layer",
     "Reach–Recoil": "one reaches, the other pulls back",
-    "One-Handed Alliance": "one partner carrying the relationship work",
+    "Carrying It Alone": "one partner carrying the relationship work",
     "Proof": "a specific change, evidence you can both see, and a set time window",
     "rule": "First appearance of the coined term in each artifact."
   },
@@ -731,7 +731,7 @@
     },
     {
       "variant": "Manager Imbalance / Imbalance (as a name)",
-      "use": "One-Handed Alliance"
+      "use": "Carrying It Alone"
     },
     {
       "variant": "push-pull loop",
@@ -849,7 +849,9 @@
       "penalized",
       "Conflict Protocol",
       "Same[- ]Team Restart",
-      "\\buninvest(ment|ed)\\b(?!-)"
+      "\\buninvest(ment|ed)\\b(?!-)",
+      "One-Handed Alliance",
+      "Peace Debt"
     ]
   },
   "helpLinesExtra": "LGBTQ+-affirming: US: Trevor Project 1-866-488-7386 (under 25) · LGBT National Hotline 1-888-843-4564 · UK: Switchboard LGBT+ 0800 0119 100 · Australia: QLife 1800 184 527 · Singapore: Oogachaga (oogachaga.com)"
