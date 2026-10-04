@@ -97,7 +97,8 @@ describe("CANON numbers and wording", () => {
     expect(steps).toContain("None of these? Good. Keep up the daily floor.");
     expect(steps).toContain("One or two signs: you likely need some space and a few small repairs (Micro-Repair, Morning + Evening Rhythm)");
     expect(steps).toContain("Three or more signs: one or both of you may be pulling away");
-    expect(steps).toContain("may be pulling away. Book a Full Recovery conversation within a week.");
+    expect(steps).toContain("may be pulling away. Bring back the daily floor and your check-ins for two weeks; if nothing has shifted, book a Full Recovery conversation.");
+    expect(steps).not.toContain("within a week");
     expect(steps).not.toContain("0–2");
   });
 
@@ -140,7 +141,7 @@ describe("CANON round 3", () => {
     expect(card.steps[1]).toContain(contempt);
     expect(card.steps.join(" ")).toContain(contempt);
     expect(card.warn).toContain(contempt);
-    expect(card.steps.join(" ")).toContain("Full Recovery conversation within a week");
+    expect(card.steps.join(" ")).toContain("if nothing has shifted, book a Full Recovery conversation");
     expect(card.crossLinks.map((c) => c.href)).toContain("/protocols/trust-recovery");
   });
 
@@ -208,7 +209,9 @@ describe("CANON round 3", () => {
     expect(diagrams).toContain('q: ["Pulling away?"]');
     expect(diagrams).toContain('a: ["Unity Anchor"]');
     expect(diagrams).not.toContain("Trust breach or");
-    // Same order as the app list: outside pressure (row 3) before trust breach and pulling away.
+    // Same order as the app list: a fight starting (row 3) and outside pressure (row 4) before trust breach and pulling away.
+    expect(diagrams.indexOf('q: ["A fight is"')).toBeLessThan(diagrams.indexOf('q: ["Outside pressure"'));
+    expect(diagrams.indexOf('q: ["Flooded or shut"')).toBeLessThan(diagrams.indexOf('q: ["A fight is"'));
     expect(diagrams.indexOf('q: ["Outside pressure"')).toBeLessThan(diagrams.indexOf('q: ["Trust breach?"]'));
     expect(diagrams.indexOf('q: ["Trust breach?"]')).toBeLessThan(diagrams.indexOf('q: ["Pulling away?"]'));
   });
@@ -562,17 +565,20 @@ describe("CANON round 6", () => {
     expect(byId["flooded"].description).not.toMatch(/contempt/i);
   });
 
-  it("Pulling-Away Check: within a week, and no one caused drift", () => {
+  it("Pulling-Away Check: two weeks of the daily floor first, and no one caused drift", () => {
     const card = getProtocol("uninvestment-check")!;
     expect(JSON.stringify(card)).not.toMatch(/before you leave the conversation/);
-    expect(card.steps.join(" ")).toContain("Book a Full Recovery conversation within a week");
+    expect(card.steps.join(" ")).toContain("Bring back the daily floor and your check-ins for two weeks; if nothing has shifted, book a Full Recovery conversation.");
+    expect(card.working).toContain("They bring back the daily floor and their morning and evening check-ins for two weeks.");
+    expect(protocolDiagrams["uninvestment-check"].steps.map((s) => s.badge ?? "")).toContain("3 or more · two weeks first");
+    expect(getProtocol("full-recovery")!.steps.join(" ")).toContain("If it’s drift rather than a breach, say so. Drift is nobody’s fault");
     expect(card.steps.join(" ")).toContain("Drift is nobody’s fault, but you can each name your part.");
   });
 
   it("Weekly Reset scope rule names the Monthly Review (short What it is, as on the Kit card since pass 40; once on the card; gloss off the card)", () => {
     const card = getProtocol("weekly-reset")!;
     const scope =
-      "Anything bigger (planning something fun, where you’re heading) waits for the Monthly Review";
+      "Anything bigger waits: planning something fun for the Monthly Review once you hold one, and where you’re heading for the Yearly Alignment";
     const gloss = "a 40-minute once-a-month look at how things are going";
     expect(card.concept).toContain("Maintenance, not a trial. Ours happens at home, on a Sunday.");
     expect(card.whenToUse).toContain("Same day and time each week; also after travel or a hard stretch. Not for a fight: flooded? Pause + Return first.");
@@ -580,7 +586,7 @@ describe("CANON round 6", () => {
     expect(card.whenToUse).not.toContain(scope);
     expect(JSON.stringify(card).split(scope).length - 1).toBe(1);
     expect(JSON.stringify(card)).not.toContain(gloss);
-    expect(card.activity).toContain("Book the next three weeks. Set a 40-minute timer; stop when it rings. Anything bigger waits for the Monthly Review.");
+    expect(card.activity).toContain("Book the next three weeks. Set a 40-minute timer; stop when it rings. Anything bigger waits.");
   });
 
   it("the Monthly Review gloss is defined once in the app, on the Weekly Reset page", () => {

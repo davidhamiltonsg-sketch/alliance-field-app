@@ -280,12 +280,12 @@
       "numbers": {
         "steps": 6,
         "session": "60–90 minutes",
-        "bookWithin": "a week (from Pulling-Away Check 3+)"
+        "bookWithin": "after two weeks of the daily floor and check-ins, if nothing has shifted (from Pulling-Away Check 3+)"
       },
       "canonical": [
         "Six steps; calm, agreed, scheduled — never mid-fight or sprung on someone.",
         "One-sided breach: only the partner who caused it acknowledges impact. Closing line only if it's true for both of you.",
-        "Routed from Pulling-Away Check at 3 or more signs: book within a week.",
+        "Routed from Pulling-Away Check at 3 or more signs: bring back the daily floor and check-ins for two weeks first; if nothing has shifted, book.",
         "Deciding not to rebuild, or to end the relationship, is a valid outcome of this protocol, not a failure of it."
       ],
       "guardrails": [
@@ -309,14 +309,14 @@
         "signs": 8,
         "bands": {
           "0–2": "you likely need some space and a few small repairs (Micro-Repair, Morning + Evening Rhythm)",
-          "3 or more": "may be pulling away → book a Full Recovery within a week"
+          "3 or more": "one or both of you may be pulling away. Bring back the daily floor and your check-ins for two weeks; if nothing has shifted, book a Full Recovery conversation."
         }
       },
       "canonical": [
         "Describe observable behaviour; don't claim to know the partner's intent ('may be pulling away', not 'is preparing to leave').",
         "If contempt is one of your signs, skip the count: contempt means stop and get outside support first.",
         "Contempt, fear or coercion at any count → safety and outside support first.",
-        "Trust breach → Trust Recovery; 3+ signs → Full Recovery within a week.",
+        "Trust breach → Trust Recovery; 3+ signs → daily floor and check-ins for two weeks, then Full Recovery if nothing has shifted.",
         "Deciding not to rebuild, or to end the relationship, is a valid outcome of this protocol, not a failure of it."
       ],
       "signs": [
@@ -493,6 +493,12 @@
           "route": "Pause + Return · 60-Second Alliance Reset"
         },
         {
+          "id": "conflict-starting",
+          "label": "A fight is starting",
+          "route": "System Overlay",
+          "note": "Green Rule first."
+        },
+        {
           "id": "outside-pressure",
           "label": "Outside pressure or disapproval from family, friends or strangers",
           "route": "Unity Anchor"
@@ -506,12 +512,6 @@
           "id": "detachment",
           "label": "Pulling away",
           "route": "Pulling-Away Check (+ Full Recovery)"
-        },
-        {
-          "id": "conflict-starting",
-          "label": "A fight is starting",
-          "route": "System Overlay",
-          "note": "Green Rule first."
         },
         {
           "id": "after-fight",

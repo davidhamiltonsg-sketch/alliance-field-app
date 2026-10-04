@@ -203,6 +203,7 @@ export function SituationMapDiagram() {
   const rows: { q: string[]; a: string[]; icon: IconId; kind: Kind }[] = [
     { q: ["Afraid, threatened,", "not free to say no?"], a: ["Stop. Get", "outside help"], icon: "help-safety", kind: "failure" },
     { q: ["Flooded or shut", "down (but safe)?"], a: ["Pause + Return"], icon: "pause-and-return", kind: "step" },
+    { q: ["A fight is", "starting?"], a: ["System Overlay"], icon: "system-overlay", kind: "step" },
     { q: ["Outside pressure", "or disapproval?"], a: ["Unity Anchor"], icon: "unity-anchor", kind: "step" },
     { q: ["Trust breach?"], a: ["Trust Recovery", "+ Proof"], icon: "trust-recovery", kind: "repair" },
     { q: ["Pulling away?"], a: ["Pulling-Away", "Check"], icon: "uninvestment-check", kind: "repair" },
@@ -219,8 +220,8 @@ export function SituationMapDiagram() {
   const hy = top + HI * pitch;
   return (
     <Frame
-      viewBox="0 0 340 336"
-      label="Situation Map: answer yes or no from the top. Afraid, threatened, or not free to say no: stop and get outside help. Flooded or shut down but safe: Pause + Return. Outside pressure or disapproval from family, friends or strangers: Unity Anchor. Trust breach: Trust Recovery plus Proof. Pulling away: Pulling-Away Check."
+      viewBox="0 0 340 394"
+      label="Situation Map: answer yes or no from the top. Afraid, threatened, or not free to say no: stop and get outside help. Flooded or shut down but safe: Pause + Return. A fight is starting: System Overlay. Outside pressure or disapproval from family, friends or strangers: Unity Anchor. Trust breach: Trust Recovery plus Proof. Pulling away: Pulling-Away Check."
     >
       <text x={2} y={13} fontSize={13.5} fill={V.muted} {...a("dg-fade", 0)}>
         Take the first row that fits, top to bottom.
@@ -289,7 +290,7 @@ export function SituationMapDiagram() {
           or 60-Second Reset
         </text>
       </g>
-      <text x={2} y={331} fontSize={13.5} fill={V.muted} {...a("dg-fade", 1300)}>
+      <text x={2} y={389} fontSize={13.5} fill={V.muted} {...a("dg-fade", 1300)}>
         More rows follow in the map.
       </text>
     </Frame>
@@ -349,7 +350,7 @@ export function PauseTimelineDiagram() {
     );
   return (
     <Frame
-      viewBox="0 0 340 336"
+      viewBox="0 0 340 394"
       label="Pause + Return timeline: flooded, signal a pause with a return time, separate for 20 minutes to 24 hours, return at the agreed time, restart with warmth then safety."
     >
       {spans.map(([y0, y1, d, dur], i) => (
@@ -490,7 +491,7 @@ export function ResetStepsDiagram() {
     h = 48;
   return (
     <Frame
-      viewBox="0 0 340 336"
+      viewBox="0 0 340 394"
       label="60-Second Alliance Reset: stop, say “I want to connect, not fight”, a brief touch only if it’s welcome, three slow breaths, then pick an exact time to keep talking. Afraid, not just flooded? Stop and get help."
     >
       {steps.map((s, i) => {
@@ -533,7 +534,7 @@ export function CoreFiveDiagram() {
     h = 56;
   return (
     <Frame
-      viewBox="0 0 340 336"
+      viewBox="0 0 340 394"
       label="The Core 5, all in the Core tier: Green Rule (Safety Gate), Pause + Return, 60-Second Alliance Reset, Micro-Repair, Weekly Reset."
     >
       {tools.map((tl, i) => {
