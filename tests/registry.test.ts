@@ -177,20 +177,27 @@ describe("registry: banned wording", () => {
     expect(all).toContain("Morning + Evening Rhythm");
   });
 
-  it("phrases the Care Check-in as the monthly item inside the Weekly Reset", () => {
+  it("phrases the monthly look-back as the monthly item inside the Weekly Reset (Care Check-in is retired)", () => {
     const phrase = registry.concepts["care-check-in"].phrase;
+    expect(phrase).toBe("a monthly look-back (inside the Weekly Reset)");
     // The Weekly Reset's own "Check the load" step (card and diagram) is already inside the
-    // Weekly Reset; it uses the Field Kit's shorter wording (voice pass 10), and the
-    // Weekly Reset wizard's step 2 is also inside the Weekly Reset, so (voice pass 22) it points at the
-    // Care Check-in table in short; the monthly calendar reminder carries the full phrase (once per product).
-    // The Situation Map's weekly row is routed to the
-    // Weekly Reset, so its short line (voice pass 18) says "Once a month, it includes the Care Check-in."
-    const mentions = texts.filter((t) => /Care Check-in/.test(t.text) && !/^Care Check-in$/.test(t.text) && !/whether the load feels fair\. Once a month, this part is the Care Check-in\.$/.test(t.text) && !/^Weekly Reset: about 40 minutes\. Once a month, it includes the Care Check-in\.$/.test(t.text) && !/^Each week, talk through who’s carrying what\. First Sunday of the month\? Use the Care Check-in table below for this part\.$/.test(t.text));
+    // Weekly Reset, so it says "Once a month, use this part to look back over the whole month."
+    // The Situation Map row says "Once a month, it includes a look back over the whole month."
+    // The monthly calendar reminder carries the full phrase (once per product).
+    const all = texts.map((t) => t.text).join("\n");
+    expect(all).not.toMatch(/Care Check-?in/i);
+    const mentions = texts.filter((t) => /look-back/i.test(t.text) && t.file.endsWith("lib/ics.ts"));
     expect(mentions.length).toBeGreaterThan(0);
-    expect(mentions.some((m) => m.file.endsWith("lib/ics.ts") && m.text.includes(phrase.replace(/^the /, "")))).toBe(true);
-    for (const m of mentions) {
-      expect(m.text.toLowerCase(), `${m.file}: ${m.text}`).toContain(phrase.toLowerCase().replace(/^the /, ""));
-    }
+    expect(mentions.some((m) => m.text.includes(phrase.replace(/^a /, "")))).toBe(true);
+    expect(texts.some((t) => t.text === "Once a month, use this part to look back over the whole month." || t.text.endsWith("Once a month, use this part to look back over the whole month."))).toBe(true);
+  });
+
+  it("uses the renamed terms everywhere (Honesty Gate, Loop Library, Yearly Review, Misuse Check)", () => {
+    const all = texts.map((t) => t.text).join("\n");
+    expect(all).not.toMatch(/Safety Gate/i);
+    expect(all).not.toMatch(/\bcircuits?\b/i);
+    expect(all).not.toMatch(/Yearly Alignment|Weaponi[sz]ation Check/);
+    expect(all).toContain("Green Rule (Honesty Gate)");
   });
 
   it("Sun Memory: Quick (a few minutes) and Full (2–24 hours)", () => {

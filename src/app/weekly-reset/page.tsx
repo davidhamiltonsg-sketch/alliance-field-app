@@ -16,7 +16,7 @@ export default function WeeklyResetPage() {
       <WeeklyResetWizard />
       <p className="px-1 text-sm leading-normal text-ink-muted">
         Anything bigger waits: planning something fun for the Monthly Review, a 40-minute
-        once-a-month look at how things are going, and where you’re heading for the Yearly Alignment.
+        once-a-month look at how things are going, and where you’re heading for the Yearly Review.
       </p>
       <KeepItGoing />
       <Link

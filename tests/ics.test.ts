@@ -99,7 +99,7 @@ describe("buildStartPlanIcs", () => {
   });
 });
 
-describe("keep it going (weekly Reset + monthly Care Check-in)", () => {
+describe("keep it going (weekly Reset + monthly look-back)", () => {
   const events = (text: string) =>
     unfold(text)
       .split("BEGIN:VEVENT")
@@ -146,11 +146,11 @@ describe("keep it going (weekly Reset + monthly Care Check-in)", () => {
     expect(nextFirstSundayAt(new Date(2026, 11, 6, 20, 0), "19:00")).toEqual(new Date(2027, 0, 3, 19, 0));
   });
 
-  it("keeps the Care Check-in inside the Weekly Reset, with canonical names", () => {
+  it("keeps the monthly look-back inside the Weekly Reset, with canonical names", () => {
     const text = keepGoingIcsText("19:00", new Date(2026, 8, 30, 12, 0));
     const [weekly, monthly] = events(text);
     expect(field(weekly, "SUMMARY")).toBe("Weekly Reset (Alliance Protocols)");
-    expect(field(monthly, "SUMMARY")).toBe("Monthly Care Check-in (inside the Weekly Reset)");
+    expect(field(monthly, "SUMMARY")).toBe("Monthly look-back (inside the Weekly Reset)");
     expect(field(monthly, "DESCRIPTION")).toContain("not an extra meeting");
     expect(field(weekly, "DESCRIPTION")).toContain("Pause + Return");
     expect(text).not.toMatch(/care audit/i);

@@ -8,7 +8,7 @@ import { SectionLabel } from "./SectionLabel";
 
 /**
  * Retention loop after the 7-day plan: one downloadable calendar file with a
- * recurring Sunday Weekly Reset and a monthly "Care Check-in inside your
+ * recurring Sunday Weekly Reset and a monthly "look-back inside your
  * Weekly Reset" reminder (first Sunday of the month). Made on this device.
  */
 export function KeepItGoing({ lead }: { lead?: string }) {
@@ -48,7 +48,7 @@ export function KeepItGoing({ lead }: { lead?: string }) {
             every Sunday, about 40 minutes.
           </li>
           <li className="list-disc">
-            <strong className="font-medium text-ink">Care Check-in</strong> —
+            <strong className="font-medium text-ink">Monthly look-back</strong> —
             once a month, inside the Weekly Reset (first Sunday).
           </li>
         </ul>

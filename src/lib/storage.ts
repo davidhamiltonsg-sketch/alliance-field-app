@@ -13,7 +13,7 @@ export const MAX_RECENT = 6;
 /** 7-day start plan: the day numbers ticked as done (no dates, no streaks). */
 export const START_PROGRESS_KEY = "alliance.field.startPlanDone";
 
-/** Care Check-in areas (CANON round 9). Also the `domain` stored on each row. */
+/** Load-check areas (CANON round 9). Also the `domain` stored on each row. */
 export const CARE_DOMAINS = [
   "Noticing each other & check-ins",
   "Logistics & household",
@@ -34,7 +34,7 @@ const LEGACY_CARE_DOMAINS: Record<string, (typeof CARE_DOMAINS)[number]> = {
   "Conflict initiation & repair": "Raising problems & repairing",
 };
 
-/** The label to show for a stored Care Check-in area (old names map to the current ones). */
+/** The label to show for a stored load-check area (old names map to the current ones). */
 export function careDomainLabel(domain: string): string {
   return LEGACY_CARE_DOMAINS[domain] ?? domain;
 }

@@ -225,20 +225,20 @@ describe("CANON round 3", () => {
     expect(byId["after-fight"].firstMove).toContain("start within minutes if you can; complete within 24 hours");
     expect(byId["intimacy-stall"].firstMove).toMatch(/Help Lines/);
     // The row stays short; the canonical "(inside the Weekly Reset)" phrase lives on the Weekly Reset card.
-    expect(byId["weekly-maintenance"].firstMove).toContain("Once a month, it includes the Care Check-in.");
+    expect(byId["weekly-maintenance"].firstMove).toContain("Once a month, it includes a look back over the whole month.");
     // Row 8 sends people where the Kit does (voice pass 34): the do-now line first, word for word
-    // with the Kit, then the Circuit Library. Voice pass 37: the first move ends on the move
-    // (Profile Calibration); the book pointer to the Circuit Library lives in the row's Go deeper.
+    // with the Kit, then the Loop Library. Voice pass 37: the first move ends on the move
+    // (Profile Calibration); the book pointer to the Loop Library lives in the row's Go deeper.
     const row8 = byId["attachment-clash"].firstMove;
-    expect(row8.startsWith("Name it out loud: “I think we’re doing the thing again.” Later, when you’re calm, find it in the Circuit Library.")).toBe(true);
+    expect(row8.startsWith("Name it out loud: “I think we’re doing the thing again.” Later, when you’re calm, find it in the Loop Library.")).toBe(true);
     expect(row8.endsWith("try Profile Calibration together.")).toBe(true);
     expect(row8).not.toContain("Manual Appendix A");
-    expect(byId["attachment-clash"].goDeeper).toContain("The Circuit Library is Manual Appendix A");
+    expect(byId["attachment-clash"].goDeeper).toContain("The Loop Library is Manual Appendix A");
     expect(componentSource("SituationCard")).toContain("situation.goDeeper");
-    // Voice pass 22: the wizard step (already inside the Weekly Reset) points at the Care Check-in table;
+    // Voice pass 22: the wizard step (already inside the Weekly Reset) points at the table to look back over the month;
     // the full canonical phrase stays once in the app, on the monthly calendar reminder.
-    expect(componentSource("WeeklyResetWizard")).toContain("Use the Care Check-in table below for this part.");
-    expect(readFileSync(join(process.cwd(), "src/lib/ics.ts"), "utf8")).toContain("monthly Care Check-in (inside the Weekly Reset)");
+    expect(componentSource("WeeklyResetWizard")).toContain("Use the table below to look back over the whole month.");
+    expect(readFileSync(join(process.cwd(), "src/lib/ics.ts"), "utf8")).toContain("monthly look-back (inside the Weekly Reset)");
     // Amber is for pause only: no row routes to an amber tone except Pause + Return.
     for (const s of situations) expect(s).not.toHaveProperty("warn");
   });
@@ -578,7 +578,7 @@ describe("CANON round 6", () => {
   it("Weekly Reset scope rule names the Monthly Review (short What it is, as on the Kit card since pass 40; once on the card; gloss off the card)", () => {
     const card = getProtocol("weekly-reset")!;
     const scope =
-      "Anything bigger waits: planning something fun for the Monthly Review once you hold one, and where you’re heading for the Yearly Alignment";
+      "Anything bigger waits: planning something fun for the Monthly Review once you hold one, and where you’re heading for the Yearly Review";
     const gloss = "a 40-minute once-a-month look at how things are going";
     expect(card.concept).toContain("Maintenance, not a trial. Ours happens at home, on a Sunday.");
     expect(card.whenToUse).toContain("Same day and time each week; also after travel or a hard stretch. Not for a fight: flooded? Pause + Return first.");

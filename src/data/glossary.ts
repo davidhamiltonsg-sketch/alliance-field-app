@@ -5,7 +5,7 @@
  */
 export const plainEnglish: Record<string, string> = {
   "System Overlay": "a five-step order for hard conversations",
-  Circuit: "a repeating loop between you",
+  Loop: "a pattern that repeats between you",
   "Layer Scan": "where you two differ most, layer by layer",
   "Reach–Recoil": "one reaches, the other pulls back",
   "Carrying It Alone": "one partner carrying the relationship work",
