@@ -1,6 +1,7 @@
 /**
  * The Core 5: the smallest set of Field Kit tools worth learning first.
- * Order follows the registry (Green Rule first). Everything else on
+ * Order follows the registry (Green Rule first). The Core tier also holds
+ * the System Overlay (listed after the Core 5); everything else on
  * /protocols is grouped by tier: Situational, then Build.
  */
 export interface CoreTool {

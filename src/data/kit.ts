@@ -3,8 +3,8 @@
  * (see the canonical decisions). Checked by tests/data-consistency.test.ts.
  */
 export const KIT = {
-  /** Field Kit: 16 cards = Read This First + 15 protocol cards. */
-  protocolCards: 15,
+  /** Field Kit: 15 cards = Read This First + 14 protocol cards. */
+  protocolCards: 14,
   /** Field Kit worksheets (see src/data/worksheets.ts). */
   worksheets: 7,
   manualChapters: 26,

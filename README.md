@@ -214,7 +214,7 @@ map changes (it must match the Kit's Situation Map rows).
 
 `/help` (header "Help" link, About, the Situation Map's first row, and the
 Green Rule / Pause + Return / Unity Anchor / Intimacy Pact / Trust Recovery /
-Uninvestment Check cautions) holds the canonical Help Lines as `tel:`/`sms:`
+Pulling-Away Check cautions) holds the canonical Help Lines as `tel:`/`sms:`
 links and the "when not to use this app" guidance. The numbers are in
 `src/data/help.ts` and must match the printed Manual and Kit exactly.
 Safety routing always comes first; "unsafe" is never routed to Pause + Return
@@ -222,7 +222,7 @@ Safety routing always comes first; "unsafe" is never routed to Pause + Return
 
 ## Content and visuals
 
-- Protocol cards: `src/data/cards/*.json` (15 protocol cards; the Kit's 16th
+- Protocol cards: `src/data/cards/*.json` (14 protocol cards; the Kit's 15th
   card is Read This First). Counts shared with the printed products are in
   `src/data/kit.ts`; `tests/data-consistency.test.ts` checks them.
 - Step diagrams: `src/data/visuals/protocol-diagrams.ts`, maintained by hand.

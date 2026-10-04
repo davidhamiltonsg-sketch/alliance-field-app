@@ -19,7 +19,7 @@ const cardsDir = join(__dirname, "../src/data/cards");
 const cardFiles = readdirSync(cardsDir).filter((f) => f.endsWith(".json"));
 
 describe("protocol cards", () => {
-  it("has the canonical 15 protocol cards, all registered", () => {
+  it("has the canonical 14 protocol cards, all registered", () => {
     expect(protocols).toHaveLength(KIT.protocolCards);
     expect(cardFiles).toHaveLength(KIT.protocolCards);
     expect(new Set(protocolSlugs).size).toBe(protocolSlugs.length);
@@ -90,7 +90,7 @@ describe("CANON numbers and wording", () => {
     expect(minutes.reduce((a, b) => a + b, 0)).toBe(KIT.weeklyResetMinutes);
   });
 
-  it("Uninvestment Check lists 8 signs and the none / 1–2 / 3+ bands (CANON round 6; Kit wording, voice passes 14, 24, 25 and 27)", () => {
+  it("Pulling-Away Check lists 8 signs and the none / 1–2 / 3+ bands (CANON round 6; Kit wording, voice passes 14, 24, 25 and 27)", () => {
     const card = getProtocol("uninvestment-check")!;
     expect(card.activity.match(/\(\d\)/g)).toHaveLength(8);
     const steps = card.steps.join(" ");
@@ -118,14 +118,14 @@ describe("CANON round 3", () => {
   const LEAVING = "Deciding not to rebuild, or to end the relationship, is a valid outcome of this protocol, not a failure of it.";
   const all = (slug: string) => JSON.stringify(getProtocol(slug));
 
-  it("says leaving is valid on Trust Recovery, Full Recovery and the Uninvestment Check", () => {
+  it("says leaving is valid on Trust Recovery, Full Recovery and the Pulling-Away Check", () => {
     for (const slug of ["trust-recovery", "full-recovery", "uninvestment-check"]) {
       expect(getProtocol(slug)!.note, slug).toBe(LEAVING);
     }
     expect(componentSource("ProtocolLayout")).toContain("protocol.note");
   });
 
-  it("Uninvestment Check: sign 4 wording, contempt skips the count, routing", () => {
+  it("Pulling-Away Check: sign 4 wording, contempt skips the count, routing", () => {
     const card = getProtocol("uninvestment-check")!;
     expect(card.activity).toContain("(4) doing more on your own in place of shared time (time apart is healthy)");
     const contempt = "If contempt is one of your signs, skip the count: contempt means stop and get outside support first.";
@@ -553,7 +553,7 @@ describe("CANON round 6", () => {
     expect(byId["flooded"].description).not.toMatch(/contempt/i);
   });
 
-  it("Uninvestment Check: within a week, and no one caused drift", () => {
+  it("Pulling-Away Check: within a week, and no one caused drift", () => {
     const card = getProtocol("uninvestment-check")!;
     expect(JSON.stringify(card)).not.toMatch(/before you leave the conversation/);
     expect(card.steps.join(" ")).toContain("Book a Full Recovery conversation within a week");

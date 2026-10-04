@@ -4,8 +4,12 @@ import { securityHeaders } from "./src/lib/security-headers";
 const nextConfig: NextConfig = {
   poweredByHeader: false,
   async redirects() {
-    // The separate "7-Day Install" plan was retired: /start is the one plan (CANON round 5).
-    return [{ source: "/install", destination: "/start", permanent: true }];
+    return [
+      // The separate "7-Day Install" plan was retired: /start is the one plan (CANON round 5).
+      { source: "/install", destination: "/start", permanent: true },
+      // The Conflict Protocol was folded into the System Overlay ("already a fight" speed), pass 3.
+      { source: "/protocols/conflict-protocol", destination: "/protocols/system-overlay", permanent: true },
+    ];
   },
   async headers() {
     return [

@@ -69,9 +69,9 @@ const scanned = [
 const texts = scanned.flatMap((f) => userText(f).map((text) => ({ file: relative(root, f), text })));
 
 describe("registry: protocols", () => {
-  it("has all 15 card slugs, each with the registry name and tier", () => {
-    expect(registry.protocols).toHaveLength(15);
-    expect(protocols).toHaveLength(15);
+  it("has all 14 card slugs, each with the registry name and tier", () => {
+    expect(registry.protocols).toHaveLength(14);
+    expect(protocols).toHaveLength(14);
     for (const r of registry.protocols) {
       const card = getProtocol(r.slug);
       expect(card, r.slug).toBeDefined();
@@ -81,9 +81,10 @@ describe("registry: protocols", () => {
     expect(new Set(protocols.map((p) => p.slug))).toEqual(new Set(registry.protocols.map((r) => r.slug)));
   });
 
-  it("the Core tier is exactly the Core 5", () => {
+  it("the Core tier is exactly the Core 5 plus the System Overlay (pass 3)", () => {
     const core = registry.protocols.filter((r) => r.tier === "core").map((r) => r.slug);
-    expect(new Set(core)).toEqual(new Set(coreFiveSlugs));
+    expect(new Set(core)).toEqual(new Set([...coreFiveSlugs, "system-overlay"]));
+    expect(coreFiveSlugs).not.toContain("system-overlay");
   });
 
   it("tier badges match the registry (label and dots)", () => {
@@ -241,7 +242,7 @@ describe("Go deeper pointers", () => {
     ["4", "Getting Started"], ["5", "How Each of You Reaches for Closeness"], ["6", "Hearing the Need Underneath"],
     ["7", "Two Ways of Caring"], ["8", "When Hurt Gets Explained Away"], ["9", "Team Over Self"],
     ["10", "How Couples Drift"], ["11", "The Four Phases"], ["12", "Daily Rhythm"], ["13", "Weekly Reset"],
-    ["14", "Micro-Repairs"], ["15", "Conflict Protocol"], ["16", "Full Recovery"],
+    ["14", "Micro-Repairs"], ["15", "When It’s Already a Fight"], ["16", "Full Recovery"],
     ["17", "Why the Tools Are Built This Way"], ["18", "Proof Over Promises"], ["19", "Trust Recovery"],
     ["20", "Consistency Pact"], ["21", "When One of You Pulls Away"], ["22", "The Intimacy Pact"],
     ["23", "Making Room for Joy"], ["24", "The Sun Memory Protocol"], ["25", "Sensory Comfort"], ["26", "Regular Reviews"],

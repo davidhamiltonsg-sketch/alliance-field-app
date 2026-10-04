@@ -186,8 +186,8 @@
       "slug": "system-overlay",
       "name": "System Overlay",
       "shortName": "System Overlay",
-      "tier": "situational",
-      "tierDots": 2,
+      "tier": "core",
+      "tierDots": 1,
       "icon": "system-overlay",
       "tone": "accent",
       "appAccentHint": "accent",
@@ -197,33 +197,22 @@
       "plainEnglishSubtitle": "spotting the pattern you're both stuck in",
       "numbers": {
         "steps": 5,
-        "practiceRun": "12 minutes"
+        "practiceRun": "12 minutes",
+        "quickVersion": "about 90 seconds"
       },
       "canonical": [
-        "Five steps: Warm up · Make it safe · Say what happened · Ask for one thing · Agree on next steps."
+        "Five steps: Warm up · Make it safe · Say what happened · Ask for one thing · Agree on next steps.",
+        "Three speeds: quick (about 90 seconds), standard, and already a fight.",
+        "Already a fight: first check you're both calm; if either of you is flooded, take a Pause + Return.",
+        "Listen in order at step 3: first how it landed, then what would help, and only then their side.",
+        "Quick version: “Restart — same team.” One warm sentence each, name the one problem you're both stuck in, then either one ask or a Pause + Return.",
+        "A serious hurt needs the slow version, Full Recovery."
       ],
       "worksheets": [
         "failure-mode-diagnostic"
-      ]
-    },
-    {
-      "slug": "conflict-protocol",
-      "name": "Conflict Protocol",
-      "shortName": "Conflict Protocol",
-      "tier": "situational",
-      "tierDots": 2,
-      "icon": "conflict-protocol",
-      "tone": "repair",
-      "appAccentHint": "repair",
-      "stepCount": 8,
-      "hasSafetyLink": false,
-      "appRoute": "/protocols/conflict-protocol",
-      "numbers": {
-        "steps": 8
-      },
-      "canonical": [
-        "Check if you're calm first; overwhelmed → Pause + Return.",
-        "Listen in order: first hear how it landed, then what would help, and only then their side."
+      ],
+      "canonicalPhrases": [
+        "Restart — same team."
       ]
     },
     {
@@ -291,12 +280,12 @@
       "numbers": {
         "steps": 6,
         "session": "60–90 minutes",
-        "bookWithin": "a week (from Uninvestment Check 3+)"
+        "bookWithin": "a week (from Pulling-Away Check 3+)"
       },
       "canonical": [
         "Six steps; calm, agreed, scheduled — never mid-fight or sprung on someone.",
         "One-sided breach: only the partner who caused it acknowledges impact. Closing line only if it's true for both of you.",
-        "Routed from Uninvestment Check at 3 or more signs: book within a week.",
+        "Routed from Pulling-Away Check at 3 or more signs: book within a week.",
         "Deciding not to rebuild, or to end the relationship, is a valid outcome of this protocol, not a failure of it."
       ],
       "guardrails": [
@@ -306,8 +295,8 @@
     },
     {
       "slug": "uninvestment-check",
-      "name": "Uninvestment Check",
-      "shortName": "Uninvestment Check",
+      "name": "Pulling-Away Check",
+      "shortName": "Pulling-Away Check",
       "tier": "situational",
       "tierDots": 2,
       "icon": "uninvestment-check",
@@ -515,13 +504,14 @@
         },
         {
           "id": "detachment",
-          "label": "Pulling away / uninvestment",
-          "route": "Uninvestment Check (+ Full Recovery)"
+          "label": "Pulling away",
+          "route": "Pulling-Away Check (+ Full Recovery)"
         },
         {
           "id": "conflict-starting",
           "label": "A fight is starting",
-          "route": "System Overlay · Conflict Protocol"
+          "route": "System Overlay",
+          "note": "Green Rule first."
         },
         {
           "id": "after-fight",
@@ -645,7 +635,7 @@
     },
     {
       "id": "uninvestment-check-worksheet",
-      "name": "Uninvestment Check Worksheet",
+      "name": "Pulling-Away Check Worksheet",
       "protocols": [
         "uninvestment-check"
       ]
@@ -653,10 +643,10 @@
   ],
   "worksheetCount": 7,
   "counts": {
-    "protocols": 15,
+    "protocols": 14,
     "worksheets": 7,
     "chapters": 26,
-    "fieldKitCards": "15 protocol cards (plus Read This First)",
+    "fieldKitCards": "14 protocol cards (plus Read This First)",
     "situationMapSides": 2
   },
   "formatRoles": {
@@ -816,6 +806,21 @@
     {
       "variant": "US spellings: behavior, recognize, practice (verb), minimize, counseling, labeling, favor, penalized",
       "use": "behaviour, recognise, practise, minimise, counselling, labelling, favour, penalised"
+    },
+    {
+      "variant": "Conflict Protocol",
+      "use": "System Overlay (already a fight)",
+      "except": "never (retired in pass 3, version 1.3)"
+    },
+    {
+      "variant": "Same-Team Restart",
+      "use": "the quick version of the System Overlay",
+      "except": "never (retired in pass 3, version 1.3)"
+    },
+    {
+      "variant": "Uninvestment Check / uninvestment / uninvested",
+      "use": "Pulling-Away Check; in prose, 'pulling away'",
+      "except": "the app slug uninvestment-check (and ids built on it)"
     }
   ],
   "bannedPatterns": {
@@ -841,7 +846,10 @@
       "counseling",
       "labeling",
       "\\bfavor",
-      "penalized"
+      "penalized",
+      "Conflict Protocol",
+      "Same[- ]Team Restart",
+      "\\buninvest(ment|ed)\\b(?!-)"
     ]
   },
   "helpLinesExtra": "LGBTQ+-affirming: US: Trevor Project 1-866-488-7386 (under 25) · LGBT National Hotline 1-888-843-4564 · UK: Switchboard LGBT+ 0800 0119 100 · Australia: QLife 1800 184 527 · Singapore: Oogachaga (oogachaga.com)"

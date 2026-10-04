@@ -32,7 +32,7 @@ export const worksheets: Worksheet[] = [
     parts: ["Drift Check", "Circuit Spotter"],
     detail: "with the Circuit Spotter: a circuit is a repeating loop between you",
   },
-  { id: "uninvestment-check-worksheet", name: "Uninvestment Check Worksheet", protocols: ["uninvestment-check"] },
+  { id: "uninvestment-check-worksheet", name: "Pulling-Away Check Worksheet", protocols: ["uninvestment-check"] },
 ];
 
 export function worksheetsFor(slug: string): Worksheet[] {
