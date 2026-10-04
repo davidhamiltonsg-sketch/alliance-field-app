@@ -423,7 +423,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "outcome": "One honest look a week at what you say and what you do."
   },
   "full-recovery": {
-    "when": "When the same fight keeps coming back, or there’s a dent in trust you can both point to, and it’s too big for a normal Weekly Reset. Use it only when you’ve both agreed to sit down for it: never mid-fight, and not instead of a smaller repair.",
+    "when": "When the same fight keeps coming back, or there’s a dent in trust you can both point to, and it’s too big for a normal Weekly Reset. Use it only when you’ve both agreed to sit down for it: never mid-fight, and not instead of a smaller repair. Lying, infidelity or a broken agreement that needs weeks of proof is Trust Recovery instead.",
     "steps": [
       {
         "title": "Warm up first",
