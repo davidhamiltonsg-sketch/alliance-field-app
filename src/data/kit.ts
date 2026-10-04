@@ -7,7 +7,7 @@ export const KIT = {
   protocolCards: 14,
   /** Field Kit worksheets (see src/data/worksheets.ts). */
   worksheets: 7,
-  manualChapters: 25,
+  manualChapters: 22,
   calibrationQuestions: 44,
   /** Pause + Return window, in minutes. */
   pauseMinMinutes: 20,

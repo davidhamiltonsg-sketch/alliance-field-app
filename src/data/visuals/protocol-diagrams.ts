@@ -178,7 +178,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Check the load",
-        "detail": "Each of you says whether you’ve felt supported or alone, and whether the load feels fair. Once a month, this part is the Care Check-in.",
+        "detail": "Each of you says whether you’ve felt supported or alone, and whether the load feels fair. Once a month, use this part to look back over the whole month.",
         "kind": "step",
         "badge": "15 min"
       },
@@ -499,7 +499,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "outcome": "Space or pulling away: you name which, and book the right next step."
   },
   "unity-anchor": {
-    "when": "When disapproval or discrimination from outside (a relative, a friend, a stranger, a colleague) follows you home and starts turning into a fight between the two of you. If the pressure comes from your partner, this isn’t a Unity Anchor situation: use the Green Rule (Safety Gate), and the safety line below.",
+    "when": "When disapproval or discrimination from outside (a relative, a friend, a stranger, a colleague) follows you home and starts turning into a fight between the two of you. If the pressure comes from your partner, this isn’t a Unity Anchor situation: use the Green Rule (Honesty Gate), and the safety line below.",
     "steps": [
       {
         "title": "Pause before reacting",

@@ -524,7 +524,7 @@ export function ResetStepsDiagram() {
 /* ------------------------------------------------------------------ */
 export function CoreFiveDiagram() {
   const tools: { slug: IconId; title: string; sub: string; color: string }[] = [
-    { slug: "green-rule", title: "Green Rule (Safety Gate)", sub: "Honesty is never punished.", color: V.safety },
+    { slug: "green-rule", title: "Green Rule (Honesty Gate)", sub: "Honesty is never punished.", color: V.safety },
     { slug: "pause-and-return", title: "Pause + Return", sub: "20 min – 24 h, exact return time.", color: V.pause },
     { slug: "60-second-reset", title: "60-Second Alliance Reset", sub: "When it’s become a fight to win.", color: V.pause },
     { slug: "micro-repair", title: "Micro-Repair", sub: "Small repairs, early.", color: V.repair },
@@ -535,7 +535,7 @@ export function CoreFiveDiagram() {
   return (
     <Frame
       viewBox="0 0 340 394"
-      label="The Core 5, all in the Core tier: Green Rule (Safety Gate), Pause + Return, 60-Second Alliance Reset, Micro-Repair, Weekly Reset."
+      label="The Core 5, all in the Core tier: Green Rule (Honesty Gate), Pause + Return, 60-Second Alliance Reset, Micro-Repair, Weekly Reset."
     >
       {tools.map((tl, i) => {
         const y = 8 + i * pitch;

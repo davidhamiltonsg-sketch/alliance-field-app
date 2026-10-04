@@ -198,7 +198,7 @@ export const WEEKLY_RESET_RRULE = "FREQ=WEEKLY;BYDAY=SU";
 /**
  * The "Keep it going" calendar as text: two recurring events at a floating
  * local time (default Sunday 7pm) — the Weekly Reset every Sunday, and a
- * monthly reminder to run the Care Check-in inside the first Weekly Reset of
+ * monthly reminder to run a monthly look-back inside the first Weekly Reset of
  * the month (not a separate meeting).
  */
 export function keepGoingIcsText(time = "19:00", fromDate = new Date()): string {
@@ -230,13 +230,13 @@ export function keepGoingIcsText(time = "19:00", fromDate = new Date()): string 
       "alliance-keep-going-care-checkin",
       monthly,
       CARE_CHECKIN_RRULE,
-      "Monthly Care Check-in (inside the Weekly Reset)",
-      "First Weekly Reset of the month: during Check the load, do the monthly Care Check-in (inside the Weekly Reset) — go through each area of care and ask if the load feels fair. Same 40 minutes, not an extra meeting. Open the Field App at /weekly-reset."
+      "Monthly look-back (inside the Weekly Reset)",
+      "First Weekly Reset of the month: during Check the load, use a monthly look-back (inside the Weekly Reset) — look back over the whole month, area by area, and ask if the load felt fair. Same 40 minutes, not an extra meeting. Open the Field App at /weekly-reset."
     ),
   ]);
 }
 
-/** Returns an object URL for the "Keep it going" calendar (weekly Reset + monthly Care Check-in). */
+/** Returns an object URL for the "Keep it going" calendar (weekly Reset + monthly look-back). */
 export function buildKeepGoingIcs(time = "19:00", fromDate = new Date()): { url: string; filename: string } {
   return toBlobUrl(keepGoingIcsText(time, fromDate), "alliance-keep-it-going.ics");
 }

@@ -35,7 +35,7 @@ export const whoFor = [
 export const notFor = [
   "Relationships with fear, intimidation, coercion or control. If you’re afraid of your partner, couples exercises aren’t the right tool.",
   "Immediate danger, including harassment or threats from other people. Contact local emergency services where it’s safe to do so.",
-  "Pressure or put-downs that come from your partner. That isn’t a Unity Anchor situation: use the Green Rule (Safety Gate), and the Help Lines if you’re afraid.",
+  "Pressure or put-downs that come from your partner. That isn’t a Unity Anchor situation: use the Green Rule (Honesty Gate), and the Help Lines if you’re afraid.",
 ];
 
 export interface CommonMove {

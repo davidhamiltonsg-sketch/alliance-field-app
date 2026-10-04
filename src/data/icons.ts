@@ -42,7 +42,7 @@ export const icons = {
       "M12 3l7.5 2.75v5.5c0 4.6-3.1 8-7.5 9.75-4.4-1.75-7.5-5.15-7.5-9.75v-5.5Z",
       "M8.75 12.25l2.25 2.25 4.25-4.5",
     ],
-    label: "Green Rule (Safety Gate)",
+    label: "Green Rule (Honesty Gate)",
     group: "protocol",
   },
   "system-overlay": {
@@ -192,7 +192,7 @@ export const icons = {
       "M12 20.25C6.6 17.1 3.25 13.7 3.25 9.9A4.4 4.4 0 0 1 12 7.4a4.4 4.4 0 0 1 8.75 2.5c0 3.8-3.35 7.2-8.75 10.35Z",
       "M8.9 12.4l2.1 2.1 4.1-4.2",
     ],
-    label: "Care Check-in",
+    label: "Monthly look-back",
     group: "concept",
   },
   "help-safety": {

@@ -36,7 +36,7 @@
   "protocols": [
     {
       "slug": "green-rule",
-      "name": "Green Rule (Safety Gate)",
+      "name": "Green Rule (Honesty Gate)",
       "shortName": "Green Rule",
       "tier": "core",
       "tierDots": 1,
@@ -166,17 +166,17 @@
             "5 min"
           ]
         ],
-        "careCheckIn": "monthly, inside the Weekly Reset"
+        "monthlyLookBack": "monthly, inside the Weekly Reset"
       },
       "canonical": [
         "5 parts, about 40 minutes: Appreciation (5 min) · Check the load (15 min) · One friction point (15 min) · Requests + Next steps (5 min).",
         "Set a 40-minute timer.",
-        "The monthly Care Check-in (inside the Weekly Reset) happens in 'Check the load' once a month; never a separate meeting.",
+        "A monthly look-back (inside the Weekly Reset) happens in 'Check the load' once a month; never a separate meeting.",
         "Maintenance, not a trial. Flooded? Pause + Return first."
       ],
       "canonicalPhrases": [
         "Set a 40-minute timer",
-        "Once a month, this part is the Care Check-in."
+        "Once a month, use this part to look back over the whole month."
       ],
       "worksheets": [
         "weekly-reset-agenda"
@@ -465,9 +465,9 @@
       ]
     },
     "care-check-in": {
-      "name": "Care Check-in",
+      "name": "Monthly look-back",
       "icon": "care-check-in",
-      "phrase": "the monthly Care Check-in (inside the Weekly Reset)",
+      "phrase": "a monthly look-back (inside the Weekly Reset)",
       "cadence": "monthly",
       "neverA": "separate meeting"
     },
@@ -521,7 +521,7 @@
         {
           "id": "attachment-clash",
           "label": "We keep clashing the same way",
-          "route": "Circuit Library / Drift Check (+ Profile Calibration)"
+          "route": "Loop Library / Drift Check (+ Profile Calibration)"
         },
         {
           "id": "intimacy-stall",
@@ -566,7 +566,7 @@
   },
   "plainEnglishSubtitles": {
     "System Overlay": "a five-step order for hard conversations",
-    "Circuit": "a repeating loop between you",
+    "Loop": "a pattern that repeats between you",
     "Layer Scan": "where you two differ most, layer by layer",
     "Reach–Recoil": "one reaches, the other pulls back",
     "Carrying It Alone": "one partner carrying the relationship work",
@@ -630,7 +630,7 @@
       ],
       "parts": [
         "Drift Check",
-        "Circuit Spotter"
+        "Loop Spotter"
       ]
     },
     {
@@ -645,7 +645,7 @@
   "counts": {
     "protocols": 14,
     "worksheets": 7,
-    "chapters": 25,
+    "chapters": 22,
     "fieldKitCards": "14 protocol cards (plus Read This First)",
     "situationMapSides": 2
   },
@@ -726,8 +726,31 @@
   },
   "bannedVariants": [
     {
+      "variant": "Safety Gate / safety gate",
+      "use": "Honesty Gate (Green Rule (Honesty Gate)); 'safety' is reserved for danger",
+      "except": "the app slug green-rule (and ids built on it)"
+    },
+    {
+      "variant": "Care Check-in",
+      "use": "a monthly look-back (inside the Weekly Reset)",
+      "except": "the icon id care-check-in and the stored careAudit data"
+    },
+    {
+      "variant": "Circuit Library / Circuit Spotter / circuit(s) as a word",
+      "use": "Loop Library / Loop Spotter / loop(s)",
+      "except": "slugs, ids and file names"
+    },
+    {
+      "variant": "Yearly Alignment",
+      "use": "Yearly Review"
+    },
+    {
+      "variant": "Weaponisation Check",
+      "use": "Misuse Check"
+    },
+    {
       "variant": "Care Audit",
-      "use": "Care Check-in"
+      "use": "a monthly look-back"
     },
     {
       "variant": "Manager Imbalance / Imbalance (as a name)",
@@ -772,8 +795,8 @@
       "use": "7 worksheets"
     },
     {
-      "variant": "Care Check-in as a separate weekly 10–15 min meeting",
-      "use": "the monthly Care Check-in (inside the Weekly Reset)"
+      "variant": "a separate weekly 10–15 min look-back meeting",
+      "use": "a monthly look-back (inside the Weekly Reset)"
     },
     {
       "variant": "Abuse guardrail (for tool misuse)",
@@ -827,6 +850,13 @@
     "$description": "Case-insensitive regexes for a lint pass. Review hits by hand (e.g. 'track' is fine outside partner monitoring).",
     "patterns": [
       "Care Audit",
+      "Safety Gate",
+      "Care Check-?in",
+      "Circuit Library",
+      "Circuit Spotter",
+      "\\bcircuits?\\b",
+      "Yearly Alignment",
+      "Weaponi[sz]ation Check",
       "Manager Imbalance",
       "push-pull loop",
       "Tempo Mismatch",

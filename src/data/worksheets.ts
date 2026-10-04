@@ -29,8 +29,8 @@ export const worksheets: Worksheet[] = [
     id: "failure-mode-diagnostic",
     name: "Drift Check",
     protocols: ["system-overlay"],
-    parts: ["Drift Check", "Circuit Spotter"],
-    detail: "with the Circuit Spotter: a circuit is a repeating loop between you",
+    parts: ["Drift Check", "Loop Spotter"],
+    detail: "with the Loop Spotter: a loop is a pattern that repeats between you",
   },
   { id: "uninvestment-check-worksheet", name: "Pulling-Away Check Worksheet", protocols: ["uninvestment-check"] },
 ];

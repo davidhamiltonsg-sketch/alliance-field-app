@@ -202,7 +202,7 @@ function WeeklyResetWizardClient() {
         >
           <p className="text-sm leading-normal text-ink-muted">
             Each week, talk through who’s carrying what. First Sunday of the
-            month? Use the Care Check-in table below for this part.
+            month? Use the table below to look back over the whole month.
           </p>
           <ul className="space-y-3">
             {draft.careAudit.map((row, i) => (

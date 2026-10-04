@@ -187,7 +187,7 @@ const TOOL_SLUG: Record<string, string> = {
   "60-Second Alliance Reset": "60-second-reset",
   "Pause + Return": "pause-and-return",
   "Weekly Reset": "weekly-reset",
-  "Care Check-in": "weekly-reset",
+  "A monthly look-back": "weekly-reset",
   "Micro-Repair": "micro-repair",
   "Impact first, then explain": "full-recovery",
   "Consistency Pact": "consistency-pact",
@@ -216,7 +216,7 @@ function routeTools(a: Profile, b: Profile, health: Record<LayerKey, number>) {
     add("Pause + Return", "You need different amounts of space and closeness. To one of you, ‘I need a minute’ can sound like being left. Whoever asks for the pause says when they’ll be back.");
   }
   if (diff(a.scores.careVisibility, b.scores.careVisibility) > 14 || diff(a.scores.warmthNeed, b.scores.structureNeed) > 18 || diff(b.scores.warmthNeed, a.scores.structureNeed) > 18) {
-    add("Care Check-in", "You show care differently, so some of what you give may be going unnoticed. Tell each other about one recent moment you felt looked after, and what did it.");
+    add("A monthly look-back", "You show care differently, so some of what you give may be going unnoticed. Tell each other about one recent moment you felt looked after, and what did it.");
   }
   if (average([a.scores.proofOrientation, b.scores.proofOrientation]) > 64) {
     add("Consistency Pact", "Pick one small thing each and do it where the other can see. Look at it together at your next Weekly Reset.");
