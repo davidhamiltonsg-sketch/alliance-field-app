@@ -256,7 +256,7 @@
       "canonical": [
         "Only the partner who broke trust acknowledges impact; the hurt partner is never asked to confess in return.",
         "Transparency is offered voluntarily by the partner who broke trust, time-limited, and never becomes monitoring (no demanding passwords, location tracking, or reading messages).",
-        "Sexual pressure: a no met with pressure once → Green Rule / Trust Recovery conversation; again, or either feels unable to say no → stop and use the Help Lines. If it involved force, threats or fear, it isn't a 'once': go straight to the Help Lines.",
+        "Sexual pressure: a no met with pressure once → if you both feel safe, Green Rule / Trust Recovery conversation; again, or either feels unable to say no → stop and use the Help Lines. If it involved force, threats or fear, it isn't a 'once': go straight to the Help Lines.",
         "Deciding not to rebuild, or to end the relationship, is a valid outcome of this protocol, not a failure of it."
       ],
       "guardrails": [
@@ -411,7 +411,7 @@
       "canonical": [
         "A “no” needs no script, reason, or substitute offer. No pact or agreement creates an obligation to sex, touch, or disclosure.",
         "Physical contact is always 'if welcome'.",
-        "A no met with pressure once → Green Rule / Trust Recovery conversation; again, or either feels unable to say no → stop and use the Help Lines. If it involved force, threats or fear, it isn't a 'once': go straight to the Help Lines."
+        "A no met with pressure once → if you both feel safe, Green Rule / Trust Recovery conversation; again, or either feels unable to say no → stop and use the Help Lines. If it involved force, threats or fear, it isn't a 'once': go straight to the Help Lines."
       ],
       "guardrails": [
         "no-script-no",
@@ -583,7 +583,7 @@
     "if-welcome": "Physical contact is always 'if welcome'.",
     "no-limiting-contact": "No tool is ever used to limit a partner's contact with friends, family, money, phone or movement.",
     "no-monitoring": "Never 'track'/'verify' the other partner; use 'look at it together at the check-in'. Transparency is voluntary, time-limited, never monitoring.",
-    "sexual-pressure": "A no met with pressure once → Green Rule / Trust Recovery conversation; if it happens again, or either of you feels unable to say no → stop and use the Help Lines. If it involved force, threats or fear, it isn't a 'once': go straight to the Help Lines.",
+    "sexual-pressure": "A no met with pressure once → if you both feel safe, Green Rule / Trust Recovery conversation; if it happens again, or either of you feels unable to say no → stop and use the Help Lines. If it involved force, threats or fear, it isn't a 'once': go straight to the Help Lines.",
     "misuse-label": "'Abuse' is reserved for abuse; a guardrail about avoidance/misuse of a tool is a 'Misuse guardrail'."
   },
   "worksheets": [

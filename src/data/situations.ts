@@ -89,7 +89,7 @@ export const situations: Situation[] = [
     id: "intimacy-stall",
     label: "Intimacy feels stuck",
     description: "Asking or saying no feels tense; things have gone cold.",
-    firstMove: "Intimacy Pact. Pressure after a no: stop and have a Green Rule talk. Again, or either of you can’t say no: stop and use the Help Lines.",
+    firstMove: "Intimacy Pact. Pressure after a no: stop. If you both feel safe, have a Green Rule talk. Again, or either of you can’t say no: stop and use the Help Lines.",
     primaryHref: "/protocols/intimacy-pact",
     secondaryHrefs: [{ label: "Help Lines", href: "/help" }],
   },

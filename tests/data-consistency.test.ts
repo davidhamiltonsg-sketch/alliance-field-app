@@ -174,7 +174,7 @@ describe("CANON round 3", () => {
     expect(last.indexOf(FORCE)).toBeGreaterThan(last.indexOf("Green Rule or Trust Recovery"));
     expect(JSON.stringify(protocolDiagrams["intimacy-pact"])).toContain(FORCE);
     const warn = getProtocol("intimacy-pact")!.warn!;
-    const ONCE = "If a no is met with pressure once, stop and have a Green Rule or Trust Recovery conversation before anything else.";
+    const ONCE = "If a no is met with pressure once, stop. Only if you both feel safe, have a Green Rule or Trust Recovery conversation before anything else; if either of you doesn’t, go straight to the Help Lines.";
     expect(warn).toContain(ONCE);
     expect(warn).toContain(FORCE);
     expect(warn.indexOf(FORCE)).toBeGreaterThan(warn.indexOf(ONCE));

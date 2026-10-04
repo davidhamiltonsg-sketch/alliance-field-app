@@ -340,7 +340,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "If a no has been met with pressure or guilt-tripping, stop here",
-        "detail": "If a no has been met with pressure or guilt-tripping, stop here and have a Green Rule or Trust Recovery conversation first — don’t try to patch intimacy on top of that. If it involved force, threats or fear, it isn’t a ‘once’: go straight to the Help Lines. If it happens again, or either of you feels unable to say no, stop and use the Help Lines. Repeated pressure is never handled with these tools.",
+        "detail": "If a no has been met with pressure or guilt-tripping, stop here. If you both feel safe, have a Green Rule or Trust Recovery conversation first — don’t try to patch intimacy on top of that. If it involved force, threats or fear, it isn’t a ‘once’: go straight to the Help Lines. If it happens again, or either of you feels unable to say no, stop and use the Help Lines. Repeated pressure is never handled with these tools.",
         "kind": "failure"
       }
     ],
