@@ -36,7 +36,7 @@ type ChapterKey = keyof typeof manualChapters;
  * note, not a numbered chapter.
  */
 export const goDeeper: Record<string, { chapter: ChapterKey; companion?: string }> = {
-  "green-rule": { chapter: "2", companion: "Companion Ch I" },
+  "green-rule": { chapter: "2", companion: "Companion Ch II" },
   "pause-and-return": { chapter: "3", companion: "Companion Ch II" },
   "60-second-reset": { chapter: "4", companion: "Companion Ch II" },
   "micro-repair": { chapter: "14", companion: "Companion Ch I" },
