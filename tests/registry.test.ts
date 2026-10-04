@@ -248,7 +248,7 @@ describe("Go deeper pointers", () => {
     ["14", "Micro-Repairs"], ["15", "When It’s Already a Fight"], ["16", "Full Recovery"],
     ["17", "Why the Tools Are Built This Way"], ["18", "Proof Over Promises"], ["19", "Trust Recovery"],
     ["20", "Consistency Pact"], ["21", "When One of You Pulls Away"], ["22", "The Intimacy Pact"],
-    ["23", "Making Room for Joy"], ["24", "The Sun Memory Protocol"], ["25", "Sensory Comfort"], ["26", "Regular Reviews"],
+    ["23", "Making Room for Joy"], ["24", "The Sun Memory Protocol"], ["25", "Regular Reviews"],
   ]);
 
   it("names a real Manual chapter (and Companion chapter) for every protocol", async () => {
