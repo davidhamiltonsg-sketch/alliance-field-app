@@ -228,7 +228,7 @@ export default function AboutPage() {
               <span className="flex flex-col py-2.5">
                 7-day plan
                 <span className="text-sm font-normal text-ink-muted">
-                  The Core 5, 10–20 minutes a day
+                  The Core 6, 10–20 minutes a day
                 </span>
               </span>
               <ChevronRight size={18} className="shrink-0 text-ink-muted/50" />

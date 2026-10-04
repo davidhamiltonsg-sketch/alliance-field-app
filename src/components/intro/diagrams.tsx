@@ -520,7 +520,7 @@ export function ResetStepsDiagram() {
 }
 
 /* ------------------------------------------------------------------ */
-/* 7. The Core 5: the five tools to learn first                         */
+/* 7. The Core 6: the six tools to learn first                          */
 /* ------------------------------------------------------------------ */
 export function CoreFiveDiagram() {
   const tools: { slug: IconId; title: string; sub: string; color: string }[] = [
@@ -529,13 +529,14 @@ export function CoreFiveDiagram() {
     { slug: "60-second-reset", title: "60-Second Alliance Reset", sub: "When it’s become a fight to win.", color: V.pause },
     { slug: "micro-repair", title: "Micro-Repair", sub: "Small repairs, early.", color: V.repair },
     { slug: "weekly-reset", title: "Weekly Reset", sub: "Five parts, about 40 minutes.", color: V.accent },
+    { slug: "system-overlay", title: "System Overlay", sub: "One order for any hard talk.", color: V.accent },
   ];
   const pitch = 64,
     h = 56;
   return (
     <Frame
       viewBox="0 0 340 394"
-      label="The Core 5, all in the Core tier: Green Rule (Honesty Gate), Pause + Return, 60-Second Alliance Reset, Micro-Repair, Weekly Reset."
+      label="The Core 6, all in the Core tier: Green Rule (Honesty Gate), Pause + Return, 60-Second Alliance Reset, Micro-Repair, Weekly Reset, System Overlay."
     >
       {tools.map((tl, i) => {
         const y = 8 + i * pitch;
