@@ -39,13 +39,16 @@ export const SITE_URL = "https://allianceprotocols.com";
 
 export const FULL_SYSTEM_URL = httpsUrlOrNull(process.env.NEXT_PUBLIC_FULL_SYSTEM_URL);
 
-export type StoreProduct = "manual" | "kit" | "bundle";
+export type StoreProduct = "manual" | "volumeA" | "complete" | "kit" | "bundle";
 
 /** Store page per product (falling back to the single full-system URL); null = no buy link. */
 export const STORE_URLS: Record<StoreProduct, string | null> = {
   manual: httpsUrlOrNull(process.env.NEXT_PUBLIC_STORE_URL_MANUAL) ?? FULL_SYSTEM_URL,
   kit: httpsUrlOrNull(process.env.NEXT_PUBLIC_STORE_URL_KIT) ?? FULL_SYSTEM_URL,
   bundle: httpsUrlOrNull(process.env.NEXT_PUBLIC_STORE_URL_BUNDLE) ?? FULL_SYSTEM_URL,
+  // Volume A (the Companion Book) and the Complete Edition (A + B in one document) have no single-URL fallback.
+  volumeA: httpsUrlOrNull(process.env.NEXT_PUBLIC_STORE_URL_VOLUME_A),
+  complete: httpsUrlOrNull(process.env.NEXT_PUBLIC_STORE_URL_COMPLETE),
 };
 
 /**

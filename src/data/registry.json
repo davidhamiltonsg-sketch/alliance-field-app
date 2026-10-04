@@ -216,28 +216,6 @@
       ]
     },
     {
-      "slug": "proof-protocol",
-      "name": "Proof Protocol",
-      "shortName": "Proof Protocol",
-      "tier": "situational",
-      "tierDots": 2,
-      "icon": "proof-protocol",
-      "tone": "repair",
-      "appAccentHint": "repair",
-      "stepCount": 6,
-      "hasSafetyLink": false,
-      "appRoute": "/protocols/proof-protocol",
-      "plainEnglishSubtitle": "a specific change, evidence you can both see, and a set time window",
-      "numbers": {
-        "steps": 6,
-        "exampleWindow": "14 days"
-      },
-      "canonical": [
-        "Proof = a specific change, evidence you can both see, and a set time window.",
-        "Keep the record short, and look at it together at the check-in (never 'track'/'verify' the partner)."
-      ]
-    },
-    {
       "slug": "trust-recovery",
       "name": "Trust Recovery",
       "shortName": "Trust Recovery",
@@ -334,39 +312,6 @@
       ],
       "worksheets": [
         "uninvestment-check-worksheet"
-      ]
-    },
-    {
-      "slug": "unity-anchor",
-      "name": "Unity Anchor",
-      "shortName": "Unity Anchor",
-      "tier": "situational",
-      "tierDots": 2,
-      "icon": "unity-anchor",
-      "tone": "forest",
-      "appAccentHint": "accent",
-      "stepCount": 4,
-      "hasSafetyLink": true,
-      "appRoute": "/protocols/unity-anchor",
-      "numbers": {
-        "steps": 4
-      },
-      "canonical": [
-        "Situation Map row: Outside pressure or disapproval from family, friends or strangers → Unity Anchor.",
-        "Unity Anchor decides how the COUPLE responds to outside pressure, never how much access a relative gets to your partner.",
-        "No tool is ever used to limit a partner's contact with friends, family, money, phone or movement."
-      ],
-      "canonicalPhrases": [
-        "We're on the same side of this."
-      ],
-      "guardrails": [
-        "no-limiting-contact"
-      ],
-      "steps": [
-        "Pause before reacting",
-        "Trace the source",
-        "Name the unit",
-        "Agree your response"
       ]
     },
     {
@@ -501,12 +446,12 @@
         {
           "id": "outside-pressure",
           "label": "Outside pressure or disapproval from family, friends or strangers",
-          "route": "Unity Anchor"
+          "route": "Team agreement"
         },
         {
           "id": "trust-breach",
           "label": "Trust breach",
-          "route": "Trust Recovery (+ Proof Protocol)"
+          "route": "Trust Recovery"
         },
         {
           "id": "detachment",
@@ -516,7 +461,7 @@
         {
           "id": "after-fight",
           "label": "After a fight, or something small stung",
-          "route": "Micro-Repair (bigger: Full Recovery; changes: Proof Protocol)"
+          "route": "Micro-Repair (bigger: Full Recovery; changes: a Proof item)"
         },
         {
           "id": "attachment-clash",
@@ -531,7 +476,7 @@
         {
           "id": "say-do-gap",
           "label": "Saying one thing, doing another",
-          "route": "Consistency Pact (+ Proof Protocol)"
+          "route": "Consistency Pact"
         },
         {
           "id": "daily-drift",
@@ -644,10 +589,10 @@
   ],
   "worksheetCount": 7,
   "counts": {
-    "protocols": 14,
+    "protocols": 12,
     "worksheets": 7,
     "chapters": 22,
-    "fieldKitCards": "14 protocol cards (plus Read This First)",
+    "fieldKitCards": "12 protocol cards (plus Read This First)",
     "situationMapSides": 2
   },
   "formatRoles": {

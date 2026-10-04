@@ -15,7 +15,6 @@ export const plainEnglish: Record<string, string> = {
 /** Protocol titles that are, or carry, a coined term. */
 const protocolTerm: Record<string, string> = {
   "system-overlay": "System Overlay",
-  "proof-protocol": "Proof",
 };
 
 /** The plain-English subtitle for a protocol whose name is a coined term, if any. */

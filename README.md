@@ -46,6 +46,7 @@ in Vercel's project env vars (or `.env.local` locally) and redeploy.
 | `NEXT_PUBLIC_CONTACT_EMAIL`   | Contact address on /privacy and /terms. Unset (or not an address): no address is shown, only "via allianceprotocols.com". |
 | `NEXT_PUBLIC_FULL_SYSTEM_URL` | https store page, the fallback for each product below. With no store URL at all, "Coming soon" replaces the buy links. |
 | `NEXT_PUBLIC_STORE_URL_MANUAL` / `_KIT` / `_BUNDLE` | https store pages for the Operating Manual, Field Kit and Complete Bundle (Gumroad). Each falls back to `NEXT_PUBLIC_FULL_SYSTEM_URL`; a product with neither gets no buy link. |
+| `NEXT_PUBLIC_STORE_URL_VOLUME_A` / `_COMPLETE` | https store pages for Volume A (The Architecture of Staying) and the Complete Edition (Volumes A and B in one document). No fallback; without a URL there is no buy link for that product. |
 | `NEXT_PUBLIC_SIGNUP_ENDPOINT` | Email signup endpoint (see *Email signup* below). Its origin is added to the CSP.                          |
 | `NEXT_PUBLIC_EMAIL_PROVIDER_NAME` | Name of the mailing-list service (e.g. `Buttondown`), named on /privacy. The sign-up form is live only when this **and** the endpoint are set. |
 
@@ -213,7 +214,7 @@ map changes (it must match the Kit's Situation Map rows).
 ## Safety page
 
 `/help` (header "Help" link, About, the Situation Map's first row, and the
-Green Rule / Pause + Return / Unity Anchor / Intimacy Pact / Trust Recovery /
+Green Rule / Pause + Return / Team agreement / Intimacy Pact / Trust Recovery /
 Pulling-Away Check cautions) holds the canonical Help Lines as `tel:`/`sms:`
 links and the "when not to use this app" guidance. The numbers are in
 `src/data/help.ts` and must match the printed Manual and Kit exactly.
@@ -222,7 +223,7 @@ Safety routing always comes first; "unsafe" is never routed to Pause + Return
 
 ## Content and visuals
 
-- Protocol cards: `src/data/cards/*.json` (14 protocol cards; the Kit's 15th
+- Protocol cards: `src/data/cards/*.json` (12 protocol cards; the Kit’s 13th
   card is Read This First). Counts shared with the printed products are in
   `src/data/kit.ts`; `tests/data-consistency.test.ts` checks them.
 - Step diagrams: `src/data/visuals/protocol-diagrams.ts`, maintained by hand.

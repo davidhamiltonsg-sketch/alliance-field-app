@@ -5,14 +5,16 @@ import { SituationMapDownload } from "./SituationMapDownload";
 import { POSITIONING_LINE, SIGNUP_ACTIVE, STORE_URLS, type StoreProduct } from "@/lib/links";
 
 const products: { id: StoreProduct; name: string; note: string }[] = [
-  { id: "manual", name: "Operating Manual", note: "Every protocol in full, for when you want the why." },
+  { id: "manual", name: "Volume B: Operating Manual", note: "Every protocol in full, for when you want the steps." },
+  { id: "volumeA", name: "Volume A: The Architecture of Staying", note: "The stories behind the tools." },
+  { id: "complete", name: "Complete Edition", note: "Volumes A and B in one document" },
   { id: "kit", name: "Field Kit", note: "Printable cards, worksheets and the Situation Map" },
-  { id: "bundle", name: "Complete Bundle", note: "Manual + Field Kit + Companion Book" },
+  { id: "bundle", name: "Complete Bundle", note: "Complete Edition, separate volumes + Field Kit" },
 ];
 
 /**
  * Free-app CTA (decision #3): the app stays free as the way in. This card
- * offers the Manual, Field Kit and bundle (each with its own store link when
+ * offers Volume A, Volume B, the Complete Edition, the Field Kit and the bundle (each with its own store link when
  * one is configured), a free printable Situation Map, and the email signup
  * for anyone not ready to buy yet.
  */
@@ -23,9 +25,11 @@ export function GetFullSystem() {
       <SectionLabel>The books, if you want more.</SectionLabel>
       <div className="card space-y-3 px-4 py-4">
         <p className="text-base leading-normal text-ink">
-          The app is free. For the Operating Manual and Field Kit, pay once
-          for the whole set: every protocol in full, plus the cards and
-          worksheets to print. Digital PDF + HTML.
+          The app is free. The books go further: Volume B, the Operating Manual,
+          has every protocol in full; Volume A, The Architecture of Staying,
+          tells the stories behind them; the Complete Edition is both in one
+          document; and the Field Kit has the cards and worksheets to print. Pay
+          once. Digital PDF + HTML.
         </p>
         <p className="text-base font-medium leading-normal text-accent">{POSITIONING_LINE}</p>
         {forSale.length > 0 ? (

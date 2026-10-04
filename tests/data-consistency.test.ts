@@ -9,7 +9,7 @@ import { getProtocol, protocolSlugs, protocols } from "@/data/protocols";
 import { situations } from "@/data/situations";
 import registry from "@/data/registry.json";
 import { START_PLAN_DAYS, startDays } from "@/data/start";
-import { TOGETHER_CITATION, commonMoves, togetherFaq, togetherTools, whoFor } from "@/data/together";
+import { TOGETHER_CITATION, commonMoves, togetherFaq, teamAgreement, togetherTools, whoFor } from "@/data/together";
 import { protocolDiagrams } from "@/data/visuals/protocol-diagrams";
 import { precacheUrls } from "../scripts/generate-sw.mjs";
 import { ACCESS_COOKIE } from "@/lib/launch-lock";
@@ -19,7 +19,7 @@ const cardsDir = join(__dirname, "../src/data/cards");
 const cardFiles = readdirSync(cardsDir).filter((f) => f.endsWith(".json"));
 
 describe("protocol cards", () => {
-  it("has the canonical 14 protocol cards, all registered", () => {
+  it("has the canonical 12 protocol cards, all registered", () => {
     expect(protocols).toHaveLength(KIT.protocolCards);
     expect(cardFiles).toHaveLength(KIT.protocolCards);
     expect(new Set(protocolSlugs).size).toBe(protocolSlugs.length);
@@ -109,9 +109,10 @@ describe("CANON numbers and wording", () => {
 
   it("states the anti-weaponisation guardrails on the relevant cards", () => {
     expect(getProtocol("intimacy-pact")!.warn).toContain("needs no script, reason, or substitute");
-    expect(getProtocol("unity-anchor")!.warn).toContain("never how much access a relative gets");
+    expect(teamAgreement.steps.join(" ")).toContain("never how much contact your partner has");
+    expect(pageSource("together")).toContain("never how much access a relative gets");
     expect(getProtocol("trust-recovery")!.warn).toContain("never becomes monitoring");
-    expect(JSON.stringify(getProtocol("unity-anchor"))).not.toMatch(/how much access they get/);
+    expect(JSON.stringify(teamAgreement)).not.toMatch(/how much access they get/);
   });
 });
 
@@ -182,7 +183,7 @@ describe("CANON round 3", () => {
   });
 
   it("never asks to track or verify the other partner", () => {
-    const text = JSON.stringify([getProtocol("trust-recovery"), getProtocol("proof-protocol")]);
+    const text = JSON.stringify([getProtocol("trust-recovery")]);
     expect(text).not.toMatch(/\btrack(ing)? (the facts|it)\b|\bverify\b/i);
     expect(text).toContain("look at it together at the check-in");
   });
@@ -196,18 +197,18 @@ describe("CANON round 3", () => {
     expect(componentSource("WeeklyResetWizard")).not.toContain("Requests (5 min, with next steps)");
   });
 
-  it("Situation Map (app and intro diagram) splits trust breach from pulling away and routes outside pressure to Unity Anchor", () => {
+  it("Situation Map (app and intro diagram) splits trust breach from pulling away and routes outside pressure to the team agreement", () => {
     const byId = Object.fromEntries(situations.map((s) => [s.id, s]));
     expect(byId["trust-breach"].primaryHref).toBe("/protocols/trust-recovery");
-    expect(byId["trust-breach"].firstMove).toContain("Trust Recovery + Proof");
+    expect(byId["trust-breach"].firstMove).toContain("Trust Recovery. Agree one change");
     expect(byId["detachment"].primaryHref).toBe("/protocols/uninvestment-check");
     expect(byId["detachment"].label).toMatch(/Pulling away/);
-    expect(byId["outside-pressure"].primaryHref).toBe("/protocols/unity-anchor");
+    expect(byId["outside-pressure"].primaryHref).toBe("/together");
     expect(byId["outside-pressure"].label).toBe("Outside pressure or disapproval from family, friends or strangers");
     const diagrams = readFileSync(join(__dirname, "../src/components/intro/diagrams.tsx"), "utf8");
     expect(diagrams).toContain('q: ["Trust breach?"]');
     expect(diagrams).toContain('q: ["Pulling away?"]');
-    expect(diagrams).toContain('a: ["Unity Anchor"]');
+    expect(diagrams).toContain('a: ["Team agreement"]');
     expect(diagrams).not.toContain("Trust breach or");
     // Same order as the app list: a fight starting (row 3) and outside pressure (row 4) before trust breach and pulling away.
     expect(diagrams.indexOf('q: ["A fight is"')).toBeLessThan(diagrams.indexOf('q: ["Outside pressure"'));
@@ -468,7 +469,7 @@ describe("/together", () => {
     const routes = new Set(precacheUrls());
     for (const t of togetherTools) expect(routes, t.href).toContain(t.href);
     expect(togetherTools.map((t) => t.href)).toEqual(
-      expect.arrayContaining(["/protocols/unity-anchor", "/"])
+      expect.arrayContaining(["/weekly-reset", "/"])
     );
     expect(TOGETHER_CITATION.text).toMatch(/Faber, Zare & Williams/);
     expect(TOGETHER_CITATION.text).toContain("2026");
@@ -476,16 +477,16 @@ describe("/together", () => {
     expect(authorsCoupleLine).toContain("biracial couple");
   });
 
-  it("routes safety to Help and states the Unity Anchor guardrail", () => {
+  it("routes safety to Help and states the team-agreement guardrail", () => {
     const src = pageSource("together");
     expect(src).toContain("WarnBanner pauseLink={false} safetyLink");
     expect(src).toContain("never how much access a relative gets");
-    expect(src).toContain('href="/protocols/unity-anchor"');
+    expect(src).toContain('href="#anchor-heading"');
   });
 
-  it("is linked from /about and the Unity Anchor card", () => {
+  it("is linked from /about and is where the Situation Map row sends outside pressure", () => {
     expect(pageSource("about")).toContain('href="/together"');
-    expect(getProtocol("unity-anchor")!.crossLinks.map((c) => c.href)).toContain("/together");
+    expect(situations.find((s) => s.id === "outside-pressure")!.primaryHref).toBe("/together");
   });
 
   it("carries no pricing and none of the banned phrasings", () => {
@@ -520,20 +521,19 @@ describe("CANON round 6", () => {
   const byId = Object.fromEntries(situations.map((s) => [s.id, s]));
   const allCopy = JSON.stringify([protocols, protocolDiagrams, situations, commonMoves, togetherTools, togetherFaq, whoFor]);
 
-  it("jealousy is a safety-row matter, never routed to Unity Anchor", () => {
+  it("jealousy is a safety-row matter, never routed to the team agreement", () => {
     expect(byId["unsafe"].description).toContain("This includes jealousy that leads to checking, restricting, or accusing.");
     expect(JSON.stringify(byId["outside-pressure"])).not.toMatch(/jealous/i);
-    expect(JSON.stringify(getProtocol("unity-anchor"))).not.toMatch(/jealous/i);
-    expect(JSON.stringify(protocolDiagrams["unity-anchor"])).not.toMatch(/jealous|log it/i);
+    expect(JSON.stringify(teamAgreement)).not.toMatch(/jealous/i);
     expect(allCopy).not.toMatch(/log (it|jealousy)[^.]*Weekly Reset/i);
   });
 
-  it("Unity Anchor: outside pressure only; partner pressure goes to the Green Rule; carries the safety line", () => {
-    const card = getProtocol("unity-anchor")!;
-    expect(card.whenToUse).toContain("If the pressure comes from your partner, this isn’t a Unity Anchor situation");
-    expect(card.warn).toContain("Afraid of your partner, being threatened, or not free to say no? Stop");
-    expect(card.safetyLink).toBe(true);
-    expect(card.crossLinks.map((c) => c.href)).toContain("/protocols/green-rule");
+  it("Team agreement: outside pressure only; partner pressure goes to the Green Rule; carries the safety line", () => {
+    const src = pageSource("together");
+    expect(src).toContain("If the pressure is coming from your");
+    expect(src).toContain("Go to the Green Rule");
+    expect(src).toContain("safetyLink");
+    expect(situations.find((s) => s.id === "outside-pressure")!.secondaryHrefs!.map((c) => c.href)).toContain("/protocols/green-rule");
   });
 
   it("row 11 says housemates, never roommates", () => {
@@ -552,7 +552,7 @@ describe("CANON round 6", () => {
     expect(trust.steps.join(" ")).toContain("the hurt partner’s feelings and questions come first; the record is an aid, never the judge");
     expect(trust.warn).toContain("If you can’t agree that a breach happened, this tool isn’t for it");
     expect(trust.warn).toContain("If refusing the “voluntary” transparency would feel unsafe, it isn’t voluntary");
-    expect(getProtocol("proof-protocol")!.steps.join(" ")).toContain("look at it together at the check-in, where feelings and questions come first.");
+    expect(trust.concept + trust.whenToUse).toContain("as a Proof item");
     // Voice pass 28: the "aid, never the judge" line is said once, in Trust Recovery's check-in step.
     expect(allCopy.split("the record is an aid, never the judge").length - 1).toBeLessThanOrEqual(2);
     expect(allCopy).not.toMatch(/hypernotic|record first|facts first|right breach/i);

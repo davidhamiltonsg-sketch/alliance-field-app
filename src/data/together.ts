@@ -29,13 +29,13 @@ export const whoFor = [
   "Interracial, intercultural and interfaith couples.",
   "Couples facing disapproval because of age gap, class, nationality, migration status, or sexual or gender identity.",
   "Couples where one partner is new to a country, a language or a family’s customs.",
-  "Couples where only one of you is ready to start. The Unity Anchor is meant for the two of you, but one person can begin by saying: “That’s coming from them, not from us.”",
+  "Couples where only one of you is ready to start. The team agreement is meant for the two of you, but one person can begin by saying: “That’s coming from them, not from us.”",
 ];
 
 export const notFor = [
   "Relationships with fear, intimidation, coercion or control. If you’re afraid of your partner, couples exercises aren’t the right tool.",
   "Immediate danger, including harassment or threats from other people. Contact local emergency services where it’s safe to do so.",
-  "Pressure or put-downs that come from your partner. That isn’t a Unity Anchor situation: use the Green Rule (Honesty Gate), and the Help Lines if you’re afraid.",
+  "Pressure or put-downs that come from your partner. That isn’t an outside-pressure situation: use the Green Rule (Honesty Gate), and the Help Lines if you’re afraid.",
 ];
 
 export interface CommonMove {
@@ -67,12 +67,22 @@ export const commonMoves: CommonMove[] = [
   },
 ];
 
+/** The team agreement: four steps for outside pressure (was the Unity Anchor card; Manual Chapter 8). */
+export const teamAgreement = {
+  steps: [
+    "Pause before reacting — don’t act on the comment or the look in the moment.",
+    "Trace the source — ask whether this is about the two of you or about them. Say it: “That’s coming from them, not from us.” Then ask what each of you needs: reassurance, a plan, or a chance to vent.",
+    "Name the unit — say it out loud: “We’re on the same side of this.”",
+    "Agree your response — decide together, as a team, how the two of you will respond next time — never how much contact your partner has with their own family, friends, money, phone or movements.",
+  ],
+  phrases: [
+    { text: "That’s coming from them, not from us." },
+    { text: "We’re on the same side of this." },
+    { text: "What do you actually need right now — reassurance, a plan, or just to vent?" },
+  ],
+} as const;
+
 export const togetherTools = [
-  {
-    label: "Unity Anchor",
-    href: "/protocols/unity-anchor",
-    note: "What to say and do when someone else’s comment hits you both.",
-  },
   {
     label: "Situation Map",
     href: "/",
@@ -106,6 +116,6 @@ export const togetherFaq = [
   },
   {
     q: "What if one of us doesn’t see what the other sees?",
-    a: "That’s common. The Unity Anchor starts by treating the strain as real, and as coming from outside, so you don’t have to win an argument about each incident before you can support each other.",
+    a: "That’s common. The team agreement starts by treating the strain as real, and as coming from outside, so you don’t have to win an argument about each incident before you can support each other.",
   },
 ];

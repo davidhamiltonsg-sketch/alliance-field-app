@@ -195,7 +195,6 @@ const TOOL_SLUG: Record<string, string> = {
   "Full Recovery": "full-recovery",
   "Trust Recovery": "trust-recovery",
   "Intimacy Pact": "intimacy-pact",
-  "Proof Protocol": "proof-protocol",
   "System Overlay": "system-overlay",
   "Morning + Evening Rhythm": "morning-evening-rhythm",
   "Green Rule": "green-rule",

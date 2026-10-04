@@ -242,43 +242,6 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     },
     "outcome": "A sharp moment, owned and cleared within a day."
   },
-  "proof-protocol": {
-    "when": "When one of you asks for a real change and all that comes back is “I promise”, with no plan behind it. Use it instead of waiting for things to get better.",
-    "steps": [
-      {
-        "title": "Name the change",
-        "detail": "Pick something specific you can both see.",
-        "kind": "step"
-      },
-      {
-        "title": "Decide what counts",
-        "detail": "Agree what ‘met’, ‘partial’ and ‘missed’ will look like.",
-        "kind": "step"
-      },
-      {
-        "title": "Set a time window",
-        "detail": "Agree a start date, an end date and when you’ll check in.",
-        "kind": "step"
-      },
-      {
-        "title": "Keep the record short",
-        "detail": "A count or a table is enough — and look at it together at the check-in, where feelings and questions come first.",
-        "kind": "step"
-      },
-      {
-        "title": "Check in",
-        "detail": "Decide together whether to keep going, change it, or call it done.",
-        "kind": "repair"
-      },
-      {
-        "title": "Missed twice and nobody’s said so?",
-        "detail": "Raise it at the next check-in.",
-        "kind": "failure"
-      }
-    ],
-    "note": null,
-    "outcome": "Change you can see. Trust moves on evidence, not promises."
-  },
   "morning-evening-rhythm": {
     "when": "Every day, and it’s the first thing to bring back when you start to feel like housemates, or you get home from a trip and every conversation is about logistics.",
     "steps": [
@@ -348,7 +311,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "outcome": "Asking and saying no both stay safe."
   },
   "trust-recovery": {
-    "when": "After a betrayal, a lie or a string of broken agreements, or anything else that leaves a clear before and after in how safe things feel.",
+    "when": "After a betrayal, a lie or a string of broken agreements, or anything else that leaves a clear before and after in how safe things feel. Steps 2 to 5 also work alone, as a Proof item, when a request for change meets only “I promise”.",
     "steps": [
       {
         "title": "Name what happened",
@@ -498,34 +461,4 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "note": null,
     "outcome": "Space or pulling away: you name which, and book the right next step."
   },
-  "unity-anchor": {
-    "when": "When disapproval or discrimination from outside (a relative, a friend, a stranger, a colleague) follows you home and starts turning into a fight between the two of you. If the pressure comes from your partner, this isn’t a Unity Anchor situation: use the Green Rule (Honesty Gate), and the safety line below.",
-    "steps": [
-      {
-        "title": "Pause before reacting",
-        "detail": "Don’t act on the comment or the look in the moment.",
-        "kind": "step"
-      },
-      {
-        "title": "Trace the source",
-        "detail": "Ask whether this is about the two of you or about them. Say it: “That’s coming from them, not from us.” Then ask what each of you needs: reassurance, a plan, or a chance to vent.",
-        "kind": "step"
-      },
-      {
-        "title": "Name the unit",
-        "detail": "Say it out loud: “We’re on the same side of this.”",
-        "kind": "step"
-      },
-      {
-        "title": "Agree your response",
-        "detail": "Decide together, as a team, how the two of you will respond next time — never how much contact your partner has with their own family, friends, money, phone or movements.",
-        "kind": "step"
-      }
-    ],
-    "note": {
-      "kind": "failure",
-      "text": "Never used to limit a partner’s contact with family, friends, money, phone or movement."
-    },
-    "outcome": "Outside pressure stays outside; the two of you stay one unit."
-  }
 };

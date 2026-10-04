@@ -5,7 +5,7 @@ import { ArrowRight } from "./icons";
 export function CompanionSampleDownload() {
   return (
     <div>
-      <p className="text-sm font-medium text-ink">Free: the first chapter of the Companion</p>
+      <p className="text-sm font-medium text-ink">Free: the first chapter of Volume A, The Architecture of Staying</p>
       <p className="mt-0.5 text-sm leading-snug text-ink-muted">
         The Prologue and Chapter I of The Architecture of Staying, the stories
         behind the tools. A good first read if one of you isn’t sold on “a system”.
