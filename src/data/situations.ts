@@ -43,17 +43,16 @@ export const situations: Situation[] = [
     label: "Outside pressure or disapproval from family, friends or strangers",
     description:
       "Family disapproval, discrimination or judgement from others is landing on the two of you. If the pressure is coming from your partner, this isn’t the right tool. Go to the Green Rule, or to Help if you’re afraid.",
-    firstMove: "Unity Anchor: decide together how the couple responds. Never limit a partner’s contact with anyone.",
-    primaryHref: "/protocols/unity-anchor",
-    secondaryHrefs: [{ label: "Together under pressure", href: "/together" }],
+    firstMove: "Team agreement: decide together how the couple responds. Never limit a partner’s contact with anyone.",
+    primaryHref: "/together",
+    secondaryHrefs: [{ label: "Green Rule (Honesty Gate)", href: "/protocols/green-rule" }],
   },
   {
     id: "trust-breach",
     label: "Trust breach",
     description: "Lying, infidelity or a broken agreement.",
-    firstMove: "Safety first, then Trust Recovery + Proof. Agree one change you’ll both see, and look at it together at a set check-in.",
+    firstMove: "Safety first, then Trust Recovery. Agree one change you’ll both see, and look at it together at a set check-in.",
     primaryHref: "/protocols/trust-recovery",
-    secondaryHrefs: [{ label: "Proof Protocol", href: "/protocols/proof-protocol" }],
   },
   {
     id: "detachment",
@@ -72,7 +71,6 @@ export const situations: Situation[] = [
     primaryHref: "/protocols/micro-repair",
     secondaryHrefs: [
       { label: "Full Recovery", href: "/protocols/full-recovery" },
-      { label: "Proof Protocol", href: "/protocols/proof-protocol" },
     ],
   },
   {
@@ -99,7 +97,6 @@ export const situations: Situation[] = [
     description: "Your own follow-through: promises that don’t match what happens.",
     firstMove: "Consistency Pact: a private weekly check. After a breach, add a shared Proof item.",
     primaryHref: "/protocols/consistency-pact",
-    secondaryHrefs: [{ label: "Proof Protocol", href: "/protocols/proof-protocol" }],
   },
   {
     id: "daily-drift",

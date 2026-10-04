@@ -69,9 +69,9 @@ const scanned = [
 const texts = scanned.flatMap((f) => userText(f).map((text) => ({ file: relative(root, f), text })));
 
 describe("registry: protocols", () => {
-  it("has all 14 card slugs, each with the registry name and tier", () => {
-    expect(registry.protocols).toHaveLength(14);
-    expect(protocols).toHaveLength(14);
+  it("has all 12 card slugs, each with the registry name and tier", () => {
+    expect(registry.protocols).toHaveLength(12);
+    expect(protocols).toHaveLength(12);
     for (const r of registry.protocols) {
       const card = getProtocol(r.slug);
       expect(card, r.slug).toBeDefined();
@@ -99,8 +99,7 @@ describe("registry: protocols", () => {
     }
   });
 
-  it("safety green is for safety content only: Unity Anchor is forest", () => {
-    expect(getProtocol("unity-anchor")!.accentHint).toBe("accent");
+  it("safety green is for safety content only", () => {
     for (const p of protocols.filter((p) => p.accentHint === "safety")) expect(p.slug).toBe("green-rule");
   });
 });
@@ -303,10 +302,9 @@ describe("registry: protocol shape (CANON round 5)", () => {
     }
   });
 
-  it("Unity Anchor uses the four canonical step names", () => {
-    const r = registry.protocols.find((p) => p.slug === "unity-anchor") as { steps: string[] };
-    const card = getProtocol("unity-anchor")!;
-    expect(card.steps.map((s) => s.split(" — ")[0])).toEqual(r.steps);
+  it("the team agreement uses the four canonical step names", async () => {
+    const { teamAgreement } = await import("@/data/together");
+    expect(teamAgreement.steps.map((s) => s.split(" — ")[0])).toEqual(["Pause before reacting", "Trace the source", "Name the unit", "Agree your response"]);
   });
 });
 

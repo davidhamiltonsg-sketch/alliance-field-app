@@ -74,15 +74,6 @@ export const icons = {
     label: "Micro-Repair",
     group: "protocol",
   },
-  "proof-protocol": {
-    paths: [
-      "M5.75 9.25a6.25 6.25 0 1 0 12.5 0a6.25 6.25 0 1 0 -12.5 0Z",
-      "M9.25 9.4l1.9 1.9 3.6-3.7",
-      "M8.6 14.5 7.5 21l4.5-2.4 4.5 2.4-1.1-6.5",
-    ],
-    label: "Proof Protocol",
-    group: "protocol",
-  },
   "morning-evening-rhythm": {
     paths: [
       "M4.75 7a2.25 2.25 0 1 0 4.5 0a2.25 2.25 0 1 0 -4.5 0Z",
@@ -145,8 +136,8 @@ export const icons = {
       "M3.4 16.6 5 15l1.7 1.4M20.6 16.6 19 15l-1.7 1.4",
     ],
     accent: "M3.5 3c3 .1 5.3 .9 6.9 2.3M20.5 3c-3 .1-5.3 .9-6.9 2.3",
-    label: "Unity Anchor",
-    group: "protocol",
+    label: "Team agreement",
+    group: "concept",
   },
   "sun-memory": {
     paths: [

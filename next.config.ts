@@ -9,6 +9,9 @@ const nextConfig: NextConfig = {
       { source: "/install", destination: "/start", permanent: true },
       // The Conflict Protocol was folded into the System Overlay ("already a fight" speed), pass 3.
       { source: "/protocols/conflict-protocol", destination: "/protocols/system-overlay", permanent: true },
+      // Folded in the volumes pass: Proof Protocol became "a Proof item" inside Trust Recovery; Unity Anchor became the team agreement on /together.
+      { source: "/protocols/proof-protocol", destination: "/protocols/trust-recovery", permanent: true },
+      { source: "/protocols/unity-anchor", destination: "/together", permanent: true },
     ];
   },
   async headers() {

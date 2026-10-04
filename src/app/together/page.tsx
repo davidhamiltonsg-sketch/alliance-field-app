@@ -7,12 +7,12 @@ import { WarnBanner } from "@/components/WarnBanner";
 import { ArrowLeft, ArrowRight, ChevronRight } from "@/components/icons";
 import { authorsCoupleLine } from "@/data/authors";
 import { HELP_LINES_POINTER } from "@/data/help";
-import { getProtocol } from "@/data/protocols";
 import {
   TOGETHER_CITATION,
   commonMoves,
   notFor,
   outsideExamples,
+  teamAgreement,
   togetherFaq,
   togetherTools,
   whoFor,
@@ -21,12 +21,10 @@ import {
 export const metadata = {
   title: "Together against outside pressure",
   description:
-    "For interracial, intercultural and other couples facing outside pressure: face it together, with the Unity Anchor.",
+    "For interracial, intercultural and other couples facing outside pressure: face it together, with a team agreement.",
 };
 
 export default function TogetherPage() {
-  const anchor = getProtocol("unity-anchor")!;
-
   return (
     <div className="space-y-6">
       <PageHeader eyebrow={<Marker kind="TOOL" label="Outside pressure" icon="unity-anchor" />} title="When the pressure comes from outside, face it from the same side.">
@@ -37,10 +35,10 @@ export default function TogetherPage() {
       </PageHeader>
 
       <Link
-        href="/protocols/unity-anchor"
+        href="#anchor-heading"
         className="flex min-h-12 items-center justify-between rounded-xl bg-accent px-4 text-base font-semibold text-paper"
       >
-        Open the Unity Anchor
+        The four steps
         <ArrowRight size={16} />
       </Link>
 
@@ -87,10 +85,10 @@ export default function TogetherPage() {
 
       <section aria-labelledby="anchor-heading" className="space-y-3">
         <SectionLabel>
-          <span id="anchor-heading">The Unity Anchor, in short</span>
+          <span id="anchor-heading">The team agreement, in short</span>
         </SectionLabel>
         <ol className="card space-y-2.5 px-4 py-4">
-          {anchor.steps.map((step, i) => (
+          {teamAgreement.steps.map((step, i) => (
             <li key={i} className="flex gap-3 text-base leading-normal text-ink">
               <span className="tabular flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent text-sm font-medium text-paper">
                 {i + 1}
@@ -99,12 +97,12 @@ export default function TogetherPage() {
             </li>
           ))}
         </ol>
-        <PhraseBlock phrases={anchor.phrases.slice(0, 2)} />
+        <PhraseBlock phrases={teamAgreement.phrases.slice(0, 2)} />
         <div className="card px-4 py-3.5 text-base leading-normal text-ink">
           <p>
             <strong className="font-medium">If the pressure is coming from your
             partner, this isn’t the right tool.</strong> Go to the Green Rule,
-            or to Help if you’re afraid. The Unity Anchor is there to help you two decide how to respond to
+            or to Help if you’re afraid. The team agreement is there to help you two decide how to respond to
             outside pressure — never how much access a relative gets to your partner.
             No tool is ever used to limit a partner’s contact with
             friends, family, money, phone or movement.
