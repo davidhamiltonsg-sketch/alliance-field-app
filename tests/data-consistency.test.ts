@@ -557,7 +557,7 @@ describe("CANON round 6", () => {
     const card = getProtocol("uninvestment-check")!;
     expect(JSON.stringify(card)).not.toMatch(/before you leave the conversation/);
     expect(card.steps.join(" ")).toContain("Book a Full Recovery conversation within a week");
-    expect(card.steps.join(" ")).toContain("Drift is nobody’s fault, so you each name your part.");
+    expect(card.steps.join(" ")).toContain("Drift is nobody’s fault, but you can each name your part.");
   });
 
   it("Weekly Reset scope rule names the Monthly Review (short What it is, as on the Kit card since pass 40; once on the card; gloss off the card)", () => {

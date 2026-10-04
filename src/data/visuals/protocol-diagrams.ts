@@ -122,7 +122,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Put it right",
-        "detail": "Whoever pushed back finishes with the repair line you agreed in advance, so the honest thing is easier to say next time.",
+        "detail": "Whoever reacted badly finishes with the repair line you agreed in advance, so the honest thing is easier to say next time.",
         "kind": "repair"
       }
     ],
@@ -484,7 +484,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Acknowledge the impact",
-        "detail": "Do it before either of you explains. If one of you caused the breach (infidelity, lying, a broken agreement), only that partner acknowledges impact; the hurt partner is never asked to confess in return. If it’s drift rather than a breach: Drift is nobody’s fault, so you each name your part.",
+        "detail": "Do it before either of you explains. If one of you caused the breach (infidelity, lying, a broken agreement), only that partner acknowledges impact; the hurt partner is never asked to confess in return. If it’s drift rather than a breach: Drift is nobody’s fault, but you can each name your part.",
         "kind": "repair"
       },
       {
@@ -532,7 +532,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Three or more signs",
-        "detail": "One or both of you may be pulling away. Book a Full Recovery conversation within a week. Drift is nobody’s fault, so you each name your part. A specific breach of trust goes to Trust Recovery.",
+        "detail": "One or both of you may be pulling away. Book a Full Recovery conversation within a week. Drift is nobody’s fault, but you can each name your part. A specific breach of trust goes to Trust Recovery.",
         "kind": "repair",
         "badge": "3 or more · within a week"
       },
