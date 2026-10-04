@@ -8,7 +8,7 @@ export function SituationMapDownload() {
       <p className="text-sm font-medium text-ink">Free: printable Situation Map</p>
       <p className="mt-0.5 text-sm leading-snug text-ink-muted">
         The two-sided map from the Field Kit, safety row first, with the
-        Quick Reference and Help Lines on the back. Keep it on the fridge.
+        Quick Reference on the back. Keep it on the fridge; the Help Lines are on the last page of the Field Kit and in this app.
       </p>
       <a
         href={SITUATION_MAP_PDF}
