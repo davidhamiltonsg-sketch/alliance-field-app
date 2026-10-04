@@ -81,10 +81,13 @@ describe("registry: protocols", () => {
     expect(new Set(protocols.map((p) => p.slug))).toEqual(new Set(registry.protocols.map((r) => r.slug)));
   });
 
-  it("the Core tier is exactly the Core 5 plus the System Overlay (pass 3)", () => {
+  it("the Core tier is exactly the Core 5 (pass 4: the System Overlay is Situational)", () => {
     const core = registry.protocols.filter((r) => r.tier === "core").map((r) => r.slug);
-    expect(new Set(core)).toEqual(new Set([...coreFiveSlugs, "system-overlay"]));
+    expect(new Set(core)).toEqual(new Set(coreFiveSlugs));
+    expect(core).toHaveLength(5);
     expect(coreFiveSlugs).not.toContain("system-overlay");
+    expect(registry.protocols.find((r) => r.slug === "system-overlay")!.tier).toBe("situational");
+    expect(getProtocol("system-overlay")!.tier).toBe("situational");
   });
 
   it("tier badges match the registry (label and dots)", () => {

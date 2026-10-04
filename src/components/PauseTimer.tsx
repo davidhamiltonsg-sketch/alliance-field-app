@@ -345,7 +345,7 @@ function PauseTimerClient() {
             </li>
             <li className="flex gap-3">
               <span className="tabular flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent text-sm font-medium text-paper">2</span>
-              <span><strong>Make it safe</strong> — say out loud that the relationship isn’t at risk tonight.</span>
+              <span><strong>Make it safe</strong> — if it’s true, say out loud that the relationship isn’t at risk tonight.</span>
             </li>
             <li className="flex gap-3">
               <span className="tabular flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent text-sm font-medium text-paper">3</span>

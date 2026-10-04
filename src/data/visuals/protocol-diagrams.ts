@@ -142,7 +142,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Make it safe",
-        "detail": "Say out loud that the relationship isn’t at risk tonight.",
+        "detail": "If it’s true, say out loud that the relationship isn’t at risk tonight.",
         "kind": "step"
       },
       {

@@ -42,7 +42,7 @@ const routes: {
 const practise: { href: string; label: string; sub: string; icon: IconId; tone: IconTone }[] = [
   { href: "/connect", label: "Connection Cards", sub: "Questions to flip through together", icon: "connection-cards", tone: "connection" },
   { href: "/weekly-reset", label: "Weekly Reset", sub: "Five parts, about 40 minutes", icon: "weekly-reset", tone: "accent" },
-  { href: "/start", label: "7-day plan", sub: "About 10 minutes a day", icon: "section-steps", tone: "accent" },
+  { href: "/start", label: "7-day plan", sub: "10–20 minutes a day", icon: "section-steps", tone: "accent" },
   { href: "/calibrate", label: "Profile Calibration", sub: "Where you two differ most", icon: "profile-calibration", tone: "accent" },
 ];
 

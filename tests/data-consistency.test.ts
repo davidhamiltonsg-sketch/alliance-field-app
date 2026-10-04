@@ -242,6 +242,15 @@ describe("CANON round 3", () => {
 });
 
 describe("safety routing", () => {
+  it("System Overlay step 2 never asks anyone to say something untrue (pass 4, F6)", () => {
+    const line = "Make it safe — if it’s true, say out loud that the relationship isn’t at risk tonight.";
+    expect(getProtocol("system-overlay")!.steps[1]).toBe(line);
+    expect(protocolDiagrams["system-overlay"].steps[1].detail).toBe("If it’s true, say out loud that the relationship isn’t at risk tonight.");
+    const timer = readFileSync(join(process.cwd(), "src/components/PauseTimer.tsx"), "utf8");
+    expect(timer).toContain("— if it’s true, say out loud that the relationship isn’t at risk tonight.");
+    expect(timer).not.toMatch(/— say out loud that the relationship isn’t at risk/);
+  });
+
   it("puts the safety row first, routed to Help, never to Pause", () => {
     expect(situations[0].danger).toBe(true);
     expect(situations[0].primaryHref).toBe("/help");
@@ -338,7 +347,7 @@ describe("Core 5 and the 7-day start plan", () => {
     expect(last.slug).toBe("weekly-reset");
     expect(last.task).toContain("40-minute timer");
     for (const slug of coreFiveSlugs) expect(startDays.map((d) => d.slug)).toContain(slug);
-    // About 10 minutes a day; the Pause + Return practice includes 20 minutes apart,
+    // 10–20 minutes a day (pass 4, F4); the Pause + Return practice includes 20 minutes apart,
     // and the morning and evening check-ins are the Manual's two check-ins (≤5 + about 10) across the day.
     for (const d of startDays.slice(0, -1).filter((d) => d.slug !== "pause-and-return" && d.slug !== "morning-evening-rhythm")) expect(d.minutes).toBeLessThanOrEqual(10);
     expect(startDays.find((d) => d.day === 5)!.task).toMatch(/morning check-in \(5 minutes or less\) and an evening check-in \(about 10 minutes\)/);
@@ -563,7 +572,7 @@ describe("CANON round 6", () => {
   it("Weekly Reset scope rule names the Monthly Review (short What it is, as on the Kit card since pass 40; once on the card; gloss off the card)", () => {
     const card = getProtocol("weekly-reset")!;
     const scope =
-      "Anything bigger (checking a Proof item, planning something fun, where you’re heading) waits for the Monthly Review";
+      "Anything bigger (planning something fun, where you’re heading) waits for the Monthly Review";
     const gloss = "a 40-minute once-a-month look at how things are going";
     expect(card.concept).toContain("Maintenance, not a trial. Ours happens at home, on a Sunday.");
     expect(card.whenToUse).toContain("Same day and time each week; also after travel or a hard stretch. Not for a fight: flooded? Pause + Return first.");
