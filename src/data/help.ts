@@ -110,8 +110,9 @@ export const SELF_CHECK_TITLE = "Not sure whether this is you?";
 export const SELF_CHECK_QUESTIONS: string[] = [
   "Do you hold back what you think because you are afraid of how your partner would react?",
   "Are you ever afraid of what they will do?",
-  "Do they check, restrict or punish your contact with others?",
+  "Do they check, restrict or punish your contact with others, or control your money?",
   "Does an argument ever end with you giving in out of fear?",
+  "Are you ever pressured into sex or touch you do not want?",
 ];
 
 export const SELF_CHECK_RESULT =
