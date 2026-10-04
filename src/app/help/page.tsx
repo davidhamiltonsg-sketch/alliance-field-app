@@ -6,8 +6,12 @@ import { SectionLabel } from "@/components/SectionLabel";
 import { ArrowRight } from "@/components/icons";
 import { QuickExit } from "@/components/QuickExit";
 import {
+  CHILD_LINE,
   ELSEWHERE_LINE,
   PRIVATE_STORAGE_NOTE,
+  SELF_CHECK_QUESTIONS,
+  SELF_CHECK_RESULT,
+  SELF_CHECK_TITLE,
   emergencyNumbers,
   helpRegions,
   lgbtqLines,
@@ -126,6 +130,7 @@ export default function HelpPage() {
             ))}
           </ul>
         </div>
+        <p className="px-1 text-base leading-normal text-ink">{CHILD_LINE}</p>
         <p className="px-1 text-base leading-normal text-ink-muted">{ELSEWHERE_LINE}</p>
       </section>
 
@@ -165,6 +170,15 @@ export default function HelpPage() {
             disclosure. No tool here is ever used to limit a partner’s
             contact with friends, family, money, phone or movement.
           </p>
+          <div>
+            <p className="font-semibold">{SELF_CHECK_TITLE}</p>
+            <ul className="mt-1 list-disc space-y-1 pl-5">
+              {SELF_CHECK_QUESTIONS.map((q) => (
+                <li key={q}>{q}</li>
+              ))}
+            </ul>
+            <p className="mt-2">{SELF_CHECK_RESULT}</p>
+          </div>
           <p className="text-ink-muted">
             Everything here assumes you’re both acting in good faith. If the
             relationship isn’t safe, these tools aren’t the answer: use the
