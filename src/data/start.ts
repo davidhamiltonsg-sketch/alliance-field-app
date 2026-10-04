@@ -64,11 +64,11 @@ export const startDays: StartDay[] = [
   },
   {
     day: 6,
-    title: "Set up the Reset",
-    task: "Open Weekly Reset, book 40 minutes for tomorrow, and each of you note one appreciation and one friction point.",
-    proof: "you’ve booked the time and drafted the agenda.",
+    title: "Quick Overlay, then set up the Reset",
+    task: "Try the System Overlay’s quick version (about 90 seconds) on a minor gripe. Then open Weekly Reset, book 40 minutes for tomorrow, and each of you note one appreciation and one friction point.",
+    proof: "you’ve tried the quick version once and booked the time.",
     minutes: 10,
-    slug: "weekly-reset",
+    slug: "system-overlay",
   },
   {
     day: 7,

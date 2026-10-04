@@ -1,12 +1,12 @@
 /**
- * The Core 5: the smallest set of Field Kit tools worth learning first.
+ * The Core 6: the smallest set of Field Kit tools worth learning first.
  * Order follows the registry (Green Rule first). The Core tier is exactly
- * these five; everything else on /protocols is grouped by tier: Situational
- * (including the System Overlay), then Build.
+ * these six, including the System Overlay; everything else on /protocols is
+ * grouped by tier: Situational, then Build.
  */
 export interface CoreTool {
   slug: string;
-  /** One line on why this is in the Core 5. */
+  /** One line on why this is in the Core 6. */
   why: string;
 }
 
@@ -30,6 +30,10 @@ export const coreFive: CoreTool[] = [
   {
     slug: "weekly-reset",
     why: "Forty minutes once a week, appreciation first: designed so small things get said before they pile up.",
+  },
+  {
+    slug: "system-overlay",
+    why: "One order for any hard conversation, with a 90-second quick version, so it ends with who does what.",
   },
 ];
 

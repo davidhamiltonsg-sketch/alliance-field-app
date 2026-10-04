@@ -50,10 +50,10 @@ const panels: Panel[] = [
   },
   {
     id: "core-5",
-    eyebrow: "The Core 5",
+    eyebrow: "The Core 6",
     icon: "tier-core",
-    title: "Start with five tools.",
-    body: "Learn these five first; the rest can wait. The 7-day plan sets them up in 10–20 minutes a day.",
+    title: "Start with six tools.",
+    body: "Learn these six first; the rest can wait. The 7-day plan sets them up in 10–20 minutes a day.",
     diagram: <CoreFiveDiagram />,
   },
   {

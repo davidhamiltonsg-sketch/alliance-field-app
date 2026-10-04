@@ -47,7 +47,7 @@ export function ProtocolSearch({ protocols }: { protocols: Protocol[] }) {
     return list;
   }, [protocols, query, favoritesOnly, favorites]);
 
-  // No search or filter: group by tier (Core first, in Core 5 order).
+  // No search or filter: group by tier (Core first, in Core order).
   const grouped =
     !query.trim() && !favoritesOnly
       ? groupByTier([

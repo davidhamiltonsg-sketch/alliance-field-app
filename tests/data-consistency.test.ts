@@ -336,14 +336,14 @@ describe("safety routing", () => {
   });
 });
 
-describe("Core 5 and the 7-day start plan", () => {
-  it("Core 5 is five distinct, real protocol cards, Green Rule first", () => {
-    expect(coreFive).toHaveLength(5);
-    expect(new Set(coreFiveSlugs).size).toBe(5);
+describe("Core 6 and the 7-day start plan", () => {
+  it("Core 6 is six distinct, real protocol cards, Green Rule first", () => {
+    expect(coreFive).toHaveLength(6);
+    expect(new Set(coreFiveSlugs).size).toBe(6);
     for (const slug of coreFiveSlugs) expect(getProtocol(slug), slug).toBeDefined();
     expect(coreFiveSlugs[0]).toBe("green-rule");
     expect(coreFiveSlugs).toEqual(
-      expect.arrayContaining(["green-rule", "pause-and-return", "60-second-reset", "weekly-reset", "micro-repair"])
+      expect.arrayContaining(["green-rule", "pause-and-return", "60-second-reset", "weekly-reset", "micro-repair", "system-overlay"])
     );
   });
 
@@ -358,7 +358,7 @@ describe("Core 5 and the 7-day start plan", () => {
     }
   });
 
-  it("ends with the first Weekly Reset on day 7 and covers every Core 5 tool", () => {
+  it("ends with the first Weekly Reset on day 7 and covers every Core 6 tool", () => {
     const last = startDays.at(-1)!;
     expect(last.day).toBe(7);
     expect(last.slug).toBe("weekly-reset");
@@ -377,7 +377,7 @@ describe("Core 5 and the 7-day start plan", () => {
       "A first Micro-Repair",
       "Practise Pause + Return",
       "Morning and evening check-ins",
-      "Set up the Reset",
+      "Quick Overlay, then set up the Reset",
       "Weekly Reset #1",
     ]);
     for (const d of startDays) expect(d.proof, `day ${d.day}`).toMatch(/\S/);
