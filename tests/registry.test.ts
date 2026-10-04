@@ -248,14 +248,28 @@ describe("registry: worksheets", () => {
 describe("Go deeper pointers", () => {
   // Chapter numbers and titles from the Operating Manual's table of contents.
   const MANUAL = new Map<string, string>([
-    ["1", "Why a Relationship Needs a Plan"], ["2", "The Short Version"], ["3", "When Your Body Takes Over"],
-    ["4", "Getting Started"], ["5", "How Each of You Reaches for Closeness"], ["6", "Hearing the Need Underneath"],
-    ["7", "Two Ways of Caring"], ["8", "When Hurt Gets Explained Away"], ["9", "Team Over Self"],
-    ["10", "How Couples Drift"], ["11", "The Four Phases"], ["12", "Daily Rhythm"], ["13", "Weekly Reset"],
-    ["14", "Micro-Repairs"], ["15", "When It’s Already a Fight"], ["16", "Full Recovery"],
-    ["17", "Why the Tools Are Built This Way"], ["18", "Proof Over Promises"], ["19", "Trust Recovery"],
-    ["20", "Consistency Pact"], ["21", "When One of You Pulls Away"], ["22", "The Intimacy Pact"],
-    ["23", "Making Room for Joy"], ["24", "The Sun Memory Protocol"], ["25", "Regular Reviews"],
+    ["1", "Why a Relationship Needs a Plan"],
+    ["2", "The Short Version"],
+    ["3", "When Your Body Takes Over"],
+    ["4", "Getting Started"],
+    ["5", "Hearing Each Other"],
+    ["6", "Two Ways of Caring"],
+    ["7", "When Hurt Gets Explained Away"],
+    ["8", "Team Over Self"],
+    ["9", "How Couples Drift"],
+    ["10", "The Four Phases"],
+    ["11", "Daily Rhythm"],
+    ["12", "Weekly Reset"],
+    ["13", "Micro-Repairs"],
+    ["14", "When It’s Already a Fight"],
+    ["15", "Full Recovery"],
+    ["16", "Proof Over Promises"],
+    ["17", "Trust Recovery"],
+    ["18", "Consistency Pact"],
+    ["19", "When One of You Pulls Away"],
+    ["20", "The Intimacy Pact"],
+    ["21", "Making Room for Joy"],
+    ["22", "Regular Reviews"],
   ]);
 
   it("names a real Manual chapter (and Companion chapter) for every protocol", async () => {
