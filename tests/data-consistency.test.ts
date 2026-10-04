@@ -366,8 +366,8 @@ describe("Core 5 and the 7-day start plan", () => {
 
 describe("About the authors", () => {
   it("credits both authors in one combined bio, with no placeholders", () => {
-    expect(authorNames).toEqual(["David Hamilton", "Dr Zhongming Shi"]);
-    expect(aboutAuthors).toContain("Dr Zhongming Shi (known to everyone as Dami)");
+    expect(authorNames).toEqual(["David Hamilton", "Zhongming Shi"]);
+    expect(aboutAuthors).toContain("Zhongming Shi (known to everyone as Dami)");
     expect(aboutAuthors).toContain("David");
     expect(aboutAuthors).toContain("Dami");
     expect(aboutAuthors).not.toMatch(/\[\[/);
@@ -403,7 +403,7 @@ describe("/privacy", () => {
   it("is dated, names both authors and Singapore's PDPA, and points to data deletion", () => {
     expect(src).toContain("1 October 2026");
     expect(src).toContain("David Hamilton");
-    expect(src).toContain("Dr Zhongming Shi");
+    expect(src).toContain("Zhongming Shi");
     expect(src).toContain("PDPA");
     expect(src).toContain("/help#your-data");
     expect(src).toContain("CONTACT_EMAIL");

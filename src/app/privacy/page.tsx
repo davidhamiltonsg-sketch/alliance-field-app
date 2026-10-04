@@ -37,7 +37,7 @@ export default function PrivacyPage() {
         <div className="card space-y-3 px-4 py-4 text-base leading-normal text-ink">
           <p>
             Alliance Protocols and this Field App are made by David Hamilton
-            and Dr Zhongming Shi, in Singapore. We handle personal data in line
+            and Zhongming Shi, in Singapore. We handle personal data in line
             with Singapore’s Personal Data Protection Act (PDPA).
           </p>
           <p>

@@ -32,7 +32,7 @@ export default function TermsPage() {
         </SectionLabel>
         <div className="card space-y-3 px-4 py-4 text-base leading-normal text-ink">
           <p>
-            Alliance Protocols, by David Hamilton and Dr Zhongming Shi,
+            Alliance Protocols, by David Hamilton and Zhongming Shi,
             Singapore. &ldquo;We&rdquo; and &ldquo;us&rdquo; below means us.
           </p>
           <p>
@@ -79,7 +79,7 @@ export default function TermsPage() {
           </ul>
           <p>
             The text, cards, diagrams and design are ours (© David Hamilton and
-            Dr Zhongming Shi). The Alliance Protocols name and mark are our
+            Zhongming Shi). The Alliance Protocols name and mark are our
             trade marks.
           </p>
         </div>
