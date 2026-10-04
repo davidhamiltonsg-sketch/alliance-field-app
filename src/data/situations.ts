@@ -28,6 +28,17 @@ export const situations: Situation[] = [
     ],
   },
   {
+    id: "conflict-starting",
+    label: "A fight is starting",
+    description: "Voices are rising and you’re both building a case.",
+    firstMove: "Check it’s safe to speak (Green Rule). Then use the System Overlay: the quick version if you can hear the sniping start, the full five steps if it’s already a fight. If either of you floods partway through, switch to Pause + Return.",
+    primaryHref: "/protocols/system-overlay",
+    secondaryHrefs: [
+      { label: "Green Rule (Safety Gate)", href: "/protocols/green-rule" },
+      { label: "Pause + Return", href: "/protocols/pause-and-return" },
+    ],
+  },
+  {
     id: "outside-pressure",
     label: "Outside pressure or disapproval from family, friends or strangers",
     description:
@@ -46,23 +57,12 @@ export const situations: Situation[] = [
   },
   {
     id: "detachment",
-    label: "Pulling away / uninvestment",
+    label: "Pulling away",
     description: "Warmth missing, repairs on autopilot: several signs of pulling away, not just needing space.",
     firstMove:
-      "Uninvestment Check: each of you marks the signs on your own, then compare. Three or more: book a Full Recovery within a week. Contempt, fear or coercion: stop and get outside support first.",
+      "Pulling-Away Check: each of you marks the signs on your own, then compare. Three or more: one or both of you may be pulling away. Bring back the daily floor and your check-ins for two weeks; if nothing has shifted, book a Full Recovery conversation. Contempt, fear or coercion: stop and get outside support first.",
     primaryHref: "/protocols/uninvestment-check",
     secondaryHrefs: [{ label: "Full Recovery", href: "/protocols/full-recovery" }],
-  },
-  {
-    id: "conflict-starting",
-    label: "A fight is starting",
-    description: "Voices are rising and you’re both building a case.",
-    firstMove: "Check it’s safe to speak (Green Rule). Then take it in order: System Overlay, then the Conflict Protocol if it runs long. If either of you floods partway through, switch to Pause + Return.",
-    primaryHref: "/protocols/system-overlay",
-    secondaryHrefs: [
-      { label: "Conflict Protocol", href: "/protocols/conflict-protocol" },
-      { label: "Green Rule (Safety Gate)", href: "/protocols/green-rule" },
-    ],
   },
   {
     id: "after-fight",

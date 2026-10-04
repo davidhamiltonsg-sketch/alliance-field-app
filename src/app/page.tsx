@@ -42,7 +42,7 @@ const routes: {
 const practise: { href: string; label: string; sub: string; icon: IconId; tone: IconTone }[] = [
   { href: "/connect", label: "Connection Cards", sub: "Questions to flip through together", icon: "connection-cards", tone: "connection" },
   { href: "/weekly-reset", label: "Weekly Reset", sub: "Five parts, about 40 minutes", icon: "weekly-reset", tone: "accent" },
-  { href: "/start", label: "7-day plan", sub: "About 10 minutes a day", icon: "section-steps", tone: "accent" },
+  { href: "/start", label: "7-day plan", sub: "10–20 minutes a day", icon: "section-steps", tone: "accent" },
   { href: "/calibrate", label: "Profile Calibration", sub: "Where you two differ most", icon: "profile-calibration", tone: "accent" },
 ];
 
@@ -123,7 +123,7 @@ export default function HomePage() {
             See how it works
           </Link>
           <br />
-          by David Hamilton and Dr Zhongming Shi
+          by David Hamilton and Zhongming Shi
         </p>
         <p className="text-sm text-ink-muted">
           <Link href="/privacy" className="inline-flex min-h-11 items-center px-2 font-medium text-accent underline underline-offset-4">

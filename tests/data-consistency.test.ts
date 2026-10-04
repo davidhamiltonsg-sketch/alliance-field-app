@@ -19,7 +19,7 @@ const cardsDir = join(__dirname, "../src/data/cards");
 const cardFiles = readdirSync(cardsDir).filter((f) => f.endsWith(".json"));
 
 describe("protocol cards", () => {
-  it("has the canonical 15 protocol cards, all registered", () => {
+  it("has the canonical 14 protocol cards, all registered", () => {
     expect(protocols).toHaveLength(KIT.protocolCards);
     expect(cardFiles).toHaveLength(KIT.protocolCards);
     expect(new Set(protocolSlugs).size).toBe(protocolSlugs.length);
@@ -90,14 +90,15 @@ describe("CANON numbers and wording", () => {
     expect(minutes.reduce((a, b) => a + b, 0)).toBe(KIT.weeklyResetMinutes);
   });
 
-  it("Uninvestment Check lists 8 signs and the none / 1–2 / 3+ bands (CANON round 6; Kit wording, voice passes 14, 24, 25 and 27)", () => {
+  it("Pulling-Away Check lists 8 signs and the none / 1–2 / 3+ bands (CANON round 6; Kit wording, voice passes 14, 24, 25 and 27)", () => {
     const card = getProtocol("uninvestment-check")!;
     expect(card.activity.match(/\(\d\)/g)).toHaveLength(8);
     const steps = card.steps.join(" ");
     expect(steps).toContain("None of these? Good. Keep up the daily floor.");
     expect(steps).toContain("One or two signs: you likely need some space and a few small repairs (Micro-Repair, Morning + Evening Rhythm)");
     expect(steps).toContain("Three or more signs: one or both of you may be pulling away");
-    expect(steps).toContain("may be pulling away. Book a Full Recovery conversation within a week.");
+    expect(steps).toContain("may be pulling away. Bring back the daily floor and your check-ins for two weeks; if nothing has shifted, book a Full Recovery conversation.");
+    expect(steps).not.toContain("within a week");
     expect(steps).not.toContain("0–2");
   });
 
@@ -118,14 +119,14 @@ describe("CANON round 3", () => {
   const LEAVING = "Deciding not to rebuild, or to end the relationship, is a valid outcome of this protocol, not a failure of it.";
   const all = (slug: string) => JSON.stringify(getProtocol(slug));
 
-  it("says leaving is valid on Trust Recovery, Full Recovery and the Uninvestment Check", () => {
+  it("says leaving is valid on Trust Recovery, Full Recovery and the Pulling-Away Check", () => {
     for (const slug of ["trust-recovery", "full-recovery", "uninvestment-check"]) {
       expect(getProtocol(slug)!.note, slug).toBe(LEAVING);
     }
     expect(componentSource("ProtocolLayout")).toContain("protocol.note");
   });
 
-  it("Uninvestment Check: sign 4 wording, contempt skips the count, routing", () => {
+  it("Pulling-Away Check: sign 4 wording, contempt skips the count, routing", () => {
     const card = getProtocol("uninvestment-check")!;
     expect(card.activity).toContain("(4) doing more on your own in place of shared time (time apart is healthy)");
     const contempt = "If contempt is one of your signs, skip the count: contempt means stop and get outside support first.";
@@ -140,7 +141,7 @@ describe("CANON round 3", () => {
     expect(card.steps[1]).toContain(contempt);
     expect(card.steps.join(" ")).toContain(contempt);
     expect(card.warn).toContain(contempt);
-    expect(card.steps.join(" ")).toContain("Full Recovery conversation within a week");
+    expect(card.steps.join(" ")).toContain("if nothing has shifted, book a Full Recovery conversation");
     expect(card.crossLinks.map((c) => c.href)).toContain("/protocols/trust-recovery");
   });
 
@@ -208,7 +209,9 @@ describe("CANON round 3", () => {
     expect(diagrams).toContain('q: ["Pulling away?"]');
     expect(diagrams).toContain('a: ["Unity Anchor"]');
     expect(diagrams).not.toContain("Trust breach or");
-    // Same order as the app list: outside pressure (row 3) before trust breach and pulling away.
+    // Same order as the app list: a fight starting (row 3) and outside pressure (row 4) before trust breach and pulling away.
+    expect(diagrams.indexOf('q: ["A fight is"')).toBeLessThan(diagrams.indexOf('q: ["Outside pressure"'));
+    expect(diagrams.indexOf('q: ["Flooded or shut"')).toBeLessThan(diagrams.indexOf('q: ["A fight is"'));
     expect(diagrams.indexOf('q: ["Outside pressure"')).toBeLessThan(diagrams.indexOf('q: ["Trust breach?"]'));
     expect(diagrams.indexOf('q: ["Trust breach?"]')).toBeLessThan(diagrams.indexOf('q: ["Pulling away?"]'));
   });
@@ -242,6 +245,15 @@ describe("CANON round 3", () => {
 });
 
 describe("safety routing", () => {
+  it("System Overlay step 2 never asks anyone to say something untrue (pass 4, F6)", () => {
+    const line = "Make it safe — if it’s true, say out loud that the relationship isn’t at risk tonight.";
+    expect(getProtocol("system-overlay")!.steps[1]).toBe(line);
+    expect(protocolDiagrams["system-overlay"].steps[1].detail).toBe("If it’s true, say out loud that the relationship isn’t at risk tonight.");
+    const timer = readFileSync(join(process.cwd(), "src/components/PauseTimer.tsx"), "utf8");
+    expect(timer).toContain("— if it’s true, say out loud that the relationship isn’t at risk tonight.");
+    expect(timer).not.toMatch(/— say out loud that the relationship isn’t at risk/);
+  });
+
   it("puts the safety row first, routed to Help, never to Pause", () => {
     expect(situations[0].danger).toBe(true);
     expect(situations[0].primaryHref).toBe("/help");
@@ -338,7 +350,7 @@ describe("Core 5 and the 7-day start plan", () => {
     expect(last.slug).toBe("weekly-reset");
     expect(last.task).toContain("40-minute timer");
     for (const slug of coreFiveSlugs) expect(startDays.map((d) => d.slug)).toContain(slug);
-    // About 10 minutes a day; the Pause + Return practice includes 20 minutes apart,
+    // 10–20 minutes a day (pass 4, F4); the Pause + Return practice includes 20 minutes apart,
     // and the morning and evening check-ins are the Manual's two check-ins (≤5 + about 10) across the day.
     for (const d of startDays.slice(0, -1).filter((d) => d.slug !== "pause-and-return" && d.slug !== "morning-evening-rhythm")) expect(d.minutes).toBeLessThanOrEqual(10);
     expect(startDays.find((d) => d.day === 5)!.task).toMatch(/morning check-in \(5 minutes or less\) and an evening check-in \(about 10 minutes\)/);
@@ -366,8 +378,8 @@ describe("Core 5 and the 7-day start plan", () => {
 
 describe("About the authors", () => {
   it("credits both authors in one combined bio, with no placeholders", () => {
-    expect(authorNames).toEqual(["David Hamilton", "Dr Zhongming Shi"]);
-    expect(aboutAuthors).toContain("Dr Zhongming Shi (known to everyone as Dami)");
+    expect(authorNames).toEqual(["David Hamilton", "Zhongming Shi"]);
+    expect(aboutAuthors).toContain("Zhongming Shi (known to everyone as Dami)");
     expect(aboutAuthors).toContain("David");
     expect(aboutAuthors).toContain("Dami");
     expect(aboutAuthors).not.toMatch(/\[\[/);
@@ -403,7 +415,7 @@ describe("/privacy", () => {
   it("is dated, names both authors and Singapore's PDPA, and points to data deletion", () => {
     expect(src).toContain("1 October 2026");
     expect(src).toContain("David Hamilton");
-    expect(src).toContain("Dr Zhongming Shi");
+    expect(src).toContain("Zhongming Shi");
     expect(src).toContain("PDPA");
     expect(src).toContain("/help#your-data");
     expect(src).toContain("CONTACT_EMAIL");
@@ -553,17 +565,20 @@ describe("CANON round 6", () => {
     expect(byId["flooded"].description).not.toMatch(/contempt/i);
   });
 
-  it("Uninvestment Check: within a week, and no one caused drift", () => {
+  it("Pulling-Away Check: two weeks of the daily floor first, and no one caused drift", () => {
     const card = getProtocol("uninvestment-check")!;
     expect(JSON.stringify(card)).not.toMatch(/before you leave the conversation/);
-    expect(card.steps.join(" ")).toContain("Book a Full Recovery conversation within a week");
-    expect(card.steps.join(" ")).toContain("Drift is nobody’s fault, so you each name your part.");
+    expect(card.steps.join(" ")).toContain("Bring back the daily floor and your check-ins for two weeks; if nothing has shifted, book a Full Recovery conversation.");
+    expect(card.working).toContain("They bring back the daily floor and their morning and evening check-ins for two weeks.");
+    expect(protocolDiagrams["uninvestment-check"].steps.map((s) => s.badge ?? "")).toContain("3 or more · two weeks first");
+    expect(getProtocol("full-recovery")!.steps.join(" ")).toContain("If it’s drift rather than a breach, say so. Drift is nobody’s fault");
+    expect(card.steps.join(" ")).toContain("Drift is nobody’s fault, but you can each name your part.");
   });
 
   it("Weekly Reset scope rule names the Monthly Review (short What it is, as on the Kit card since pass 40; once on the card; gloss off the card)", () => {
     const card = getProtocol("weekly-reset")!;
     const scope =
-      "Anything bigger (checking a Proof item, planning something fun, where you’re heading) waits for the Monthly Review";
+      "Anything bigger waits: planning something fun for the Monthly Review once you hold one, and where you’re heading for the Yearly Alignment";
     const gloss = "a 40-minute once-a-month look at how things are going";
     expect(card.concept).toContain("Maintenance, not a trial. Ours happens at home, on a Sunday.");
     expect(card.whenToUse).toContain("Same day and time each week; also after travel or a hard stretch. Not for a fight: flooded? Pause + Return first.");
@@ -571,7 +586,7 @@ describe("CANON round 6", () => {
     expect(card.whenToUse).not.toContain(scope);
     expect(JSON.stringify(card).split(scope).length - 1).toBe(1);
     expect(JSON.stringify(card)).not.toContain(gloss);
-    expect(card.activity).toContain("Book the next three weeks. Set a 40-minute timer; stop when it rings. Anything bigger waits for the Monthly Review.");
+    expect(card.activity).toContain("Book the next three weeks. Set a 40-minute timer; stop when it rings. Anything bigger waits.");
   });
 
   it("the Monthly Review gloss is defined once in the app, on the Weekly Reset page", () => {

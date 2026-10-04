@@ -56,7 +56,7 @@ export default function AboutPage() {
             Built for precision. Designed for connection.
           </p>
           <p className="mt-3 text-sm text-paper/80">
-            by David Hamilton and Dr Zhongming Shi
+            by David Hamilton and Zhongming Shi
           </p>
         </div>
       </section>
@@ -164,13 +164,13 @@ export default function AboutPage() {
         <Marker kind="NOTE" label="Feeling far apart?" />
         <p className="mt-2 text-base leading-normal">
           <strong>Not sure if it’s needing space or pulling away?</strong> That’s
-          what the Uninvestment Check is for.
+          what the Pulling-Away Check is for.
         </p>
         <Link
           href="/protocols/uninvestment-check"
           className="-mb-1.5 mt-1 inline-flex min-h-11 items-center gap-1.5 text-base font-medium text-repair"
         >
-          Open Uninvestment Check
+          Open Pulling-Away Check
           <ArrowRight size={16} />
         </Link>
       </section>
@@ -228,7 +228,7 @@ export default function AboutPage() {
               <span className="flex flex-col py-2.5">
                 7-day plan
                 <span className="text-sm font-normal text-ink-muted">
-                  The Core 5, about 10 minutes a day
+                  The Core 5, 10–20 minutes a day
                 </span>
               </span>
               <ChevronRight size={18} className="shrink-0 text-ink-muted/50" />

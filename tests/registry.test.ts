@@ -69,9 +69,9 @@ const scanned = [
 const texts = scanned.flatMap((f) => userText(f).map((text) => ({ file: relative(root, f), text })));
 
 describe("registry: protocols", () => {
-  it("has all 15 card slugs, each with the registry name and tier", () => {
-    expect(registry.protocols).toHaveLength(15);
-    expect(protocols).toHaveLength(15);
+  it("has all 14 card slugs, each with the registry name and tier", () => {
+    expect(registry.protocols).toHaveLength(14);
+    expect(protocols).toHaveLength(14);
     for (const r of registry.protocols) {
       const card = getProtocol(r.slug);
       expect(card, r.slug).toBeDefined();
@@ -81,9 +81,13 @@ describe("registry: protocols", () => {
     expect(new Set(protocols.map((p) => p.slug))).toEqual(new Set(registry.protocols.map((r) => r.slug)));
   });
 
-  it("the Core tier is exactly the Core 5", () => {
+  it("the Core tier is exactly the Core 5 (pass 4: the System Overlay is Situational)", () => {
     const core = registry.protocols.filter((r) => r.tier === "core").map((r) => r.slug);
     expect(new Set(core)).toEqual(new Set(coreFiveSlugs));
+    expect(core).toHaveLength(5);
+    expect(coreFiveSlugs).not.toContain("system-overlay");
+    expect(registry.protocols.find((r) => r.slug === "system-overlay")!.tier).toBe("situational");
+    expect(getProtocol("system-overlay")!.tier).toBe("situational");
   });
 
   it("tier badges match the registry (label and dots)", () => {
@@ -237,16 +241,14 @@ describe("registry: worksheets", () => {
 describe("Go deeper pointers", () => {
   // Chapter numbers and titles from the Operating Manual's table of contents.
   const MANUAL = new Map<string, string>([
-    ["I", "The Short Version"], ["II", "Fast Start"], ["III", "Introduction"],
-    ["IV", "When Your Body Takes Over"], ["V-A", "How Each of You Reaches for Closeness"],
-    ["V-B", "When Hurt Gets Explained Away"], ["VI", "The Four Phases"], ["VII", "How Couples Drift"],
-    ["VIII", "Hearing the Need Underneath"], ["IX", "Team Over Self"],
-    ["X", "Two Ways of Caring"], ["XI", "Daily Rhythm"], ["XI-A", "Sensory Comfort"],
-    ["XII", "Weekly Reset"], ["XIII", "Conflict Protocol"], ["XIII-A", "Micro-Repairs"],
-    ["XIII-B", "Full Recovery"], ["XIII-C", "Why the Tools Are Built This Way"],
-    ["XIII-D", "When One of You Pulls Away"], ["XIV", "The Intimacy Pact"],
-    ["XV", "Proof Over Promises"], ["XVI", "Trust Recovery"], ["XVII", "Consistency Pact"],
-    ["XVIII", "Making Room for Joy"], ["XVIII-A", "The Sun Memory Protocol"], ["XIX", "Regular Reviews"],
+    ["1", "Why a Relationship Needs a Plan"], ["2", "The Short Version"], ["3", "When Your Body Takes Over"],
+    ["4", "Getting Started"], ["5", "How Each of You Reaches for Closeness"], ["6", "Hearing the Need Underneath"],
+    ["7", "Two Ways of Caring"], ["8", "When Hurt Gets Explained Away"], ["9", "Team Over Self"],
+    ["10", "How Couples Drift"], ["11", "The Four Phases"], ["12", "Daily Rhythm"], ["13", "Weekly Reset"],
+    ["14", "Micro-Repairs"], ["15", "When It’s Already a Fight"], ["16", "Full Recovery"],
+    ["17", "Why the Tools Are Built This Way"], ["18", "Proof Over Promises"], ["19", "Trust Recovery"],
+    ["20", "Consistency Pact"], ["21", "When One of You Pulls Away"], ["22", "The Intimacy Pact"],
+    ["23", "Making Room for Joy"], ["24", "The Sun Memory Protocol"], ["25", "Regular Reviews"],
   ]);
 
   it("names a real Manual chapter (and Companion chapter) for every protocol", async () => {

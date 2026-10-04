@@ -122,7 +122,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Put it right",
-        "detail": "Whoever pushed back finishes with the repair line you agreed in advance, so the honest thing is easier to say next time.",
+        "detail": "Whoever reacted badly finishes with the repair line you agreed in advance, so the honest thing is easier to say next time.",
         "kind": "repair"
       }
     ],
@@ -133,26 +133,26 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "outcome": "Honest things stay safe to say."
   },
   "system-overlay": {
-    "when": "When you need to raise something touchy, ask for a change, make a repair or decide something together. If you start going in circles, find the step you skipped and go back to it.",
+    "when": "Quick (about 90 seconds): you can hear the sniping start. Standard: you need to raise something touchy, ask for a change, make a repair or decide something together. Already a fight: it’s started, or it’s the one you keep having, and you can still be kind to each other. If you start going in circles, find the step you skipped and go back to it.",
     "steps": [
       {
         "title": "Warm up",
-        "detail": "Say the warmest true thing you can. Remind each other you’re on the same team.",
+        "detail": "Say the warmest true thing you can. Remind each other you’re on the same team. Already a fight? First check you’re both calm; if either of you is flooded, take a Pause + Return.",
         "kind": "step"
       },
       {
         "title": "Make it safe",
-        "detail": "Say out loud that the relationship isn’t at risk tonight.",
+        "detail": "If it’s true, say out loud that the relationship isn’t at risk tonight.",
         "kind": "step"
       },
       {
         "title": "Say what happened",
-        "detail": "Describe it, then say how it felt and what it meant to you.",
+        "detail": "Describe it, then say how it felt and what it meant to you. The one listening hears it in order: how it landed, then what would help, and only then their side.",
         "kind": "step"
       },
       {
         "title": "Ask for one thing",
-        "detail": "Make it specific and doable, with a time to do it by.",
+        "detail": "Make it specific and doable, with a time to do it by. If it’s a change you’ll want to see, make it a Proof item.",
         "kind": "step"
       },
       {
@@ -163,7 +163,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     ],
     "note": {
       "kind": "note",
-      "text": "If a conversation falls apart, go back to the last step that held."
+      "text": "Quick version: “Restart — same team.” One warm sentence each, name the one problem you’re both stuck in, then either one ask or a Pause + Return."
     },
     "outcome": "Hard conversations end somewhere, not in “always” and “never”."
   },
@@ -206,53 +206,6 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       "text": "If either of you is flooded: Pause + Return first, then pick another time."
     },
     "outcome": "Forty minutes, then the rest of the week is yours."
-  },
-  "conflict-protocol": {
-    "when": "When a fight has started, or it’s the one you keep having, and you can both still be kind to each other, or a Pause + Return has brought you back to calm.",
-    "steps": [
-      {
-        "title": "Check if you’re calm",
-        "detail": "If either of you is flooded, take a Pause + Return first.",
-        "kind": "pause"
-      },
-      {
-        "title": "Warm up",
-        "detail": "Say one warm, true thing.",
-        "kind": "step"
-      },
-      {
-        "title": "Make it safe",
-        "detail": "Remind each other you’re not breaking up.",
-        "kind": "step"
-      },
-      {
-        "title": "Say what happened",
-        "detail": "One of you puts it this way: “When X happened, I felt Y; here’s the impact.”",
-        "kind": "step"
-      },
-      {
-        "title": "Ask for one thing",
-        "detail": "Be specific.",
-        "kind": "step"
-      },
-      {
-        "title": "Listen in the right order",
-        "detail": "First hear how it landed, then what would help, and only then their side.",
-        "kind": "repair"
-      },
-      {
-        "title": "Get proof if you need it",
-        "detail": "If something needs to change, turn it into a Proof item (Proof Protocol card).",
-        "kind": "repair"
-      },
-      {
-        "title": "Line up next steps",
-        "detail": "Agree who does what, and when you’ll check back.",
-        "kind": "step"
-      }
-    ],
-    "note": null,
-    "outcome": "One clear path through the fight, and nobody ends up on trial."
   },
   "micro-repair": {
     "when": "When a remark has come out sharp or something small has stung, and a full repair feels like too much but leaving it will only make it worse. Timing: start within minutes if you can; complete within 24 hours.",
@@ -484,7 +437,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Acknowledge the impact",
-        "detail": "Do it before either of you explains. If one of you caused the breach (infidelity, lying, a broken agreement), only that partner acknowledges impact; the hurt partner is never asked to confess in return. If it’s drift rather than a breach: Drift is nobody’s fault, so you each name your part.",
+        "detail": "Do it before either of you explains. If one of you caused the breach (infidelity, lying, a broken agreement), only that partner acknowledges impact; the hurt partner is never asked to confess in return. If it’s drift rather than a breach, say so. Drift is nobody’s fault, but you can each name your part.",
         "kind": "repair"
       },
       {
@@ -532,9 +485,9 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Three or more signs",
-        "detail": "One or both of you may be pulling away. Book a Full Recovery conversation within a week. Drift is nobody’s fault, so you each name your part. A specific breach of trust goes to Trust Recovery.",
+        "detail": "One or both of you may be pulling away. Bring back the daily floor and your check-ins for two weeks; if nothing has shifted, book a Full Recovery conversation. Drift is nobody’s fault, but you can each name your part. A specific breach of trust goes to Trust Recovery.",
         "kind": "repair",
-        "badge": "3 or more · within a week"
+        "badge": "3 or more · two weeks first"
       },
       {
         "title": "Set a time window",

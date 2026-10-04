@@ -66,15 +66,6 @@ export const icons = {
     label: "Weekly Reset",
     group: "protocol",
   },
-  "conflict-protocol": {
-    paths: [
-      "M5 10h3.5a2.5 2.5 0 0 1 2.5 2.5v2a2.5 2.5 0 0 1-2.5 2.5H6.25L3.5 19.75V16.6A2.5 2.5 0 0 1 2.5 14.5v-2A2.5 2.5 0 0 1 5 10Z",
-      "M19 10h-3.5a2.5 2.5 0 0 0-2.5 2.5v2a2.5 2.5 0 0 0 2.5 2.5h2.25l2.75 2.75V16.6a2.5 2.5 0 0 0 1-2.1v-2A2.5 2.5 0 0 0 19 10Z",
-    ],
-    accent: "M6.75 7.5C8.25 4.9 10 3.75 12 3.75s3.75 1.15 5.25 3.75",
-    label: "Conflict Protocol",
-    group: "protocol",
-  },
   "micro-repair": {
     paths: [
       "M3 12c3-2 6-2 9 0s6 2 9 0",
@@ -142,7 +133,7 @@ export const icons = {
       "M14.5 20.5v-7",
       "M19.5 20.5v-2.5",
     ],
-    label: "Uninvestment Check",
+    label: "Pulling-Away Check",
     group: "protocol",
   },
   "unity-anchor": {

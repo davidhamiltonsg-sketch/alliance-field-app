@@ -64,6 +64,9 @@ export const SIGNUP_ACTIVE = Boolean(SIGNUP_ENDPOINT && EMAIL_PROVIDER_NAME);
 /** Free lead magnet: printable Situation Map (drop the PDF in public/downloads/). */
 export const SITUATION_MAP_PDF = "/downloads/situation-map.pdf";
 
+/** Free sample: the Companion Book's Prologue and Chapter I, with its Help Lines page. */
+export const COMPANION_SAMPLE_PDF = "/downloads/companion-sample.pdf";
+
 /** One-line positioning, used in GetFullSystem and on /about. */
 export const POSITIONING_LINE =
   "Pay once; there’s no subscription. The Field App works without a signal, and what you type stays on your phone.";

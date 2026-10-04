@@ -1,7 +1,7 @@
 /**
  * /start — the one 7-day plan (CANON round 5): the same plan, day for day,
  * as the Field Kit's "The First Week" and the Manual's "Your First 7 Days".
- * About 10 minutes a day; day 7 is the first Weekly Reset (about 40 minutes).
+ * 10–20 minutes a day; day 7 is the first Weekly Reset (about 40 minutes).
  */
 export interface StartDay {
   day: number;

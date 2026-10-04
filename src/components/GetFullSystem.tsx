@@ -1,5 +1,6 @@
 import { SectionLabel } from "./SectionLabel";
 import { SignupForm } from "./SignupForm";
+import { CompanionSampleDownload } from "./CompanionSampleDownload";
 import { SituationMapDownload } from "./SituationMapDownload";
 import { POSITIONING_LINE, SIGNUP_ACTIVE, STORE_URLS, type StoreProduct } from "@/lib/links";
 
@@ -59,6 +60,10 @@ export function GetFullSystem() {
 
         <div className="border-t border-rule/35 pt-3">
           <SituationMapDownload />
+        </div>
+
+        <div className="border-t border-rule/35 pt-3">
+          <CompanionSampleDownload />
         </div>
 
         <div className="border-t border-rule/35 pt-3">

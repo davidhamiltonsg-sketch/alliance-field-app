@@ -189,10 +189,9 @@ const TOOL_SLUG: Record<string, string> = {
   "Weekly Reset": "weekly-reset",
   "Care Check-in": "weekly-reset",
   "Micro-Repair": "micro-repair",
-  "Conflict Protocol": "conflict-protocol",
   "Impact first, then explain": "full-recovery",
   "Consistency Pact": "consistency-pact",
-  "Uninvestment Check": "uninvestment-check",
+  "Pulling-Away Check": "uninvestment-check",
   "Full Recovery": "full-recovery",
   "Trust Recovery": "trust-recovery",
   "Intimacy Pact": "intimacy-pact",
@@ -229,7 +228,7 @@ function routeTools(a: Profile, b: Profile, health: Record<LayerKey, number>) {
     average([a.scores.withdrawalUnderStress, b.scores.withdrawalUnderStress]) > 60 &&
     average([a.scores.reassuranceNeed, b.scores.reassuranceNeed, a.scores.signalSensitivity, b.scores.signalSensitivity]) > 55
   ) {
-    add("Uninvestment Check", "You both tend to pull back when things are hard, and to notice when the other does. Do the Uninvestment Check together to tell needing space from pulling away, instead of guessing.");
+    add("Pulling-Away Check", "You both tend to pull back when things are hard, and to notice when the other does. Do the Pulling-Away Check together to tell needing space from pulling away, instead of guessing.");
   }
   if (!routes.length) {
     add("Morning + Evening Rhythm", "Keep a little daily contact you can both count on.");

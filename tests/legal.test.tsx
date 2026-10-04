@@ -31,7 +31,7 @@ const text = (html: string) => html.replace(/<[^>]+>/g, " ").replace(/&#x27;|&rs
 describe("/terms", () => {
   it("says who runs the site, no warranty, not therapy, acceptable use, privacy and statutory rights", async () => {
     const t = text(await renderWith({ NEXT_PUBLIC_CONTACT_EMAIL: "" }, terms));
-    expect(t).toContain("Alliance Protocols, by David Hamilton and Dr Zhongming Shi, Singapore");
+    expect(t).toContain("Alliance Protocols, by David Hamilton and Zhongming Shi, Singapore");
     expect(t).toMatch(/not therapy/);
     expect(t).toMatch(/We offer the site and app as they are/);
     expect(t).toMatch(/Please don’t/);
