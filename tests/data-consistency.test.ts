@@ -309,6 +309,20 @@ describe("safety routing", () => {
     }
   });
 
+  it("pins the child-protection line and the four-question self-check", async () => {
+    const { CHILD_LINE, SELF_CHECK_QUESTIONS, SELF_CHECK_RESULT } = await import("@/data/help");
+    expect(CHILD_LINE).toBe(
+      "Worried about a child: your local child-protection service, or your emergency number if a child is in danger.",
+    );
+    expect(registry.concepts["help-safety"].helpLines).toContain(CHILD_LINE);
+    expect(HELP_LINES_POINTER).toContain(CHILD_LINE);
+    expect(SELF_CHECK_QUESTIONS).toHaveLength(4);
+    expect(SELF_CHECK_RESULT).toMatch(/get outside help first/);
+    const help = pageSource("help");
+    expect(help).toContain("{CHILD_LINE}");
+    expect(help).toContain("SELF_CHECK_QUESTIONS.map(");
+  });
+
   it("adds the canonical LGBTQ+-affirming line (CANON round 5)", async () => {
     const { LGBTQ_LINE, lgbtqLines } = await import("@/data/help");
     expect(LGBTQ_LINE).toBe(registry.helpLinesExtra);

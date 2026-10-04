@@ -102,6 +102,21 @@ export const lgbtqLines: (HelpNumber & { region: string })[] = [
   { region: "Singapore", label: "Oogachaga", display: "oogachaga.com", href: "https://oogachaga.com" },
 ];
 
+export const CHILD_LINE =
+  "Worried about a child: your local child-protection service, or your emergency number if a child is in danger.";
+
+export const SELF_CHECK_TITLE = "Not sure whether this is you?";
+
+export const SELF_CHECK_QUESTIONS: string[] = [
+  "Do you hold back what you think because you are afraid of how your partner would react?",
+  "Are you ever afraid of what they will do?",
+  "Do they check, restrict or punish your contact with others?",
+  "Does an argument ever end with you giving in out of fear?",
+];
+
+export const SELF_CHECK_RESULT =
+  "If any answer is yes, these tools are not for this: get outside help first.";
+
 export const ELSEWHERE_LINE = "Elsewhere: your local emergency number or national helpline.";
 
 /**
@@ -121,4 +136,4 @@ function proseList(items: string[]): string {
  */
 export const HELP_LINES_POINTER = `The Help page has Help Lines for ${proseList(
   helpRegions.map((r) => r.inProse),
-)}. Anywhere else, call your local emergency number or national helpline.`;
+)}. Anywhere else, call your local emergency number or national helpline. ${CHILD_LINE}`;
