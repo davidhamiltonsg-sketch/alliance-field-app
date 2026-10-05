@@ -84,7 +84,7 @@ function CalibrationReportClient() {
       )}
 
       <section className="space-y-3">
-        <SectionLabel>Where you differ, layer by layer</SectionLabel>
+        <SectionLabel>Where you differ, area by area</SectionLabel>
         <div className="card px-4 py-1">
           <h3 className="pt-3 text-sm font-semibold text-ink">Where you two see things most differently</h3>
           <ul className="divide-y divide-rule/30">
@@ -247,7 +247,7 @@ export function SoloProfile({ profile, otherName, preview = false }: { profile: 
       {!preview && (
         <>
           <div className="rounded-2xl border border-accent/20 bg-surface-tool px-4 py-3.5 text-sm leading-normal text-ink-muted">
-            You’ll see the couple report (where you differ, layer by layer; how you clash and the tools to try first) once {otherName} has answered too.
+            You’ll see the couple report (where you differ, area by area; how you clash and the tools to try first) once {otherName} has answered too.
           </div>
 
           <PrimaryButton onClick={() => router.push("/calibrate")}>Carry on</PrimaryButton>

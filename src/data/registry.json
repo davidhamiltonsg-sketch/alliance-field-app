@@ -243,7 +243,7 @@
       "appRoute": "/protocols/trust-recovery",
       "numbers": {
         "steps": 6,
-        "window": "2–4 weeks to start (1–2 weeks for a smaller Proof item)"
+        "window": "2–4 weeks to start (1–2 weeks for a smaller agreed breach)"
       },
       "canonical": [
         "A breach is something the partner agrees they did. Seeing friends or family, privacy or a locked phone is never a breach. You cannot be made to accept a breach you do not agree happened.",
@@ -429,7 +429,7 @@
       },
       "canonical": [
         "Nobody has to complete this, and you can stop at any time. Do not ask your partner to show their answers.",
-        "Answers stay on your phone. The Profile Calibration report shows where you differ most, layer by layer."
+        "Take turns answering on one phone; answers stay on that phone. The Profile Calibration report shows where you differ most, area by area."
       ],
       "guardrails": [
         "no-pressure"

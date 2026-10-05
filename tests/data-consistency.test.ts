@@ -179,7 +179,7 @@ describe("tools: guardrails and safety wording (spec section 6)", () => {
     const text = all("trust-recovery");
     expect(text).toMatch(/breach/);
     expect(trust.warn).toMatch(/agree|refus|voluntary/i);
-    expect(trust.steps[2]).toContain("two to four weeks to start (1 to 2 weeks for a smaller Proof item)");
+    expect(trust.steps[2]).toContain("two to four weeks to start (1 to 2 weeks for a smaller agreed breach)");
     expect(trust.steps[3]).toContain("noted only if the one pausing agrees");
     expect(trust.steps[4]).toContain("the hurt partner’s feelings and questions come first");
     expect(trust.steps[4]).toContain("The record is an aid, never the judge");

@@ -191,7 +191,7 @@ describe("times are stated once and mirrored", () => {
     expect(t.checkUp).toBe("about every few months, 20 minutes");
     expect(card("check-up")).toContain("About every few months, 20 minutes");
     expect(t.proofWindows).toBe("1–2 weeks (2–4 for a breach)");
-    expect(card("trust-recovery")).toContain("two to four weeks to start (1 to 2 weeks for a smaller Proof item)");
+    expect(card("trust-recovery")).toContain("two to four weeks to start (1 to 2 weeks for a smaller agreed breach)");
     expect(t.dailyRhythm).toBe("morning hello 5 minutes or less; evening catch-up about 10 minutes");
     expect(card("daily-rhythm")).toContain("Morning hello (5 minutes or less)");
     expect(card("daily-rhythm")).toContain("Evening catch-up (about 10 minutes)");

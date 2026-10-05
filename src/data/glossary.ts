@@ -57,7 +57,7 @@ export const glossary: GlossaryEntry[] = [
   { term: "Plan first / mood first", meaning: "Two ways of caring. Plan first cares by sorting things out; mood first cares through presence and warmth. A shared language, not a diagnosis.", chapter: "5" },
   { term: "Proof item", meaning: "One specific change, with evidence you can both see and a set time window.", chapter: "11" },
   { term: "Profile Calibration", meaning: "Each of you answers 44 questions on your own phone. Nobody has to complete it, and you can stop at any time.", chapter: "5" },
-  { term: "Profile Calibration report", meaning: "The Field App’s report once you have both answered the Profile Calibration questions. It shows where your answers are furthest apart across five layers.", chapter: "5" },
+  { term: "Profile Calibration report", meaning: "The Field App’s report once you have both answered the Profile Calibration questions. It shows where your answers are furthest apart, area by area.", chapter: "5" },
   { term: "Reach–Recoil", meaning: "A pattern where one of you reaches and the other pulls back, so the more one reaches, the more the other backs away.", chapter: "6" },
   { term: "Situation Map", meaning: "A one-page list of situations, with the first move for each. Take the first row that fits, from the top.", chapter: "4" },
   { term: "Sun Memory", meaning: "A break from system-talk, called by either of you: Quick (a few minutes) or Full (2 to 24 hours). Safety, childcare and booked repairs carry on.", chapter: "15" },

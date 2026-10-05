@@ -238,7 +238,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Ask for one thing",
-        "detail": "Specific and doable, with a time to do it by. If it’s a change you’ll want to see, make it a Proof item.",
+        "detail": "Specific and doable, with a time to do it by.",
         "kind": "step"
       },
       {
@@ -294,7 +294,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "outcome": "One agreed change, with a date to check it."
   },
   "trust-recovery": {
-    "when": "After a betrayal, a lie or a string of broken agreements, or anything that leaves a clear before and after in how safe things feel. A breach is something the partner agrees they did. Seeing friends or family, privacy or a locked phone is never a breach. You cannot be made to accept a breach you do not agree happened. Steps 2 to 5 also work alone, as a Proof item, when a request for change meets only “I promise”.",
+    "when": "After a betrayal, a lie or a string of broken agreements, or anything that leaves a clear before and after in how safe things feel. A breach is something the partner agrees they did. Seeing friends or family, privacy or a locked phone is never a breach. You cannot be made to accept a breach you do not agree happened. Steps 2 to 5 also suit a smaller breach, but only if you both agree it was one.",
     "steps": [
       {
         "title": "Name what happened",
@@ -308,7 +308,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Set a time window",
-        "detail": "Two to four weeks to start (1 to 2 weeks for a smaller Proof item). Extending it takes both of you. Put the check-back dates in the calendar. Either of you can end it at a check back.",
+        "detail": "Two to four weeks to start (1 to 2 weeks for a smaller agreed breach). Extending it takes both of you. Put the check-back dates in the calendar. Either of you can end it at a check back.",
         "kind": "step",
         "badge": "2–4 weeks"
       },
@@ -575,12 +575,12 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Pick one translation habit",
-        "detail": "For 14 days. At the monthly part of your Weekly Reset, decide whether it stays.",
+        "detail": "For 14 days: a small way of checking you heard the feeling, not only the words. At the monthly part of your Weekly Reset, decide whether it stays.",
         "kind": "step"
       },
       {
         "title": "In the Field App",
-        "detail": "Each of you answers 44 questions on your own. The Profile Calibration report then shows where you differ most, layer by layer.",
+        "detail": "Take turns answering 44 questions on one phone; answers stay on that phone. The Profile Calibration report then shows where you differ most, area by area.",
         "kind": "step"
       }
     ],
