@@ -1,11 +1,14 @@
 import type { IconId } from "./icons";
 import type { Protocol, Tier } from "./types";
 
-/** CANON round 4 tiers: dots plus a text label, always shown together. */
-export const tierInfo: Record<Tier, { label: string; dots: number; icon: IconId; meaning: string }> = {
-  core: { label: "Core", dots: 1, icon: "tier-core", meaning: "Learn these first." },
-  situational: { label: "Situational", dots: 2, icon: "tier-situational", meaning: "For when the Situation Map sends you there." },
-  build: { label: "Build", dots: 3, icon: "tier-build", meaning: "Ongoing practices to add once the Core feels familiar." },
+/**
+ * Three plain tier labels (SPEC section 1). The internal keys stay core /
+ * situational / build; people only ever see the labels. No dots or glyph text.
+ */
+export const tierInfo: Record<Tier, { label: string; icon: IconId; meaning: string }> = {
+  core: { label: "Learn first", icon: "tier-core", meaning: "Start here. These six cover most evenings." },
+  situational: { label: "When it comes up", icon: "tier-situational", meaning: "For when the Situation Map sends you there." },
+  build: { label: "Build over time", icon: "tier-build", meaning: "Habits to add once the first six feel familiar." },
 };
 
 export const tierOrder: Tier[] = ["core", "situational", "build"];
