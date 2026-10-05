@@ -81,7 +81,7 @@ export function ProtocolSearch({ protocols }: { protocols: Protocol[] }) {
             href="/#situation-map"
             className="inline-flex min-h-12 items-center gap-1.5 rounded-xl bg-accent px-4 text-base font-semibold text-paper"
           >
-            Find your situation on the Situation Map
+            Open the Situation Map
             <ChevronRight size={18} />
           </Link>
         </div>
