@@ -42,7 +42,7 @@ export const situations: Situation[] = [
     id: "outside-pressure",
     label: "Outside pressure or disapproval from family, friends or strangers",
     description:
-      "Family disapproval, discrimination or judgement from others is landing on the two of you. If the pressure is coming from your partner, this isn’t the right tool. Go to the Green Rule, or to Help if you’re afraid.",
+      "Family disapproval, discrimination or judgement from others is landing on the two of you. If the pressure is coming from your partner, this isn’t the right tool. If they check, restrict or punish your contact with others, go to Help; otherwise use the Green Rule.",
     firstMove: "Team agreement: decide together how the couple responds. Never limit a partner’s contact with anyone.",
     primaryHref: "/together",
     secondaryHrefs: [{ label: "Green Rule (Honesty Gate)", href: "/protocols/green-rule" }],

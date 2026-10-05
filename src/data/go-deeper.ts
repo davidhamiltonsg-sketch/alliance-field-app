@@ -46,8 +46,8 @@ export const goDeeper: Record<string, { chapter: ChapterKey; companion?: string 
   "full-recovery": { chapter: "15", companion: "Companion Ch IV" },
   "uninvestment-check": { chapter: "19", companion: "Companion Ch V" },
   "morning-evening-rhythm": { chapter: "11", companion: "Companion Ch V" },
-  "intimacy-pact": { chapter: "20" },
-  "consistency-pact": { chapter: "18" },
+  "intimacy-pact": { chapter: "20", companion: "Companion Ch X" },
+  "consistency-pact": { chapter: "18", companion: "Companion Ch XI" },
 };
 
 /** "Chapter 14, Micro-Repairs" */

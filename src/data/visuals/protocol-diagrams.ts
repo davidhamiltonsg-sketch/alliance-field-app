@@ -303,7 +303,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "If a no has been met with pressure or guilt-tripping, stop here",
-        "detail": "If a no has been met with pressure or guilt-tripping, stop here. If you both feel safe, have a Green Rule or Trust Recovery conversation first — don’t try to patch intimacy on top of that. If it involved force, threats or fear, it isn’t a ‘once’: go straight to the Help Lines. If it happens again, or either of you feels unable to say no, stop and use the Help Lines. Repeated pressure is never handled with these tools.",
+        "detail": "If a no has been met with pressure or guilt-tripping, stop here, and don’t try to patch intimacy on top of it. The one who pressured owns it plainly; the other decides whether, when and with whom to talk about it, and a counsellor or trusted friend is fine. If it involved force, threats or fear, go straight to the Help Lines. If it happens again, or either of you feels unable to say no, stop and use the Help Lines. Repeated pressure is never handled with these tools.",
         "kind": "failure"
       }
     ],
@@ -311,7 +311,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "outcome": "Asking and saying no both stay safe."
   },
   "trust-recovery": {
-    "when": "After a betrayal, a lie or a string of broken agreements, or anything else that leaves a clear before and after in how safe things feel. Steps 2 to 5 also work alone, as a Proof item, when a request for change meets only “I promise”.",
+    "when": "After a betrayal, a lie or a string of broken agreements, or anything else that leaves a clear before and after in how safe things feel. Steps 2 to 5 also work alone, as a Proof item, when a request for change meets only “I promise”. The other partner may say no, change it or end it at a check-in; nobody can impose one.",
     "steps": [
       {
         "title": "Name what happened",
@@ -325,7 +325,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Set a real time window",
-        "detail": "And put the check-in dates in the calendar.",
+        "detail": "Two to four weeks to start; extending it takes both of you. Put the check-in dates in the calendar. Either of you can end it at a check-in.",
         "kind": "step"
       },
       {

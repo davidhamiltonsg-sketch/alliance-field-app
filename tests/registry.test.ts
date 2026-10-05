@@ -277,7 +277,7 @@ describe("Go deeper pointers", () => {
     for (const c of Object.values(manualChapters)) expect(MANUAL.get(c.num)).toBe(c.title);
     // Companion chapters as headed in the Companion Book (I–VIII) or its founders' note.
     for (const g of Object.values(goDeeper)) {
-      if (g.companion) expect(g.companion).toMatch(/^Companion(?: Ch (?:I|II|III|IV|V|VI|VII|VIII)|: The Third Voice)$/);
+      if (g.companion) expect(g.companion).toMatch(/^Companion(?: Ch (?:I|II|III|IV|V|VI|VII|VIII|IX|X|XI)|: The Third Voice)$/);
     }
   });
 });
