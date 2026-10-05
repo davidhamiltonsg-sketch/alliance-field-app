@@ -2,24 +2,29 @@ import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { aboutAuthors, authorNames, authorsCoupleLine } from "@/data/authors";
-import { coreFive, coreFiveSlugs } from "@/data/core5";
+import { coreSix, coreSixSlugs } from "@/data/core6";
 import { KIT } from "@/data/kit";
 import { ELSEWHERE_LINE, HELP_LINES_POINTER, HELP_LINES_REGIONS, emergencyNumbers, helpRegions } from "@/data/help";
 import { getProtocol, protocolSlugs, protocols } from "@/data/protocols";
 import { situations } from "@/data/situations";
 import registry from "@/data/registry.json";
-import { START_PLAN_DAYS, startDays } from "@/data/start";
+import { START_PLAN_DAYS, START_NOTES, TONIGHT, startDays } from "@/data/start";
 import { TOGETHER_CITATION, commonMoves, togetherFaq, teamAgreement, togetherTools, whoFor } from "@/data/together";
 import { protocolDiagrams } from "@/data/visuals/protocol-diagrams";
 import { precacheUrls } from "../scripts/generate-sw.mjs";
 import { ACCESS_COOKIE } from "@/lib/launch-lock";
 import { CONTACT_EMAIL, FULL_SYSTEM_URL, httpsUrlOrNull } from "@/lib/links";
 
+const appDir = join(__dirname, "../src/app");
+const pageSource = (route: string) => readFileSync(join(appDir, route, "page.tsx"), "utf8");
+const componentSource = (name: string) => readFileSync(join(__dirname, "../src/components", `${name}.tsx`), "utf8");
+
 const cardsDir = join(__dirname, "../src/data/cards");
 const cardFiles = readdirSync(cardsDir).filter((f) => f.endsWith(".json"));
 
 describe("protocol cards", () => {
-  it("has the canonical 12 protocol cards, all registered", () => {
+  it("has exactly the 15 tool cards, all registered", () => {
+    expect(protocols).toHaveLength(15);
     expect(protocols).toHaveLength(KIT.protocolCards);
     expect(cardFiles).toHaveLength(KIT.protocolCards);
     expect(new Set(protocolSlugs).size).toBe(protocolSlugs.length);
@@ -27,6 +32,13 @@ describe("protocol cards", () => {
       const slug = JSON.parse(readFileSync(join(cardsDir, f), "utf8")).slug;
       expect(f).toBe(`${slug}.json`);
       expect(getProtocol(slug)).toBeDefined();
+    }
+  });
+
+  it("every card has synonyms for search", () => {
+    for (const p of protocols) {
+      expect(Array.isArray(p.synonyms), p.slug).toBe(true);
+      expect(p.synonyms.length, p.slug).toBeGreaterThanOrEqual(6);
     }
   });
 
@@ -60,7 +72,7 @@ describe("protocol cards", () => {
   });
 });
 
-describe("CANON numbers and wording", () => {
+describe("numbers and wording", () => {
   it("Pause + Return is 20 minutes to 24 hours", () => {
     const badge = protocolDiagrams["pause-and-return"].steps.find((s) => s.title === "Set a time")?.badge;
     expect(badge).toBe("20 min – 24 h");
@@ -81,178 +93,192 @@ describe("CANON numbers and wording", () => {
     }
   });
 
-  it("Weekly Reset is five parts, about 40 minutes (5/15/15/5)", () => {
+  it("Weekly Reset is five parts of about 40 minutes (5/15/15/5), plus the monthly part", () => {
     const card = getProtocol("weekly-reset")!;
-    expect(card.steps).toHaveLength(KIT.weeklyResetParts);
+    expect(card.steps).toHaveLength(KIT.weeklyResetParts + 1);
+    expect(card.concept).toContain("About 40 minutes, five short parts");
+    expect(card.concept).toContain("15 minutes is fine to start");
     expect(card.activity).toContain("40-minute timer");
     const badges = protocolDiagrams["weekly-reset"].steps.map((s) => s.badge ?? "");
     const minutes = badges.map((b) => Number(b.match(/^(\d+) min/)?.[1] ?? 0));
     expect(minutes.reduce((a, b) => a + b, 0)).toBe(KIT.weeklyResetMinutes);
+    // The monthly part adds 10 minutes; the yearly part is 1 to 2 hours.
+    expect(card.steps[5]).toMatch(/^Monthly part, once a month, adds 10 minutes/);
+    expect(card.note).toMatch(/^Yearly part, 1 to 2 hours once a year/);
+    expect(KIT.weeklyResetMonthlyExtraMinutes).toBe(10);
+    expect(KIT.weeklyResetStartMinutes).toBe(15);
   });
 
-  it("Pulling-Away Check lists 8 signs and the none / 1–2 / 3+ bands (CANON round 6; Kit wording, voice passes 14, 24, 25 and 27)", () => {
-    const card = getProtocol("uninvestment-check")!;
+  it("Weekly Reset parts: Requests, then Next steps, then the monthly part", () => {
+    const card = getProtocol("weekly-reset")!;
+    expect(card.steps[3]).toMatch(/^Requests/);
+    expect(card.steps[4]).toMatch(/^Next steps/);
+    expect(protocolDiagrams["weekly-reset"].steps.map((s) => s.title).slice(3)).toEqual(["Requests", "Next steps", "Monthly part"]);
+  });
+
+  it("Check-Up: one tool, three lenses; safety first; compare only if you both want to", () => {
+    const card = getProtocol("check-up")!;
+    expect(card.concept).toContain("One sheet, three lenses");
+    for (const lens of ["Lens 1, drifting apart", "Lens 2, pulling away", "Lens 3, say-and-do gaps"]) expect(card.activity).toContain(lens);
     expect(card.activity.match(/\(\d\)/g)).toHaveLength(8);
-    const steps = card.steps.join(" ");
-    expect(steps).toContain("None of these? Good. Keep up the daily floor.");
-    expect(steps).toContain("One or two signs: you likely need some space and a few small repairs (Micro-Repair, Morning + Evening Rhythm)");
-    expect(steps).toContain("Three or more signs: one or both of you may be pulling away");
-    expect(steps).toContain("may be pulling away. Bring back the daily floor and your check-ins for two weeks; if nothing has shifted, book a Full Recovery conversation.");
-    expect(steps).not.toContain("within a week");
-    expect(steps).not.toContain("0–2");
+    expect(card.steps[0]).toMatch(/^Safety first\. Contempt, fear or coercion: stop and get outside support\./);
+    expect(card.steps[0]).toContain("Never use the signs to question where your partner goes, who they see or what they plan.");
+    expect(card.steps[0]).toContain("A partner who has stopped sharing because they are afraid is not pulling away: use the Help Lines.");
+    expect(card.steps[2]).toContain("Either of you may decline to compare counts.");
+    expect(card.steps.join(" ")).toContain("agree a Full Repair date if you both want to; either of you may say no.");
+    expect(card.warn).toContain("Contempt, fear or coercion at any count: stop");
+    expect(card.warn).toContain("It is not a verdict");
+    expect(card.safetyLink).toBe(true);
+    expect(JSON.stringify(card)).not.toMatch(/before you leave the table/);
+  });
+
+  it("states the anti-weaponisation guardrails on the relevant cards", () => {
+    expect(getProtocol("intimacy-pact")!.warn).toMatch(/Afraid of your partner|no/);
+    expect(JSON.stringify(getProtocol("intimacy-pact"))).toContain("A no costs nothing and needs no reason.");
+    expect(teamAgreement.steps.join(" ")).toContain("never how much contact your partner has");
+    expect(getProtocol("trust-recovery")!.steps.join(" ")).toContain("never becomes monitoring");
+    expect(JSON.stringify(teamAgreement)).not.toMatch(/how much access they get/);
   });
 
   it("uses canonical names", () => {
     const text = JSON.stringify(protocols);
     expect(text).not.toMatch(/Care Audit|Tempo Mismatch|Manager Imbalance|Abuse guardrail|push-pull/i);
   });
-
-  it("states the anti-weaponisation guardrails on the relevant cards", () => {
-    expect(getProtocol("intimacy-pact")!.warn).toContain("needs no script, reason, or substitute");
-    expect(teamAgreement.steps.join(" ")).toContain("never how much contact your partner has");
-    expect(pageSource("together")).toContain("never how much access a relative gets");
-    expect(getProtocol("trust-recovery")!.warn).toContain("never becomes monitoring");
-    expect(JSON.stringify(teamAgreement)).not.toMatch(/how much access they get/);
-  });
 });
 
-describe("CANON round 3", () => {
-  const LEAVING = "Deciding not to rebuild, or to end the relationship, is a valid outcome of this protocol, not a failure of it.";
+describe("tools: guardrails and safety wording (spec section 6)", () => {
+  const LEAVING = "Deciding not to rebuild, or to end the relationship, is a valid outcome of this tool, not a failure of it.";
   const all = (slug: string) => JSON.stringify(getProtocol(slug));
 
-  it("says leaving is valid on Trust Recovery, Full Recovery and the Pulling-Away Check", () => {
-    for (const slug of ["trust-recovery", "full-recovery", "uninvestment-check"]) {
+  it("says leaving is valid on Trust Recovery, Full Repair and the Check-Up", () => {
+    for (const slug of ["trust-recovery", "full-repair", "check-up"]) {
       expect(getProtocol(slug)!.note, slug).toBe(LEAVING);
     }
     expect(componentSource("ProtocolLayout")).toContain("protocol.note");
   });
 
-  it("Pulling-Away Check: sign 4 wording, contempt skips the count, routing", () => {
-    const card = getProtocol("uninvestment-check")!;
-    expect(card.activity).toContain("(4) doing more on your own in place of shared time (time apart is healthy)");
-    const contempt = "If contempt is one of your signs, skip the count: contempt means stop and get outside support first.";
-    // Voice pass 21: the Practise text is short sentences with no worksheet
-    // reference, and still carries the contempt rule in full. Voice pass 24:
-    // the counting rules live once, in the steps; the Practise text lists the
-    // eight signs and carries the contempt stop rule verbatim.
-    expect(card.activity).toContain(contempt);
-    expect(card.activity).toContain("Mark the signs on your own, then compare.");
-    expect(card.activity).not.toMatch(/1–2|3 or more/);
-    expect(card.activity).not.toMatch(/worksheet/i);
-    expect(card.steps[1]).toContain(contempt);
-    expect(card.steps.join(" ")).toContain(contempt);
-    expect(card.warn).toContain(contempt);
-    expect(card.steps.join(" ")).toContain("if nothing has shifted, book a Full Recovery conversation");
-    expect(card.crossLinks.map((c) => c.href)).toContain("/protocols/trust-recovery");
-  });
-
   it("Micro-Repair uses the one canonical window", () => {
     const text = [all("micro-repair"), JSON.stringify(protocolDiagrams["micro-repair"])].join(" ");
-    expect(text.toLowerCase()).toContain("start within minutes if you can; complete within 24 hours");
+    expect(text.toLowerCase()).toContain("start within minutes if you can; finish within 24 hours");
     expect(text).not.toMatch(/48[- ]hour|within (10|ten) minutes/i);
   });
 
-  it("Full Recovery and Trust Recovery handle one-sided breaches", () => {
-    const full = getProtocol("full-recovery")!.steps.join(" ");
+  it("Full Repair and Trust Recovery handle one-sided breaches", () => {
+    const full = getProtocol("full-repair")!.steps.join(" ");
     expect(full).toContain("only that partner acknowledges impact; the hurt partner is never asked to confess in return");
     expect(full).toContain("only if it’s true for both of you");
     expect(getProtocol("trust-recovery")!.steps[0]).toContain("never asked to confess in return");
   });
 
-  it("Intimacy Pact sends repeated pressure to the Help Lines", () => {
+  it("Full Repair: 60 to 90 minutes, and either of you may say no to booking it", () => {
+    expect(all("full-repair")).toContain("60 to 90 minutes");
+  });
+
+  it("Trust Recovery: a breach is something the partner agrees they did; proof windows; pauses noted only if the one pausing agrees", () => {
+    const trust = getProtocol("trust-recovery")!;
+    const text = all("trust-recovery");
+    expect(text).toMatch(/breach/);
+    expect(trust.warn).toMatch(/agree|refus|voluntary/i);
+    expect(trust.steps[2]).toContain("two to four weeks to start (1 to 2 weeks for a smaller Proof item)");
+    expect(trust.steps[3]).toContain("noted only if the one pausing agrees");
+    expect(trust.steps[4]).toContain("the hurt partner’s feelings and questions come first");
+    expect(trust.steps[4]).toContain("The record is an aid, never the judge");
+    expect(trust.safetyLink).toBe(true);
+  });
+
+  it("Intimacy Pact: the review is about how asking and no feel, never how often; pressure after a no stops the tool", () => {
     const card = getProtocol("intimacy-pact")!;
+    expect(card.steps[0]).toBe("Asking? Think first about how it will land for the other person tonight. If you’re declining, you owe nothing. No is enough.");
+    expect(card.steps[3]).toContain("ask, and wait for a clear yes.");
+    expect(card.steps[4]).toContain("The review is about how asking and saying no feel, never about how often.");
+    expect(card.steps[4]).toContain("Either of you can skip or postpone it. “Stalled” is never a reason to ask more.");
     const last = card.steps.at(-1)!;
-    expect(last).toMatch(/If it happens again, or either of you feels unable to say no, stop and use the Help Lines/);
+    expect(last).toContain("don’t try to patch intimacy on top");
+    expect(last).toContain("The one pressured decides whether, when and with whom to talk.");
+    expect(last).toContain("Force, threats, fear or a repeat: use the Help Lines.");
     expect(card.warn).toMatch(/Help Lines/);
+    expect(card.safetyLink).toBe(true);
+    expect(JSON.stringify(protocolDiagrams["intimacy-pact"])).toContain("Force, threats, fear or a repeat: use the Help Lines.");
+  });
+
+  it("Consistency Pact: telling your partner about a broken shared agreement is part of the partnership; your notes are never owed", () => {
+    const steps = getProtocol("consistency-pact")!.steps;
+    expect(steps[4]).toContain("Your own notes, thoughts and answers are never owed.");
+    expect(steps[5]).toContain("Tell your partner. Telling them is part of the partnership");
+  });
+
+  it("Team Agreement: Believe first, one step list, the outing line", () => {
+    const card = getProtocol("team-agreement")!;
+    expect(card.steps).toHaveLength(5);
+    expect(card.steps[0]).toMatch(/^Believe first\./);
+    expect(teamAgreement.steps).toEqual(card.steps);
+    expect(card.warn).toContain(teamAgreement.outingLine);
     expect(card.safetyLink).toBe(true);
   });
 
-  it("Intimacy Pact: pressure after a no stops the tool; force, threats or fear go straight to the Help Lines", () => {
-    const FORCE = "If it involved force, threats or fear, go straight to the Help Lines.";
-    const last = getProtocol("intimacy-pact")!.steps.at(-1)!;
-    expect(last).toContain(FORCE);
-    expect(last).toContain("don’t try to patch intimacy on top of it");
-    expect(last).not.toMatch(/Trust Recovery/);
-    expect(JSON.stringify(protocolDiagrams["intimacy-pact"])).toContain(FORCE);
-    const warn = getProtocol("intimacy-pact")!.warn!;
-    expect(warn).toContain("Afraid of your partner, being threatened, or not free to say no? Stop");
-    expect(warn).toContain("If a no is met with pressure, stop; don’t try to repair intimacy on top of it.");
-    expect(warn).toContain(FORCE);
-    expect(warn.indexOf("feels unable to say no")).toBeGreaterThan(warn.indexOf(FORCE));
-    expect(warn).not.toMatch(/Trust Recovery|once/);
+  it("Pause + Return: the one waiting does not follow, block or message; leaving a room is a Help Lines moment", () => {
+    const card = getProtocol("pause-and-return")!;
+    expect(card.steps[3]).toContain("If you’re the one waiting: don’t follow, block the way or message during the pause.");
+    expect(card.steps[3]).toContain("Not being allowed to leave a room or the house is a Help Lines moment, not a pause.");
+    expect(card.steps[4]).toBe("Come back at the time you said, even briefly.");
+    expect(JSON.stringify([card, protocolDiagrams["pause-and-return"]])).not.toMatch(/prove it/);
+    expect(card.warn).toContain("do not return at the set time");
+  });
+
+  it("Green Rule: do not return at the set time; a stated lack of safety is believed first", () => {
+    const card = getProtocol("green-rule")!;
+    expect(card.steps[2]).toContain("do not return at the set time");
+    expect(card.warn).toContain("A stated lack of safety is believed first.");
+    expect(card.steps[1]).toContain("Whoever hears it believes it first");
+  });
+
+  it("Profile Calibration: nobody has to complete it; do not ask your partner to show their answers", () => {
+    const card = getProtocol("profile-calibration")!;
+    expect(card.whenToUse).toContain("Nobody has to complete this, and you can stop at any time.");
+    expect(card.warn).toContain("Do not ask your partner to show their answers.");
+    expect(card.steps.join(" ")).toContain("44 questions");
   });
 
   it("never asks to track or verify the other partner", () => {
     const text = JSON.stringify([getProtocol("trust-recovery")]);
     expect(text).not.toMatch(/\btrack(ing)? (the facts|it)\b|\bverify\b/i);
-    expect(text).toContain("look at it together at the check-in");
+    expect(text).toContain("look at it together");
   });
 
-  it("Weekly Reset part 4 is Requests, part 5 is Next steps", () => {
-    const card = getProtocol("weekly-reset")!;
-    expect(card.steps[3]).toMatch(/^Requests — /);
-    expect(card.steps[4]).toMatch(/^Next steps — /);
-    expect(protocolDiagrams["weekly-reset"].steps.map((s) => s.title).slice(3)).toEqual(["Requests", "Next steps"]);
-    expect(componentSource("WeeklyResetWizard")).toContain('title="Requests"');
-    expect(componentSource("WeeklyResetWizard")).not.toContain("Requests (5 min, with next steps)");
+  it("the System Overlay's second step never asks anyone to say something untrue", () => {
+    const line = "Make it safe: if it’s true, say out loud that the relationship isn’t at risk tonight.";
+    expect(getProtocol("system-overlay")!.steps[1]).toBe(line);
+    expect(protocolDiagrams["system-overlay"].steps[1].detail).toBe("If it’s true, say out loud that the relationship isn’t at risk tonight.");
   });
 
-  it("Situation Map (app and intro diagram) splits trust breach from pulling away and routes outside pressure to the team agreement", () => {
-    const byId = Object.fromEntries(situations.map((s) => [s.id, s]));
-    expect(byId["trust-breach"].primaryHref).toBe("/protocols/trust-recovery");
-    expect(byId["trust-breach"].firstMove).toContain("Trust Recovery. Agree one change");
-    expect(byId["detachment"].primaryHref).toBe("/protocols/uninvestment-check");
-    expect(byId["detachment"].label).toMatch(/Pulling away/);
-    expect(byId["outside-pressure"].primaryHref).toBe("/together");
-    expect(byId["outside-pressure"].label).toBe("Outside pressure or disapproval from family, friends or strangers");
-    const diagrams = readFileSync(join(__dirname, "../src/components/intro/diagrams.tsx"), "utf8");
-    expect(diagrams).toContain('q: ["Trust breach?"]');
-    expect(diagrams).toContain('q: ["Pulling away?"]');
-    expect(diagrams).toContain('a: ["Team agreement"]');
-    expect(diagrams).not.toContain("Trust breach or");
-    // Same order as the app list: a fight starting (row 3) and outside pressure (row 4) before trust breach and pulling away.
-    expect(diagrams.indexOf('q: ["A fight is"')).toBeLessThan(diagrams.indexOf('q: ["Outside pressure"'));
-    expect(diagrams.indexOf('q: ["Flooded or shut"')).toBeLessThan(diagrams.indexOf('q: ["A fight is"'));
-    expect(diagrams.indexOf('q: ["Outside pressure"')).toBeLessThan(diagrams.indexOf('q: ["Trust breach?"]'));
-    expect(diagrams.indexOf('q: ["Trust breach?"]')).toBeLessThan(diagrams.indexOf('q: ["Pulling away?"]'));
+  it("Pause + Return flooding signs leave out contempt", () => {
+    for (const sign of ["heart racing", "tunnel vision", "can’t think straight", "flee or to win"]) {
+      expect(getProtocol("pause-and-return")!.whenToUse).toContain(sign);
+    }
+    expect(getProtocol("pause-and-return")!.whenToUse).not.toMatch(/contempt/i);
+    expect(protocolDiagrams["pause-and-return"].when).not.toMatch(/contempt/i);
+    expect(situations.find((s) => s.id === "flooded")!.description).not.toMatch(/contempt/i);
   });
 
-  it("Situation Map rows are the registry's 12 canonical rows, in order (first match wins)", () => {
-    const rows = registry.concepts["situation-map"].rowsCanonical;
-    expect(situations.map((s) => s.id)).toEqual(rows.map((r) => r.id));
-    expect(situations.map((s) => s.label)).toEqual(rows.map((r) => r.label));
-    const byId = Object.fromEntries(situations.map((s) => [s.id, s]));
-    expect(byId["say-do-gap"].primaryHref).toBe("/protocols/consistency-pact");
-    expect(byId["after-fight"].firstMove).toContain("start within minutes if you can; complete within 24 hours");
-    expect(byId["intimacy-stall"].firstMove).toMatch(/Help Lines/);
-    // The row stays short; the canonical "(inside the Weekly Reset)" phrase lives on the Weekly Reset card.
-    expect(byId["weekly-maintenance"].firstMove).toContain("Once a month, it includes a look back over the whole month.");
-    // Row 8 sends people where the Kit does (voice pass 34): the do-now line first, word for word
-    // with the Kit, then the Loop Library. Voice pass 37: the first move ends on the move
-    // (Profile Calibration); the book pointer to the Loop Library lives in the row's Go deeper.
-    const row8 = byId["attachment-clash"].firstMove;
-    expect(row8.startsWith("Name it out loud: “I think we’re doing the thing again.” Later, when you’re calm, find it in the Loop Library.")).toBe(true);
-    expect(row8.endsWith("try Profile Calibration together.")).toBe(true);
-    expect(row8).not.toContain("Manual Appendix A");
-    expect(byId["attachment-clash"].goDeeper).toContain("The Loop Library is Manual Appendix A");
-    expect(componentSource("SituationCard")).toContain("situation.goDeeper");
-    // Voice pass 22: the wizard step (already inside the Weekly Reset) points at the table to look back over the month;
-    // the full canonical phrase stays once in the app, on the monthly calendar reminder.
-    expect(componentSource("WeeklyResetWizard")).toContain("Use the table below to look back over the whole month.");
-    expect(readFileSync(join(process.cwd(), "src/lib/ics.ts"), "utf8")).toContain("monthly look-back (inside the Weekly Reset)");
-    // Amber is for pause only: no row routes to an amber tone except Pause + Return.
-    for (const s of situations) expect(s).not.toHaveProperty("warn");
+  it("“afraid” only appears in safety content", () => {
+    const green = getProtocol("green-rule")!;
+    expect(green.working).not.toMatch(/afraid/i);
+    expect(green.notWorking).toContain("Misuse: saying “this doesn’t feel safe” to shut down every complaint");
+    for (const p of protocols) {
+      for (const field of [p.concept, p.whenToUse, p.working, p.notWorking, p.activity, ...p.steps, ...p.phrases.map((x) => x.text)]) {
+        if (/\bafraid\b/i.test(field)) expect(field, p.slug).toMatch(/Help Lines|outside help|outside support|Afraid of your partner|because they are afraid/);
+      }
+    }
   });
 });
 
-describe("safety routing", () => {
-  it("System Overlay step 2 never asks anyone to say something untrue (pass 4, F6)", () => {
-    const line = "Make it safe — if it’s true, say out loud that the relationship isn’t at risk tonight.";
-    expect(getProtocol("system-overlay")!.steps[1]).toBe(line);
-    expect(protocolDiagrams["system-overlay"].steps[1].detail).toBe("If it’s true, say out loud that the relationship isn’t at risk tonight.");
-    const timer = readFileSync(join(process.cwd(), "src/components/PauseTimer.tsx"), "utf8");
-    expect(timer).toContain("— if it’s true, say out loud that the relationship isn’t at risk tonight.");
-    expect(timer).not.toMatch(/— say out loud that the relationship isn’t at risk/);
+describe("Situation Map", () => {
+  const byId = Object.fromEntries(situations.map((s) => [s.id, s]));
+
+  it("rows are the registry's 12 canonical rows, in order (first match wins)", () => {
+    const rows = registry.concepts["situation-map"].rowsCanonical;
+    expect(situations.map((s) => s.id)).toEqual(rows.map((r) => r.id));
+    expect(situations.map((s) => s.label)).toEqual(rows.map((r) => r.label));
   });
 
   it("puts the safety row first, routed to Help, never to Pause", () => {
@@ -264,10 +290,67 @@ describe("safety routing", () => {
     }
   });
 
+  it("“A fight is starting” first move is one sentence to say, from the 60-Second Reset; Pause + Return second; the Overlay is the next link", () => {
+    const row = byId["conflict-starting"];
+    expect(row.firstMove).toBe("Say: “I want to connect, not fight. Can we talk at ___?” (60-Second Reset)");
+    expect(row.primaryHref).toBe("/protocols/60-second-reset");
+    expect(row.secondaryHrefs!.map((l) => l.href)).toEqual(["/protocols/pause-and-return", "/protocols/system-overlay"]);
+    expect(row.secondaryHrefs![0].label).toMatch(/^Too hot to stay in the room\? Pause \+ Return/);
+  });
+
+  it("trust breach skips the 7-day plan; a breach is something both agree happened", () => {
+    expect(byId["trust-breach"].primaryHref).toBe("/protocols/trust-recovery");
+    expect(byId["trust-breach"].firstMove).toContain("Skip the 7-day plan: start with Trust Recovery, then the Weekly Reset.");
+    expect(byId["trust-breach"].description).toContain("never a breach");
+  });
+
+  it("pulling away goes to the Check-Up with its safety lines; outside pressure goes to the Team Agreement", () => {
+    expect(byId["detachment"].primaryHref).toBe("/protocols/check-up");
+    expect(byId["detachment"].firstMove).toContain("Contempt, fear or coercion: stop and get outside support first.");
+    expect(byId["detachment"].firstMove).toContain("A partner who has stopped sharing because they are afraid is not pulling away: use the Help Lines.");
+    expect(byId["outside-pressure"].primaryHref).toBe("/protocols/team-agreement");
+    expect(byId["outside-pressure"].label).toBe("Outside pressure or disapproval from family, friends or strangers");
+    expect(byId["outside-pressure"].secondaryHrefs!.map((c) => c.href)).toContain("/protocols/green-rule");
+  });
+
+  it("pressure from a partner goes to Help or the Green Rule, never to the Team Agreement", () => {
+    expect(byId["outside-pressure"].description).toContain("If the pressure is coming from your partner, this isn’t the right tool.");
+    expect(byId["unsafe"].description).toContain("This includes jealousy that leads to checking, restricting, or accusing.");
+    expect(JSON.stringify(byId["outside-pressure"])).not.toMatch(/jealous/i);
+  });
+
+  it("Intimacy row: pressure after a no stops; the person pressured decides; force, threats, fear or a repeat go to Help Lines", () => {
+    const row = byId["intimacy-stall"];
+    expect(row.primaryHref).toBe("/protocols/intimacy-pact");
+    expect(row.firstMove).toContain("Pressure after a no: stop; don’t talk it through in the moment.");
+    expect(row.firstMove).toContain("The person pressured decides whether, when and with whom to talk.");
+    expect(row.firstMove).toContain("Force, threats, fear or a repeat: Help Lines.");
+  });
+
+  it("other rows route to the right tools, in plain words", () => {
+    expect(byId["say-do-gap"].primaryHref).toBe("/protocols/consistency-pact");
+    expect(byId["after-fight"].firstMove).toContain("start within minutes if you can; finish within 24 hours");
+    expect(byId["after-fight"].secondaryHrefs!.map((l) => l.href)).toContain("/protocols/full-repair");
+    expect(byId["daily-drift"].primaryHref).toBe("/protocols/daily-rhythm");
+    expect(byId["daily-drift"].secondaryHrefs!.map((l) => l.href)).toContain("/protocols/sun-memory");
+    expect(byId["weekly-maintenance"].firstMove).toContain("The monthly part adds 10 minutes.");
+    expect(byId["attachment-clash"].primaryHref).toBe("/protocols/profile-calibration");
+    expect(byId["attachment-clash"].firstMove.startsWith("Name it out loud: “I think we’re doing the thing again.”")).toBe(true);
+    expect(byId["attachment-clash"].firstMove).toContain("try Profile Calibration together.");
+    expect(byId["attachment-clash"].goDeeper).toContain("Appendix A: common patterns");
+    expect(componentSource("SituationCard")).toContain("situation.goDeeper");
+    expect(byId["daily-drift"].label).toBe("We feel like housemates");
+    expect(JSON.stringify(situations)).not.toMatch(/roommate/i);
+    // Amber is for pause only: no row routes to an amber tone except Pause + Return.
+    for (const s of situations) expect(s).not.toHaveProperty("warn");
+  });
+});
+
+describe("safety routing", () => {
   it("lists the canonical help lines as dialable links", () => {
-    expect(emergencyNumbers.map((n) => n.display)).toEqual(["999", "911", "000", "112"]);
+    expect(emergencyNumbers.map((n) => n.display)).toEqual(["999", "995", "911", "000", "112"]);
     const all = helpRegions.flatMap((r) => r.lines.map((l) => l.display));
-    for (const n of ["1-800-799-7233", "88788", "988", "0808 2000 247", "116 123", "1800 737 732", "13 11 14", "1800 777 0000", "1767"]) {
+    for (const n of ["1-800-799-7233", "88788", "988", "800-656-4673", "64673", "0808 2000 247", "116 123", "0808 500 2222", "1800 737 732", "13 11 14", "1800 777 0000", "1767", "6779 0282"]) {
       expect(all).toContain(n);
     }
     for (const line of [...emergencyNumbers, ...helpRegions.flatMap((r) => r.lines)]) {
@@ -324,7 +407,7 @@ describe("safety routing", () => {
     expect(help).toContain("SELF_CHECK_QUESTIONS.map(");
   });
 
-  it("adds the canonical LGBTQ+-affirming line (CANON round 5)", async () => {
+  it("adds the canonical LGBTQ+-affirming line", async () => {
     const { LGBTQ_LINE, lgbtqLines } = await import("@/data/help");
     expect(LGBTQ_LINE).toBe(registry.helpLinesExtra);
     for (const l of lgbtqLines) expect(LGBTQ_LINE).toContain(l.display);
@@ -337,13 +420,13 @@ describe("safety routing", () => {
   });
 });
 
-describe("Core 6 and the 7-day start plan", () => {
-  it("Core 6 is six distinct, real protocol cards, Green Rule first", () => {
-    expect(coreFive).toHaveLength(6);
-    expect(new Set(coreFiveSlugs).size).toBe(6);
-    for (const slug of coreFiveSlugs) expect(getProtocol(slug), slug).toBeDefined();
-    expect(coreFiveSlugs[0]).toBe("green-rule");
-    expect(coreFiveSlugs).toEqual(
+describe("the six to learn first and Your First Week", () => {
+  it("the six to learn first are six distinct, real cards, Green Rule first", () => {
+    expect(coreSix).toHaveLength(6);
+    expect(new Set(coreSixSlugs).size).toBe(6);
+    for (const slug of coreSixSlugs) expect(getProtocol(slug), slug).toBeDefined();
+    expect(coreSixSlugs[0]).toBe("green-rule");
+    expect(coreSixSlugs).toEqual(
       expect.arrayContaining(["green-rule", "pause-and-return", "60-second-reset", "weekly-reset", "micro-repair", "system-overlay"])
     );
   });
@@ -359,34 +442,53 @@ describe("Core 6 and the 7-day start plan", () => {
     }
   });
 
-  it("ends with the first Weekly Reset on day 7 and covers every Core 6 tool", () => {
+  it("“Tonight (20 minutes)” has the three jobs, and day 1 is the tonight job only", () => {
+    expect(TONIGHT.title).toBe("Tonight (20 minutes)");
+    expect(TONIGHT.minutes).toBe(20);
+    expect(TONIGHT.steps).toHaveLength(3);
+    expect(TONIGHT.steps[0]).toBe("Read the red row of the Situation Map.");
+    expect(TONIGHT.steps[2]).toBe("Try the 60-Second Reset once, while you’re calm.");
+    expect(startDays[0].minutes).toBe(20);
+    expect(startDays[0].task).toContain("read the red row of the Situation Map");
+    expect(startDays[0].task).toContain("try the 60-Second Reset once, while you’re calm");
+  });
+
+  it("ends with the first Weekly Reset on day 7 and covers the six to learn first", () => {
     const last = startDays.at(-1)!;
     expect(last.day).toBe(7);
     expect(last.slug).toBe("weekly-reset");
     expect(last.task).toContain("40-minute timer");
-    for (const slug of coreFiveSlugs) expect(startDays.map((d) => d.slug)).toContain(slug);
-    // 10–20 minutes a day (pass 4, F4); the Pause + Return practice includes 20 minutes apart,
-    // and the morning and evening check-ins are the Manual's two check-ins (≤5 + about 10) across the day.
-    for (const d of startDays.slice(0, -1).filter((d) => d.slug !== "pause-and-return" && d.slug !== "morning-evening-rhythm")) expect(d.minutes).toBeLessThanOrEqual(10);
-    expect(startDays.find((d) => d.day === 5)!.task).toMatch(/morning check-in \(5 minutes or less\) and an evening check-in \(about 10 minutes\)/);
+    expect(last.task).toContain("15 minutes is fine");
+    for (const slug of coreSixSlugs) expect(startDays.map((d) => d.slug)).toContain(slug);
+    for (const d of startDays.slice(1, -1).filter((d) => d.slug !== "pause-and-return")) expect(d.minutes, `day ${d.day}`).toBeLessThanOrEqual(10);
+    expect(startDays.find((d) => d.day === 5)!.task).toMatch(/evening catch-up only \(about 10 minutes\)/);
   });
 
-  it("is the Field Kit's “The First Week”, day for day (CANON round 5: one plan)", () => {
+  it("is the Field Kit’s week, day for day (SPEC section 5)", () => {
     expect(startDays.map((d) => d.title)).toEqual([
-      "Safety + Pause defaults",
-      "Practise the 60-Second Alliance Reset",
+      "Tonight’s job",
+      "Say the Green Rule lines aloud",
       "A first Micro-Repair",
       "Practise Pause + Return",
-      "Morning and evening check-ins",
-      "Quick Overlay, then set up the Reset",
-      "Weekly Reset #1",
+      "One evening catch-up",
+      "Try the quick System Overlay",
+      "Your first Weekly Reset",
     ]);
+    expect(startDays.map((d) => d.slug)).toEqual(["60-second-reset", "green-rule", "micro-repair", "pause-and-return", "daily-rhythm", "system-overlay", "weekly-reset"]);
+    expect(registry.firstWeek.title).toBe("Your First Week");
+    expect(registry.firstWeek.tonight).toEqual([...TONIGHT.steps]);
     for (const d of startDays) expect(d.proof, `day ${d.day}`).toMatch(/\S/);
+  });
+
+  it("carries the First Week notes: tight on time, trust breach skips the plan, invite don’t assign", () => {
+    expect(START_NOTES.tightOnTime).toBe("Tight on time? Do the Weekly Reset in two 20-minute halves.");
+    expect(START_NOTES.trustBreach).toContain("start with Trust Recovery, then the Weekly Reset");
+    expect(START_NOTES.onlyOneReading).toBe("Only one of you reading? Invite, don’t assign.");
   });
 
   it("never offers a pause shorter than 20 minutes", () => {
     for (const d of startDays) expect(d.task).not.toMatch(/\b(10|15|ten|fifteen)[- ]?min(ute)? (pause|break)/i);
-    expect(startDays[0].task).toContain("a 20-minute minimum");
+    expect(startDays[0].task).toContain("one pause phrase and a return time");
     expect(startDays.find((d) => d.slug === "pause-and-return")!.task).toContain("Take 20 minutes apart");
   });
 });
@@ -402,7 +504,7 @@ describe("About the authors", () => {
   });
 
   it("describes David's background without a title, employer, sector, institution, place or pet", () => {
-    expect(aboutAuthors).toContain("governance, strategy, transformation, efficiency and value");
+    expect(aboutAuthors).toContain("governance and transformation");
     for (const text of [aboutAuthors, authorsCoupleLine]) {
       expect(text).not.toMatch(/\b(bank|banking|CAO|COO|Chief|consultant|ETH|Zurich|Singapore|Hong Kong|Australia|Asia Pacific|APAC|Troy|Bean)\b/i);
       expect(text).not.toMatch(/\btested\b/i);
@@ -420,10 +522,6 @@ describe("offline precache", () => {
     expect(urls.some((u) => u.includes("["))).toBe(false);
   });
 });
-
-const appDir = join(__dirname, "../src/app");
-const pageSource = (route: string) => readFileSync(join(appDir, route, "page.tsx"), "utf8");
-const componentSource = (name: string) => readFileSync(join(__dirname, "../src/components", `${name}.tsx`), "utf8");
 
 describe("/privacy", () => {
   const src = pageSource("privacy");
@@ -470,7 +568,7 @@ describe("/together", () => {
     const routes = new Set(precacheUrls());
     for (const t of togetherTools) expect(routes, t.href).toContain(t.href);
     expect(togetherTools.map((t) => t.href)).toEqual(
-      expect.arrayContaining(["/weekly-reset", "/"])
+      expect.arrayContaining(["/protocols/team-agreement", "/weekly-reset", "/"])
     );
     expect(TOGETHER_CITATION.text).toMatch(/Faber, Zare & Williams/);
     expect(TOGETHER_CITATION.text).toContain("2026");
@@ -478,16 +576,21 @@ describe("/together", () => {
     expect(authorsCoupleLine).toContain("biracial couple");
   });
 
-  it("routes safety to Help and states the team-agreement guardrail", () => {
+  it("routes safety to Help and states the Team Agreement guardrail", () => {
     const src = pageSource("together");
-    expect(src).toContain("WarnBanner pauseLink={false} safetyLink");
+    expect(src).toContain("safetyLink");
     expect(src).toContain("never how much access a relative gets");
-    expect(src).toContain('href="#anchor-heading"');
   });
 
-  it("is linked from /about and is where the Situation Map row sends outside pressure", () => {
+  it("is linked from /about and the Situation Map row sends outside pressure to the Team Agreement", () => {
     expect(pageSource("about")).toContain('href="/together"');
-    expect(situations.find((s) => s.id === "outside-pressure")!.primaryHref).toBe("/together");
+    expect(situations.find((s) => s.id === "outside-pressure")!.primaryHref).toBe("/protocols/team-agreement");
+    expect(situations.find((s) => s.id === "outside-pressure")!.secondaryHrefs!.map((l) => l.href)).toContain("/together");
+  });
+
+  it("/together points at the live Situation Map row", () => {
+    const map = togetherTools.find((t) => t.href === "/")!;
+    expect(map.note).toContain(`“${situations.find((s) => s.id === "outside-pressure")!.label}”`);
   });
 
   it("carries no pricing and none of the banned phrasings", () => {
@@ -518,104 +621,35 @@ describe("contact and store links", () => {
   });
 });
 
-describe("CANON round 6", () => {
-  const byId = Object.fromEntries(situations.map((s) => [s.id, s]));
+describe("tests that cross the data and the app", () => {
   const allCopy = JSON.stringify([protocols, protocolDiagrams, situations, commonMoves, togetherTools, togetherFaq, whoFor]);
 
-  it("jealousy is a safety-row matter, never routed to the team agreement", () => {
-    expect(byId["unsafe"].description).toContain("This includes jealousy that leads to checking, restricting, or accusing.");
-    expect(JSON.stringify(byId["outside-pressure"])).not.toMatch(/jealous/i);
-    expect(JSON.stringify(teamAgreement)).not.toMatch(/jealous/i);
-    expect(allCopy).not.toMatch(/log (it|jealousy)[^.]*Weekly Reset/i);
+  it("Sun Memory: Quick (a few minutes) and Full (2 to 24 hours); either of you can end it by naming a safety concern", () => {
+    const card = getProtocol("sun-memory")!;
+    expect(card.concept).toContain("Quick is a few minutes; Full is 2 to 24 hours.");
+    expect(card.steps.join(" ")).toContain("Quick: a few minutes inside one ritual. Full: 2 to 24 hours.");
+    expect(card.warn).toContain("Safety, childcare, logistics and any repair you’ve already booked carry on.");
+    expect(card.warn).toContain("Either of you can end it by naming a safety concern.");
   });
 
-  it("Team agreement: outside pressure only; partner pressure goes to the Green Rule; carries the safety line", () => {
-    const src = pageSource("together");
-    expect(src).toContain("If the pressure is coming from your");
-    expect(src).toContain("otherwise use the Green Rule");
-    expect(src).toContain("safetyLink");
-    expect(situations.find((s) => s.id === "outside-pressure")!.secondaryHrefs!.map((c) => c.href)).toContain("/protocols/green-rule");
+  it("Daily Rhythm: morning hello (5 minutes or less), evening catch-up (about 10), and the minimum", () => {
+    const steps = getProtocol("daily-rhythm")!.steps;
+    expect(steps[0]).toMatch(/^Morning hello \(5 minutes or less\)/);
+    expect(steps[1]).toMatch(/^Evening catch-up \(about 10 minutes\)/);
+    expect(steps[3]).toContain("keep the minimum: a hello, an “I see you”, an appreciation, and a repair within 24 hours if anything stings");
+    expect(allCopy).not.toMatch(/morning check-in|evening check-in/i);
   });
 
-  it("row 11 says housemates, never roommates", () => {
-    expect(byId["daily-drift"].label).toBe("We feel like housemates");
-    expect(allCopy).not.toMatch(/roommate/i);
+  it("states “scripts are training wheels” exactly once in the app", () => {
+    const walk = (d: string): string[] =>
+      readdirSync(d, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(join(d, e.name)) : [join(d, e.name)]));
+    const hits = walk(join(__dirname, "../src"))
+      .filter((f) => /\.(tsx?|json)$/.test(f))
+      .flatMap((f) => readFileSync(f, "utf8").match(/scripts are training wheels/gi) ?? []);
+    expect(hits).toHaveLength(1);
   });
 
-  it("Intimacy Pact steps 1 and 4 keep the consent wording (voice pass 25)", () => {
-    const card = getProtocol("intimacy-pact")!;
-    expect(card.steps[0]).toBe("Asking? Think first about how it will land for the other person tonight. If you’re declining, you owe nothing. No is enough.");
-    expect(card.steps[3]).toContain("body language can signal interest, but ask, and wait for a clear yes.");
-  });
-
-  it("Trust Recovery and Proof: feelings and questions first, the record is an aid; disputed and coerced cases stop", () => {
-    const trust = getProtocol("trust-recovery")!;
-    expect(trust.steps.join(" ")).toContain("the hurt partner’s feelings and questions come first; the record is an aid, never the judge");
-    expect(trust.warn).toContain("If you can’t agree that a breach happened, this tool isn’t for it");
-    expect(trust.warn).toContain("If refusing the “voluntary” transparency would feel unsafe, it isn’t voluntary");
-    expect(trust.concept + trust.whenToUse).toContain("as a Proof item");
-    // Voice pass 28: the "aid, never the judge" line is said once, in Trust Recovery's check-in step.
-    expect(allCopy.split("the record is an aid, never the judge").length - 1).toBeLessThanOrEqual(2);
-    expect(allCopy).not.toMatch(/hypernotic|record first|facts first|right breach/i);
-  });
-
-  it("“afraid” only appears in safety content; the Green Rule names its misuse", () => {
-    const green = getProtocol("green-rule")!;
-    expect(green.working).not.toMatch(/afraid/i);
-    expect(green.notWorking).toContain("Misuse: saying “this doesn’t feel safe” to shut down every complaint");
-    for (const p of protocols) {
-      for (const field of [p.concept, p.whenToUse, p.working, p.notWorking, p.activity, ...p.steps, ...p.phrases.map((x) => x.text)]) {
-        if (/\bafraid\b/i.test(field)) expect(field, p.slug).toMatch(/Help Lines|outside help|Afraid of your partner/);
-      }
-    }
-  });
-
-  it("Pause + Return flooding signs leave out contempt", () => {
-    // All four CANON flooding signs, in the Kit's sentence form (voice pass 39).
-    for (const sign of ["heart is racing", "tunnel vision", "can’t think straight", "flee or to win"]) {
-      expect(getProtocol("pause-and-return")!.whenToUse).toContain(sign);
-    }
-    expect(getProtocol("pause-and-return")!.whenToUse).not.toMatch(/contempt/i);
-    expect(protocolDiagrams["pause-and-return"].when).not.toMatch(/contempt/i);
-    expect(byId["flooded"].description).not.toMatch(/contempt/i);
-  });
-
-  it("Pulling-Away Check: two weeks of the daily floor first, and no one caused drift", () => {
-    const card = getProtocol("uninvestment-check")!;
-    expect(JSON.stringify(card)).not.toMatch(/before you leave the conversation/);
-    expect(card.steps.join(" ")).toContain("Bring back the daily floor and your check-ins for two weeks; if nothing has shifted, book a Full Recovery conversation.");
-    expect(card.working).toContain("They bring back the daily floor and their morning and evening check-ins for two weeks.");
-    expect(protocolDiagrams["uninvestment-check"].steps.map((s) => s.badge ?? "")).toContain("3 or more · two weeks first");
-    expect(getProtocol("full-recovery")!.steps.join(" ")).toContain("If it’s drift rather than a breach, say so. Drift is nobody’s fault");
-    expect(card.steps.join(" ")).toContain("Drift is nobody’s fault, but you can each name your part.");
-  });
-
-  it("Weekly Reset scope rule names the Monthly Review (short What it is, as on the Kit card since pass 40; once on the card; gloss off the card)", () => {
-    const card = getProtocol("weekly-reset")!;
-    const scope =
-      "Anything bigger waits: planning something fun for the Monthly Review once you hold one, and where you’re heading for the Yearly Review";
-    const gloss = "a 40-minute once-a-month look at how things are going";
-    expect(card.concept).toContain("Maintenance, not a trial. Ours happens at home, on a Sunday.");
-    expect(card.whenToUse).toContain("Same day and time each week; also after travel or a hard stretch. Not for a fight: flooded? Pause + Return first.");
-    expect(card.concept).toContain(`${scope}. Maintenance, not a trial.`);
-    expect(card.whenToUse).not.toContain(scope);
-    expect(JSON.stringify(card).split(scope).length - 1).toBe(1);
-    expect(JSON.stringify(card)).not.toContain(gloss);
-    expect(card.activity).toContain("Book the next three weeks. Set a 40-minute timer; stop when it rings. Anything bigger waits.");
-  });
-
-  it("the Monthly Review gloss is defined once in the app, on the Weekly Reset page", () => {
-    const gloss = "the Monthly Review, a 40-minute once-a-month look at how things are going";
-    const page = readFileSync(join(process.cwd(), "src/app/weekly-reset/page.tsx"), "utf8").replace(/\s+/g, " ");
-    expect(page.split(gloss).length - 1).toBe(1);
-  });
-
-  it("/together points at the live Situation Map row", () => {
-    const map = togetherTools.find((t) => t.href === "/")!;
-    expect(map.note).toContain(`“${byId["outside-pressure"].label}”`);
-  });
-
-  it("Help lists the round 6 additions with the verified numbers", async () => {
+  it("Help lists the verified additions (Respect, Men’s lines, PAVE, AWARE, SMS 70999, the EU line)", async () => {
     const { ownBehaviourLines, PRIVATE_STORAGE_NOTE } = await import("@/data/help");
     const all = [...helpRegions.flatMap((r) => r.lines), ...ownBehaviourLines];
     const byDisplay = Object.fromEntries(all.map((l) => [l.display, l]));
@@ -627,16 +661,10 @@ describe("CANON round 6", () => {
     expect(byDisplay["70999"].href).toBe("sms:70999");
     expect(all.map((l) => l.display)).not.toContain("71999");
     expect(byDisplay["116 016"].label).toBe("Helpline for women experiencing violence, where available");
+    expect(byDisplay["800-656-4673"].label).toMatch(/RAINN/);
+    expect(byDisplay["0808 500 2222"].label).toMatch(/Rape Crisis/);
+    expect(byDisplay["6779 0282"].label).toMatch(/weekdays 10am to 6pm/);
     for (const l of all.filter((l) => l.href.startsWith("tel:"))) expect(l.href.slice(4), l.label).toBe(l.display.replace(/\D/g, ""));
     expect(PRIVATE_STORAGE_NOTE).toContain("keep this somewhere private");
-  });
-
-  it("states “scripts are training wheels” exactly once in the app", () => {
-    const walk = (d: string): string[] =>
-      readdirSync(d, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(join(d, e.name)) : [join(d, e.name)]));
-    const hits = walk(join(__dirname, "../src"))
-      .filter((f) => /\.(tsx?|json)$/.test(f))
-      .flatMap((f) => readFileSync(f, "utf8").match(/scripts are training wheels/gi) ?? []);
-    expect(hits).toHaveLength(1);
   });
 });
