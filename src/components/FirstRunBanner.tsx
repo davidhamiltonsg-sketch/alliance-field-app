@@ -25,9 +25,12 @@ export function FirstRunBanner() {
       </span>
       <ArrowRight size={18} className="shrink-0" />
     </Link>
-    <Link href="/intro" className="inline-flex min-h-11 items-center px-1 text-base font-medium text-accent underline underline-offset-4">
-      Take the 60-second tour
-    </Link>
+    <p className="px-1 text-sm text-ink-muted">
+      Or{" "}
+      <Link href="/intro" className="inline-flex min-h-11 items-center font-medium text-accent underline underline-offset-4">
+        take the 60-second tour
+      </Link>
+    </p>
     </div>
   );
 }

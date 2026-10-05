@@ -9,6 +9,8 @@ import { ChevronRight } from "@/components/icons";
 import { situations } from "@/data/situations";
 import { WarnBanner } from "@/components/WarnBanner";
 import { GetFullSystem } from "@/components/GetFullSystem";
+import { SituationMapDownload } from "@/components/SituationMapDownload";
+import { CompanionSampleDownload } from "@/components/CompanionSampleDownload";
 import { STORE_URLS } from "@/lib/links";
 
 /** The buy cards show on Now only once a store link is live: no "not on sale yet" here. */
@@ -137,7 +139,22 @@ export default function HomePage() {
         </p>
       </section>
 
-      {ON_SALE && <GetFullSystem />}
+      {ON_SALE ? (
+        <GetFullSystem />
+      ) : (
+        // Free downloads show even before the books are on sale.
+        <section aria-labelledby="free-heading" className="space-y-3">
+          <SectionLabel>
+            <span id="free-heading">Free to download</span>
+          </SectionLabel>
+          <div className="card space-y-3 px-4 py-4">
+            <SituationMapDownload />
+            <div className="border-t border-rule/35 pt-3">
+              <CompanionSampleDownload />
+            </div>
+          </div>
+        </section>
+      )}
 
       <footer className="flex flex-col items-center gap-2 pt-2 text-center">
         <AllianceMark size={22} className="text-accent/70" waveColor="#A8895A" />

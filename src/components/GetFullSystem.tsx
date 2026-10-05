@@ -4,15 +4,15 @@ import { CompanionSampleDownload } from "./CompanionSampleDownload";
 import { SituationMapDownload } from "./SituationMapDownload";
 import { POSITIONING_LINE, SIGNUP_ACTIVE, STORE_URLS, type StoreProduct } from "@/lib/links";
 
-type Product = { id: StoreProduct; name: string; price: string; note: string; sub?: boolean };
+type Product = { id: StoreProduct; name: string; price: string; note: string; format: string; sub?: boolean };
 
 /** Order: Kit, Volume A, Volume B, then the Complete Edition as an "in one file" option under the volumes, then the Bundle. */
 const products: Product[] = [
-  { id: "kit", name: "Field Kit", price: "US$24", note: "Printable cards, worksheets and the Situation Map. US$24." },
-  { id: "volumeA", name: "Volume A: The Architecture of Staying", price: "US$14", note: "The stories behind the tools, and the book to hand a sceptical partner. US$14." },
-  { id: "manual", name: "Volume B: Operating Manual", price: "US$44", note: "Every tool in full, for when you want the steps. US$44." },
-  { id: "complete", name: "Complete Edition", price: "US$52", note: "Volume A and Volume B together. US$52.", sub: true },
-  { id: "bundle", name: "Complete Bundle", price: "US$69", note: "The Kit, the Complete Edition, and Volume A and Volume B as separate files. US$13 less than the Kit, Volume A and Volume B bought separately. US$69." },
+  { id: "kit", name: "Field Kit", price: "US$24", note: "Printable cards, worksheets and the Situation Map. US$24.", format: "PDF + print-ready files" },
+  { id: "volumeA", name: "Volume A: The Architecture of Staying", price: "US$14", note: "The stories behind the tools, and the book to hand a sceptical partner. US$14.", format: "PDF + HTML" },
+  { id: "manual", name: "Volume B: Operating Manual", price: "US$44", note: "Every tool in full, for when you want the steps. US$44.", format: "PDF + HTML" },
+  { id: "complete", name: "Complete Edition", price: "US$52", note: "Volume A and Volume B together. US$52.", format: "PDF", sub: true },
+  { id: "bundle", name: "Complete Bundle", price: "US$69", note: "The Kit, the Complete Edition, and Volume A and Volume B as separate files. US$13 less than the Kit, Volume A and Volume B bought separately. US$69.", format: "PDF + HTML + print-ready files" },
 ];
 
 const BUY_FIRST = [
@@ -35,7 +35,7 @@ export function GetFullSystem() {
       <SectionLabel>The books, if you want more.</SectionLabel>
       <div className="card space-y-3 px-4 py-4">
         <p className="text-base leading-normal text-ink">
-          The app is free. The books go further. Pay once. Digital PDF + HTML.
+          The app is free. The books go further. Pay once; digital files.
         </p>
         <div className="space-y-1 rounded-xl bg-surface-tool px-4 py-3">
           <p className="text-base font-semibold text-accent">Which one first?</p>
@@ -66,6 +66,7 @@ export function GetFullSystem() {
                   <span className="flex flex-col">
                     <span className="text-base font-semibold">{p.name}</span>
                     <span className="text-sm text-paper/90">{p.sub ? "In one file: " : ""}{p.note}</span>
+                    <span className="text-sm font-medium text-paper/90">{p.format}</span>
                   </span>
                   <span className="shrink-0 text-sm font-semibold">
                     Buy
@@ -76,11 +77,13 @@ export function GetFullSystem() {
                 <div className="flex min-h-12 w-full flex-col justify-center rounded-xl border border-rule/60 px-4 py-2">
                   <span className="text-base font-semibold text-ink">{p.name}</span>
                   <span className="text-sm text-ink-muted">{p.sub ? "In one file: " : ""}{p.note}</span>
+                  <span className="text-sm font-medium text-ink">{p.format}</span>
                 </div>
               )}
             </li>
           ))}
         </ul>
+        <p className="text-sm text-ink-muted">Prices in US dollars. Prices may exclude VAT/GST.</p>
 
         <div className="border-t border-rule/35 pt-3">
           <SituationMapDownload />
