@@ -159,27 +159,27 @@ describe("CANON round 3", () => {
     expect(getProtocol("trust-recovery")!.steps[0]).toContain("never asked to confess in return");
   });
 
-  it("Intimacy Pact never routes repeated pressure to in-house tools only", () => {
+  it("Intimacy Pact sends repeated pressure to the Help Lines", () => {
     const card = getProtocol("intimacy-pact")!;
     const last = card.steps.at(-1)!;
-    expect(last).toMatch(/Green Rule or Trust Recovery/);
     expect(last).toMatch(/If it happens again, or either of you feels unable to say no, stop and use the Help Lines/);
     expect(card.warn).toMatch(/Help Lines/);
     expect(card.safetyLink).toBe(true);
   });
 
-  it("Intimacy Pact sends force, threats or fear straight to the Help Lines", () => {
-    const FORCE = "If it involved force, threats or fear, it isn’t a ‘once’: go straight to the Help Lines.";
+  it("Intimacy Pact: pressure after a no stops the tool; force, threats or fear go straight to the Help Lines", () => {
+    const FORCE = "If it involved force, threats or fear, go straight to the Help Lines.";
     const last = getProtocol("intimacy-pact")!.steps.at(-1)!;
     expect(last).toContain(FORCE);
-    expect(last.indexOf(FORCE)).toBeGreaterThan(last.indexOf("Green Rule or Trust Recovery"));
+    expect(last).toContain("don’t try to patch intimacy on top of it");
+    expect(last).not.toMatch(/Trust Recovery/);
     expect(JSON.stringify(protocolDiagrams["intimacy-pact"])).toContain(FORCE);
     const warn = getProtocol("intimacy-pact")!.warn!;
-    const ONCE = "If a no is met with pressure once, stop. Only if you both feel safe, have a Green Rule or Trust Recovery conversation before anything else; if either of you doesn’t, go straight to the Help Lines.";
-    expect(warn).toContain(ONCE);
+    expect(warn).toContain("Afraid of your partner, being threatened, or not free to say no? Stop");
+    expect(warn).toContain("If a no is met with pressure, stop; don’t try to repair intimacy on top of it.");
     expect(warn).toContain(FORCE);
-    expect(warn.indexOf(FORCE)).toBeGreaterThan(warn.indexOf(ONCE));
     expect(warn.indexOf("feels unable to say no")).toBeGreaterThan(warn.indexOf(FORCE));
+    expect(warn).not.toMatch(/Trust Recovery|once/);
   });
 
   it("never asks to track or verify the other partner", () => {
@@ -531,7 +531,7 @@ describe("CANON round 6", () => {
   it("Team agreement: outside pressure only; partner pressure goes to the Green Rule; carries the safety line", () => {
     const src = pageSource("together");
     expect(src).toContain("If the pressure is coming from your");
-    expect(src).toContain("Go to the Green Rule");
+    expect(src).toContain("otherwise use the Green Rule");
     expect(src).toContain("safetyLink");
     expect(situations.find((s) => s.id === "outside-pressure")!.secondaryHrefs!.map((c) => c.href)).toContain("/protocols/green-rule");
   });

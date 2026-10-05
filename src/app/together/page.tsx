@@ -101,8 +101,8 @@ export default function TogetherPage() {
         <div className="card px-4 py-3.5 text-base leading-normal text-ink">
           <p>
             <strong className="font-medium">If the pressure is coming from your
-            partner, this isn’t the right tool.</strong> Go to the Green Rule,
-            or to Help if you’re afraid. The team agreement is there to help you two decide how to respond to
+            partner, this isn’t the right tool.</strong> If they check, restrict or
+            punish your contact with others, go to Help; otherwise use the Green Rule. The team agreement is there to help you two decide how to respond to
             outside pressure — never how much access a relative gets to your partner.
             No tool is ever used to limit a partner’s contact with
             friends, family, money, phone or movement.
