@@ -83,9 +83,10 @@ function playChime() {
   }
 }
 
-const NOTIFY_TITLE = "Time to come back";
+// Neutral on purpose: a lock screen must not reveal what the timer is for.
+export const NOTIFY_TITLE = "Reminder";
 const NOTIFY_OPTIONS: NotificationOptions = {
-  body: "It’s time. Before you pick the topic back up: warm up and check it’s safe.",
+  body: "Your set time has arrived.",
   tag: "alliance-pause-return",
   icon: "/icon-192.png",
 };
@@ -202,6 +203,27 @@ function PauseTimerClient() {
     const id = window.setInterval(() => setNow(Date.now()), 250);
     return () => window.clearInterval(id);
   }, [returnAt, backMode]);
+
+  // Before starting: what the dial previews (the chosen length and its clock time).
+  const chosenMs = useMemo(() => {
+    if (customMinutes.trim() !== "") {
+      const checked = parseCustomMinutes(customMinutes);
+      return checked.ok ? checked.minutes * 60 * 1000 : null;
+    }
+    if (selectedMs !== null) return selectedMs;
+    if (clockTime) {
+      const checked = clockReturnTarget(clockTime, new Date(now));
+      return checked.ok ? checked.target.getTime() - now : null;
+    }
+    return null;
+  }, [customMinutes, selectedMs, clockTime, now]);
+
+  // Keep the previewed "ready at" time current while a length is chosen.
+  useEffect(() => {
+    if (returnAt || chosenMs === null) return;
+    const id = window.setInterval(() => setNow(Date.now()), 15000);
+    return () => window.clearInterval(id);
+  }, [returnAt, chosenMs]);
 
   const remainingMs = useMemo(() => {
     if (!returnAt) return 0;
@@ -443,8 +465,9 @@ function PauseTimerClient() {
         <TimerDisplay
           remainingMs={0}
           expired={false}
-          idleLabel="00:00"
-          caption="Choose a return time"
+          idleLabel={chosenMs !== null ? formatRemaining(chosenMs) : "00:00"}
+          caption={chosenMs !== null ? `Ready at ${formatClock(new Date(now + chosenMs))}` : "Choose a return time"}
+          chosen={chosenMs !== null}
         />
         <p className="mt-3 text-center text-base leading-normal text-ink-muted">
           Exact phrase:{" "}
@@ -465,6 +488,7 @@ function PauseTimerClient() {
                 type="button"
                 aria-pressed={on}
                 onClick={() => {
+                  setNow(Date.now());
                   setSelectedMs(d.ms);
                   setCustomMinutes("");
                   setCustomError(null);
@@ -490,6 +514,7 @@ function PauseTimerClient() {
             placeholder="e.g. 45"
             value={customMinutes}
             onChange={(e) => {
+              setNow(Date.now());
               setCustomMinutes(e.target.value);
               setSelectedMs(null);
               setCustomError(null);
@@ -509,6 +534,8 @@ function PauseTimerClient() {
           )}
         </div>
         <p className="pt-1 text-sm font-medium text-ink">2. Start</p>
+        {/* Pinned just above the tab bar (and the home indicator) so it is never hidden. */}
+        <div className="sticky bottom-[calc(4rem+1px+env(safe-area-inset-bottom)+0.75rem)] z-30 -mx-1 rounded-2xl bg-paper/90 p-1 backdrop-blur-sm">
         <PrimaryButton
           variant="warn"
           onClick={() => {
@@ -531,6 +558,7 @@ function PauseTimerClient() {
         >
           Start the pause
         </PrimaryButton>
+        </div>
       </section>
 
       <section className="grid grid-cols-1 gap-3 border-t border-rule/35 pt-4">
@@ -545,6 +573,7 @@ function PauseTimerClient() {
               type="time"
               value={clockTime}
               onChange={(e) => {
+                setNow(Date.now());
                 setClockTime(e.target.value);
                 setClockTimeError(null);
               }}

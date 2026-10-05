@@ -168,6 +168,23 @@ describe("a pause read back from storage (L5, L6)", () => {
     expect(localStorage.getItem(PAUSE_KEY)).toBeNull();
   });
 
+  it("shows the chosen length and its ready-at time in the dial as soon as a time is picked", () => {
+    render(<PauseTimer />);
+    expect(text()).toContain("Choose a return time");
+    act(() => button("20m").click());
+    expect(text()).not.toContain("Choose a return time");
+    expect(text()).toContain("20:00");
+    expect(text()).toMatch(/Ready at \d{1,2}[:.]\d{2}/);
+  });
+
+  it("uses a neutral notification that does not reveal the purpose on a lock screen", async () => {
+    const { NOTIFY_TITLE } = await import("@/components/PauseTimer");
+    expect(NOTIFY_TITLE).toBe("Reminder");
+    const src = (await import("node:fs")).readFileSync("src/components/PauseTimer.tsx", "utf8");
+    expect(src).toContain('body: "Your set time has arrived."');
+    expect(src).not.toMatch(/Time to come back/);
+  });
+
   it("resumes a running pause in the calm view", () => {
     localStorage.setItem(PAUSE_KEY, JSON.stringify({ returnAt: iso(Date.now() + 15 * MIN), startedAt: iso(Date.now() - 5 * MIN) }));
     render(<PauseTimer />);
