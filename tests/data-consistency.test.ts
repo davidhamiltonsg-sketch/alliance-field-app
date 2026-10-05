@@ -281,6 +281,20 @@ describe("Situation Map", () => {
     expect(situations.map((s) => s.label)).toEqual(rows.map((r) => r.label));
   });
 
+  it("matches the canonical map word for word: row text, primary tool and second tools in order", () => {
+    const rows = registry.concepts["situation-map"].rowsCanonical as { id: string; route: string; answer: string }[];
+    const nameOf = (href: string) => (href === "/help" ? "Help Lines" : getProtocol(href.replace("/protocols/", ""))?.title);
+    for (const [i, row] of rows.entries()) {
+      const s = situations[i];
+      expect(s.firstMove, row.id).toBe(row.answer);
+      const tools = row.route.split(" · ");
+      const primary = row.id === "weekly-maintenance" ? "Weekly Reset" : nameOf(s.primaryHref);
+      expect(primary, row.id).toBe(tools[0]);
+      const second = (s.secondaryHrefs ?? []).map((l) => l.href).filter((h) => h.startsWith("/protocols/") && h !== "/protocols/weekly-reset").map(nameOf);
+      expect(second, row.id).toEqual(tools.slice(1));
+    }
+  });
+
   it("puts the safety row first, routed to Help, never to Pause", () => {
     expect(situations[0].danger).toBe(true);
     expect(situations[0].primaryHref).toBe("/help");
