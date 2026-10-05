@@ -48,7 +48,7 @@ export const metadata: Metadata = {
   description:
     "Built for precision. Designed for connection. Field companion to the Alliance Protocols Manual and Kit.",
   applicationName: "Alliance Protocols Field App",
-  authors: [{ name: "David Hamilton" }, { name: "Zhongming Shi" }],
+  authors: [{ name: "David" }, { name: "Dami" }],
   appleWebApp: {
     capable: true,
     title: "Alliance",

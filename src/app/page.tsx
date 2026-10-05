@@ -123,7 +123,7 @@ export default function HomePage() {
             See how it works
           </Link>
           <br />
-          by David Hamilton and Zhongming Shi
+          by David and Dami
         </p>
         <p className="text-sm text-ink-muted">
           <Link href="/privacy" className="inline-flex min-h-11 items-center px-2 font-medium text-accent underline underline-offset-4">

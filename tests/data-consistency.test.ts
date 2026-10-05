@@ -393,17 +393,18 @@ describe("Core 6 and the 7-day start plan", () => {
 
 describe("About the authors", () => {
   it("credits both authors in one combined bio, with no placeholders", () => {
-    expect(authorNames).toEqual(["David Hamilton", "Zhongming Shi"]);
-    expect(aboutAuthors).toContain("Zhongming Shi (known to everyone as Dami)");
+    expect(authorNames).toEqual(["David", "Dami"]);
+    expect(aboutAuthors).toContain("David and Zhongming (known to everyone as Dami)");
     expect(aboutAuthors).toContain("David");
     expect(aboutAuthors).toContain("Dami");
     expect(aboutAuthors).not.toMatch(/\[\[/);
     expect(aboutAuthors).toContain("They first used these protocols in their own relationship.");
   });
 
-  it("stays anonymous: no employers, job titles, institutions, places or pets", () => {
+  it("describes David's background without a title, employer, sector, institution, place or pet", () => {
+    expect(aboutAuthors).toContain("governance, strategy, transformation, efficiency and value");
     for (const text of [aboutAuthors, authorsCoupleLine]) {
-      expect(text).not.toMatch(/\b(bank|banking|CAO|COO|consultant|ETH|Zurich|Singapore|Hong Kong|Australia|Troy|Bean)\b/i);
+      expect(text).not.toMatch(/\b(bank|banking|CAO|COO|Chief|consultant|ETH|Zurich|Singapore|Hong Kong|Australia|Asia Pacific|APAC|Troy|Bean)\b/i);
       expect(text).not.toMatch(/\btested\b/i);
     }
   });
