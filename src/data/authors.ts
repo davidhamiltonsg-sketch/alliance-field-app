@@ -5,7 +5,7 @@
 export const authorNames = ["David", "Dami"] as const;
 
 export const aboutAuthors =
-  "David and Zhongming (known to everyone as Dami) are a biracial couple, and neither is a therapist. The relational science comes from the research the Manual cites; what they add is the structure. Dami’s background is in design; David’s is senior leadership at a bank across Asia Pacific, as Chief Administrative Officer and Chief Operating Officer. They first used these protocols in their own relationship.";
+  "David and Zhongming (known to everyone as Dami) are a biracial couple, and neither is a therapist. The relational science comes from the research the Manual cites; what they add is the structure. Dami’s background is in design; David’s is senior leadership: governance, strategy, transformation, efficiency and value. They first used these protocols in their own relationship.";
 
 /** Short line for pages that speak to intercultural / minority-stress couples (/together). */
 export const authorsCoupleLine =

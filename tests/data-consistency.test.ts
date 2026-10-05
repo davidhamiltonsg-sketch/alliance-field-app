@@ -401,11 +401,10 @@ describe("About the authors", () => {
     expect(aboutAuthors).toContain("They first used these protocols in their own relationship.");
   });
 
-  it("names David's role (CAO and COO of a bank across Asia Pacific) but no employer, institution, place or pet", () => {
-    expect(aboutAuthors).toContain("Chief Administrative Officer and Chief Operating Officer");
-    expect(aboutAuthors).toContain("a bank across Asia Pacific");
+  it("describes David's background without a title, employer, sector, institution, place or pet", () => {
+    expect(aboutAuthors).toContain("governance, strategy, transformation, efficiency and value");
     for (const text of [aboutAuthors, authorsCoupleLine]) {
-      expect(text).not.toMatch(/\b(consultant|ETH|Zurich|Singapore|Hong Kong|Australia|Troy|Bean)\b/i);
+      expect(text).not.toMatch(/\b(bank|banking|CAO|COO|Chief|consultant|ETH|Zurich|Singapore|Hong Kong|Australia|Asia Pacific|APAC|Troy|Bean)\b/i);
       expect(text).not.toMatch(/\btested\b/i);
     }
   });
