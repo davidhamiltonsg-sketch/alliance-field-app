@@ -5,13 +5,17 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   async redirects() {
     return [
-      // The separate "7-Day Install" plan was retired: /start is the one plan (CANON round 5).
+      // The separate "7-Day Install" plan was retired: /start is the one plan.
       { source: "/install", destination: "/start", permanent: true },
-      // The Conflict Protocol was folded into the System Overlay ("already a fight" speed), pass 3.
+      // The Conflict Protocol was folded into the System Overlay ("already a fight" speed).
       { source: "/protocols/conflict-protocol", destination: "/protocols/system-overlay", permanent: true },
-      // Folded in the volumes pass: Proof Protocol became "a Proof item" inside Trust Recovery; Unity Anchor became the team agreement on /together.
+      // Folded: Proof Protocol became "a Proof item" inside Trust Recovery.
       { source: "/protocols/proof-protocol", destination: "/protocols/trust-recovery", permanent: true },
-      { source: "/protocols/unity-anchor", destination: "/together", permanent: true },
+      // Renamed in the 15-tool rebuild: old slugs keep working.
+      { source: "/protocols/full-recovery", destination: "/protocols/full-repair", permanent: true },
+      { source: "/protocols/uninvestment-check", destination: "/protocols/check-up", permanent: true },
+      { source: "/protocols/unity-anchor", destination: "/protocols/team-agreement", permanent: true },
+      { source: "/protocols/morning-evening-rhythm", destination: "/protocols/daily-rhythm", permanent: true },
     ];
   },
   async headers() {
