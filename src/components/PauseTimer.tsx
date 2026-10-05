@@ -162,7 +162,9 @@ function PauseTimerClient() {
   const [returnAt, setReturnAt] = useState<string | null>(saved.returnAt);
   const [startedAt, setStartedAt] = useState<string | null>(saved.startedAt);
   const [now, setNow] = useState(() => Date.now());
-  const [customMinutes, setCustomMinutes] = useState("45");
+  const [customMinutes, setCustomMinutes] = useState("");
+  // A preset chip only selects a length; the one Start button starts the pause.
+  const [selectedMs, setSelectedMs] = useState<number | null>(null);
   const [clockTime, setClockTime] = useState("");
   const [backMode, setBackMode] = useState(false);
   const [shareCopied, setShareCopied] = useState(false);
@@ -321,7 +323,9 @@ function PauseTimerClient() {
   );
 
   const chip =
-    "min-h-12 rounded-xl border border-rule/50 bg-white text-base font-medium text-ink shadow-[0_1px_2px_rgb(26_26_26/0.04)] transition hover:border-pause/40 hover:bg-surface-warn active:scale-[0.98]";
+    "min-h-12 rounded-xl border border-rule/50 bg-surface-raised text-base font-medium text-ink shadow-[0_1px_2px_rgb(26_26_26/0.04)] transition hover:border-pause/40 hover:bg-surface-warn active:scale-[0.98]";
+  const chipOn =
+    "min-h-12 rounded-xl border-2 border-pause bg-surface-warn text-base font-semibold text-pause-text transition active:scale-[0.98]";
 
   if (backMode) {
     return (
@@ -450,60 +454,50 @@ function PauseTimerClient() {
 
       <section className="space-y-2">
         <p id="pause-duration" tabIndex={-1} className="focus-target text-sm font-medium text-ink">
-          Duration
+          1. Pick how long
         </p>
-        <div className="grid grid-cols-12 gap-2">
-          {DURATIONS.map((d, i) => (
-            <button
-              key={d.label}
-              type="button"
-              onClick={() => startWithMs(d.ms)}
-              className={`${chip} tabular ${i < 4 ? "col-span-3" : "col-span-4"}`}
-            >
-              {d.label}
-            </button>
-          ))}
+        <div role="group" aria-labelledby="pause-duration" className="grid grid-cols-12 gap-2">
+          {DURATIONS.map((d, i) => {
+            const on = selectedMs === d.ms && customMinutes.trim() === "";
+            return (
+              <button
+                key={d.label}
+                type="button"
+                aria-pressed={on}
+                onClick={() => {
+                  setSelectedMs(d.ms);
+                  setCustomMinutes("");
+                  setCustomError(null);
+                }}
+                className={`${on ? chipOn : chip} tabular ${i < 4 ? "col-span-3" : "col-span-4"}`}
+              >
+                {d.label}
+              </button>
+            );
+          })}
         </div>
-      </section>
-
-      <section className="grid grid-cols-1 gap-3">
-        <div className="space-y-2">
+        <div className="space-y-2 pt-1">
           <label htmlFor="custom-minutes" className="block text-sm font-medium text-ink">
-            Custom minutes
+            Or type minutes
           </label>
-          <div className="flex gap-2">
-            <input
-              id="custom-minutes"
-              type="number"
-              inputMode="numeric"
-              step={1}
-              min={20}
-              max={1440}
-              value={customMinutes}
-              onChange={(e) => {
-                setCustomMinutes(e.target.value);
-                setCustomError(null);
-              }}
-              aria-invalid={customError ? true : undefined}
-              aria-describedby="custom-minutes-hint"
-              className="field-input tabular"
-            />
-            <PrimaryButton
-              fullWidth={false}
-              className="shrink-0 px-5"
-              onClick={() => {
-                const checked = parseCustomMinutes(customMinutes);
-                if (!checked.ok) {
-                  setCustomError(checked.error);
-                  return;
-                }
-                setCustomError(null);
-                startWithMs(checked.minutes * 60 * 1000);
-              }}
-            >
-              Start
-            </PrimaryButton>
-          </div>
+          <input
+            id="custom-minutes"
+            type="number"
+            inputMode="numeric"
+            step={1}
+            min={20}
+            max={1440}
+            placeholder="e.g. 45"
+            value={customMinutes}
+            onChange={(e) => {
+              setCustomMinutes(e.target.value);
+              setSelectedMs(null);
+              setCustomError(null);
+            }}
+            aria-invalid={customError ? true : undefined}
+            aria-describedby="custom-minutes-hint"
+            className="field-input tabular"
+          />
           {customError ? (
             <p id="custom-minutes-hint" role="alert" className="text-sm text-failure">
               {customError}
@@ -514,6 +508,32 @@ function PauseTimerClient() {
             </p>
           )}
         </div>
+        <p className="pt-1 text-sm font-medium text-ink">2. Start</p>
+        <PrimaryButton
+          variant="warn"
+          onClick={() => {
+            if (customMinutes.trim() !== "") {
+              const checked = parseCustomMinutes(customMinutes);
+              if (!checked.ok) {
+                setCustomError(checked.error);
+                return;
+              }
+              setCustomError(null);
+              startWithMs(checked.minutes * 60 * 1000);
+              return;
+            }
+            if (selectedMs === null) {
+              setCustomError("Pick a length above, or type minutes, first.");
+              return;
+            }
+            startWithMs(selectedMs);
+          }}
+        >
+          Start the pause
+        </PrimaryButton>
+      </section>
+
+      <section className="grid grid-cols-1 gap-3 border-t border-rule/35 pt-4">
 
         <div className="space-y-2">
           <label htmlFor="clock-time" className="block text-sm font-medium text-ink">

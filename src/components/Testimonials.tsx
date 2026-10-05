@@ -20,7 +20,7 @@ function TestimonialCard({ t, i }: { t: Testimonial; i: number }) {
   );
 }
 
-/** Real testimonials, shown as a swipeable strip instead of a long stacked list. */
+/** Pilot testimonials (paraphrased), shown as a swipeable strip instead of a long stacked list. */
 function TestimonialRow({ items }: { items: Testimonial[] }) {
   return (
     <ul
@@ -35,7 +35,7 @@ function TestimonialRow({ items }: { items: Testimonial[] }) {
 }
 
 /** Shown with the testimonials, always (CANON round 6). */
-export const TESTIMONIALS_DISCLAIMER = "Shared with permission. Individual experiences; results vary.";
+export const TESTIMONIALS_DISCLAIMER = "Paraphrased from pilot feedback shared with permission. Individual experiences; results vary.";
 
 export function Testimonials() {
   return (

@@ -222,7 +222,7 @@ function WeeklyResetWizardClient() {
                       className={`min-h-11 rounded-full px-3.5 text-sm font-medium capitalize transition-colors ${
                         row.balance === b
                           ? "bg-accent text-paper"
-                          : "border border-rule/60 bg-white text-ink"
+                          : "border border-rule/60 bg-surface-raised text-ink"
                       }`}
                     >
                       {CARE_BALANCE_LABELS[b]}
@@ -240,7 +240,7 @@ function WeeklyResetWizardClient() {
                       className={`min-h-11 rounded-full px-3.5 text-sm font-medium capitalize transition-colors ${
                         row.rebalance === r
                           ? "bg-repair text-paper"
-                          : "border border-rule/60 bg-white text-ink"
+                          : "border border-rule/60 bg-surface-raised text-ink"
                       }`}
                     >
                       {r}
@@ -356,7 +356,7 @@ function WeeklyResetWizardClient() {
       )}
 
       {confirmClear ? (
-        <div role="group" aria-label="Clear this week’s notes" className="space-y-2 rounded-xl border border-rule/60 bg-white px-3.5 py-3">
+        <div role="group" aria-label="Clear this week’s notes" className="space-y-2 rounded-xl border border-rule/60 bg-surface-raised px-3.5 py-3">
           <p className="text-sm leading-normal text-ink-muted">
             What would you like to clear from this phone?
           </p>

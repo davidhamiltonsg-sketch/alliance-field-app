@@ -93,7 +93,7 @@ function ConnectionDeck({ shuffled }: { shuffled: boolean }) {
       className={`min-h-11 shrink-0 rounded-full px-3.5 text-sm font-medium transition-colors ${
         filter === value
           ? "bg-accent text-paper"
-          : "border border-rule/60 bg-white text-ink-muted"
+          : "border border-rule/60 bg-surface-raised text-ink-muted"
       }`}
     >
       {label}
@@ -145,7 +145,7 @@ function ConnectionDeck({ shuffled }: { shuffled: boolean }) {
 
               {/* Back — question */}
               <div
-                className="absolute inset-0 flex flex-col items-center justify-center gap-4 rounded-3xl border-t-4 border-brass bg-white px-6 text-center shadow-[var(--shadow-lift)] [backface-visibility:hidden]"
+                className="absolute inset-0 flex flex-col items-center justify-center gap-4 rounded-3xl border-t-4 border-brass bg-surface-raised px-6 text-center shadow-[var(--shadow-lift)] [backface-visibility:hidden]"
                 style={{ transform: "rotateY(180deg)" }}
               >
                 <span className="text-xs font-medium uppercase tracking-[0.14em] text-ink-muted">

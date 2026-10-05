@@ -21,7 +21,7 @@ export default function WeeklyResetPage() {
       <KeepItGoing />
       <Link
         href="/protocols/weekly-reset"
-        className="flex min-h-12 items-center justify-between rounded-xl border border-rule/40 bg-white px-4 text-base font-medium text-accent"
+        className="flex min-h-12 items-center justify-between rounded-xl border border-rule/40 bg-surface-raised px-4 text-base font-medium text-accent"
       >
         Read the whole card
         <ArrowRight size={16} />

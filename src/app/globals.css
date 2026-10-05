@@ -350,14 +350,14 @@ b {
   justify-content: center;
   background: var(--color-paper);
   /* No-JS fallback: leave on its own after the full sequence */
-  animation: splash-out 420ms var(--ease-out) 2.1s forwards;
+  animation: splash-out 300ms var(--ease-out) 700ms forwards;
 }
 .splash[data-js] {
   animation: none;
 }
 .splash[data-leaving] {
   opacity: 0;
-  transition: opacity 420ms var(--ease-out);
+  transition: opacity 300ms var(--ease-out);
   pointer-events: none;
 }
 .splash-mark .sp-ribbon,
@@ -366,25 +366,17 @@ b {
   stroke-dasharray: 1 2;
   stroke-dashoffset: 0;
 }
-.splash-mark .sp-ribbon {
-  animation: dg-draw 1s var(--ease-inout) 80ms both;
-  stroke-dashoffset: 1.02;
-}
+/* First visit, about 1 s in all: the legs and the name are there from
+   the first frame; only the wave draws in and the tagline settles. */
 .splash-mark .sp-over {
-  animation: dg-draw 460ms var(--ease-out) 760ms both;
+  animation: dg-draw 380ms var(--ease-out) 60ms both;
   stroke-dashoffset: 1.02;
-}
-.splash-word {
-  animation: dg-rise 620ms var(--ease-out) 1.05s both;
 }
 .splash-tag {
-  animation: dg-rise 620ms var(--ease-out) 1.28s both;
+  animation: dg-rise 320ms var(--ease-out) 120ms both;
 }
 .splash-glow {
-  animation: dg-fade 1.4s var(--ease-out) 200ms both;
-}
-.splash-skip {
-  animation: dg-fade 300ms var(--ease-out) 150ms both;
+  animation: dg-fade 600ms var(--ease-out) both;
 }
 
 /* Returning visit: static lockup, gone in well under a second */
@@ -469,7 +461,15 @@ html[data-splash="off"] .splash {
 :root {
   --forest: #2c3e2d;
   --hairline: #9fb2a6;
-  --warm: #f3f0e8;
+  --warm: var(--color-surface-activity);
+  /* Theme-aware lines and fills for the v2 panels and cards (flip in dark). */
+  --v2-surface: var(--color-surface-raised);
+  --v2-line: rgb(44 62 45);
+  --v2-line-soft: rgb(44 62 45 / 0.28);
+  --v2-pause: #c47a1a;
+  --v2-repair: #2f5f8a;
+  --v2-safety: #2e7d4f;
+  --v2-failure: #a33b2b;
   --arch: 15px 15px 3px 3px;
   --arch-in: 12px 12px 1.5px 1.5px;
 }
@@ -478,8 +478,8 @@ html[data-splash="off"] .splash {
 .v2-panel {
   position: relative;
   border-radius: var(--arch);
-  background: #fff;
-  border: 1px solid rgb(44 62 45 / 0.8);
+  background: var(--v2-surface);
+  border: 1px solid color-mix(in srgb, var(--v2-line) 80%, transparent);
 }
 .v2-panel::after {
   content: none;
@@ -490,39 +490,39 @@ html[data-splash="off"] .splash {
 }
 /* standard step: single forest hairline */
 .v2-step {
-  border-color: rgb(44 62 45 / 0.75);
+  border-color: color-mix(in srgb, var(--v2-line) 75%, transparent);
 }
 /* pause: fine dashed double hairline, warm paper */
 .v2-pause {
   background: var(--warm);
-  border: 1px dashed #c47a1a;
+  border: 1px dashed var(--v2-pause);
 }
 .v2-pause::after {
   content: "";
-  border: 0.75px dashed rgb(196 122 26 / 0.85);
+  border: 0.75px dashed color-mix(in srgb, var(--v2-pause) 85%, transparent);
 }
 /* repair: double rule */
 .v2-repair {
-  border: 1px solid #2f5f8a;
+  border: 1px solid var(--v2-repair);
 }
 .v2-repair::after {
   content: "";
-  border: 1px solid #2f5f8a;
+  border: 1px solid var(--v2-repair);
 }
 /* safety: heavy single rule */
 .v2-safety {
-  background: #eef2ef;
-  border: 2.5px solid #2e7d4f;
+  background: var(--color-surface-tool);
+  border: 2.5px solid var(--v2-safety);
 }
 /* stop / escalate: dotted */
 .v2-failure {
-  background: #f7ede6;
-  border: 2px dotted #a33b2b;
+  background: var(--color-surface-warn);
+  border: 2px dotted var(--v2-failure);
 }
 /* aside: fine dashes */
 .v2-note {
   background: transparent;
-  border: 1px dashed rgb(74 74 74 / 0.7);
+  border: 1px dashed color-mix(in srgb, var(--color-ink-muted) 70%, transparent);
 }
 .v2-swatch {
   --arch: 8px 8px 1.5px 1.5px;
@@ -567,9 +567,10 @@ html[data-splash="off"] .splash {
 /* Arch-topped card (Situation Map rows, protocol list) */
 .v2-card {
   position: relative;
-  background: #fff;
+  background: var(--v2-surface);
+  color: var(--color-ink);
   border-radius: 20px 20px 5px 5px;
-  border: 1px solid rgb(44 62 45 / 0.28);
+  border: 1px solid var(--v2-line-soft);
   box-shadow: var(--shadow-card);
   transition: box-shadow 160ms ease, transform 160ms ease;
 }
@@ -581,24 +582,24 @@ html[data-splash="off"] .splash {
   pointer-events: none;
 }
 .v2-card--pause {
-  border: 1px dashed #c47a1a;
+  border: 1px dashed var(--v2-pause);
 }
 .v2-card--pause::after {
   content: "";
-  border: 0.75px dashed rgb(196 122 26 / 0.8);
+  border: 0.75px dashed color-mix(in srgb, var(--v2-pause) 80%, transparent);
 }
 .v2-card--repair {
-  border: 1px solid rgb(47 95 138 / 0.85);
+  border: 1px solid color-mix(in srgb, var(--v2-repair) 85%, transparent);
 }
 .v2-card--repair::after {
   content: "";
-  border: 1px solid rgb(47 95 138 / 0.55);
+  border: 1px solid color-mix(in srgb, var(--v2-repair) 55%, transparent);
 }
 .v2-card--safety {
-  border: 2px solid rgb(46 125 79 / 0.85);
+  border: 2px solid color-mix(in srgb, var(--v2-safety) 85%, transparent);
 }
 .v2-card--failure {
-  border: 2px solid rgb(163 59 43 / 0.85);
+  border: 2px solid color-mix(in srgb, var(--v2-failure) 85%, transparent);
 }
 @media (hover: hover) {
   .v2-card:hover {
@@ -622,27 +623,27 @@ html[data-splash="off"] .splash {
   pointer-events: none;
 }
 .v2-edge--accent {
-  border-left: 1.5px solid #2c3e2d;
+  border-left: 1.5px solid var(--v2-line);
 }
 .v2-edge--safety {
-  border-left: 3px solid #2e7d4f;
+  border-left: 3px solid var(--v2-safety);
 }
 .v2-edge--pause {
-  border-left: 1.25px dashed #c47a1a;
-  border-right: 1px dashed #c47a1a;
+  border-left: 1.25px dashed var(--v2-pause);
+  border-right: 1px dashed var(--v2-pause);
   width: 4.5px;
 }
 .v2-edge--repair {
-  border-left: 1.25px solid #2f5f8a;
-  border-right: 1.25px solid #2f5f8a;
+  border-left: 1.25px solid var(--v2-repair);
+  border-right: 1.25px solid var(--v2-repair);
   width: 4.5px;
 }
 
 /* Arch tab (tags, secondary links): no capsules */
 .v2-tab {
   border-radius: 10px 10px 3px 3px;
-  border: 0.75px solid rgb(44 62 45 / 0.25);
-  background: #fff;
+  border: 0.75px solid var(--v2-line-soft);
+  background: var(--v2-surface);
 }
 
 
@@ -707,7 +708,18 @@ html[data-calm] body {
   /* Red and blue text lighten on dark; red and blue fills keep white text. */
   .text-failure { color: #F29A89; }
   .text-repair { color: #8FBCE8; }
-  .bg-white { background-color: var(--color-surface-raised); }
+  .bg-surface-raised { background-color: var(--color-surface-raised); }
+  :root {
+    --forest: #1f2c22;
+    --hairline: #4f6356;
+    --v2-line: #a9cbaf;
+    --v2-line-soft: rgb(169 203 175 / 0.24);
+    --v2-pause: #d9923a;
+    --v2-repair: #7fb0e0;
+    --v2-safety: #5fbf86;
+    --v2-failure: #e07a68;
+  }
+  ::selection { background: rgb(169 203 175 / 0.3); }
   .card, .phrase-block, .field-input { border-color: rgb(169 203 175 / 0.16); }
   .phrase-block::before { color: rgb(169 203 175 / 0.5); }
   .field-input::placeholder { color: rgb(182 191 184 / 0.7); }

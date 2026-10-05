@@ -11,8 +11,8 @@ const products: Product[] = [
   { id: "kit", name: "Field Kit", price: "US$24", note: "Printable cards, worksheets and the Situation Map. US$24." },
   { id: "volumeA", name: "Volume A: The Architecture of Staying", price: "US$14", note: "The stories behind the tools, and the book to hand a sceptical partner. US$14." },
   { id: "manual", name: "Volume B: Operating Manual", price: "US$44", note: "Every tool in full, for when you want the steps. US$44." },
-  { id: "complete", name: "Complete Edition", price: "US$52", note: "Volumes A and B together. US$52.", sub: true },
-  { id: "bundle", name: "Complete Bundle", price: "US$69", note: "Kit, Complete Edition and both volumes as separate files. US$13 less than buying separately. US$69." },
+  { id: "complete", name: "Complete Edition", price: "US$52", note: "Volume A and Volume B together. US$52.", sub: true },
+  { id: "bundle", name: "Complete Bundle", price: "US$69", note: "The Kit, the Complete Edition, and Volume A and Volume B as separate files. US$13 less than the Kit, Volume A and Volume B bought separately. US$69." },
 ];
 
 const BUY_FIRST = [

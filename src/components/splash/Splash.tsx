@@ -24,10 +24,10 @@ const LEG_LEFT = "M60 14L26 106";
 const LEG_RIGHT = "M60 14L94 106";
 const WAVE = "M40 74Q50 63 60 74Q70 63 80 74";
 
-const FULL_MS = 1950; // fade starts; gone by ~2.37 s
+const FULL_MS = 700; // fade starts; gone by ~1.0 s (never more than 1.2 s)
 const SHORT_MS = 260;
-const REDUCED_MS = 700;
-const FADE_MS = 420;
+const REDUCED_MS = 600;
+const FADE_MS = 300;
 
 // First-time visitors get the serious tagline. Returning visitors (mode
 // "short") get one of these instead — picked once per load, not a cycle.

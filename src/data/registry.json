@@ -63,7 +63,8 @@
       "canonical": [
         "Exact return time, always.",
         "For flooding, never for fear.",
-        "If you're the one waiting: don't follow, block the way or message during the pause. Not being allowed to leave a room or the house is a Help Lines moment, not a pause."
+        "If you're the one waiting: don't follow, block the way or message during the pause. Not being allowed to leave a room or the house is a Help Lines moment, not a pause.",
+        "If you are afraid, do not go back: use the Help Lines."
       ],
       "canonicalPhrases": [
         "at least 20 minutes and at most 24 hours away",
@@ -428,7 +429,7 @@
       },
       "canonical": [
         "Nobody has to complete this, and you can stop at any time. Do not ask your partner to show their answers.",
-        "Answers stay on your phone. The Layer Scan report shows where you differ most, layer by layer."
+        "Answers stay on your phone. The Profile Calibration report shows where you differ most, layer by layer."
       ],
       "guardrails": [
         "no-pressure"
@@ -563,7 +564,6 @@
   },
   "plainEnglishSubtitles": {
     "System Overlay": "a five-step order for hard conversations",
-    "Layer Scan": "where you two differ most, layer by layer",
     "Reach–Recoil": "one reaches, the other pulls back",
     "Proof item": "a specific change, evidence you can both see, and a set time window",
     "rule": "First appearance of the coined term in each artifact."
@@ -800,6 +800,10 @@
     {
       "variant": "US spellings: behavior, recognize, practice (verb), minimize, counseling, labeling, favor, penalized",
       "use": "behaviour, recognise, practise, minimise, counselling, labelling, favour, penalised"
+    },
+    {
+      "variant": "Layer Scan",
+      "use": "Profile Calibration report"
     }
   ],
   "bannedPatterns": {
@@ -870,7 +874,8 @@
       "Return Defaults",
       "Pacts Worksheet",
       "Sensory Comfort Inventory",
-      "\\bCore [56]\\b"
+      "\\bCore [56]\\b",
+      "Layer Scan"
     ]
   },
   "helpLinesExtra": "LGBTQ+-affirming: US: Trevor Project 1-866-488-7386 (under 25) · LGBT National Hotline 1-888-843-4564 · UK: Switchboard LGBT+ 0800 0119 100 · Australia: QLife 1800 184 527 · Singapore: Oogachaga (oogachaga.com)",

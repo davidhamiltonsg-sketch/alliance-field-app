@@ -156,6 +156,8 @@ export default function AboutPage() {
         </p>
       </section>
 
+      <GetFullSystem />
+
       <section
         id="detachment"
         className="relative scroll-mt-20 overflow-hidden rounded-2xl border border-repair/25 bg-surface-tool px-4 py-3.5"
@@ -187,7 +189,6 @@ export default function AboutPage() {
         </WarnBanner>
       </section>
 
-      <GetFullSystem />
 
       <section className="space-y-3">
         <SectionLabel>More</SectionLabel>
@@ -240,7 +241,7 @@ export default function AboutPage() {
               className="flex min-h-12 items-center justify-between gap-3 px-4 text-base font-medium text-ink hover:bg-surface-tool"
             >
               <span className="flex flex-col py-2.5">
-                Together against outside pressure
+                Together: outside pressure and more
                 <span className="text-sm font-normal text-ink-muted">
                   For interracial, intercultural and other couples facing outside pressure
                 </span>

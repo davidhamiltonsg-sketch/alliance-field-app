@@ -520,7 +520,7 @@ export function ResetStepsDiagram() {
 }
 
 /* ------------------------------------------------------------------ */
-/* 7. The Core 6: the six tools to learn first                          */
+/* 7. The six tools to learn first                                       */
 /* ------------------------------------------------------------------ */
 export function CoreFiveDiagram() {
   const tools: { slug: IconId; title: string; sub: string; color: string }[] = [

@@ -151,7 +151,7 @@ function CalibrationFlowClient() {
             <label
               key={String(value)}
               className={`flex min-h-12 cursor-pointer items-start gap-3 rounded-xl border px-3.5 py-3 text-base leading-snug ${
-                state.aPrivate === value ? "border-accent bg-accent/[0.06] text-ink" : "border-rule/60 bg-white text-ink"
+                state.aPrivate === value ? "border-accent bg-accent/[0.06] text-ink" : "border-rule/60 bg-surface-raised text-ink"
               }`}
             >
               <input
@@ -227,7 +227,7 @@ function CalibrationFlowClient() {
                 onClick={() => choose(key)}
                 aria-pressed={selected}
                 className={`w-full rounded-xl border px-4 py-3.5 text-left text-base leading-snug transition-colors ${
-                  selected ? "border-accent bg-accent/10 font-medium text-accent" : "border-rule/60 bg-white text-ink hover:border-accent/30"
+                  selected ? "border-accent bg-accent/10 font-medium text-accent" : "border-rule/60 bg-surface-raised text-ink hover:border-accent/30"
                 }`}
               >
                 {text}

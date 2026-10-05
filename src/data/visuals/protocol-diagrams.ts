@@ -85,7 +85,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "Come back",
-        "detail": "At the time you said, even briefly.",
+        "detail": "At the time you said, even briefly. If you are afraid, do not go back: use the Help Lines.",
         "kind": "step",
         "badge": "at the agreed time"
       },
@@ -559,12 +559,12 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
         "kind": "step"
       },
       {
-        "title": "Share one way you show love",
+        "title": "If you want to, share one way you show love",
         "detail": "That gets misread.",
         "kind": "step"
       },
       {
-        "title": "Share one thing you need",
+        "title": "If you want to, share one thing you need",
         "detail": "To stay calm in a fight.",
         "kind": "step"
       },
@@ -580,7 +580,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
       },
       {
         "title": "In the Field App",
-        "detail": "Each of you answers 44 questions on your own. The Layer Scan report then shows where you differ most, layer by layer.",
+        "detail": "Each of you answers 44 questions on your own. The Profile Calibration report then shows where you differ most, layer by layer.",
         "kind": "step"
       }
     ],

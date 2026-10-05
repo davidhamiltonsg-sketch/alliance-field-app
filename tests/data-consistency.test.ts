@@ -220,7 +220,7 @@ describe("tools: guardrails and safety wording (spec section 6)", () => {
     const card = getProtocol("pause-and-return")!;
     expect(card.steps[3]).toContain("If you’re the one waiting: don’t follow, block the way or message during the pause.");
     expect(card.steps[3]).toContain("Not being allowed to leave a room or the house is a Help Lines moment, not a pause.");
-    expect(card.steps[4]).toBe("Come back at the time you said, even briefly.");
+    expect(card.steps[4]).toBe("Come back at the time you said, even briefly. If you are afraid, do not go back: use the Help Lines.");
     expect(JSON.stringify([card, protocolDiagrams["pause-and-return"]])).not.toMatch(/prove it/);
     expect(card.warn).toContain("do not return at the set time");
   });

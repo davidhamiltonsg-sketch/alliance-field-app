@@ -8,22 +8,29 @@ import { coupleTestimonials, individualTestimonials } from "@/data/testimonials"
 import { TESTIMONIALS_DISCLAIMER, Testimonials } from "@/components/Testimonials";
 
 /**
- * Testimonials are real people's words, kept exactly as first supplied
- * (CANON round 6). This pins them: if this test fails, the wording changed —
- * restore the original rather than updating the hash.
+ * Testimonials are paraphrases of pilot feedback (October 2026 rewrite into
+ * current tool names, with no outcome claims), pending each person's approval.
+ * This pins them: if this test fails, the wording changed — only update the
+ * hash for wording the people quoted have approved.
  */
-const ORIGINAL_SHA256 = "7d8ca4698e561422703448201cbf05128a0da84d8686c41b20f32551492ce485";
+const ORIGINAL_SHA256 = "3a574c36be724c1dca37222ec90a55a363c19ef016610d223911b8d1d47998da";
 
 describe("testimonials", () => {
-  it("are the original wording, verbatim", () => {
+  it("are the approved paraphrase, pinned", () => {
     const text = JSON.stringify([coupleTestimonials, individualTestimonials]);
     expect(createHash("sha256").update(text).digest("hex")).toBe(ORIGINAL_SHA256);
     expect(coupleTestimonials).toHaveLength(6);
     expect(individualTestimonials).toHaveLength(4);
   });
 
+  it("use no retired names and make no outcome claims", () => {
+    const text = JSON.stringify([coupleTestimonials, individualTestimonials]);
+    expect(text).not.toMatch(/Care Audit|Team Frame|pursuer|withdrawer|Layer Scan|2% Rule/i);
+    expect(text).not.toMatch(/changed everything|game-changer|completely|saved (us|me)|rebuild real trust/i);
+  });
+
   it("are shown with the permission and results-vary note", () => {
-    expect(TESTIMONIALS_DISCLAIMER).toBe("Shared with permission. Individual experiences; results vary.");
+    expect(TESTIMONIALS_DISCLAIMER).toBe("Paraphrased from pilot feedback shared with permission. Individual experiences; results vary.");
     const html = renderToStaticMarkup(createElement(Testimonials));
     expect(html).toContain(TESTIMONIALS_DISCLAIMER);
     for (const t of [...coupleTestimonials, ...individualTestimonials]) expect(html).toContain(t.names.replace("&", "&amp;"));

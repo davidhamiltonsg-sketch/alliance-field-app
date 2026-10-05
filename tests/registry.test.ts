@@ -144,6 +144,7 @@ describe("registry: icons", () => {
       "src/components/intro/diagrams.tsx", // the safety row of the intro map
       "src/app/page.tsx", // "I'm afraid or not safe" → Help
       "src/components/PauseTimer.tsx", // the Help link in the calm pause view
+      "src/app/together/page.tsx", // the Help & safety card on the Together hub
     ]);
     const users = walk(src)
       .filter((f) => /\.tsx?$/.test(f) && !f.endsWith("icons.ts"))
@@ -226,7 +227,7 @@ describe("registry: plain-English subtitles", () => {
   });
 
   it("each coined term that appears in the app has its subtitle shown", () => {
-    const viaGlossary = new Set(["System Overlay", "Proof item", "Layer Scan"]);
+    const viaGlossary = new Set(["System Overlay", "Proof item"]);
     const own = texts.filter((t) => !t.file.endsWith("glossary.ts"));
     for (const [term, sub] of Object.entries(plainEnglish)) {
       const used = own.some((t) => new RegExp(`\\b${term}\\b`).test(t.text));
@@ -282,7 +283,7 @@ describe("Go deeper pointers", () => {
   it("each tool points at the new chapter that covers it", async () => {
     const { goDeeper } = await import("@/data/go-deeper");
     const expected: Record<string, string> = {
-      "green-rule": "2", "pause-and-return": "3", "60-second-reset": "4", "micro-repair": "9", "weekly-reset": "8", "system-overlay": "10",
+      "green-rule": "2", "pause-and-return": "3", "60-second-reset": "3", "micro-repair": "9", "weekly-reset": "8", "system-overlay": "2",
       "full-repair": "10", "trust-recovery": "11", "check-up": "12", "team-agreement": "16", "sun-memory": "15",
       "daily-rhythm": "7", "intimacy-pact": "14", "consistency-pact": "13", "profile-calibration": "5",
     };

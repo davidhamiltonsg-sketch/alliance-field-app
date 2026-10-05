@@ -236,7 +236,7 @@ export function IntroFlow() {
                 {/* The stage takes the height that's left (equal across panels, so
                     headlines line up) and shrinks on short screens so the text
                     stays in view. */}
-                <div className="flex min-h-[200px] max-h-[436px] max-w-full flex-1 basis-0 [@media(max-height:600px)]:min-h-[112px] items-center justify-center self-center rounded-[26px_26px_6px_6px] border border-rule/60 bg-white/90 p-2 shadow-[var(--shadow-card)]">
+                <div className="flex min-h-[200px] max-h-[436px] max-w-full flex-1 basis-0 [@media(max-height:600px)]:min-h-[112px] items-center justify-center self-center rounded-[26px_26px_6px_6px] border border-rule/60 bg-surface-raised/90 p-2 shadow-[var(--shadow-card)]">
                   <div className="flex aspect-[340/336] h-full max-w-full items-center">{i <= reached ? p.diagram : null}</div>
                 </div>
                 <div className="mt-5 shrink-0">
@@ -300,7 +300,7 @@ export function IntroFlow() {
               <button
                 type="button"
                 onClick={() => goTo(Math.max(0, index - 1))}
-                className={`inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-rule/60 bg-white text-accent transition-opacity ${
+                className={`inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-rule/60 bg-surface-raised text-accent transition-opacity ${
                   index === 0 ? "pointer-events-none opacity-0" : ""
                 }`}
                 aria-label="Back"
@@ -329,7 +329,7 @@ export function IntroFlow() {
               <div className="grid grid-cols-2 gap-2">
                 <Link
                   href="/"
-                  className="flex h-12 items-center justify-center gap-1.5 rounded-2xl border border-accent/30 bg-white text-sm font-semibold text-accent transition active:scale-[0.99]"
+                  className="flex h-12 items-center justify-center gap-1.5 rounded-2xl border border-accent/30 bg-surface-raised text-sm font-semibold text-accent transition active:scale-[0.99]"
                 >
                   Situation Map
                 </Link>

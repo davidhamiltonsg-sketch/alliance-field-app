@@ -44,7 +44,7 @@ export function PracticeTabs({
             aria-selected={tab === t.key}
             onClick={() => setTab(t.key)}
             className={`min-h-11 flex-1 rounded-full border px-2 text-sm font-medium transition-colors ${
-              tab === t.key ? t.tone : "border-rule/60 bg-white text-ink-muted"
+              tab === t.key ? t.tone : "border-rule/60 bg-surface-raised text-ink-muted"
             }`}
           >
             {t.label}

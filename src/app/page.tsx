@@ -8,6 +8,11 @@ import { QuickAccess } from "@/components/QuickAccess";
 import { ChevronRight } from "@/components/icons";
 import { situations } from "@/data/situations";
 import { WarnBanner } from "@/components/WarnBanner";
+import { GetFullSystem } from "@/components/GetFullSystem";
+import { STORE_URLS } from "@/lib/links";
+
+/** The buy cards show on Now only once a store link is live: no "not on sale yet" here. */
+const ON_SALE = Object.values(STORE_URLS).some(Boolean);
 
 /** The three in-the-moment routes. Safety is always first, never routed to Pause. */
 const routes: {
@@ -124,7 +129,15 @@ export default function HomePage() {
           coercion or violence appear, don’t return at the set time —
           leave safely and use the Help Lines.
         </WarnBanner>
+        <p className="px-1 pt-1 text-sm leading-normal text-ink-muted">
+          Want the whole system?{" "}
+          <Link href="/about#product-line" className="font-medium text-accent underline underline-offset-4">
+            The Manual, Field Kit and Companion.
+          </Link>
+        </p>
       </section>
+
+      {ON_SALE && <GetFullSystem />}
 
       <footer className="flex flex-col items-center gap-2 pt-2 text-center">
         <AllianceMark size={22} className="text-accent/70" waveColor="#A8895A" />

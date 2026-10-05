@@ -33,17 +33,17 @@ export const manualChapters = {
 type ChapterKey = keyof typeof manualChapters;
 
 /**
- * Manual chapter and Companion Book chapter for each tool. Companion
+ * Manual chapter (the one that holds the tool's card) and Companion Book chapter for each tool. Companion
  * chapters match the Companion's own headings; "The Third Voice" is the
  * authors' note, not a numbered chapter.
  */
 export const goDeeper: Record<string, { chapter: ChapterKey; companion?: string }> = {
   "green-rule": { chapter: "2" },
   "pause-and-return": { chapter: "3", companion: "Companion Ch II" },
-  "60-second-reset": { chapter: "4", companion: "Companion Ch II" },
+  "60-second-reset": { chapter: "3", companion: "Companion Ch II" },
   "micro-repair": { chapter: "9", companion: "Companion Ch I" },
   "weekly-reset": { chapter: "8", companion: "Companion Ch V" },
-  "system-overlay": { chapter: "10", companion: "Companion: The Third Voice" },
+  "system-overlay": { chapter: "2", companion: "Companion: The Third Voice" },
   "full-repair": { chapter: "10", companion: "Companion Ch IV" },
   "trust-recovery": { chapter: "11", companion: "Companion Ch VI" },
   "check-up": { chapter: "12", companion: "Companion Ch V" },

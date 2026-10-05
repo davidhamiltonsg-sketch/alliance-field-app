@@ -11,7 +11,7 @@ export default function NotFound() {
         <Link href="/" className="inline-flex min-h-11 items-center rounded-full bg-accent px-4 text-paper">
           Situation Map
         </Link>
-        <Link href="/protocols" className="inline-flex min-h-11 items-center rounded-full border border-rule/60 bg-white px-4 text-accent">
+        <Link href="/protocols" className="inline-flex min-h-11 items-center rounded-full border border-rule/60 bg-surface-raised px-4 text-accent">
           Protocols
         </Link>
       </div>

@@ -196,14 +196,14 @@ export default function HelpPage() {
         <SectionLabel>Flooded, but safe?</SectionLabel>
         <Link
           href="/pause"
-          className="flex min-h-12 items-center justify-between rounded-xl border border-rule/40 bg-white px-4 text-base font-medium text-accent"
+          className="flex min-h-12 items-center justify-between rounded-xl border border-rule/40 bg-surface-raised px-4 text-base font-medium text-accent"
         >
           Pause + Return timer
           <ArrowRight size={16} />
         </Link>
         <Link
           href="/protocols/60-second-reset"
-          className="flex min-h-12 items-center justify-between rounded-xl border border-rule/40 bg-white px-4 text-base font-medium text-accent"
+          className="flex min-h-12 items-center justify-between rounded-xl border border-rule/40 bg-surface-raised px-4 text-base font-medium text-accent"
         >
           60-Second Reset
           <ArrowRight size={16} />

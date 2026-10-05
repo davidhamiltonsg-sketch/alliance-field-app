@@ -42,6 +42,7 @@ const RETIRED: RegExp[] = [
   /Your First 7 Days/, /The First Week/,
   /Return Defaults/, /Pacts Worksheet/, /Sensory Comfort Inventory/,
   /\bCore [56]\b/,
+  /Layer Scan/,
 ];
 
 // testimonials.ts holds real people's words, verbatim; this file holds the list itself.

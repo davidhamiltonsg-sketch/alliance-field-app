@@ -14,7 +14,7 @@ import { chapterLabel, goDeeper } from "@/data/go-deeper";
 import { protocolDiagrams } from "@/data/visuals/protocol-diagrams";
 import { WarnBanner, isSafetyWording } from "./WarnBanner";
 import { RecentTracker } from "./RecentTracker";
-import { ArrowLeft, ChevronRight } from "./icons";
+import { ArrowLeft, ArrowRight, ChevronRight } from "./icons";
 
 const headerWash: Record<string, string> = {
   safety: "border-safety/15 bg-safety/[0.05]",
@@ -60,6 +60,20 @@ export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
         </div>
         <p className="text-base leading-normal text-ink">{protocol.concept}</p>
       </header>
+
+      {protocol.slug === "pause-and-return" && (
+        // Someone opening this card mid-argument needs the timer, not 3,000px of reading first.
+        <Link
+          href="/pause"
+          className="flex min-h-14 items-center justify-between gap-3 rounded-2xl bg-pause px-4 py-3 text-lg font-semibold text-ink shadow-[var(--shadow-card)] transition active:scale-[0.99]"
+        >
+          <span className="flex items-center gap-3">
+            <ApIcon id="pause-and-return" size={26} mono />
+            Set a pause timer
+          </span>
+          <ArrowRight size={20} />
+        </Link>
+      )}
 
       {protocol.warn && (
         // A warning that mentions fear, threats or coercion always routes to
@@ -163,7 +177,7 @@ export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
       <nav className="flex flex-wrap items-center gap-2 border-t border-rule/35 pt-4">
         <Link
           href="/"
-          className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-rule/60 bg-white px-4 text-sm font-medium text-accent"
+          className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-rule/60 bg-surface-raised px-4 text-sm font-medium text-accent"
         >
           <ApIcon id="situation-map" size={18} />
           Situation Map

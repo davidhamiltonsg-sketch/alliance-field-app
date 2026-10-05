@@ -5,37 +5,16 @@ import Link from "next/link";
 import { ChevronRight } from "./icons";
 import { IconChip, isIconId } from "./ApIcon";
 import { SectionLabel } from "./SectionLabel";
-import { SEARCH_HINTS, TIER_LABEL, TIER_MEANING, TIER_ORDER, TOOL_ORDER } from "./tierLabels";
-import { protocolSubtitle } from "@/data/glossary";
+import { PLAIN_SUBTITLE, TIER_LABEL, TIER_MEANING, TIER_ORDER } from "./tierLabels";
+import { isSafetyQuery, searchTools } from "@/lib/toolSearch";
 import type { Protocol } from "@/data/types";
 
-function synonymsOf(p: Protocol): string {
-  const raw = (p as unknown as { synonyms?: unknown }).synonyms;
-  const own = Array.isArray(raw) ? raw.join(" ") : typeof raw === "string" ? raw : "";
-  return `${own} ${SEARCH_HINTS[p.slug] ?? ""}`;
-}
-
-function rank(slug: string): number {
-  const i = TOOL_ORDER.indexOf(slug);
-  return i === -1 ? TOOL_ORDER.length : i;
-}
-
-/** Client-side search over the tools, in three plain-word tiers. Matches the card's synonyms too. */
+/** Client-side search over the tools, in three plain-word tiers. Title and synonym hits rank above body text. */
 export function ProtocolSearch({ protocols }: { protocols: Protocol[] }) {
   const [query, setQuery] = useState("");
 
-  const sorted = useMemo(() => [...protocols].sort((a, b) => rank(a.slug) - rank(b.slug)), [protocols]);
-
-  const filtered = useMemo(() => {
-    const words = query.trim().toLowerCase().split(/\s+/).filter(Boolean);
-    if (words.length === 0) return sorted;
-    return sorted.filter((p) => {
-      const haystack = [p.title, p.concept, p.whenToUse, ...p.phrases.map((ph) => ph.text), synonymsOf(p)]
-        .join(" ")
-        .toLowerCase();
-      return words.every((w) => haystack.includes(w));
-    });
-  }, [sorted, query]);
+  const filtered = useMemo(() => searchTools(protocols, query), [protocols, query]);
+  const safety = isSafetyQuery(query);
 
   const searching = query.trim() !== "";
 
@@ -43,7 +22,7 @@ export function ProtocolSearch({ protocols }: { protocols: Protocol[] }) {
     <ul className="space-y-2.5">
       {list.map((p) => {
         const tone = p.accentHint ?? "accent";
-        const subtitle = protocolSubtitle(p.slug);
+        const plain = PLAIN_SUBTITLE[p.slug];
         return (
           <li key={p.slug}>
             <Link
@@ -55,10 +34,8 @@ export function ProtocolSearch({ protocols }: { protocols: Protocol[] }) {
               <span className="min-w-0 flex-1">
                 {searching && <span className="block text-sm font-medium text-accent">{TIER_LABEL[p.tier]}</span>}
                 <span className="display block text-lg leading-snug">{p.title}</span>
-                <span className="mt-0.5 line-clamp-2 text-sm leading-snug text-ink-muted">
-                  {subtitle ? `${subtitle.charAt(0).toUpperCase()}${subtitle.slice(1)}. ` : ""}
-                  {p.concept}
-                </span>
+                {plain && <span className="block text-sm font-medium leading-snug text-ink">{plain}</span>}
+                <span className="mt-0.5 line-clamp-2 text-sm leading-snug text-ink-muted">{p.concept}</span>
               </span>
               <ChevronRight size={20} className="shrink-0 text-ink-muted/50" />
             </Link>
@@ -74,15 +51,40 @@ export function ProtocolSearch({ protocols }: { protocols: Protocol[] }) {
         type="search"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        placeholder="Search: try “jealous”, “lied” or “housemates”"
+        placeholder="Search, e.g. “lied” or “housemates”"
         aria-label="Search tools"
         className="field-input w-full"
       />
 
+      {safety && (
+        <Link
+          href="/help"
+          role="note"
+          className="v2-card v2-card--failure flex min-h-14 items-center gap-3 px-4 py-3.5"
+        >
+          <span className="min-w-0 flex-1">
+            <span className="block text-base font-semibold leading-snug text-failure">
+              Is this fear or being controlled?
+            </span>
+            <span className="mt-0.5 block text-base leading-snug text-ink">
+              These tools are not for that. <span className="font-semibold underline underline-offset-4">Help Lines</span>
+            </span>
+          </span>
+          <ChevronRight size={20} className="shrink-0 text-failure" />
+        </Link>
+      )}
+
       {filtered.length === 0 ? (
-        <p className="py-8 text-center text-base text-ink-muted">
-          No tools match &ldquo;{query}&rdquo;. Try a plainer word, or start from the Situation Map on the Now tab.
-        </p>
+        <div className="space-y-3 py-6 text-center">
+          <p className="text-base text-ink-muted">No tools match &ldquo;{query}&rdquo;.</p>
+          <Link
+            href="/#situation-map"
+            className="inline-flex min-h-12 items-center gap-1.5 rounded-xl bg-accent px-4 text-base font-semibold text-paper"
+          >
+            Find your situation on the Situation Map
+            <ChevronRight size={18} />
+          </Link>
+        </div>
       ) : searching ? (
         renderList(filtered)
       ) : (

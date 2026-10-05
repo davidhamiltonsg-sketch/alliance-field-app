@@ -103,13 +103,19 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: splashBootScript }} />
       </head>
       <body className="min-h-full text-ink">
+        <a
+          href="#main"
+          className="sr-only z-[110] rounded-xl bg-accent px-4 py-3 text-base font-semibold text-paper focus:not-sr-only focus:fixed focus:left-3 focus:top-3"
+        >
+          Skip to content
+        </a>
         <ServiceWorkerRegister />
         <Splash />
         <div className="relative mx-auto flex min-h-dvh w-full max-w-lg flex-col bg-paper sm:border-x sm:border-rule/30 sm:shadow-[0_0_60px_-20px_rgb(44_62_45/0.25)]">
           <ChromeGate>
             <AppHeader />
           </ChromeGate>
-          <main className="flex-1 px-4 pb-28 pt-4">{children}</main>
+          <main id="main" tabIndex={-1} className="flex-1 px-4 pb-[calc(7rem+env(safe-area-inset-bottom))] pt-4 focus:outline-none">{children}</main>
           <ChromeGate>
             <AppNav />
           </ChromeGate>
