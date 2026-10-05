@@ -474,6 +474,53 @@ html[data-splash="off"] .splash {
   --arch-in: 12px 12px 1.5px 1.5px;
 }
 
+/* Diagram palette (src/components/visuals/v2.tsx "V"): every SVG drawing
+   reads these, so diagrams follow light and dark mode. */
+:root {
+  --dg-ink: #1A1A1A;
+  --dg-muted: #4A4A4A;
+  --dg-paper: #FAFAF8;
+  --dg-white: #FFFFFF;
+  --dg-forest: #2C3E2D;
+  --dg-accent: #2C3E2D;
+  --dg-thread: #6F8177;
+  --dg-hair: #9FB2A6;
+  --dg-brass: #A8895A;
+  --dg-rim: #9FB2A6;
+  --dg-rim-l: #FFFFFF;
+  --dg-safety: #2E7D4F;
+  --dg-pause: #C47A1A;
+  --dg-pause-ink: #8F5610;
+  --dg-repair: #2F5F8A;
+  --dg-failure: #A33B2B;
+  --dg-tint: #EEF2EF;
+  --dg-warm: #F3F0E8;
+  --dg-warn: #F7EDE6;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --dg-ink: #ECEFEA;
+    --dg-muted: #B6BFB8;
+    --dg-paper: #141815;
+    --dg-white: #1B211D;
+    --dg-forest: #2F4A34;
+    --dg-accent: #A9CBAF;
+    --dg-thread: #8FA396;
+    --dg-hair: #4F6356;
+    --dg-brass: #C9A872;
+    --dg-rim: #5E7466;
+    --dg-rim-l: #FFFFFF;
+    --dg-safety: #5FBF86;
+    --dg-pause: #D9923A;
+    --dg-pause-ink: #F0B65F;
+    --dg-repair: #8FBCE8;
+    --dg-failure: #F29A89;
+    --dg-tint: #1D2520;
+    --dg-warm: #22251E;
+    --dg-warn: #2D2220;
+  }
+}
+
 /* Arch-topped panel: generous shoulders, near-square foot */
 .v2-panel {
   position: relative;
