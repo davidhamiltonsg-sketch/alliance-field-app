@@ -53,7 +53,7 @@ export const commonMoves: CommonMove[] = [
   },
   {
     move: "“Just ignore it”",
-    result: "One of you ends up carrying it alone.",
+    result: "One of you ends up carrying the work.",
     alliance: "Ask what each of you needs: reassurance, a plan, or a chance to vent.",
   },
   {
