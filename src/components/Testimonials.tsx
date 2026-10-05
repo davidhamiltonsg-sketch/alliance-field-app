@@ -35,7 +35,7 @@ function TestimonialRow({ items }: { items: Testimonial[] }) {
 }
 
 /** Shown with the testimonials, always (CANON round 6). */
-export const TESTIMONIALS_DISCLAIMER = "Paraphrased from pilot feedback shared with permission. Individual experiences; results vary.";
+export const TESTIMONIALS_DISCLAIMER = "Paraphrased from pilot feedback. Individual experiences; results vary.";
 
 export function Testimonials() {
   return (

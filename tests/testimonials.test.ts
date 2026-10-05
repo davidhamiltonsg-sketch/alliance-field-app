@@ -30,7 +30,7 @@ describe("testimonials", () => {
   });
 
   it("are shown with the permission and results-vary note", () => {
-    expect(TESTIMONIALS_DISCLAIMER).toBe("Paraphrased from pilot feedback shared with permission. Individual experiences; results vary.");
+    expect(TESTIMONIALS_DISCLAIMER).toBe("Paraphrased from pilot feedback. Individual experiences; results vary.");
     const html = renderToStaticMarkup(createElement(Testimonials));
     expect(html).toContain(TESTIMONIALS_DISCLAIMER);
     for (const t of [...coupleTestimonials, ...individualTestimonials]) expect(html).toContain(t.names.replace("&", "&amp;"));
