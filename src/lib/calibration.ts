@@ -27,7 +27,7 @@ export function emptyPersonInput(name: string): PersonInput {
 }
 
 export function emptyCalibration(): CalibrationState {
-  return { personA: emptyPersonInput("Partner A"), personB: emptyPersonInput("Partner B"), aPrivate: false };
+  return { personA: emptyPersonInput("Partner A"), personB: emptyPersonInput("Partner B"), aPrivate: false, bPrivate: false };
 }
 
 export function readCalibration(): CalibrationState {
@@ -37,6 +37,7 @@ export function readCalibration(): CalibrationState {
     personA: { name: state.personA?.name || "Partner A", answers: state.personA?.answers || {} },
     personB: { name: state.personB?.name || "Partner B", answers: state.personB?.answers || {} },
     aPrivate: state.aPrivate === true,
+    bPrivate: state.bPrivate === true,
   };
 }
 

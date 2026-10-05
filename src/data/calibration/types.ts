@@ -51,6 +51,11 @@ export type CalibrationState = {
    * A can choose to share before handing the device over.
    */
   aPrivate: boolean;
+  /**
+   * The same choice for Partner B, made when B finishes (private by default).
+   * When false, A can open B's individual profile from the couple report.
+   */
+  bPrivate: boolean;
 };
 
 export type Profile = {

@@ -77,9 +77,11 @@ function CalibrationReportClient() {
         You’ve both finished. Here’s where your answers line up, and where they don’t. {report.executiveSummary}
       </PageHeader>
 
-      {state.aPrivate && (
+      {(state.aPrivate || state.bPrivate) && (
         <p className="rounded-2xl border border-accent/20 bg-surface-tool px-4 py-3 text-sm leading-normal text-ink-muted">
-          {state.personA.name} kept their individual profile private, so this shows only the couple report.
+          {state.aPrivate && state.bPrivate
+            ? "You both kept your individual profiles private, so this shows only the couple report."
+            : `${state.aPrivate ? state.personA.name : state.personB.name} kept their individual profile private.`}
         </p>
       )}
 
@@ -175,6 +177,22 @@ function CalibrationReportClient() {
           </p>
         ))}
       </section>
+
+      {([
+        [profileA, state.aPrivate, state.personB.name],
+        [profileB, state.bPrivate, state.personA.name],
+      ] as const).map(([profile, isPrivate, otherName]) =>
+        isPrivate ? null : (
+          <details key={profile.person} className="card px-4 py-1">
+            <summary className="flex min-h-12 cursor-pointer items-center text-base font-medium text-accent">
+              {profile.name} shared their own profile
+            </summary>
+            <div className="pb-4 pt-2">
+              <SoloProfile profile={profile} otherName={otherName} preview />
+            </div>
+          </details>
+        ),
+      )}
 
       <button
         type="button"
