@@ -227,7 +227,7 @@ export const icons = {
       "M12 6.75C10 5.25 7 4.6 3 4.75v13.5c4-.15 7 .5 9 2 2-1.5 5-2.15 9-2v-13.5c-4-.15-7 .5-9 2Z",
       "M12 6.75v13.5",
     ],
-    label: "Companion Book",
+    label: "Volume A",
     group: "concept",
   },
   "section-when": {

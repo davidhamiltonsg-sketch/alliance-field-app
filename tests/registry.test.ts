@@ -275,8 +275,8 @@ describe("Go deeper pointers", () => {
     expect(Object.keys(goDeeper).sort()).toEqual(protocols.map((p) => p.slug).sort());
     for (const [slug, g] of Object.entries(goDeeper)) {
       expect(manualChapters, `${slug} → chapter ${g.chapter}`).toHaveProperty(g.chapter);
-      // Companion chapters as headed in the Companion Book (I–XI) or its authors' note.
-      if (g.companion) expect(g.companion).toMatch(/^Companion(?: Ch (?:I|II|III|IV|V|VI|VII|VIII|IX|X|XI)|: The Third Voice)$/);
+      // Volume A chapters as headed in Volume A (I–XI) or its authors' note.
+      if (g.companion) expect(g.companion).toMatch(/^Volume A(?:, Ch (?:I|II|III|IV|V|VI|VII|VIII|IX|X|XI)|: The Third Voice)$/);
     }
   });
 

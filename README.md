@@ -2,12 +2,13 @@
 
 ALLIANCE PROTOCOLS · Field App — Built for precision. Designed for connection.
 
-The pocket companion to the Alliance Protocols Operating Manual and Field Kit, by David
+The free app that goes with the Alliance Protocols books, Volume A (The
+Architecture of Staying), Volume B (the Operating Manual) and the Field Kit, by David
 Hamilton and Dr Zhongming Shi: a Situation Map that routes you to the right
 tool, 15 tools in three plain groups (the six to learn first, five for when it
 comes up, four to build over time), a Pause + Return timer, the Weekly Reset
 wizard, Profile Calibration and Connection Cards. Five tabs: Now, Tools, Pause,
-Week, Together; Help is always in the header. Next.js (App Router) + Tailwind
+Week, Together; Help is always in the header (alone: Pause is a tab). Next.js (App Router) + Tailwind
 CSS v4, installable as an offline PWA.
 
 ## The 15 tools

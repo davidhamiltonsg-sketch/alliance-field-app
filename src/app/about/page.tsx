@@ -89,8 +89,8 @@ export default function AboutPage() {
         <p className="text-base leading-normal text-ink">
           The tools grew out of it over the years, in our own relationship:
           how we come back to each other, what we say when things go
-          sideways, what we promise not to do. This app, the Manual, the Field Kit and the Companion
-          Book are that same system, written down so other couples can use it.
+          sideways, what we promise not to do. This app, Volume A, Volume B and the Field Kit
+          are that same system, written down so other couples can use it.
         </p>
       </section>
 
@@ -153,7 +153,7 @@ export default function AboutPage() {
           </div>
         </div>
         <p className="text-base leading-normal text-ink">
-          The Manual, the Field Kit and the Companion Book go further, if you want them.
+          Volume A, Volume B and the Field Kit go further, if you want them.
         </p>
       </section>
 
@@ -272,7 +272,7 @@ export default function AboutPage() {
               <span className="flex flex-col py-2.5">
                 Connection Cards
                 <span className="text-sm font-normal text-ink-muted">
-                  A deck of question cards for coming back to each other
+                  Free in this app: question cards for coming back to each other
                 </span>
               </span>
               <ChevronRight size={18} className="shrink-0 text-ink-muted/50" />

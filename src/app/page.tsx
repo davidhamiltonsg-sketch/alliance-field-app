@@ -132,7 +132,7 @@ export default function HomePage() {
         <p className="px-1 pt-1 text-sm leading-normal text-ink-muted">
           Want the whole system?{" "}
           <Link href="/about#product-line" className="font-medium text-accent underline underline-offset-4">
-            The Manual, Field Kit and Companion.
+            Volume A, Volume B and the Field Kit.
           </Link>
         </p>
       </section>
