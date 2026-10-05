@@ -205,7 +205,7 @@ export default function HelpPage() {
           href="/protocols/60-second-reset"
           className="flex min-h-12 items-center justify-between rounded-xl border border-rule/40 bg-white px-4 text-base font-medium text-accent"
         >
-          60-Second Alliance Reset
+          60-Second Reset
           <ArrowRight size={16} />
         </Link>
       </section>

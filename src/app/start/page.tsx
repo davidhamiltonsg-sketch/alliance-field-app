@@ -8,15 +8,62 @@ import { StartReminder } from "@/components/StartReminder";
 import { WarnBanner } from "@/components/WarnBanner";
 import { ArrowLeft } from "@/components/icons";
 
-export const metadata = { title: "7-day plan" };
+export const metadata = { title: "Your first week" };
 
 export default function StartPage() {
   return (
     <div className="space-y-5">
-      <PageHeader eyebrow={<Marker kind="DO" label="Seven days" />} title="Your 7-day plan">
-        If you’re new, this is where we’d start. 10–20 minutes a day. Day 7
+      <PageHeader eyebrow={<Marker kind="DO" label="Seven days" />} title="Your first week">
+        If you’re new, this is where we’d start. Tonight is 20 minutes; Day 7
         is your first Weekly Reset. Miss a day? Pick up where you left off.
+        Only one of you reading? Invite, don’t assign.
       </PageHeader>
+
+      <section aria-labelledby="tonight-heading" className="card space-y-3 border-accent/30 px-4 py-4">
+        <h2 id="tonight-heading" className="display text-lg leading-snug">
+          Tonight (20 minutes)
+        </h2>
+        <ol className="list-decimal space-y-1.5 pl-5 text-base leading-normal text-ink">
+          <li>
+            Read the red row of the{" "}
+            <Link href="/#situation-map" className="font-medium text-accent underline underline-offset-4">
+              Situation Map
+            </Link>
+            .
+          </li>
+          <li>Agree one pause phrase and a return time. Write it where you will both see it.</li>
+          <li>
+            Try the{" "}
+            <Link href="/protocols/60-second-reset" className="font-medium text-accent underline underline-offset-4">
+              60-Second Reset
+            </Link>{" "}
+            once, while you are calm.
+          </li>
+        </ol>
+        <p className="text-base leading-normal text-ink">
+          <span className="font-semibold text-accent">Tight on time? </span>
+          Do the Weekly Reset in two 20-minute halves.
+        </p>
+        <p className="text-base leading-normal text-ink">
+          <span className="font-semibold text-accent">Trust breach? </span>
+          Skip the plan: start with{" "}
+          <Link href="/protocols/trust-recovery" className="font-medium text-accent underline underline-offset-4">
+            Trust Recovery
+          </Link>
+          , then the Weekly Reset.
+        </p>
+        <p className="text-base leading-normal text-ink">
+          <span className="font-semibold text-accent">Partner not keen? </span>
+          Hand them Volume A, or the{" "}
+          <a
+            href="/downloads/companion-sample.pdf"
+            className="font-medium text-accent underline underline-offset-4"
+          >
+            free sample
+          </a>{" "}
+          (PDF).
+        </p>
+      </section>
 
       <StartPlan />
 
@@ -33,8 +80,8 @@ export default function StartPage() {
       </WarnBanner>
 
       <p className="text-sm leading-normal text-ink-muted">
-        Go deeper: the same plan, day for day, is “The First Week” in the Field
-        Kit and “Your First 7 Days” in the Operating Manual.
+        Go deeper: the same plan, day for day, is “Your First Week” in the Field
+        Kit and the Operating Manual.
       </p>
 
       <Link href="/" className="inline-flex min-h-12 items-center gap-1.5 text-base font-medium text-accent">

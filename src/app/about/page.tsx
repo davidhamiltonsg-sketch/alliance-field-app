@@ -164,13 +164,13 @@ export default function AboutPage() {
         <Marker kind="NOTE" label="Feeling far apart?" />
         <p className="mt-2 text-base leading-normal">
           <strong>Not sure if it’s needing space or pulling away?</strong> That’s
-          what the Pulling-Away Check is for.
+          what the Check-Up is for.
         </p>
         <Link
-          href="/protocols/uninvestment-check"
+          href="/protocols/check-up"
           className="-mb-1.5 mt-1 inline-flex min-h-11 items-center gap-1.5 text-base font-medium text-repair"
         >
-          Open Pulling-Away Check
+          Open Check-Up
           <ArrowRight size={16} />
         </Link>
       </section>
@@ -226,9 +226,9 @@ export default function AboutPage() {
               className="flex min-h-12 items-center justify-between gap-3 px-4 text-base font-medium text-ink hover:bg-surface-tool"
             >
               <span className="flex flex-col py-2.5">
-                7-day plan
+                Your first week
                 <span className="text-sm font-normal text-ink-muted">
-                  The Core 6, 10–20 minutes a day
+                  The six tools to learn first, 10–20 minutes a day
                 </span>
               </span>
               <ChevronRight size={18} className="shrink-0 text-ink-muted/50" />

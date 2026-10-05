@@ -174,7 +174,34 @@ export default function TogetherPage() {
             </li>
           ))}
         </ul>
-        <WarnBanner pauseLink={false} safetyLink>
+        <section aria-labelledby="more-heading" className="space-y-3">
+        <SectionLabel>
+          <span id="more-heading">More from Together</span>
+        </SectionLabel>
+        <ul className="card divide-y divide-rule/30 overflow-hidden">
+          {[
+            { href: "/about", label: "About", sub: "Who made this, the books, and what the app is for" },
+            { href: "/connect", label: "Connection Cards", sub: "Questions to flip through together" },
+            { href: "/calibrate", label: "Profile Calibration", sub: "Where you two differ most" },
+            { href: "/intro", label: "Take the 60-second tour", sub: "How the app works" },
+          ].map((l) => (
+            <li key={l.href}>
+              <Link
+                href={l.href}
+                className="flex min-h-12 items-center justify-between gap-3 px-4 text-base font-medium text-ink hover:bg-surface-tool"
+              >
+                <span className="flex flex-col py-2.5">
+                  {l.label}
+                  <span className="text-sm font-normal text-ink-muted">{l.sub}</span>
+                </span>
+                <ChevronRight size={18} className="shrink-0 text-ink-muted/50" />
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <WarnBanner pauseLink={false} safetyLink>
           Afraid of your partner, being threatened, or not free to say no?
           Stop. These tools are not for this. Get outside help.{" "}
           {HELP_LINES_POINTER}

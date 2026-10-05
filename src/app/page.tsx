@@ -3,6 +3,7 @@ import { AllianceMark } from "@/components/AllianceMark";
 import { ApIcon, IconChip, type IconId, type IconTone } from "@/components/ApIcon";
 import { SectionLabel } from "@/components/SectionLabel";
 import { SituationCard } from "@/components/SituationCard";
+import { FirstRunBanner } from "@/components/FirstRunBanner";
 import { QuickAccess } from "@/components/QuickAccess";
 import { ChevronRight } from "@/components/icons";
 import { situations } from "@/data/situations";
@@ -13,6 +14,7 @@ const routes: {
   href: string;
   label: string;
   sub: string;
+  sayNow?: string;
   icon: IconId;
   className: string;
 }[] = [
@@ -27,6 +29,7 @@ const routes: {
     href: "/pause",
     label: "I’m flooded, or one of us is",
     sub: "Pause + Return: set an exact return time first.",
+    sayNow: "I need a pause. I’ll be back at ___.",
     icon: "pause-and-return",
     className: "bg-pause text-ink",
   },
@@ -42,7 +45,7 @@ const routes: {
 const practise: { href: string; label: string; sub: string; icon: IconId; tone: IconTone }[] = [
   { href: "/connect", label: "Connection Cards", sub: "Questions to flip through together", icon: "connection-cards", tone: "connection" },
   { href: "/weekly-reset", label: "Weekly Reset", sub: "Five parts, about 40 minutes", icon: "weekly-reset", tone: "accent" },
-  { href: "/start", label: "7-day plan", sub: "10–20 minutes a day", icon: "section-steps", tone: "accent" },
+  { href: "/start", label: "Your first week", sub: "Tonight is 20 minutes", icon: "section-steps", tone: "accent" },
   { href: "/calibrate", label: "Profile Calibration", sub: "Where you two differ most", icon: "profile-calibration", tone: "accent" },
 ];
 
@@ -53,6 +56,10 @@ export default function HomePage() {
         <h1 id="now-heading" className="display text-xl">
           What’s happening right now?
         </h1>
+        <p className="text-base leading-normal text-ink-muted">
+          Free. No account. For couples who are safe with each other.
+        </p>
+        <FirstRunBanner />
         <ul className="space-y-3">
           {routes.map((r) => (
             <li key={r.href}>
@@ -63,6 +70,12 @@ export default function HomePage() {
                 <ApIcon id={r.icon} size={32} mono />
                 <span className="min-w-0 flex-1">
                   <span className="block text-lg font-semibold leading-tight">{r.label}</span>
+                  {r.sayNow && (
+                    <span className="mt-1 block text-base leading-snug">
+                      <span className="font-semibold">Say this now: </span>
+                      <span className="phrase">“{r.sayNow}”</span>
+                    </span>
+                  )}
                   <span className="mt-1 block text-sm leading-snug">{r.sub}</span>
                 </span>
                 <ChevronRight size={22} className="shrink-0 opacity-80" />
@@ -98,8 +111,8 @@ export default function HomePage() {
           <span id="map-heading">Situation Map</span>
         </SectionLabel>
         <p className="px-1 text-base leading-normal text-ink-muted">
-          Read from the top and take the first row that fits. Safety always
-          comes first.
+          Read from the top and take the first row that fits. Tap a row to open it.
+          Safety always comes first.
         </p>
         <ul className="space-y-3">
           {situations.map((s, i) => (
@@ -119,8 +132,8 @@ export default function HomePage() {
           ALLIANCE PROTOCOLS · We are an alliance.
           <br />
           New here?{" "}
-          <Link href="/intro" className="font-medium text-accent underline underline-offset-4">
-            See how it works
+          <Link href="/intro" className="inline-flex min-h-11 items-center font-medium text-accent underline underline-offset-4">
+            Take the 60-second tour
           </Link>
           <br />
           by David and Dami

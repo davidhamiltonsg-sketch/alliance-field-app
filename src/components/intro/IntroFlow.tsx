@@ -35,7 +35,7 @@ const panels: Panel[] = [
     id: "reset",
     eyebrow: "Use it tonight",
     icon: "60-second-reset",
-    title: "If it’s getting heated: the 60-Second Alliance Reset.",
+    title: "If it’s getting heated: the 60-Second Reset.",
     body: "Stop, say it, a touch only if it’s welcome, three breaths, then an exact time to keep talking. About a minute.",
     safety: true,
     diagram: <ResetStepsDiagram />,
@@ -50,10 +50,10 @@ const panels: Panel[] = [
   },
   {
     id: "core-5",
-    eyebrow: "The Core 6",
+    eyebrow: "Learn first",
     icon: "tier-core",
     title: "Start with six tools.",
-    body: "Learn these six first; the rest can wait. The 7-day plan sets them up in 10–20 minutes a day.",
+    body: "Learn these six first; the rest can wait. Your first week sets them up in 10–20 minutes a day.",
     diagram: <CoreFiveDiagram />,
   },
   {
@@ -77,7 +77,7 @@ const panels: Panel[] = [
     eyebrow: "Optional",
     icon: "manual",
     title: "The app, and the books.",
-    body: "We made this app for when it’s actually happening and there’s no time to look anything up. Free, and complete on its own. The books go further if you want them.",
+    body: "We made this app for when it’s actually happening and there’s no time to look anything up. Free, and complete on its own. Open each tool once on wifi or Add to Home Screen, then it works offline. The books go further if you want them.",
     diagram: <SystemDiagram />,
   },
 ];
@@ -323,7 +323,7 @@ export function IntroFlow() {
                 href="/start"
                 className="flex h-12 items-center justify-center gap-2 rounded-2xl bg-accent text-base font-semibold text-paper shadow-[0_8px_20px_-10px_rgb(44_62_45/0.7)] transition active:scale-[0.99]"
               >
-                Start the 7-day plan
+                Start your first week
                 <ArrowRight size={18} />
               </Link>
               <div className="grid grid-cols-2 gap-2">

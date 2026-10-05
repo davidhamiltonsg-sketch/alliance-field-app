@@ -1,62 +1,43 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import Link from "next/link";
-import { ChevronRight, StarIcon } from "./icons";
+import { ChevronRight } from "./icons";
 import { IconChip, isIconId } from "./ApIcon";
-import { FavoriteButton } from "./FavoriteButton";
 import { SectionLabel } from "./SectionLabel";
-import { TierBadge } from "./TierBadge";
-import { coreFiveSlugs } from "@/data/core5";
+import { SEARCH_HINTS, TIER_LABEL, TIER_MEANING, TIER_ORDER, TOOL_ORDER } from "./tierLabels";
 import { protocolSubtitle } from "@/data/glossary";
-import { groupByTier, tierInfo } from "@/data/tiers";
-import { readFavorites } from "@/lib/storage";
 import type { Protocol } from "@/data/types";
 
-/** Client-side search + filter over the full protocol list. */
+function synonymsOf(p: Protocol): string {
+  const raw = (p as unknown as { synonyms?: unknown }).synonyms;
+  const own = Array.isArray(raw) ? raw.join(" ") : typeof raw === "string" ? raw : "";
+  return `${own} ${SEARCH_HINTS[p.slug] ?? ""}`;
+}
+
+function rank(slug: string): number {
+  const i = TOOL_ORDER.indexOf(slug);
+  return i === -1 ? TOOL_ORDER.length : i;
+}
+
+/** Client-side search over the tools, in three plain-word tiers. Matches the card's synonyms too. */
 export function ProtocolSearch({ protocols }: { protocols: Protocol[] }) {
   const [query, setQuery] = useState("");
-  const [favoritesOnly, setFavoritesOnly] = useState(false);
-  // Starts empty to match SSR, synced from localStorage after mount.
-  const [favorites, setFavorites] = useState<string[]>([]);
 
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- syncing from localStorage, not mirroring props/state
-    setFavorites(readFavorites());
-  }, []);
+  const sorted = useMemo(() => [...protocols].sort((a, b) => rank(a.slug) - rank(b.slug)), [protocols]);
 
   const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    let list = protocols;
-    if (q) {
-      list = list.filter((p) => {
-        const haystack = [
-          p.title,
-          p.concept,
-          p.whenToUse,
-          ...p.phrases.map((ph) => ph.text),
-        ]
-          .join(" ")
-          .toLowerCase();
-        return haystack.includes(q);
-      });
-    }
-    if (favoritesOnly) {
-      list = list.filter((p) => favorites.includes(p.slug));
-    }
-    return list;
-  }, [protocols, query, favoritesOnly, favorites]);
+    const words = query.trim().toLowerCase().split(/\s+/).filter(Boolean);
+    if (words.length === 0) return sorted;
+    return sorted.filter((p) => {
+      const haystack = [p.title, p.concept, p.whenToUse, ...p.phrases.map((ph) => ph.text), synonymsOf(p)]
+        .join(" ")
+        .toLowerCase();
+      return words.every((w) => haystack.includes(w));
+    });
+  }, [sorted, query]);
 
-  // No search or filter: group by tier (Core first, in Core order).
-  const grouped =
-    !query.trim() && !favoritesOnly
-      ? groupByTier([
-          ...coreFiveSlugs
-            .map((slug) => protocols.find((p) => p.slug === slug))
-            .filter((p): p is Protocol => Boolean(p)),
-          ...protocols.filter((p) => !coreFiveSlugs.includes(p.slug)),
-        ])
-      : null;
+  const searching = query.trim() !== "";
 
   const renderList = (list: Protocol[]) => (
     <ul className="space-y-2.5">
@@ -72,21 +53,13 @@ export function ProtocolSearch({ protocols }: { protocols: Protocol[] }) {
               <span className={`v2-edge v2-edge--${tone}`} aria-hidden />
               {isIconId(p.slug) && <IconChip id={p.slug} tone={tone} size="md" />}
               <span className="min-w-0 flex-1">
-                <TierBadge tier={p.tier} />
-                <span className="display mt-1 block text-lg leading-snug">
-                  {p.title}
-                </span>
+                {searching && <span className="block text-sm font-medium text-accent">{TIER_LABEL[p.tier]}</span>}
+                <span className="display block text-lg leading-snug">{p.title}</span>
                 <span className="mt-0.5 line-clamp-2 text-sm leading-snug text-ink-muted">
                   {subtitle ? `${subtitle.charAt(0).toUpperCase()}${subtitle.slice(1)}. ` : ""}
                   {p.concept}
                 </span>
               </span>
-              <FavoriteButton
-                slug={p.slug}
-                size={17}
-                compact
-                onChange={setFavorites}
-              />
               <ChevronRight size={20} className="shrink-0 text-ink-muted/50" />
             </Link>
           </li>
@@ -97,55 +70,37 @@ export function ProtocolSearch({ protocols }: { protocols: Protocol[] }) {
 
   return (
     <div className="space-y-4">
-      <div className="relative">
-        <input
-          type="search"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search protocols — try “phone” or “trust”…"
-          aria-label="Search protocols"
-          className="field-input w-full"
-        />
-      </div>
-
-      {favorites.length > 0 && (
-        <button
-          type="button"
-          onClick={() => setFavoritesOnly((v) => !v)}
-          aria-pressed={favoritesOnly}
-          className={`inline-flex min-h-11 items-center gap-1.5 rounded-full px-3.5 text-sm font-medium transition-colors ${
-            favoritesOnly
-              ? "bg-accent text-paper"
-              : "border border-rule/60 bg-white text-ink-muted"
-          }`}
-        >
-          <StarIcon size={14} filled={favoritesOnly} />
-          Favourites only
-        </button>
-      )}
+      <input
+        type="search"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        placeholder="Search: try “jealous”, “lied” or “housemates”"
+        aria-label="Search tools"
+        className="field-input w-full"
+      />
 
       {filtered.length === 0 ? (
         <p className="py-8 text-center text-base text-ink-muted">
-          {favoritesOnly
-            ? "No favourites yet. Tap the star on any card to save it here."
-            : <>No cards match &ldquo;{query}&rdquo;. Try a different word, or browse the full list from the Situation Map.</>}
+          No tools match &ldquo;{query}&rdquo;. Try a plainer word, or start from the Situation Map on the Now tab.
         </p>
-      ) : grouped ? (
-        <div className="space-y-6">
-          {grouped.map((g) => (
-            <section key={g.tier} className="space-y-2.5" aria-labelledby={`group-${g.tier}`}>
-              <SectionLabel>
-                <span id={`group-${g.tier}`}>
-                  {tierInfo[g.tier].label} · {g.protocols.length}
-                </span>
-              </SectionLabel>
-              <p className="px-1 text-sm text-ink-muted">{tierInfo[g.tier].meaning}</p>
-              {renderList(g.protocols)}
-            </section>
-          ))}
-        </div>
-      ) : (
+      ) : searching ? (
         renderList(filtered)
+      ) : (
+        <div className="space-y-6">
+          {TIER_ORDER.map((tier) => {
+            const list = filtered.filter((p) => p.tier === tier);
+            if (list.length === 0) return null;
+            return (
+              <section key={tier} className="space-y-2.5" aria-labelledby={`group-${tier}`}>
+                <SectionLabel>
+                  <span id={`group-${tier}`}>{TIER_LABEL[tier]}</span>
+                </SectionLabel>
+                <p className="px-1 text-sm text-ink-muted">{TIER_MEANING[tier]}</p>
+                {renderList(list)}
+              </section>
+            );
+          })}
+        </div>
       )}
     </div>
   );

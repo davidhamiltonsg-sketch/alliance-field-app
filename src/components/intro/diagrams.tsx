@@ -206,7 +206,7 @@ export function SituationMapDiagram() {
     { q: ["A fight is", "starting?"], a: ["System Overlay"], icon: "system-overlay", kind: "step" },
     { q: ["Outside pressure", "or disapproval?"], a: ["Team agreement"], icon: "unity-anchor", kind: "step" },
     { q: ["Trust breach?"], a: ["Trust Recovery"], icon: "trust-recovery", kind: "repair" },
-    { q: ["Pulling away?"], a: ["Pulling-Away", "Check"], icon: "uninvestment-check", kind: "repair" },
+    { q: ["Pulling away?"], a: ["Check-Up"], icon: "uninvestment-check", kind: "repair" },
   ];
   const top = 24,
     pitch = 58,
@@ -221,7 +221,7 @@ export function SituationMapDiagram() {
   return (
     <Frame
       viewBox="0 0 340 394"
-      label="Situation Map: answer yes or no from the top. Afraid, threatened, or not free to say no: stop and get outside help. Flooded or shut down but safe: Pause + Return. A fight is starting: System Overlay. Outside pressure or disapproval from family, friends or strangers: Unity Anchor. Trust breach: Trust Recovery plus Proof. Pulling away: Pulling-Away Check."
+      label="Situation Map: answer yes or no from the top. Afraid, threatened, or not free to say no: stop and get outside help. Flooded or shut down but safe: Pause + Return. A fight is starting: System Overlay. Outside pressure or disapproval from family, friends or strangers: Team Agreement. Trust breach: Trust Recovery. Pulling away: Check-Up."
     >
       <text x={2} y={13} fontSize={13.5} fill={V.muted} {...a("dg-fade", 0)}>
         Take the first row that fits, top to bottom.
@@ -477,7 +477,7 @@ export function ConnectionCardsDiagram() {
 }
 
 /* ------------------------------------------------------------------ */
-/* 0. 60-Second Alliance Reset: five numbered steps, one minute         */
+/* 0. 60-Second Reset: five numbered steps, one minute         */
 /* ------------------------------------------------------------------ */
 export function ResetStepsDiagram() {
   const steps = [
@@ -492,7 +492,7 @@ export function ResetStepsDiagram() {
   return (
     <Frame
       viewBox="0 0 340 394"
-      label="60-Second Alliance Reset: stop, say “I want to connect, not fight”, a brief touch only if it’s welcome, three slow breaths, then pick an exact time to keep talking. Afraid, not just flooded? Stop and get help."
+      label="60-Second Reset: stop, say “I want to connect, not fight”, a brief touch only if it’s welcome, three slow breaths, then pick an exact time to keep talking. Afraid, not just flooded? Stop and get help."
     >
       {steps.map((s, i) => {
         const y = 4 + i * pitch;
@@ -524,9 +524,9 @@ export function ResetStepsDiagram() {
 /* ------------------------------------------------------------------ */
 export function CoreFiveDiagram() {
   const tools: { slug: IconId; title: string; sub: string; color: string }[] = [
-    { slug: "green-rule", title: "Green Rule (Honesty Gate)", sub: "Honesty is never punished.", color: V.safety },
+    { slug: "green-rule", title: "Green Rule", sub: "Honesty is never punished.", color: V.safety },
     { slug: "pause-and-return", title: "Pause + Return", sub: "20 min – 24 h, exact return time.", color: V.pause },
-    { slug: "60-second-reset", title: "60-Second Alliance Reset", sub: "When it’s become a fight to win.", color: V.pause },
+    { slug: "60-second-reset", title: "60-Second Reset", sub: "When it’s become a fight to win.", color: V.pause },
     { slug: "micro-repair", title: "Micro-Repair", sub: "Small repairs, early.", color: V.repair },
     { slug: "weekly-reset", title: "Weekly Reset", sub: "Five parts, about 40 minutes.", color: V.accent },
     { slug: "system-overlay", title: "System Overlay", sub: "One order for any hard talk.", color: V.accent },
@@ -536,7 +536,7 @@ export function CoreFiveDiagram() {
   return (
     <Frame
       viewBox="0 0 340 394"
-      label="The Core 6, all in the Core tier: Green Rule (Honesty Gate), Pause + Return, 60-Second Alliance Reset, Micro-Repair, Weekly Reset, System Overlay."
+      label="The six to learn first: Green Rule, Pause + Return, 60-Second Reset, Micro-Repair, Weekly Reset, System Overlay."
     >
       {tools.map((tl, i) => {
         const y = 8 + i * pitch;

@@ -5,7 +5,7 @@ import { buildStartPlanIcs, isValidTime } from "@/lib/ics";
 import { downloadObjectUrl } from "@/lib/download";
 import { PrimaryButton } from "./PrimaryButton";
 
-/** Optional: download a daily 10-minute calendar reminder for the 7-day plan. */
+/** Optional: download a daily 10-minute calendar reminder for your first week. */
 export function StartReminder() {
   const [time, setTime] = useState("20:00");
   const [added, setAdded] = useState(false);

@@ -69,6 +69,13 @@ function RouteThread({ color }: { color: string }) {
   );
 }
 
+/** One sentence to say right now, shown first on the two in-the-moment rows. */
+const SAY_NOW: Record<string, string> = {
+  flooded: "I need a pause. I’ll be back at ___.",
+  "conflict-starting": "I want to connect, not fight. Can we talk at ___?",
+};
+
+/** One-line expandable row. The safety row starts open; every other row opens on tap. */
 export function SituationCard({
   situation,
   index,
@@ -83,51 +90,51 @@ export function SituationCard({
     : situation.icon && isIconId(situation.icon)
       ? situation.icon
       : iconSlugFor(situation.primaryHref);
+  const sayNow = SAY_NOW[situation.id];
   return (
     <li>
-      <div className={`v2-card ${card[tone]} overflow-hidden`}>
-        <Link
-          href={situation.primaryHref}
-          className="relative z-[1] flex min-h-14 items-center gap-3 pb-3 pl-3.5 pr-3 pt-3.5"
-        >
-          <div className="min-w-0 flex-1">
-            <div className="flex items-center gap-2.5">
-              {typeof index === "number" && <LensNumber n={String(index + 1).padStart(2, "0")} />}
-              <span className="text-base font-medium leading-snug text-ink">
-                {situation.label}
-              </span>
-            </div>
-            <span className="mt-1 block text-sm leading-snug text-ink-muted">
-              {situation.description}
+      <details open={situation.danger || undefined} className={`v2-card ${card[tone]} group overflow-hidden`}>
+        <summary className="relative z-[1] flex min-h-14 cursor-pointer list-none items-center gap-3 py-3 pl-3.5 pr-3 [&::-webkit-details-marker]:hidden">
+          {typeof index === "number" && <LensNumber n={String(index + 1).padStart(2, "0")} />}
+          <span className="min-w-0 flex-1 text-base font-medium leading-snug text-ink">{situation.label}</span>
+          <ChevronRight size={20} className="shrink-0 text-ink-muted/60 transition-transform group-open:rotate-90" />
+        </summary>
+        {sayNow && (
+          <p className="relative z-[1] mx-3 border-t border-rule/60 py-2.5 pl-1 text-base leading-snug text-ink">
+            <span className="font-semibold text-accent">Say this now: </span>
+            <span className="phrase">“{sayNow}”</span>
+          </p>
+        )}
+        <div className="relative z-[1] space-y-2 border-t border-rule/60 px-4 pb-3 pt-3">
+          <p className="text-sm leading-snug text-ink-muted">{situation.description}</p>
+          <Link
+            href={situation.primaryHref}
+            className={`flex min-h-11 items-center gap-2 text-sm font-medium leading-snug ${moveText[tone]}`}
+          >
+            <RouteThread color={threadColor[tone]} />
+            {iconSlug && (
+              <ApIcon
+                id={iconSlug}
+                size={20}
+                // The safety glyph is safety green on light backgrounds (CANON round 5).
+                className={situation.danger ? "text-safety" : ""}
+              />
+            )}
+            <span className="min-w-0 flex-1">
+              <MarkedText text={situation.firstMove} />
             </span>
-            <span
-              className={`mt-2.5 flex items-center gap-2 text-sm font-medium leading-snug ${moveText[tone]}`}
-            >
-              <RouteThread color={threadColor[tone]} />
-              {iconSlug && (
-                <ApIcon
-                  id={iconSlug}
-                  size={20}
-                  // The safety glyph is safety green on light backgrounds (CANON round 5).
-                  className={situation.danger ? "text-safety" : ""}
-                />
-              )}
-              <span className="min-w-0">
-                <MarkedText text={situation.firstMove} />
-              </span>
-            </span>
-          </div>
-          <ChevronRight size={20} className="shrink-0 text-ink-muted/50" />
-        </Link>
+            <ChevronRight size={18} className="shrink-0 text-ink-muted/50" />
+          </Link>
+        </div>
         {situation.secondaryHrefs && situation.secondaryHrefs.length > 0 && (
           <div className="relative z-[1] mx-3 flex flex-wrap gap-x-2 border-t border-rule/60 pl-1">
             {situation.secondaryHrefs.map((s) => (
               <Link
                 key={s.href}
                 href={s.href}
-                className="group inline-flex min-h-12 items-center"
+                className="group/link inline-flex min-h-12 items-center"
               >
-                <span className="v2-tab inline-flex h-8 items-center gap-1 px-3 text-sm font-medium text-accent transition-colors group-hover:bg-accent/[0.06]">
+                <span className="v2-tab inline-flex h-8 items-center gap-1 px-3 text-sm font-medium text-accent transition-colors group-hover/link:bg-accent/[0.06]">
                   {s.label}
                   <ChevronRight size={14} strokeWidth={2.25} />
                 </span>
@@ -141,7 +148,7 @@ export function SituationCard({
             {situation.goDeeper}
           </p>
         )}
-      </div>
+      </details>
     </li>
   );
 }

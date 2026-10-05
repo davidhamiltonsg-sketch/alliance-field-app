@@ -7,7 +7,7 @@ import { PrimaryButton } from "./PrimaryButton";
 import { SectionLabel } from "./SectionLabel";
 
 /**
- * Retention loop after the 7-day plan: one downloadable calendar file with a
+ * Retention loop after your first week: one downloadable calendar file with a
  * recurring Sunday Weekly Reset and a monthly "look-back inside your
  * Weekly Reset" reminder (first Sunday of the month). Made on this device.
  */

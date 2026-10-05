@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
-@theme inline {
+/* Colour tokens are plain (not inline) so the dark set below can override them. */
+@theme {
   --color-ink: #1A1A1A;
   --color-ink-muted: #4A4A4A;
   --color-paper: #FAFAF8;
@@ -26,7 +27,10 @@
   --color-cover-manual: #2C3E2D;
   --color-cover-kit: #6E4210;
   --color-cover-companion: #1A1A1A;
+  --color-surface-raised: #fff;
+}
 
+@theme inline {
   /* Type scale (design/tokens.json): 12 / 14 / 16 / 20 / 28 / 40. The
      Tailwind defaults are cleared so only these six sizes exist. */
   --text-*: initial;
@@ -53,9 +57,16 @@
   --shadow-amber: 0 1px 2px rgb(120 70 10 / 0.18), 0 10px 24px -10px rgb(196 122 26 / 0.55);
 }
 
+:root {
+  color-scheme: light dark;
+  --canvas: #f1f3ef;
+  --canvas-glow-a: rgb(44 62 45 / 0.10);
+  --canvas-glow-b: rgb(196 122 26 / 0.05);
+}
+
 html {
   -webkit-tap-highlight-color: transparent;
-  background: #f1f3ef;
+  background: var(--canvas);
 }
 
 body {
@@ -67,9 +78,9 @@ body {
   text-rendering: optimizeLegibility;
   /* Soft, intentional canvas on wide screens; the app column sits on top. */
   background:
-    radial-gradient(1200px 600px at 50% -10%, rgb(44 62 45 / 0.10), transparent 60%),
-    radial-gradient(900px 500px at 100% 100%, rgb(196 122 26 / 0.05), transparent 60%),
-    #f1f3ef;
+    radial-gradient(1200px 600px at 50% -10%, var(--canvas-glow-a), transparent 60%),
+    radial-gradient(900px 500px at 100% 100%, var(--canvas-glow-b), transparent 60%),
+    var(--canvas);
   background-attachment: fixed;
 }
 
@@ -134,7 +145,7 @@ b {
 
   /* Elevated card */
   .card {
-    background: #fff;
+    background: var(--color-surface-raised);
     border: 1px solid rgb(44 62 45 / 0.09);
     border-radius: 1rem;
     box-shadow: var(--shadow-card);
@@ -171,7 +182,7 @@ b {
   /* Quote card for exact phrases */
   .phrase-block {
     position: relative;
-    background: #fff;
+    background: var(--color-surface-raised);
     border: 1px solid rgb(44 62 45 / 0.14);
     border-radius: 0.875rem;
     padding: 0.875rem 1rem 0.875rem 2.5rem;
@@ -193,7 +204,7 @@ b {
   .accent-wash {
     background:
       radial-gradient(120% 90% at 100% 0%, rgb(44 62 45 / 0.16), transparent 55%),
-      linear-gradient(180deg, #eef2ef 0%, #fafaf8 100%);
+      linear-gradient(180deg, var(--color-surface-tool) 0%, var(--color-paper) 100%);
   }
 
   .field-input {
@@ -201,7 +212,7 @@ b {
     min-height: 3rem;
     border-radius: 0.75rem;
     border: 1px solid rgb(44 62 45 / 0.16);
-    background: #fff;
+    background: var(--color-surface-raised);
     padding: 0.625rem 0.875rem;
     color: var(--color-ink);
     /* Never below 16px: iOS zooms into smaller inputs. */
@@ -662,3 +673,48 @@ html[data-calm] body {
     opacity: 1;
   }
 }
+
+/* ------------------------------------------------------------------ */
+/* Dark mode: follows the device. Text pairs keep >= 4.5:1 (ink and    */
+/* muted ink on paper are ~14:1 and ~8:1; coloured text is lightened). */
+/* ------------------------------------------------------------------ */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-ink: #ECEFEA;
+    --color-ink-muted: #B6BFB8;
+    --color-paper: #141815;
+    --color-rule: #3B473E;
+    --color-accent: #A9CBAF;
+    --color-safety: #5FBF86;
+    --color-safety-text: #86D6A6;
+    /* Amber stays a dark fill so light ink on it holds >= 4.5:1. */
+    --color-pause: #8F5A12;
+    --color-pause-text: #F0B65F;
+    --color-repair: #7FB0E0;
+    --color-failure: #A33B2B;
+    --color-stop: #A33B2B;
+    --color-brass: #C9A872;
+    --color-surface-tool: #1D2520;
+    --color-surface-activity: #22251E;
+    --color-surface-warn: #2D2220;
+    --color-surface-raised: #1B211D;
+    --canvas: #0E110F;
+    --canvas-glow-a: rgb(169 203 175 / 0.07);
+    --canvas-glow-b: rgb(240 182 95 / 0.04);
+    --shadow-card: 0 1px 2px rgb(0 0 0 / 0.4), 0 4px 14px -6px rgb(0 0 0 / 0.5);
+    --shadow-lift: 0 2px 4px rgb(0 0 0 / 0.4), 0 12px 28px -12px rgb(0 0 0 / 0.6);
+  }
+  /* Red and blue text lighten on dark; red and blue fills keep white text. */
+  .text-failure { color: #F29A89; }
+  .text-repair { color: #8FBCE8; }
+  .bg-white { background-color: var(--color-surface-raised); }
+  .card, .phrase-block, .field-input { border-color: rgb(169 203 175 / 0.16); }
+  .phrase-block::before { color: rgb(169 203 175 / 0.5); }
+  .field-input::placeholder { color: rgb(182 191 184 / 0.7); }
+  .accent-wash {
+    background: linear-gradient(180deg, #1D2520 0%, #141815 100%);
+  }
+}
+
+/* Safety and Help content is never below 14px (the type scale has no 12px for it). */
+.help-content, .help-content * { font-size: max(14px, 1em); }

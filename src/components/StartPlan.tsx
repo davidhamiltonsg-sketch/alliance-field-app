@@ -8,7 +8,7 @@ import { readStartProgress, toggleStartDay } from "@/lib/storage";
 import { ArrowRight, CheckIcon } from "./icons";
 
 /**
- * The 7-day start plan with quiet progress dots. Ticks live only on this
+ * The first-week plan with quiet progress dots. Ticks live only on this
  * device (alliance.* storage, removed by Delete all data). No streaks, no
  * scores: a day can be ticked in any order, or not at all.
  */

@@ -3,16 +3,15 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
-import { navItems } from "@/data/nav";
+import { navAliases, navItems } from "@/data/nav";
 import { ApIcon } from "./ApIcon";
-import { InfoIcon } from "./icons";
 
 const iconFor: Record<string, ReactNode> = {
   "/": <ApIcon id="situation-map" size={22} mono />,
   "/protocols": <ApIcon id="field-kit" size={22} mono />,
   "/pause": <ApIcon id="pause-and-return" size={22} mono />,
   "/weekly-reset": <ApIcon id="weekly-reset" size={22} mono />,
-  "/about": <InfoIcon size={22} />,
+  "/together": <ApIcon id="connection-cards" size={22} mono />,
 };
 
 export function AppNav() {
@@ -29,7 +28,8 @@ export function AppNav() {
           const active =
             item.href === "/"
               ? pathname === "/"
-              : pathname.startsWith(item.href);
+              : pathname.startsWith(item.href) ||
+                (navAliases[item.href] ?? []).some((a) => pathname.startsWith(a));
           return (
             <li key={item.href} className="min-w-0 flex-1">
               <Link

@@ -13,7 +13,7 @@ import { worksheetsFor } from "@/data/worksheets";
 import { chapterLabel, goDeeper } from "@/data/go-deeper";
 import { protocolDiagrams } from "@/data/visuals/protocol-diagrams";
 import { WarnBanner, isSafetyWording } from "./WarnBanner";
-import { FavoriteButton } from "./FavoriteButton";
+import { RecentTracker } from "./RecentTracker";
 import { ArrowLeft, ChevronRight } from "./icons";
 
 const headerWash: Record<string, string> = {
@@ -46,13 +46,13 @@ export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
           className="-ml-1 inline-flex min-h-11 items-center gap-1.5 rounded-full px-1 text-sm font-medium text-ink-muted hover:text-accent"
         >
           <ArrowLeft size={16} />
-          All protocols
+          All tools
         </Link>
         <div className="flex items-center gap-3">
           {isIconId(protocol.slug) && <IconChip id={protocol.slug} tone={tone} size="lg" />}
           <TierBadge tier={protocol.tier} />
           <span className="flex-1" />
-          <FavoriteButton slug={protocol.slug} recordVisit />
+          <RecentTracker slug={protocol.slug} />
         </div>
         <div>
           <h1 className="display text-xl">{protocol.title}</h1>
