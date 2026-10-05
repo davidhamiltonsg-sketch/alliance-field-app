@@ -471,7 +471,9 @@ function PauseTimerClient() {
         />
         <p className="mt-3 text-center text-base leading-normal text-ink-muted">
           Exact phrase:{" "}
-          <span className="phrase text-base text-ink">“I’ll be ready at ___.”</span>
+          <span className="phrase text-base text-ink">
+            “I’ll be ready at {chosenMs !== null ? formatClock(new Date(now + chosenMs)) : "___"}.”
+          </span>
         </p>
       </div>
 
