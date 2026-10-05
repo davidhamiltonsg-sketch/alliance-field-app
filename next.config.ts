@@ -8,8 +8,8 @@ const nextConfig: NextConfig = {
       // The separate "7-Day Install" plan was retired: /start is the one plan.
       { source: "/install", destination: "/start", permanent: true },
       // Printed fridge sheets and the free PDF give allianceprotocols.com/situation-map.
-      { source: "/situation-map", destination: "/#situation-map", permanent: false },
-      { source: "/map", destination: "/#situation-map", permanent: false },
+      { source: "/situation-map", destination: "/#situation-map", permanent: true },
+      { source: "/map", destination: "/#situation-map", permanent: true },
       // The Conflict Protocol was folded into the System Overlay ("already a fight" speed).
       { source: "/protocols/conflict-protocol", destination: "/protocols/system-overlay", permanent: true },
       // Folded: Proof Protocol became "a Proof item" inside Trust Recovery.

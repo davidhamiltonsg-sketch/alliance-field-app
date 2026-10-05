@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { AllianceMark } from "./AllianceMark";
-import { ApIcon } from "./ApIcon";
 
 export function AppHeader() {
   return (
@@ -26,14 +25,6 @@ export function AppHeader() {
             aria-label="Help and safety: Help Lines"
           >
             Help
-          </Link>
-          <Link
-            href="/pause"
-            className="inline-flex h-12 items-center gap-1 rounded-full px-2.5 text-sm font-semibold text-pause-text transition-colors hover:bg-pause/10"
-            aria-label="Pause + Return timer"
-          >
-            <ApIcon id="pause-and-return" size={20} className="text-pause" />
-            Pause
           </Link>
         </div>
       </div>
