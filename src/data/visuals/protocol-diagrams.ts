@@ -168,7 +168,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     ],
     "note": {
       "kind": "note",
-      "text": "Start within minutes if you can; complete within 24 hours."
+      "text": "Start within minutes if you can; finish within 24 hours."
     },
     "outcome": "A sharp moment, owned and cleared within a day."
   },

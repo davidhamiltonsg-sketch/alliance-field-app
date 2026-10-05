@@ -72,7 +72,7 @@ export const situations: Situation[] = [
     id: "after-fight",
     label: "After a fight, or something small stung",
     description: "Something sharp was said, or a small promise slipped, and it’s still sitting there.",
-    firstMove: "Micro-Repair: start within minutes if you can; complete within 24 hours. Bigger hurts go to Full Repair.",
+    firstMove: "Micro-Repair: start within minutes if you can; finish within 24 hours. Bigger hurts go to Full Repair.",
     primaryHref: "/protocols/micro-repair",
     secondaryHrefs: [{ label: "Full Repair", href: "/protocols/full-repair" }],
   },
