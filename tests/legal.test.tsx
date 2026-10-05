@@ -100,7 +100,7 @@ describe("The books, if you want more.", () => {
     expect(html).toContain('href="https://store.example/manual"');
     expect(html.match(/href="https:\/\/store\.example\/all"/g)).toHaveLength(2); // kit (http refused) and bundle
     expect(html).not.toContain("insecure.example");
-    expect(text(html)).toMatch(/Operating Manual.*Field Kit.*Complete Bundle/);
+    expect(text(html)).toMatch(/Field Kit.*Volume A.*Volume B.*Complete Edition.*Complete Bundle/);
   });
 
   it("with only a bundle link, shows only the bundle", async () => {

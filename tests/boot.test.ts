@@ -21,8 +21,8 @@ function run({ seen, path, ua = "Mozilla/5.0 (iPhone)", throws = false }: { seen
 }
 
 describe("splash boot script", () => {
-  it("sends a first-time visitor on / straight to /intro", () => {
-    expect(run({ seen: false, path: "/" })).toEqual({ mode: "full", replaced: ["/intro"] });
+  it("shows a first-time visitor the full opening on / and no longer forces /intro (the home page offers the tour)", () => {
+    expect(run({ seen: false, path: "/" })).toEqual({ mode: "full", replaced: [] });
   });
 
   it("leaves returning visitors, other pages and crawlers alone", () => {

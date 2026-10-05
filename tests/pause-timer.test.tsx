@@ -179,7 +179,7 @@ describe("restart cue uses plain step names (M7)", () => {
   it("the 7-day plan's day 3 is plain, like the Kit's First Week", () => {
     const day3 = startDays.find((d) => d.day === 3)!;
     expect(day3.task).not.toMatch(/2%|softness/);
-    expect(day3.task).toContain("Start within minutes if you can; complete within 24 hours.");
+    expect(day3.task).toContain("Start within minutes if you can; finish within 24 hours.");
   });
 });
 
