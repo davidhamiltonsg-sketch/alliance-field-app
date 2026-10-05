@@ -41,6 +41,8 @@ export interface Situation {
   id: string;
   label: string;
   description: string;
+  /** Extra line under the description (the safety row's jealousy note). */
+  note?: string;
   firstMove: string;
   primaryHref: string;
   secondaryHrefs?: { label: string; href: string }[];

@@ -107,6 +107,7 @@ export function SituationCard({
         )}
         <div className="relative z-[1] space-y-2 border-t border-rule/60 px-4 pb-3 pt-3">
           <p className="text-sm leading-snug text-ink-muted">{situation.description}</p>
+          {situation.note && <p className="text-sm leading-snug text-ink">{situation.note}</p>}
           <Link
             href={situation.primaryHref}
             className={`flex min-h-11 items-center gap-2 text-sm font-medium leading-snug ${moveText[tone]}`}

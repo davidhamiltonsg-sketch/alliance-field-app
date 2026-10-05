@@ -6,7 +6,7 @@ import { SituationCard } from "@/components/SituationCard";
 import { FirstRunBanner } from "@/components/FirstRunBanner";
 import { QuickAccess } from "@/components/QuickAccess";
 import { ChevronRight } from "@/components/icons";
-import { situations } from "@/data/situations";
+import { SITUATION_MAP_FOOTER, SITUATION_MAP_RULE, situations } from "@/data/situations";
 import { WarnBanner } from "@/components/WarnBanner";
 import { GetFullSystem } from "@/components/GetFullSystem";
 import { SituationMapDownload } from "@/components/SituationMapDownload";
@@ -118,14 +118,14 @@ export default function HomePage() {
           <span id="map-heading">Situation Map</span>
         </SectionLabel>
         <p className="px-1 text-base leading-normal text-ink-muted">
-          Read from the top and take the first row that fits. Tap a row to open it.
-          Safety always comes first.
+          {SITUATION_MAP_RULE} Tap a row to open it.
         </p>
         <ul className="space-y-3">
           {situations.map((s, i) => (
             <SituationCard key={s.id} situation={s} index={i} />
           ))}
         </ul>
+        <p className="px-1 text-sm leading-normal text-ink">{SITUATION_MAP_FOOTER}</p>
         <WarnBanner pauseLink={false} safetyLink>
           Pause + Return is for flooding, never for fear. If threats, fear,
           coercion or violence appear, don’t return at the set time —

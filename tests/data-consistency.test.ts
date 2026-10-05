@@ -292,16 +292,17 @@ describe("Situation Map", () => {
 
   it("“A fight is starting” first move is one sentence to say, from the 60-Second Reset; Pause + Return second; the Overlay is the next link", () => {
     const row = byId["conflict-starting"];
-    expect(row.firstMove).toBe("Say: “I want to connect, not fight. Can we talk at ___?” (60-Second Reset)");
+    // Canonical wording (spec/situation-map.json): the 60-Second Reset sentence first, then Pause + Return, then the Overlay.
+    expect(row.firstMove).toBe("60-Second Reset. Say: “I want to connect, not fight. Can we talk at ___?” Too hot to stay in the room? Pause + Return. Next: the System Overlay, and start it with the Green Rule.");
     expect(row.primaryHref).toBe("/protocols/60-second-reset");
-    expect(row.secondaryHrefs!.map((l) => l.href)).toEqual(["/protocols/pause-and-return", "/protocols/system-overlay"]);
-    expect(row.secondaryHrefs![0].label).toMatch(/^Too hot to stay in the room\? Pause \+ Return/);
+    expect(row.secondaryHrefs!.map((l) => l.href)).toEqual(["/protocols/pause-and-return", "/protocols/system-overlay", "/protocols/green-rule"]);
   });
 
   it("trust breach skips the 7-day plan; a breach is something both agree happened", () => {
     expect(byId["trust-breach"].primaryHref).toBe("/protocols/trust-recovery");
-    expect(byId["trust-breach"].firstMove).toContain("Skip the 7-day plan: start with Trust Recovery, then the Weekly Reset.");
-    expect(byId["trust-breach"].description).toContain("never a breach");
+    expect(byId["trust-breach"].firstMove).toContain("Skip Your First Week: start with Trust Recovery, then the Weekly Reset.");
+    expect(byId["trust-breach"].firstMove).toContain("A breach is something you both agree happened.");
+    expect(byId["trust-breach"].firstMove).toContain("never a breach");
   });
 
   it("pulling away goes to the Check-Up with its safety lines; outside pressure goes to the Team Agreement", () => {
@@ -314,8 +315,8 @@ describe("Situation Map", () => {
   });
 
   it("pressure from a partner goes to Help or the Green Rule, never to the Team Agreement", () => {
-    expect(byId["outside-pressure"].description).toContain("If the pressure is coming from your partner, this isn’t the right tool.");
-    expect(byId["unsafe"].description).toContain("This includes jealousy that leads to checking, restricting, or accusing.");
+    expect(byId["outside-pressure"].firstMove).toContain("Pressure coming from your partner? If they check, restrict or punish your contact with others: row 1 (Help Lines). Otherwise: the Green Rule.");
+    expect(byId["unsafe"].note).toContain("This includes jealousy that leads to checking, restricting or accusing.");
     expect(JSON.stringify(byId["outside-pressure"])).not.toMatch(/jealous/i);
   });
 
