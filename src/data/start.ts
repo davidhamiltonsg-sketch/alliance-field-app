@@ -37,7 +37,7 @@ export const START_NOTES = {
     "If there has been a breach of trust, skip the plan: start with Trust Recovery, then the Weekly Reset.",
   onlyOneReading: "Only one of you reading? Invite, don’t assign.",
   longDistance: "Long distance: everything works on a call. See Adapting in the Manual.",
-  sceptical: "Sceptical partner? Hand them Volume A.",
+  sceptical: "Sceptical partner? Hand them the book (Volume A).",
 } as const;
 
 export const START_PLAN_DAYS = 7;

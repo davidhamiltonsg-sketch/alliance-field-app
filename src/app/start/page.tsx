@@ -19,27 +19,7 @@ export default function StartPage() {
         Only one of you reading? Invite, don’t assign.
       </PageHeader>
 
-      <section aria-labelledby="tonight-heading" className="card space-y-3 border-accent/30 px-4 py-4">
-        <h2 id="tonight-heading" className="display text-lg leading-snug">
-          Tonight (20 minutes)
-        </h2>
-        <ol className="list-decimal space-y-1.5 pl-5 text-base leading-normal text-ink">
-          <li>
-            Read the red row of the{" "}
-            <Link href="/#situation-map" className="font-medium text-accent underline underline-offset-4">
-              Situation Map
-            </Link>
-            .
-          </li>
-          <li>Agree one pause phrase and a return time. Write it where you will both see it.</li>
-          <li>
-            Try the{" "}
-            <Link href="/protocols/60-second-reset" className="font-medium text-accent underline underline-offset-4">
-              60-Second Reset
-            </Link>{" "}
-            once, while you are calm.
-          </li>
-        </ol>
+      <section aria-label="Before you start" className="card space-y-2 border-accent/30 px-4 py-3.5">
         <p className="text-base leading-normal text-ink">
           <span className="font-semibold text-accent">Tight on time? </span>
           Do the Weekly Reset in two 20-minute halves.
@@ -54,7 +34,7 @@ export default function StartPage() {
         </p>
         <p className="text-base leading-normal text-ink">
           <span className="font-semibold text-accent">Partner not keen? </span>
-          Hand them Volume A, or the{" "}
+          Hand them the book (Volume A), or the{" "}
           <a
             href="/downloads/companion-sample.pdf"
             className="font-medium text-accent underline underline-offset-4"

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { getProtocol } from "@/data/protocols";
-import { START_PLAN_DAYS, startDays } from "@/data/start";
+import { START_PLAN_DAYS, TONIGHT, startDays } from "@/data/start";
 import { readStartProgress, toggleStartDay } from "@/lib/storage";
 import { ArrowRight, CheckIcon, ChevronRight } from "./icons";
 
@@ -89,7 +89,16 @@ export function StartPlan() {
               </button>
               </h2>
               <div id={`start-day-${d.day}`} hidden={!isOpen} className="pb-2">
-              <p className="mt-1 pl-11 text-base leading-normal text-ink-muted">{d.task}</p>
+              {d.day === 1 ? (
+                // Day 1 is tonight: the three jobs, as a list (one card, not two).
+                <ol className="mt-1 list-decimal space-y-1 pl-[3.75rem] text-base leading-normal text-ink">
+                  {TONIGHT.steps.map((s) => (
+                    <li key={s}>{s}</li>
+                  ))}
+                </ol>
+              ) : (
+                <p className="mt-1 pl-11 text-base leading-normal text-ink-muted">{d.task}</p>
+              )}
               <p className="mt-1.5 pl-11 text-sm leading-snug text-ink">
                 <span className="font-medium text-accent">Today’s done when</span> {d.proof}
               </p>
@@ -118,7 +127,7 @@ export function StartPlan() {
                   type="button"
                   aria-pressed={isDone}
                   onClick={() => setDone(toggleStartDay(d.day))}
-                  className={`inline-flex min-h-11 items-center gap-2 rounded-full border px-3.5 text-sm font-medium transition-colors ${
+                  className={`inline-flex min-h-11 min-w-24 items-center justify-center gap-2 rounded-full border px-4 text-base font-medium transition-colors ${
                     isDone ? "border-accent bg-accent/10 text-accent" : "border-rule/60 bg-surface-raised text-ink-muted"
                   }`}
                 >
