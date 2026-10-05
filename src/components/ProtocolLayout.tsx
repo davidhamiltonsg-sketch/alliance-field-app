@@ -13,6 +13,7 @@ import { chapterLabel, goDeeper } from "@/data/go-deeper";
 import { protocolDiagrams } from "@/data/visuals/protocol-diagrams";
 import { WarnBanner, isSafetyWording } from "./WarnBanner";
 import { RecentTracker } from "./RecentTracker";
+import { StickyTimerButton } from "./StickyTimerButton";
 import { ArrowLeft, ArrowRight, ChevronRight } from "./icons";
 
 const headerWash: Record<string, string> = {
@@ -62,6 +63,7 @@ export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
       {protocol.slug === "pause-and-return" && (
         // Someone opening this card mid-argument needs the timer, not 3,000px of reading first.
         <Link
+          id="pause-top-cta"
           href="/pause"
           className="flex min-h-14 items-center justify-between gap-3 rounded-2xl bg-pause px-4 py-3 text-lg font-semibold text-ink shadow-[var(--shadow-card)] transition active:scale-[0.99]"
         >
@@ -192,16 +194,8 @@ export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
       </nav>
 
       {protocol.slug === "pause-and-return" && (
-        // Pinned above the tab bar while reading, so the timer is one tap away anywhere on the card.
-        <div className="sticky bottom-[calc(4rem+1px+env(safe-area-inset-bottom)+0.75rem)] z-30">
-          <Link
-            href="/pause"
-            className="flex min-h-12 items-center justify-center gap-2 rounded-xl bg-pause px-4 text-base font-semibold text-ink shadow-[var(--shadow-amber)] transition active:scale-[0.99]"
-          >
-            <ApIcon id="pause-and-return" size={20} mono />
-            Start timer
-          </Link>
-        </div>
+        // Pinned above the tab bar once the top button scrolls away.
+        <StickyTimerButton watchId="pause-top-cta" />
       )}
     </article>
   );
