@@ -7,7 +7,6 @@ import { SectionLabel } from "./SectionLabel";
 import { StepList } from "./StepList";
 import { StepDiagram, WhenStrip } from "./visuals/StepDiagram";
 import { ApIcon, IconChip, isIconId } from "./ApIcon";
-import { TierBadge } from "./TierBadge";
 import { protocolSubtitle } from "@/data/glossary";
 import { worksheetsFor } from "@/data/worksheets";
 import { chapterLabel, goDeeper } from "@/data/go-deeper";
@@ -50,7 +49,6 @@ export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
         </Link>
         <div className="flex items-center gap-3">
           {isIconId(protocol.slug) && <IconChip id={protocol.slug} tone={tone} size="lg" />}
-          <TierBadge tier={protocol.tier} />
           <span className="flex-1" />
           <RecentTracker slug={protocol.slug} />
         </div>
@@ -182,15 +180,6 @@ export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
           <ApIcon id="situation-map" size={18} />
           Situation Map
         </Link>
-        {protocol.slug === "pause-and-return" && (
-          <Link
-            href="/pause"
-            className="inline-flex min-h-11 items-center gap-1.5 rounded-full bg-pause px-4 text-sm font-medium text-ink"
-          >
-            <ApIcon id="pause-and-return" size={18} />
-            Start timer
-          </Link>
-        )}
         {protocol.slug === "weekly-reset" && (
           <Link
             href="/weekly-reset"
@@ -201,6 +190,19 @@ export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
           </Link>
         )}
       </nav>
+
+      {protocol.slug === "pause-and-return" && (
+        // Pinned above the tab bar while reading, so the timer is one tap away anywhere on the card.
+        <div className="sticky bottom-[calc(4rem+1px+env(safe-area-inset-bottom)+0.75rem)] z-30">
+          <Link
+            href="/pause"
+            className="flex min-h-12 items-center justify-center gap-2 rounded-xl bg-pause px-4 text-base font-semibold text-ink shadow-[var(--shadow-amber)] transition active:scale-[0.99]"
+          >
+            <ApIcon id="pause-and-return" size={20} mono />
+            Start timer
+          </Link>
+        </div>
+      )}
     </article>
   );
 }
