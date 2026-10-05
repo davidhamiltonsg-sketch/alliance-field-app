@@ -69,20 +69,25 @@ function score(p: Protocol, words: string[], requireAll: boolean): number {
 }
 
 /**
- * Tools that match a search, best first. Every meaningful word must match;
- * if no tool matches them all, tools matching any of them are returned.
+ * Tools that match a search, best first. Tools matching every meaningful word
+ * come first; then tools whose name or synonyms match any one word (so
+ * "jealous, he lied" still reaches Trust Recovery). If no tool matches every
+ * word, tools matching any of them are returned.
  */
 export function searchTools(protocols: Protocol[], query: string): Protocol[] {
   const words = queryWords(query);
   if (words.length === 0) return [...protocols].sort((a, b) => order(a.slug) - order(b.slug));
-  const run = (requireAll: boolean) =>
+  const run = (requireAll: boolean, min = 1) =>
     protocols
       .map((p) => ({ p, s: score(p, words, requireAll) }))
-      .filter((x) => x.s > 0)
+      .filter((x) => x.s >= min)
       .sort((a, b) => b.s - a.s || order(a.p.slug) - order(b.p.slug))
       .map((x) => x.p);
   const strict = run(true);
-  return strict.length > 0 ? strict : run(false);
+  if (strict.length === 0) return run(false);
+  if (words.length === 1) return strict;
+  const extra = run(false, 40).filter((p) => !strict.includes(p));
+  return [...strict, ...extra];
 }
 
 /** True when the search could be about fear or control rather than an ordinary fight. */

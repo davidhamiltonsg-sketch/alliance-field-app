@@ -15,7 +15,8 @@ describe("UI shell", () => {
   it("maps plain words to tools", () => {
     expect(SEARCH_HINTS["check-up"]).toContain("housemates");
     expect(SEARCH_HINTS["trust-recovery"]).toContain("lied");
-    expect(SEARCH_HINTS["consistency-pact"]).toContain("jealous");
+    expect(SEARCH_HINTS["check-up"]).toContain("jealous");
+    expect(SEARCH_HINTS["trust-recovery"]).not.toContain("jealous");
   });
   it("never redirects a first visit to /intro", () => {
     expect(splashBootScript).not.toContain("/intro");

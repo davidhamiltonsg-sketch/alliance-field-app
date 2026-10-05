@@ -13,7 +13,16 @@ describe("tool search (/protocols)", () => {
     expect(top("money").slice(0, 3)).toContain("weekly-reset");
     expect(top("stonewalling").slice(0, 3)).toContain("pause-and-return");
     expect(top("he yells").slice(0, 3)).toEqual(expect.arrayContaining(["pause-and-return"]));
-    expect(top("jealous")).toContain("trust-recovery");
+    // Jealousy alone is not a breach: it goes to Check-Up, Team Agreement or Micro-Repair.
+    expect(top("jealous").slice(0, 3)).toEqual(expect.arrayContaining(["check-up", "team-agreement", "micro-repair"]));
+    for (const q of ["jealous", "jealousy", "i'm jealous"]) {
+      expect(top(q), q).not.toContain("trust-recovery");
+      expect(top(q), q).not.toContain("intimacy-pact");
+    }
+    // Only a named breach brings in Trust Recovery.
+    for (const q of ["jealous he lied", "jealous because she cheated", "jealous after the affair", "jealous, I was betrayed"]) {
+      expect(top(q), q).toContain("trust-recovery");
+    }
   });
 
   it("ranks title and synonym hits above body text", () => {

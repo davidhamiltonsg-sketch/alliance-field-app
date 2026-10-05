@@ -18,9 +18,9 @@ export function ProtocolSearch({ protocols }: { protocols: Protocol[] }) {
 
   const searching = query.trim() !== "";
 
-  const renderList = (list: Protocol[]) => (
+  const renderList = (list: Protocol[], ranked = false) => (
     <ul className="space-y-2.5">
-      {list.map((p) => {
+      {list.map((p, i) => {
         const tone = p.accentHint ?? "accent";
         const plain = PLAIN_SUBTITLE[p.slug];
         return (
@@ -32,7 +32,11 @@ export function ProtocolSearch({ protocols }: { protocols: Protocol[] }) {
               <span className={`v2-edge v2-edge--${tone}`} aria-hidden />
               {isIconId(p.slug) && <IconChip id={p.slug} tone={tone} size="md" />}
               <span className="min-w-0 flex-1">
-                {searching && <span className="block text-sm font-medium text-accent">{TIER_LABEL[p.tier]}</span>}
+                {ranked && i === 0 && (
+                  <span className="mb-0.5 inline-block rounded-full bg-accent px-2 py-0.5 text-xs font-semibold text-paper">
+                    Best match
+                  </span>
+                )}
                 <span className="display block text-lg leading-snug">{p.title}</span>
                 {plain && <span className="block text-sm font-medium leading-snug text-ink">{plain}</span>}
                 <span className="mt-0.5 line-clamp-2 text-sm leading-snug text-ink-muted">{p.concept}</span>
@@ -86,7 +90,12 @@ export function ProtocolSearch({ protocols }: { protocols: Protocol[] }) {
           </Link>
         </div>
       ) : searching ? (
-        renderList(filtered)
+        <div className="space-y-2.5">
+          <p role="status" className="px-1 text-sm text-ink-muted">
+            {filtered.length === 1 ? "1 tool matches" : `${filtered.length} tools match`}
+          </p>
+          {renderList(filtered, true)}
+        </div>
       ) : (
         <div className="space-y-6">
           {TIER_ORDER.map((tier) => {
