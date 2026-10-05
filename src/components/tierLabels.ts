@@ -46,7 +46,7 @@ export const SEARCH_HINTS: Record<string, string> = {
   "green-rule": "honest honesty truth safe to say secret hide punished yell yelling shouting afraid scared fear hit hitting pushed shoved violence threatened controlled controlling phone",
   "pause-and-return": "break timeout time out space cool down walk away flooded angry shut down stonewall stonewalling silent treatment yell yelling shouting overwhelmed",
   "60-second-reset": "argument fight starting heated calm quick connect snapping yell yelling shouting raised voice bickering",
-  "micro-repair": "sorry apologise apologize snapped sharp tone small hurt make up rude jealous jealousy",
+  "micro-repair": "sorry apologise apologize snapped sharp tone small hurt make up rude",
   "weekly-reset": "weekly meeting catch up check in routine schedule talk money finances budget bills spending chores housework load",
   "system-overlay": "system-talk we versus us problem blame who is right money finances budget spending decision hard talk",
   "full-repair": "big fight aftermath make up after a fight apology same fight again recurring stonewalling",

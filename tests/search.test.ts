@@ -13,8 +13,8 @@ describe("tool search (/protocols)", () => {
     expect(top("money").slice(0, 3)).toContain("weekly-reset");
     expect(top("stonewalling").slice(0, 3)).toContain("pause-and-return");
     expect(top("he yells").slice(0, 3)).toEqual(expect.arrayContaining(["pause-and-return"]));
-    // Jealousy alone is not a breach: it goes to Check-Up, Team Agreement or Micro-Repair.
-    expect(top("jealous").slice(0, 3)).toEqual(expect.arrayContaining(["check-up", "team-agreement", "micro-repair"]));
+    // Jealousy alone is not a breach: it goes to Check-Up, then Team Agreement.
+    expect(top("jealous").slice(0, 2)).toEqual(["check-up", "team-agreement"]);
     for (const q of ["jealous", "jealousy", "i'm jealous"]) {
       expect(top(q), q).not.toContain("trust-recovery");
       expect(top(q), q).not.toContain("intimacy-pact");
