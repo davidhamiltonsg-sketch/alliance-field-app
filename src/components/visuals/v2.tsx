@@ -13,29 +13,34 @@ import type { IconId } from "@/data/icons";
  * ornament only, never body copy.
  */
 
+/**
+ * Diagram palette. Each colour is a CSS variable (globals.css, "Diagram
+ * palette") with the light value as fallback, so every SVG drawing follows
+ * the device's light or dark mode.
+ */
 export const V = {
-  ink: "#1A1A1A",
-  muted: "#4A4A4A",
-  paper: "#FAFAF8",
-  white: "#FFFFFF",
-  forest: "#2C3E2D",
-  accent: "#2C3E2D",
-  thread: "#6F8177",
-  hair: "#9FB2A6",
+  ink: "var(--dg-ink, #1A1A1A)",
+  muted: "var(--dg-muted, #4A4A4A)",
+  paper: "var(--dg-paper, #FAFAF8)",
+  white: "var(--dg-white, #FFFFFF)",
+  forest: "var(--dg-forest, #2C3E2D)",
+  accent: "var(--dg-accent, #2C3E2D)",
+  thread: "var(--dg-thread, #6F8177)",
+  hair: "var(--dg-hair, #9FB2A6)",
   /** Connection only (logo bridge, Connection Cards, icon accents). */
-  brass: "#A8895A",
+  brass: "var(--dg-brass, #A8895A)",
   /** Neutral hairline for rims, plies and ornament (brass is reserved for connection). */
-  rim: "#9FB2A6",
+  rim: "var(--dg-rim, #9FB2A6)",
   /** Numerals on forest grounds. */
-  rimL: "#FFFFFF",
-  safety: "#2E7D4F",
-  pause: "#C47A1A",
-  pauseInk: "#8F5610",
-  repair: "#2F5F8A",
-  failure: "#A33B2B",
-  tint: "#EEF2EF",
-  warm: "#F3F0E8",
-  warn: "#F7EDE6",
+  rimL: "var(--dg-rim-l, #FFFFFF)",
+  safety: "var(--dg-safety, #2E7D4F)",
+  pause: "var(--dg-pause, #C47A1A)",
+  pauseInk: "var(--dg-pause-ink, #8F5610)",
+  repair: "var(--dg-repair, #2F5F8A)",
+  failure: "var(--dg-failure, #A33B2B)",
+  tint: "var(--dg-tint, #EEF2EF)",
+  warm: "var(--dg-warm, #F3F0E8)",
+  warn: "var(--dg-warn, #F7EDE6)",
 } as const;
 
 export const SERIF = "var(--font-source-serif), Georgia, 'Times New Roman', serif";

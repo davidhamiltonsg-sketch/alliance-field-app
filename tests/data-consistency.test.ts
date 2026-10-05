@@ -348,7 +348,7 @@ describe("Situation Map", () => {
 
 describe("safety routing", () => {
   it("lists the canonical help lines as dialable links", () => {
-    expect(emergencyNumbers.map((n) => n.display)).toEqual(["999", "995", "911", "000", "112"]);
+    expect(emergencyNumbers.map((n) => n.display)).toEqual(["911", "999", "000", "995", "112"]);
     const all = helpRegions.flatMap((r) => r.lines.map((l) => l.display));
     for (const n of ["1-800-799-7233", "88788", "988", "800-656-4673", "64673", "0808 2000 247", "116 123", "0808 500 2222", "1800 737 732", "13 11 14", "1800 777 0000", "1767", "6779 0282"]) {
       expect(all).toContain(n);

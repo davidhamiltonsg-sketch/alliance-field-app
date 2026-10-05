@@ -257,7 +257,7 @@ export function IntroFlow() {
                     </Link>
                   )}
                   {p.aside && (
-                    <p className="mt-1.5 text-sm italic leading-snug text-ink-muted/75">
+                    <p className="mt-1.5 text-sm italic leading-snug text-ink-muted">
                       {p.aside}
                     </p>
                   )}

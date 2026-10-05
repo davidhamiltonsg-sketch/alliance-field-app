@@ -25,10 +25,11 @@ export const SAFETY_FIRST_ROW =
   "Afraid of your partner, being threatened, or not free to say no? → Stop. These tools are not for this. Get outside help (see Help Lines).";
 
 export const emergencyNumbers: HelpNumber[] = [
-  { label: "UK / SG police", display: "999", href: "tel:999" },
-  { label: "SG ambulance", display: "995", href: "tel:995" },
+  // Same order as the Help Lines list below: US, UK, Australia, Singapore, EU.
   { label: "US", display: "911", href: "tel:911" },
-  { label: "AU", display: "000", href: "tel:000" },
+  { label: "UK / SG police", display: "999", href: "tel:999" },
+  { label: "Australia", display: "000", href: "tel:000" },
+  { label: "SG ambulance", display: "995", href: "tel:995" },
   { label: "EU", display: "112", href: "tel:112" },
 ];
 

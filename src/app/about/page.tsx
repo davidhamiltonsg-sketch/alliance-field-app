@@ -48,7 +48,7 @@ export default function AboutPage() {
           <h1 className="mt-4 text-lg font-medium tracking-[0.14em] pl-[0.14em]">
             ALLIANCE PROTOCOLS™
           </h1>
-          <p className="mt-2 text-xs font-medium uppercase tracking-[0.08em] pl-[0.08em] text-paper/75">
+          <p className="mt-2 text-xs font-medium uppercase tracking-[0.08em] pl-[0.08em] text-paper/90">
             Field App
           </p>
           <div className="my-4 h-px w-40 bg-paper/25" aria-hidden />

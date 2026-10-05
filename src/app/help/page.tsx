@@ -48,7 +48,7 @@ export default function HelpPage() {
                 className="flex min-h-12 flex-col items-center justify-center rounded-xl bg-failure px-2 py-1.5 text-center text-white"
               >
                 <span className="tabular text-lg font-semibold leading-tight">{n.display}</span>
-                <span className="text-xs font-medium leading-tight text-white/90">{n.label}</span>
+                <span className="text-sm font-medium leading-tight text-white">{n.label}</span>
               </a>
             </li>
           ))}

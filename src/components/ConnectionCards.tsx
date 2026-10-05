@@ -130,7 +130,7 @@ function ConnectionDeck({ shuffled }: { shuffled: boolean }) {
               <div
                 className={`absolute inset-0 flex flex-col items-center justify-center gap-3 rounded-3xl px-6 text-center shadow-[var(--shadow-lift)] ring-2 ring-inset ring-brass/70 [backface-visibility:hidden] bg-accent text-paper`}
               >
-                <span className="text-xs font-medium uppercase tracking-[0.14em] text-paper/70">
+                <span className="text-xs font-medium uppercase tracking-[0.14em] text-paper/90">
                   Connection Cards
                 </span>
                 <span className="display text-xl leading-tight !text-paper">{meta.label}</span>
@@ -138,7 +138,7 @@ function ConnectionDeck({ shuffled }: { shuffled: boolean }) {
                 <span className="max-w-[220px] text-sm leading-snug text-paper/85">
                   {meta.caption}
                 </span>
-                <span className="mt-2 text-sm font-medium text-paper/70">
+                <span className="mt-2 text-sm font-medium text-paper/90">
                   Tap to flip
                 </span>
               </div>
