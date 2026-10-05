@@ -22,12 +22,14 @@ import {
 export const metadata = {
   title: "Together",
   description:
-    "Things to do as a couple: facing outside pressure with a Team Agreement, Connection Cards, Profile Calibration, how the app works, and help and safety.",
+    "Things to do as a couple: Connection Cards, facing outside pressure with a Team Agreement, and Profile Calibration.",
 };
 
 type HubLink = { href: string; label: string; sub: string; icon: IconId; tone: IconTone };
 
+/** The three things to do together, in this order. */
 const hub: HubLink[] = [
+  { href: "/connect", label: "Connection Cards", sub: "Free in this app: questions to flip through together.", icon: "connection-cards", tone: "connection" },
   {
     href: "/protocols/team-agreement",
     label: "Outside pressure",
@@ -35,10 +37,13 @@ const hub: HubLink[] = [
     icon: "team-agreement",
     tone: "accent",
   },
-  { href: "/connect", label: "Connection Cards", sub: "Questions to flip through together.", icon: "connection-cards", tone: "connection" },
   { href: "/calibrate", label: "Profile Calibration", sub: "Where you two differ most, and the tools to try first.", icon: "profile-calibration", tone: "accent" },
-  { href: "/about", label: "How this works", sub: "About the app, who made it, and the books.", icon: "field-kit", tone: "accent" },
-  { href: "/help", label: "Help & safety", sub: "Afraid, threatened or not free to say no? Help Lines.", icon: "help-safety", tone: "stop" },
+];
+
+/** A small "More" list at the bottom of the page. */
+const more: { href: string; label: string; sub: string }[] = [
+  { href: "/about", label: "How this works", sub: "About the app, who made it, and the books." },
+  { href: "/help", label: "Help & safety", sub: "Help Lines, for fear, threats or not being free to say no." },
 ];
 
 export default function TogetherPage() {
@@ -53,11 +58,11 @@ export default function TogetherPage() {
           <li key={h.href}>
             <Link
               href={h.href}
-              className={`v2-card relative flex min-h-16 items-center gap-3 py-3.5 pl-4 pr-3 ${h.tone === "stop" ? "v2-card--failure" : ""}`}
+              className="v2-card relative flex min-h-16 items-center gap-3 py-3.5 pl-4 pr-3"
             >
               <IconChip id={h.icon} tone={h.tone} size="md" />
               <span className="min-w-0 flex-1">
-                <span className={`block text-lg font-semibold leading-snug ${h.tone === "stop" ? "text-failure" : "text-ink"}`}>
+                <span className="block text-lg font-semibold leading-snug text-ink">
                   {h.label}
                 </span>
                 <span className="mt-0.5 block text-sm leading-snug text-ink-muted">{h.sub}</span>
@@ -261,6 +266,28 @@ export default function TogetherPage() {
 
         </div>
       </details>
+
+      <section aria-labelledby="more-heading" className="space-y-2">
+        <SectionLabel>
+          <span id="more-heading">More</span>
+        </SectionLabel>
+        <ul className="card divide-y divide-rule/30 overflow-hidden">
+          {more.map((m) => (
+            <li key={m.href}>
+              <Link
+                href={m.href}
+                className="flex min-h-12 items-center justify-between gap-3 px-4 text-base font-medium text-ink hover:bg-surface-tool"
+              >
+                <span className="flex flex-col py-2.5">
+                  {m.label}
+                  <span className="text-sm font-normal text-ink-muted">{m.sub}</span>
+                </span>
+                <ChevronRight size={18} className="shrink-0 text-ink-muted/50" />
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </section>
 
       <Link href="/" className="inline-flex min-h-12 items-center gap-1.5 text-base font-medium text-accent">
         <ArrowLeft size={16} />

@@ -37,6 +37,13 @@ describe("Together tab", () => {
     for (const label of ["Outside pressure", "Connection Cards", "Profile Calibration", "How this works", "Help & safety"]) {
       expect(src).toContain(`label: "${label}"`);
     }
+    // Order: Connection Cards, then Outside pressure, then Profile Calibration; About and Help sit in "More" at the bottom.
+    const at = (s: string) => src.indexOf(s);
+    expect(at('label: "Connection Cards"')).toBeLessThan(at('label: "Outside pressure"'));
+    expect(at('label: "Outside pressure"')).toBeLessThan(at('label: "Profile Calibration"'));
+    expect(at("const more")).toBeLessThan(at('label: "How this works"'));
+    expect(at("const more")).toBeLessThan(at('label: "Help & safety"'));
+    expect(at('id="outside-pressure"')).toBeLessThan(at('id="more-heading"'));
     // The outside-pressure copy stays, as one section.
     expect(src).toContain('id="outside-pressure"');
     expect(src).toContain("minority stress");

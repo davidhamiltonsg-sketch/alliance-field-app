@@ -50,7 +50,7 @@ const routes: {
 ];
 
 const practise: { href: string; label: string; sub: string; icon: IconId; tone: IconTone }[] = [
-  { href: "/connect", label: "Connection Cards", sub: "Questions to flip through together", icon: "connection-cards", tone: "connection" },
+  { href: "/connect", label: "Connection Cards", sub: "Free in this app: questions to ask each other", icon: "connection-cards", tone: "connection" },
   { href: "/weekly-reset", label: "Weekly Reset", sub: "Five parts, about 40 minutes", icon: "weekly-reset", tone: "accent" },
   { href: "/start", label: "Your first week", sub: "Tonight is 20 minutes", icon: "section-steps", tone: "accent" },
   { href: "/calibrate", label: "Profile Calibration", sub: "Where you two differ most", icon: "profile-calibration", tone: "accent" },
