@@ -178,25 +178,25 @@ function buildConflictPattern(a: Profile, b: Profile): string {
     return `${b.name} tends to push for an answer while ${a.name} backs off. Left alone, that can become a Reach–Recoil loop (one reaches, the other pulls back). Pause + Return, with an exact return time, is designed to break it.`;
   if (aPursues && bPursues)
     return "You both push when you’re worried. Slow down before the asking turns into the fight.";
-  return "You both tend to back off. That can mean fewer fights, and less contact. The Morning + Evening Rhythm and the Weekly Reset are designed to catch the distance early.";
+  return "You both tend to back off. That can mean fewer fights, and less contact. The Daily Rhythm and the Weekly Reset are designed to catch the distance early.";
 }
 
 // Maps a recommendation's concept to a real Field Kit protocol slug.
 // Concepts with no standalone card route to the closest existing one.
 const TOOL_SLUG: Record<string, string> = {
-  "60-Second Alliance Reset": "60-second-reset",
+  "60-Second Reset": "60-second-reset",
   "Pause + Return": "pause-and-return",
   "Weekly Reset": "weekly-reset",
-  "A monthly look-back": "weekly-reset",
+  "The monthly part of the Weekly Reset": "weekly-reset",
   "Micro-Repair": "micro-repair",
-  "Impact first, then explain": "full-recovery",
+  "Impact first, then explain": "full-repair",
   "Consistency Pact": "consistency-pact",
-  "Pulling-Away Check": "uninvestment-check",
-  "Full Recovery": "full-recovery",
+  "Check-Up": "check-up",
+  "Full Repair": "full-repair",
   "Trust Recovery": "trust-recovery",
   "Intimacy Pact": "intimacy-pact",
   "System Overlay": "system-overlay",
-  "Morning + Evening Rhythm": "morning-evening-rhythm",
+  "Daily Rhythm": "daily-rhythm",
   "Green Rule": "green-rule",
 };
 
@@ -206,8 +206,8 @@ function routeTools(a: Profile, b: Profile, health: Record<LayerKey, number>) {
     if (!routes.some((r) => r.tool === tool)) routes.push({ tool, reason });
   };
 
-  if (health.Atmosphere < 62) add("Morning + Evening Rhythm", "Your answers are far apart on warmth. Start there, with a little each day, before either of you asks for a change.");
-  if (health.Structure < 62) add("Weekly Reset", "You see the everyday arrangements differently: who does what, and when. Begin with a weekly check-in you can both count on.");
+  if (health.Atmosphere < 62) add("Daily Rhythm", "Your answers are far apart on warmth. Start there, with a little each day, before either of you asks for a change.");
+  if (health.Structure < 62) add("Weekly Reset", "You see the everyday arrangements differently: who does what, and when. Begin with a Weekly Reset you can both count on.");
   if (health.Repair < 62) add("Micro-Repair", "Whoever’s ready first makes one small move today, like a kind word or a cup of tea, and the bigger talk waits for a time you both agree.");
   if (health.Protection < 62) add("Pause + Return", "You don’t agree on what keeps a heated moment safe. Agree now what you’ll each do when it gets there.");
 
@@ -215,7 +215,7 @@ function routeTools(a: Profile, b: Profile, health: Record<LayerKey, number>) {
     add("Pause + Return", "You need different amounts of space and closeness. To one of you, ‘I need a minute’ can sound like being left. Whoever asks for the pause says when they’ll be back.");
   }
   if (diff(a.scores.careVisibility, b.scores.careVisibility) > 14 || diff(a.scores.warmthNeed, b.scores.structureNeed) > 18 || diff(b.scores.warmthNeed, a.scores.structureNeed) > 18) {
-    add("A monthly look-back", "You show care differently, so some of what you give may be going unnoticed. Tell each other about one recent moment you felt looked after, and what did it.");
+    add("The monthly part of the Weekly Reset", "You show care differently, so some of what you give may be going unnoticed. Tell each other about one recent moment you felt looked after, and what did it.");
   }
   if (average([a.scores.proofOrientation, b.scores.proofOrientation]) > 64) {
     add("Consistency Pact", "Pick one small thing each and do it where the other can see. Look at it together at your next Weekly Reset.");
@@ -227,11 +227,11 @@ function routeTools(a: Profile, b: Profile, health: Record<LayerKey, number>) {
     average([a.scores.withdrawalUnderStress, b.scores.withdrawalUnderStress]) > 60 &&
     average([a.scores.reassuranceNeed, b.scores.reassuranceNeed, a.scores.signalSensitivity, b.scores.signalSensitivity]) > 55
   ) {
-    add("Pulling-Away Check", "You both tend to pull back when things are hard, and to notice when the other does. Do the Pulling-Away Check together to tell needing space from pulling away, instead of guessing.");
+    add("Check-Up", "You both tend to pull back when things are hard, and to notice when the other does. Do the Check-Up together to tell needing space from pulling away, instead of guessing.");
   }
   if (!routes.length) {
-    add("Morning + Evening Rhythm", "Keep a little daily contact you can both count on.");
-    add("Weekly Reset", "Keep a weekly check-in going, so small things get said while they’re small.");
+    add("Daily Rhythm", "Keep a little daily contact you can both count on.");
+    add("Weekly Reset", "Keep a Weekly Reset going, so small things get said while they’re small.");
   }
 
   return routes.slice(0, 6);

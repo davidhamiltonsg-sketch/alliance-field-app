@@ -99,7 +99,7 @@ describe("buildStartPlanIcs", () => {
   });
 });
 
-describe("keep it going (weekly Reset + monthly look-back)", () => {
+describe("keep it going (Weekly Reset + the monthly part)", () => {
   const events = (text: string) =>
     unfold(text)
       .split("BEGIN:VEVENT")
@@ -123,13 +123,13 @@ describe("keep it going (weekly Reset + monthly look-back)", () => {
     expect(events(text)).toHaveLength(2);
   });
 
-  it("starts at floating local time on the next Sunday and next first Sunday, 40 minutes long", () => {
+  it("starts at floating local time on the next Sunday and next first Sunday: 40 minutes weekly, 50 on the monthly part (+10 minutes)", () => {
     // Wednesday 30 September 2026 → Sunday 4 October (also the first Sunday of October).
     const [weekly, monthly] = events(keepGoingIcsText("19:00", new Date(2026, 8, 30, 12, 0)));
     expect(field(weekly, "DTSTART")).toBe("20261004T190000");
     expect(field(weekly, "DTEND")).toBe("20261004T194000");
     expect(field(monthly, "DTSTART")).toBe("20261004T190000");
-    expect(field(monthly, "DTEND")).toBe("20261004T194000");
+    expect(field(monthly, "DTEND")).toBe("20261004T195000");
     for (const e of [weekly, monthly]) expect(field(e, "DTSTART")).not.toMatch(/Z$/);
   });
 
@@ -146,11 +146,12 @@ describe("keep it going (weekly Reset + monthly look-back)", () => {
     expect(nextFirstSundayAt(new Date(2026, 11, 6, 20, 0), "19:00")).toEqual(new Date(2027, 0, 3, 19, 0));
   });
 
-  it("keeps the monthly look-back inside the Weekly Reset, with canonical names", () => {
+  it("keeps the monthly part inside the Weekly Reset, with canonical names", () => {
     const text = keepGoingIcsText("19:00", new Date(2026, 8, 30, 12, 0));
     const [weekly, monthly] = events(text);
     expect(field(weekly, "SUMMARY")).toBe("Weekly Reset (Alliance Protocols)");
-    expect(field(monthly, "SUMMARY")).toBe("Monthly look-back (inside the Weekly Reset)");
+    expect(field(monthly, "SUMMARY")).toBe("Monthly part of your Weekly Reset");
+    expect(field(monthly, "DESCRIPTION")).toContain("the monthly part of your Weekly Reset adds 10 minutes");
     expect(field(monthly, "DESCRIPTION")).toContain("not an extra meeting");
     expect(field(weekly, "DESCRIPTION")).toContain("Pause + Return");
     expect(text).not.toMatch(/care audit/i);
@@ -260,7 +261,7 @@ describe("daylight saving time", () => {
     process.env.TZ = "America/New_York";
     const ls = lines(keepGoingIcsText("19:00", new Date(2026, 9, 30, 12, 0)));
     expect(all(ls, "DTSTART")).toEqual(["20261101T190000", "20261101T190000"]);
-    expect(all(ls, "DTEND")).toEqual(["20261101T194000", "20261101T194000"]);
+    expect(all(ls, "DTEND")).toEqual(["20261101T194000", "20261101T195000"]);
   });
 
   it("America/New_York: the 7-day plan starting 31 Oct stays at 9pm", () => {

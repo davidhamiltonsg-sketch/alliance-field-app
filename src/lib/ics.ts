@@ -198,20 +198,20 @@ export const WEEKLY_RESET_RRULE = "FREQ=WEEKLY;BYDAY=SU";
 /**
  * The "Keep it going" calendar as text: two recurring events at a floating
  * local time (default Sunday 7pm) — the Weekly Reset every Sunday, and a
- * monthly reminder to run a monthly look-back inside the first Weekly Reset of
- * the month (not a separate meeting).
+ * monthly reminder to add the monthly part to the first Weekly Reset of the
+ * month (10 more minutes, not a separate meeting).
  */
 export function keepGoingIcsText(time = "19:00", fromDate = new Date()): string {
   const weekly = nextSundayAt(fromDate, time);
   const monthly = nextFirstSundayAt(fromDate, time);
   const stamp = toIcsDate(new Date());
 
-  const event = (uid: string, start: Date, rrule: string, summary: string, description: string) => [
+  const event = (uid: string, start: Date, rrule: string, summary: string, description: string, minutes: number = WEEKLY_RESET_MINUTES) => [
     "BEGIN:VEVENT",
     `UID:${uid}-${start.getTime()}@allianceprotocols.com`,
     `DTSTAMP:${stamp}`,
     `DTSTART:${toFloatingDate(start)}`,
-    `DTEND:${toFloatingDate(addLocalMinutes(start, WEEKLY_RESET_MINUTES))}`,
+    `DTEND:${toFloatingDate(addLocalMinutes(start, minutes))}`,
     `RRULE:${rrule}`,
     text("SUMMARY", summary),
     text("DESCRIPTION", description),
@@ -230,13 +230,14 @@ export function keepGoingIcsText(time = "19:00", fromDate = new Date()): string 
       "alliance-keep-going-care-checkin",
       monthly,
       CARE_CHECKIN_RRULE,
-      "Monthly look-back (inside the Weekly Reset)",
-      "First Weekly Reset of the month: during Check the load, use a monthly look-back (inside the Weekly Reset) — look back over the whole month, area by area, and ask if the load felt fair. Same 40 minutes, not an extra meeting. Open the Field App at /weekly-reset."
+      "Monthly part of your Weekly Reset",
+      "First Weekly Reset of the month: the monthly part of your Weekly Reset adds 10 minutes. Look back over the whole month, area by area, and ask if the load felt fair. It is part of the same meeting, not an extra meeting. Open the Field App at /weekly-reset.",
+      WEEKLY_RESET_MINUTES + 10
     ),
   ]);
 }
 
-/** Returns an object URL for the "Keep it going" calendar (weekly Reset + monthly look-back). */
+/** Returns an object URL for the "Keep it going" calendar (Weekly Reset + the monthly part). */
 export function buildKeepGoingIcs(time = "19:00", fromDate = new Date()): { url: string; filename: string } {
   return toBlobUrl(keepGoingIcsText(time, fromDate), "alliance-keep-it-going.ics");
 }

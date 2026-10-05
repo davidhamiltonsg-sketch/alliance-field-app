@@ -3,20 +3,12 @@ import { ICON_ACCENT, ICON_STROKE, icons, type IconId } from "@/data/icons";
 
 export type { IconId };
 
-/** New tool slugs that still use the older glyph ids until the icon set is renamed. */
-const ICON_ALIASES: Record<string, IconId> = {
-  "check-up": "uninvestment-check",
-  "team-agreement": "unity-anchor",
-  "daily-rhythm": "morning-evening-rhythm",
-  "full-repair": "full-recovery",
-};
-
 function resolve(id: string): IconId | null {
   if (Object.prototype.hasOwnProperty.call(icons, id)) return id as IconId;
-  return ICON_ALIASES[id] ?? null;
+  return null;
 }
 
-/** True when `id` (or a new-slug alias of it) names an icon in the shared set. */
+/** True when `id` names an icon in the shared set. */
 export function isIconId(id: string): id is IconId {
   return resolve(id) !== null;
 }

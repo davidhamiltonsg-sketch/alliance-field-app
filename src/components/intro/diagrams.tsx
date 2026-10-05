@@ -204,9 +204,9 @@ export function SituationMapDiagram() {
     { q: ["Afraid, threatened,", "not free to say no?"], a: ["Stop. Get", "outside help"], icon: "help-safety", kind: "failure" },
     { q: ["Flooded or shut", "down (but safe)?"], a: ["Pause + Return"], icon: "pause-and-return", kind: "step" },
     { q: ["A fight is", "starting?"], a: ["System Overlay"], icon: "system-overlay", kind: "step" },
-    { q: ["Outside pressure", "or disapproval?"], a: ["Team agreement"], icon: "unity-anchor", kind: "step" },
+    { q: ["Outside pressure", "or disapproval?"], a: ["Team agreement"], icon: "team-agreement", kind: "step" },
     { q: ["Trust breach?"], a: ["Trust Recovery"], icon: "trust-recovery", kind: "repair" },
-    { q: ["Pulling away?"], a: ["Check-Up"], icon: "uninvestment-check", kind: "repair" },
+    { q: ["Pulling away?"], a: ["Check-Up"], icon: "check-up", kind: "repair" },
   ];
   const top = 24,
     pitch = 58,

@@ -8,8 +8,8 @@ import { SectionLabel } from "./SectionLabel";
 
 /**
  * Retention loop after your first week: one downloadable calendar file with a
- * recurring Sunday Weekly Reset and a monthly "look-back inside your
- * Weekly Reset" reminder (first Sunday of the month). Made on this device.
+ * recurring Sunday Weekly Reset and the monthly part of your
+ * Weekly Reset as a reminder (first Sunday of the month). Made on this device.
  */
 export function KeepItGoing({ lead }: { lead?: string }) {
   const [time, setTime] = useState("19:00");
@@ -48,8 +48,8 @@ export function KeepItGoing({ lead }: { lead?: string }) {
             every Sunday, about 40 minutes.
           </li>
           <li className="list-disc">
-            <strong className="font-medium text-ink">Monthly look-back</strong> —
-            once a month, inside the Weekly Reset (first Sunday).
+            <strong className="font-medium text-ink">Monthly part</strong> —
+            first Sunday of the month, 10 more minutes inside the Weekly Reset.
           </li>
         </ul>
         <div className="flex items-end gap-2">

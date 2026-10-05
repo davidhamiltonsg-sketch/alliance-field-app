@@ -4,9 +4,32 @@ ALLIANCE PROTOCOLS · Field App — Built for precision. Designed for connection
 
 The pocket companion to the Alliance Protocols Operating Manual and Field Kit, by David
 Hamilton and Dr Zhongming Shi: a Situation Map that routes you to the right
-protocol card, a Pause + Return timer, the Weekly Reset wizard, Profile
-Calibration and Connection Cards. Next.js (App Router) + Tailwind CSS v4,
-installable as an offline PWA.
+tool, 15 tools in three plain groups (the six to learn first, five for when it
+comes up, four to build over time), a Pause + Return timer, the Weekly Reset
+wizard, Profile Calibration and Connection Cards. Five tabs: Now, Tools, Pause,
+Week, Together; Help is always in the header. Next.js (App Router) + Tailwind
+CSS v4, installable as an offline PWA.
+
+## The 15 tools
+
+| Group (internal key)               | Tools                                                                                          |
+| ---------------------------------- | ---------------------------------------------------------------------------------------------- |
+| Learn first (`core`), 6            | Green Rule, Pause + Return, 60-Second Reset, Micro-Repair, Weekly Reset, System Overlay        |
+| When it comes up (`situational`), 5 | Full Repair, Trust Recovery, Check-Up, Team Agreement, Sun Memory                              |
+| Build over time (`build`), 4       | Daily Rhythm, Intimacy Pact, Consistency Pact, Profile Calibration                             |
+
+Each tool is one card in `src/data/cards/<slug>.json` and one page at
+`/protocols/<slug>`. Old addresses redirect (`next.config.ts`):
+`full-recovery` to `full-repair`, `uninvestment-check` to `check-up`,
+`unity-anchor` to `team-agreement`, `morning-evening-rhythm` to `daily-rhythm`,
+`proof-protocol` to `trust-recovery`, `conflict-protocol` to `system-overlay`.
+
+Times, stated once in `src/data/registry.json` (`times`) and mirrored on the
+cards: Pause 20 minutes to 24 hours; 60-Second Reset 1 minute; Weekly Reset 40
+minutes (15 is fine to start; the monthly part adds 10 minutes; the yearly part
+is 1 to 2 hours); Micro-Repair start within minutes, finish within 24 hours;
+Full Repair 60 to 90 minutes; Check-Up about every few months, 20 minutes;
+Proof windows 1 to 2 weeks (2 to 4 for a breach).
 
 ## Setup
 
@@ -45,7 +68,7 @@ in Vercel's project env vars (or `.env.local` locally) and redeploy.
 | `LAUNCH_COOKIE_SECRET`        | Key for the access cookie's HMAC. Recommended while locked; if unset, a key is derived from the code.      |
 | `NEXT_PUBLIC_CONTACT_EMAIL`   | Contact address on /privacy and /terms. Unset (or not an address): no address is shown, only "via allianceprotocols.com". |
 | `NEXT_PUBLIC_FULL_SYSTEM_URL` | https store page, the fallback for each product below. With no store URL at all, "Coming soon" replaces the buy links. |
-| `NEXT_PUBLIC_STORE_URL_MANUAL` / `_KIT` / `_BUNDLE` | https store pages for the Operating Manual, Field Kit and Complete Bundle (Gumroad). Each falls back to `NEXT_PUBLIC_FULL_SYSTEM_URL`; a product with neither gets no buy link. |
+| `NEXT_PUBLIC_STORE_URL_MANUAL` / `_KIT` / `_BUNDLE` | https store pages for Volume B (the Operating Manual), the Field Kit and the Bundle (Kit + Complete Edition + both volumes as separate files). Each falls back to `NEXT_PUBLIC_FULL_SYSTEM_URL`; a product with neither gets no buy link. |
 | `NEXT_PUBLIC_STORE_URL_VOLUME_A` / `_COMPLETE` | https store pages for Volume A (The Architecture of Staying) and the Complete Edition (Volumes A and B in one document). No fallback; without a URL there is no buy link for that product. |
 | `NEXT_PUBLIC_SIGNUP_ENDPOINT` | Email signup endpoint (see *Email signup* below). Its origin is added to the CSP.                          |
 | `NEXT_PUBLIC_EMAIL_PROVIDER_NAME` | Name of the mailing-list service (e.g. `Buttondown`), named on /privacy. The sign-up form is live only when this **and** the endpoint are set. |
@@ -214,18 +237,43 @@ map changes (it must match the Kit's Situation Map rows).
 ## Safety page
 
 `/help` (header "Help" link, About, the Situation Map's first row, and the
-Green Rule / Pause + Return / Team agreement / Intimacy Pact / Trust Recovery /
-Pulling-Away Check cautions) holds the canonical Help Lines as `tel:`/`sms:`
+Green Rule / Pause + Return / Team Agreement / Intimacy Pact / Trust Recovery /
+Check-Up cautions) holds the canonical Help Lines as `tel:`/`sms:`
 links and the "when not to use this app" guidance. The numbers are in
-`src/data/help.ts` and must match the printed Manual and Kit exactly.
+`src/data/help.ts` and must match the printed Manual and Kit exactly. The
+printed list is `HELP_LINES_PRINTED` in `help.ts`; `registry.json`
+(`concepts.help-safety.helpLines`) and this README repeat it word for word, and
+`tests/spec-v2.test.ts` fails if they drift. Numbers checked October 2026.
 Safety routing always comes first; "unsafe" is never routed to Pause + Return
 (Pause + Return is for flooding, never for fear).
 
+### Help Lines (checked October 2026)
+
+```
+Immediate danger: your local emergency number (999 UK/SG police · 995 SG ambulance · 911 US · 000 AU · 112 EU)
+US: National Domestic Violence Hotline 1-800-799-7233 (text START to 88788) · 988 Suicide & Crisis Lifeline (call/text 988)
+UK: National Domestic Abuse Helpline (Refuge) 0808 2000 247 · Samaritans 116 123
+Australia: 1800RESPECT 1800 737 732 · Lifeline 13 11 14
+Singapore: National Anti-Violence & Sexual Harassment Helpline 1800 777 0000 · SOS 1767
+Sexual violence, including from a partner: US RAINN 800-656-4673 (text HOPE to 64673) · UK Rape Crisis England & Wales 0808 500 2222 · Australia 1800RESPECT (1800 737 732) · Singapore AWARE Sexual Assault Care Centre 6779 0282 (weekdays 10am to 6pm)
+EU: Helpline for women experiencing violence 116 016, where available
+Worried about a child: your local child-protection service, or your emergency number if a child is in danger.
+Elsewhere: your local emergency number or national helpline.
+```
+
 ## Content and visuals
 
-- Protocol cards: `src/data/cards/*.json` (12 protocol cards; the Kit’s 13th
-  card is Read This First). Counts shared with the printed products are in
-  `src/data/kit.ts`; `tests/data-consistency.test.ts` checks them.
+- Tool cards: `src/data/cards/*.json` (15 cards, each with a `synonyms` list used
+  by search; the Kit adds Read This First). The master text is the Kit's; the
+  Manual and this app mirror it word for word. Counts shared with the printed
+  products (15 cards, 5 worksheets, 16 Manual chapters) are in `src/data/kit.ts`;
+  `tests/data-consistency.test.ts` and `tests/spec-v2.test.ts` check them.
+- Groups and labels: `src/data/tiers.ts` (internal keys `core`, `situational`,
+  `build`; people see "Learn first", "When it comes up", "Build over time").
+  The six to learn first: `src/data/core6.ts`.
+- Situation Map rows: `src/data/situations.ts`; Your First Week: `src/data/start.ts`;
+  go-deeper pointers and the 16 Manual chapters: `src/data/go-deeper.ts`; glossary:
+  `src/data/glossary.ts`.
 - Step diagrams: `src/data/visuals/protocol-diagrams.ts`, maintained by hand.
   A diagram only renders when it has exactly as many steps as its card.
 - Protocol and section icons: `src/components/visuals/ProtocolIcon.tsx`, and
