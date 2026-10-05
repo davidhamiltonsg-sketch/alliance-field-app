@@ -86,7 +86,11 @@ describe("The books, if you want more.", () => {
     const html = await renderWith({ NEXT_PUBLIC_FULL_SYSTEM_URL: "", NEXT_PUBLIC_STORE_URL_MANUAL: "", NEXT_PUBLIC_STORE_URL_KIT: "", NEXT_PUBLIC_STORE_URL_BUNDLE: "" }, store);
     expect(html).not.toMatch(/>Buy/);
     expect(text(html)).toContain("The books aren’t on sale yet.");
-    expect(text(html)).toContain("Digital PDF + HTML");
+    // Each product states its own format, and prices may exclude tax.
+    expect(text(html)).toMatch(/Field Kit.*PDF \+ print-ready files.*Volume A.*PDF \+ HTML.*Volume B.*PDF \+ HTML.*Complete Edition.*PDF.*Complete Bundle.*PDF \+ HTML \+ print-ready files/);
+    expect(text(html)).toContain("Prices may exclude VAT/GST");
+    expect(text(html)).toContain("Download the Situation Map (PDF)");
+    expect(text(html)).toContain("Download the sample (PDF)");
     // Sign-up isn't live, so the card doesn't promise it.
     expect(text(html)).not.toContain("sign up below");
     expect(text(html)).toContain("Email sign-up isn’t open yet");
