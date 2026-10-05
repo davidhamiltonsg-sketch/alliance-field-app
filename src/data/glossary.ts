@@ -39,8 +39,7 @@ export interface GlossaryEntry {
  * tool names; chapter numbers are the Manual's 16 chapters.
  */
 export const glossary: GlossaryEntry[] = [
-  { term: "2% habit", meaning: "The smallest useful repair: make things 2% better right now with a softer tone, one acknowledgement or a pause, or own the small part of your partner’s complaint that is true.", chapter: "9" },
-  { term: "60-Second Reset", meaning: "A one-minute stop for when an argument has become a fight to win: one sentence, “I want to connect, not fight. Can we talk at ___?”, then three slow breaths and a time to keep talking.", chapter: "3" },
+    { term: "60-Second Reset", meaning: "A one-minute stop for when an argument has become a fight to win: one sentence, “I want to connect, not fight. Can we talk at ___?”, then three slow breaths and a time to keep talking.", chapter: "3" },
   { term: "Bids", meaning: "The small reaches each of you makes for attention, closeness or space. How a bid is met, or missed, is often where a recurring fight starts.", chapter: "5" },
   { term: "Check-Up", meaning: "One sheet with three lenses: drifting apart, pulling away, and gaps between what you say and do. It describes behaviour; it is not a verdict.", chapter: "12" },
   { term: "Consistency Pact", meaning: "A private weekly check on whether what you do matches what you say you want, with one change where it doesn’t.", chapter: "13" },
@@ -60,6 +59,7 @@ export const glossary: GlossaryEntry[] = [
   { term: "Profile Calibration report", meaning: "The Field App’s report once you have both answered the Profile Calibration questions. It shows where your answers are furthest apart, area by area.", chapter: "5" },
   { term: "Reach–Recoil", meaning: "A pattern where one of you reaches and the other pulls back, so the more one reaches, the more the other backs away.", chapter: "6" },
   { term: "Situation Map", meaning: "A one-page list of situations, with the first move for each. Take the first row that fits, from the top.", chapter: "4" },
+  { term: "Soften first", meaning: "The smallest useful repair: soften your tone a little first, offer one acknowledgement or a pause, or own the small part of your partner’s complaint that is true.", chapter: "9" },
   { term: "Sun Memory", meaning: "A break from system-talk, called by either of you: Quick (a few minutes) or Full (2 to 24 hours). Safety, childcare and booked repairs carry on.", chapter: "15" },
   { term: "System-talk", meaning: "Talk about the tools, the reviews or how you could do this better. Sun Memory pauses it.", chapter: "15" },
   { term: "System Overlay", meaning: "A five-step order for hard conversations, at three speeds: quick (about 90 seconds), standard and already a fight.", chapter: "2" },

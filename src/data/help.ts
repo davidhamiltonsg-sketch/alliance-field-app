@@ -115,7 +115,7 @@ export const CHILD_LINE =
 export const SELF_CHECK_TITLE = "Not sure whether this is you?";
 
 export const SELF_CHECK_QUESTIONS: string[] = [
-  "Do you hold back what you think because you are afraid of how your partner would react?",
+  "Are you afraid of what your partner might do if you disagree: hurt you, threaten you, or cut you off? (Ordinary nerves about upsetting them are not what this means.)",
   "Are you ever afraid of what they will do?",
   "Do they check, restrict or punish your contact with others, or control your money?",
   "Does an argument ever end with you giving in out of fear?",

@@ -66,7 +66,7 @@ export const individualTestimonials: Testimonial[] = [
   },
   {
     quote:
-      "Big arguments felt too big to fix in one go. The 2% habit gives me one small, concrete way to own my part of a friction point without feeling I’m swallowing all the blame.",
+      "Big arguments felt too big to fix in one go. Softening my tone a little first gives me one small, concrete way to own my part of a friction point without feeling I’m swallowing all the blame.",
     names: "Elena",
   },
 ];
