@@ -85,6 +85,11 @@ export const teamAgreement = {
 
 export const togetherTools = [
   {
+    label: "Team Agreement",
+    href: "/protocols/team-agreement",
+    note: "The five steps for outside pressure, with “Believe first” as the first line.",
+  },
+  {
     label: "Situation Map",
     href: "/",
     note: `Pick “${outsidePressureRow.label}” — it goes straight to the first move.`,
