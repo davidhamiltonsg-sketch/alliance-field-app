@@ -4,6 +4,7 @@ import { Marker } from "@/components/Marker";
 import { SectionLabel } from "@/components/SectionLabel";
 import { GetFullSystem } from "@/components/GetFullSystem";
 import { Testimonials } from "@/components/Testimonials";
+import { SHOW_TESTIMONIALS } from "@/data/testimonials";
 import { WarnBanner } from "@/components/WarnBanner";
 import { ArrowRight, ChevronRight } from "@/components/icons";
 import { aboutAuthors, authorNames } from "@/data/authors";
@@ -137,7 +138,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <Testimonials />
+      {SHOW_TESTIMONIALS && <Testimonials />}
 
       <section id="product-line" className="scroll-mt-20 space-y-3">
         <SectionLabel>What the app is for</SectionLabel>

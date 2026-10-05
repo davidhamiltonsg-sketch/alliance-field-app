@@ -4,7 +4,7 @@ import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { renderToStaticMarkup } from "react-dom/server";
 import { createElement } from "react";
-import { coupleTestimonials, individualTestimonials } from "@/data/testimonials";
+import { SHOW_TESTIMONIALS, coupleTestimonials, individualTestimonials } from "@/data/testimonials";
 import { TESTIMONIALS_DISCLAIMER, Testimonials } from "@/components/Testimonials";
 
 /**
@@ -13,7 +13,9 @@ import { TESTIMONIALS_DISCLAIMER, Testimonials } from "@/components/Testimonials
  * This pins them: if this test fails, the wording changed — only update the
  * hash for wording the people quoted have approved.
  */
-const ORIGINAL_SHA256 = "3a574c36be724c1dca37222ec90a55a363c19ef016610d223911b8d1d47998da";
+// Updated October 2026 when the retired "2% habit" wording was replaced in one
+// quote. The wording is still unapproved, so SHOW_TESTIMONIALS stays false.
+const ORIGINAL_SHA256 = "e1890bc68cd75966f7d9dc13fba16267707cdcd7cbadfaa982dd707f9127d5c0";
 
 describe("testimonials", () => {
   it("are the approved paraphrase, pinned", () => {
@@ -34,6 +36,16 @@ describe("testimonials", () => {
     const html = renderToStaticMarkup(createElement(Testimonials));
     expect(html).toContain(TESTIMONIALS_DISCLAIMER);
     for (const t of [...coupleTestimonials, ...individualTestimonials]) expect(html).toContain(t.names.replace("&", "&amp;"));
+  });
+
+  it("are not rendered on the About page until each person approves the wording", () => {
+    const about = readFileSync(join(__dirname, "..", "src", "app", "about", "page.tsx"), "utf8");
+    expect(SHOW_TESTIMONIALS).toBe(false);
+    expect(about).toMatch(/\{SHOW_TESTIMONIALS && <Testimonials \/>\}/);
+    const others = ["page.tsx", "together/page.tsx", "start/page.tsx", "help/page.tsx"].map((f) =>
+      readFileSync(join(__dirname, "..", "src", "app", f), "utf8"),
+    );
+    for (const src of others) expect(src).not.toContain("<Testimonials");
   });
 
   it("stay out of the copy scans (their wording is never “fixed”)", () => {

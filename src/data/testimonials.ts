@@ -10,6 +10,12 @@
  * can't drift. Shown with TESTIMONIALS_DISCLAIMER
  * (src/components/Testimonials.tsx).
  */
+/**
+ * Feature flag: testimonials are not rendered anywhere until consent.
+ * Set true only after each person approves written wording.
+ */
+export const SHOW_TESTIMONIALS = false;
+
 export interface Testimonial {
   quote: string;
   names: string;
