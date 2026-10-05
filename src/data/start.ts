@@ -1,7 +1,7 @@
 /**
  * /start: Your First Week (SPEC section 5), the same plan, day for day, as
  * the Field Kit's first-week plan and Manual Chapter 4. "Tonight" takes
- * 20 minutes; days 2 to 6 take 10 to 25; day 7 is the first Weekly Reset
+ * 20 minutes; days 2 to 6 take 10 to 25; day 7 is your first Weekly Reset
  * (15 minutes is fine; 40 is the full version).
  */
 export interface StartDay {
