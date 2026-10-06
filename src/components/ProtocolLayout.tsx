@@ -143,19 +143,19 @@ export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
         </SectionLabel>
         <ul className="space-y-1.5 text-sm leading-snug text-ink">
           {deeper && (
-            <li className="flex items-center gap-2">
-              <ApIcon id="manual" size={20} className="shrink-0 text-accent" />
+            <li className="flex items-start gap-2">
+              <ApIcon id="manual" size={20} className="-mt-px shrink-0 text-accent" />
               <span>{manualLine(deeper.chapter)}</span>
             </li>
           )}
           {deeper?.companion && (
-            <li className="flex items-center gap-2">
-              <ApIcon id="companion" size={20} className="shrink-0 text-accent" />
+            <li className="flex items-start gap-2">
+              <ApIcon id="companion" size={20} className="-mt-px shrink-0 text-accent" />
               <span>{companionLine(deeper.companion)}</span>
             </li>
           )}
-          <li className="flex items-center gap-2">
-            <ApIcon id="field-kit" size={20} className="shrink-0 text-accent" />
+          <li className="flex items-start gap-2">
+            <ApIcon id="field-kit" size={20} className="-mt-px shrink-0 text-accent" />
             <span>
               Field Kit: the {protocol.title} card
               {sheets.length > 0 ? ` and the ${sheets.map((w) => w.name).join(" and ")}` : ""}

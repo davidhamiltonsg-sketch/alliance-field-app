@@ -220,7 +220,14 @@ const TOOL_SLUG: Record<string, string> = {
   "Green Rule": "green-rule",
 };
 
-function routeTools(a: Profile, b: Profile, health: Record<LayerKey, number>) {
+const KEEP_GOING_ROUTES = [
+  { tool: "Daily Rhythm", reason: "Keep a little daily contact you can both count on." },
+  { tool: "Weekly Reset", reason: "Keep a Weekly Reset going, so small things get said while they’re small." },
+];
+
+function routeTools(a: Profile, b: Profile, health: Record<LayerKey, number>, noDifference: boolean) {
+  // Nothing differs: no reason may claim a difference, so only the keep-going pair.
+  if (noDifference) return [...KEEP_GOING_ROUTES];
   const routes: { tool: string; reason: string }[] = [];
   const add = (tool: string, reason: string) => {
     if (!routes.some((r) => r.tool === tool)) routes.push({ tool, reason });
@@ -249,10 +256,7 @@ function routeTools(a: Profile, b: Profile, health: Record<LayerKey, number>) {
   ) {
     add("Check-Up", "You both tend to pull back when things are hard, and to notice when the other does. Do the Check-Up together to tell needing space from pulling away, instead of guessing.");
   }
-  if (!routes.length) {
-    add("Daily Rhythm", "Keep a little daily contact you can both count on.");
-    add("Weekly Reset", "Keep a Weekly Reset going, so small things get said while they’re small.");
-  }
+  if (!routes.length) for (const r of KEEP_GOING_ROUTES) add(r.tool, r.reason);
 
   return routes.slice(0, 6);
 }
@@ -383,7 +387,7 @@ export function generateCoupleReport(profileA: Profile, profileB: Profile, optio
   const noDifference = diverging.length === 0 && Object.values(health).every((h) => h >= CLOSE_HEALTH);
   const mismatch = diverging.map((r) => `${r.domain}: ${r.risk}`);
 
-  const routes = routeTools(profileA, profileB, health);
+  const routes = routeTools(profileA, profileB, health, noDifference);
   const recommendedTools = toRecommendedTools(routes);
 
   // Name something the couple’s own answers already agree on, rather than a generic line.

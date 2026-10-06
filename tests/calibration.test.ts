@@ -238,6 +238,9 @@ describe("couple report when nothing differs", () => {
     const report = generateCoupleReport(a, b, { anonymous: false });
     expect(report.noDifference).toBe(true);
     expect(report.conflictPattern).toBe("");
+    // No “try these first” reason may claim a difference the report says isn’t there.
+    expect(report.recommendedTools.map((t) => t.slug)).toEqual(["daily-rhythm", "weekly-reset"]);
+    for (const t of report.recommendedTools) expect(t.reason).not.toMatch(/differen/i);
   });
 
   it("writes a clash story when the answers differ", () => {
