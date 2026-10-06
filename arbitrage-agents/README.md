@@ -53,6 +53,29 @@ Schedule with cron:
 0 7 * * 1  cd /path/to/arbitrage-agents && python3 cli.py saas-scout     >> logs/cron.log 2>&1
 ```
 
+### Run it from GitHub (no laptop needed)
+
+`.github/workflows/arbitrage-agents-run.yml` runs the agents on GitHub's
+servers on the cookbook schedule (06:00 UTC daily for the Domain Flipper,
+07:00 UTC Mondays for the SaaS Scout) and on demand. Everything can be done
+from the GitHub mobile app or a phone browser.
+
+1. **Add keys** at *Settings → Secrets and variables → Actions → New repository
+   secret*: `WHOISFREAKS_API_KEY`, `DATAFORSEO_LOGIN`, `DATAFORSEO_PASSWORD`,
+   `OPENAI_API_KEY`, `SLACK_WEBHOOK_URL`. For the SaaS Scout also
+   `SAAS_LISTINGS_URL` (a URL that returns the listings JSON, such as an Apify
+   dataset items URL) and optionally `BUILTWITH_API_KEY`, `SIMILARWEB_API_KEY`.
+   Thresholds such as `DOMAIN_TOP_N` go under *Variables* instead of secrets.
+2. **Trigger a run** at *Actions → Run arbitrage agents → Run workflow*. Leave
+   *Dry run* ticked the first time: it needs no keys and prints the digest in
+   the job log so you can see the output shape. Untick it for a live run.
+3. **Read the result** in Slack (live runs) or in the job log under the
+   *Run* step. Audit logs are attached to every run as an artifact.
+
+Missing keys degrade rather than fail: no OpenAI key uses the heuristic
+scorer, no enrichment keys skip that step, no listings URL makes the SaaS
+Scout fall back to a dry run.
+
 ### n8n
 
 Import `n8n/domain_flipper.workflow.json` and `n8n/saas_scout.workflow.json`
