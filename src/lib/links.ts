@@ -9,9 +9,10 @@
  * - NEXT_PUBLIC_SIGNUP_ENDPOINT + NEXT_PUBLIC_EMAIL_PROVIDER_NAME: the email
  *   sign-up is live only when both are set, so the privacy notice can always
  *   name the service that holds the list.
- * - NEXT_PUBLIC_STORE_URL_MANUAL / _KIT / _BUNDLE: store pages for each
- *   product, each falling back to NEXT_PUBLIC_FULL_SYSTEM_URL. https only; a
- *   product with no valid URL gets no buy link.
+ * - NEXT_PUBLIC_STORE_URL_KIT / _MANUAL / _VOLUME_A / _COMPLETE / _BUNDLE:
+ *   the store page for each product. No fallback: a product's buy link
+ *   appears only when its own variable holds a valid https URL, so two
+ *   products can never open the same page by accident.
  */
 
 /** Returns the URL when it is a valid https URL, else null. */
@@ -37,18 +38,15 @@ export const CONTACT_EMAIL = emailOrNull(process.env.NEXT_PUBLIC_CONTACT_EMAIL);
 export const SITE_CONTACT_TEXT = "via allianceprotocols.com";
 export const SITE_URL = "https://allianceprotocols.com";
 
-export const FULL_SYSTEM_URL = httpsUrlOrNull(process.env.NEXT_PUBLIC_FULL_SYSTEM_URL);
-
 export type StoreProduct = "manual" | "volumeA" | "complete" | "kit" | "bundle";
 
-/** Store page per product (falling back to the single full-system URL); null = no buy link. */
+/** Store page per product, each from its own variable only; null = no buy link. */
 export const STORE_URLS: Record<StoreProduct, string | null> = {
-  manual: httpsUrlOrNull(process.env.NEXT_PUBLIC_STORE_URL_MANUAL) ?? FULL_SYSTEM_URL,
-  kit: httpsUrlOrNull(process.env.NEXT_PUBLIC_STORE_URL_KIT) ?? FULL_SYSTEM_URL,
-  bundle: httpsUrlOrNull(process.env.NEXT_PUBLIC_STORE_URL_BUNDLE) ?? FULL_SYSTEM_URL,
-  // Volume A (the Companion Book) and the Complete Edition (A + B in one document) have no single-URL fallback.
+  kit: httpsUrlOrNull(process.env.NEXT_PUBLIC_STORE_URL_KIT),
+  manual: httpsUrlOrNull(process.env.NEXT_PUBLIC_STORE_URL_MANUAL),
   volumeA: httpsUrlOrNull(process.env.NEXT_PUBLIC_STORE_URL_VOLUME_A),
   complete: httpsUrlOrNull(process.env.NEXT_PUBLIC_STORE_URL_COMPLETE),
+  bundle: httpsUrlOrNull(process.env.NEXT_PUBLIC_STORE_URL_BUNDLE),
 };
 
 /**

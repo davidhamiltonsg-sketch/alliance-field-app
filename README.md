@@ -68,11 +68,15 @@ in Vercel's project env vars (or `.env.local` locally) and redeploy.
 | `LAUNCH_ACCESS_CODE`          | Turns on the pre-launch lock (see below). Unset = launched, no lock.                                      |
 | `LAUNCH_COOKIE_SECRET`        | Key for the access cookie's HMAC. Recommended while locked; if unset, a key is derived from the code.      |
 | `NEXT_PUBLIC_CONTACT_EMAIL`   | Contact address on /privacy and /terms. Unset (or not an address): no address is shown, only "via allianceprotocols.com". |
-| `NEXT_PUBLIC_FULL_SYSTEM_URL` | https store page, the fallback for each product below. With no store URL at all, "Coming soon" replaces the buy links. |
-| `NEXT_PUBLIC_STORE_URL_MANUAL` / `_KIT` / `_BUNDLE` | https store pages for Volume B (the Operating Manual), the Field Kit and the Bundle (Kit + Complete Edition + both volumes as separate files). Each falls back to `NEXT_PUBLIC_FULL_SYSTEM_URL`; a product with neither gets no buy link. |
-| `NEXT_PUBLIC_STORE_URL_VOLUME_A` / `_COMPLETE` | https store pages for Volume A (The Architecture of Staying) and the Complete Edition (Volumes A and B in one document). No fallback; without a URL there is no buy link for that product. |
+| `NEXT_PUBLIC_STORE_URL_KIT` | https store page for the Field Kit. |
+| `NEXT_PUBLIC_STORE_URL_MANUAL` | https store page for Volume B (the Operating Manual). |
+| `NEXT_PUBLIC_STORE_URL_VOLUME_A` | https store page for Volume A (The Architecture of Staying). |
+| `NEXT_PUBLIC_STORE_URL_COMPLETE` | https store page for the Complete Edition (Volumes A and B in one document). |
+| `NEXT_PUBLIC_STORE_URL_BUNDLE` | https store page for the Bundle (Kit + Complete Edition + both volumes as separate files). |
 | `NEXT_PUBLIC_SIGNUP_ENDPOINT` | Email signup endpoint (see *Email signup* below). Its origin is added to the CSP.                          |
 | `NEXT_PUBLIC_EMAIL_PROVIDER_NAME` | Name of the mailing-list service (e.g. `Buttondown`), named on /privacy. The sign-up form is live only when this **and** the endpoint are set. |
+
+Each product's buy button appears only when its own `NEXT_PUBLIC_STORE_URL_*` is a valid https URL; there is no shared fallback, so two products never open the same page. With none set, the card says the books aren't on sale yet. Prices are shown in US dollars, "plus any VAT/GST calculated at checkout".
 
 ## Pre-launch lock
 
@@ -198,10 +202,10 @@ sees only the couple report.
 ## Email signup and free download
 
 The "Get the full system" card (`src/components/GetFullSystem.tsx`, on
-About) has a buy link per product (`STORE_URLS`: Manual, Field Kit, Bundle,
-each from its own `NEXT_PUBLIC_STORE_URL_*` or `NEXT_PUBLIC_FULL_SYSTEM_URL`;
-"Coming soon" when none is set), a free printable Situation Map and an email
-signup.
+About) has a buy link per product (`STORE_URLS`: Field Kit, Volume A,
+Volume B, Complete Edition, Bundle, each only from its own
+`NEXT_PUBLIC_STORE_URL_*`; "The books aren't on sale yet" when none is set),
+a free printable Situation Map and an email signup.
 
 | Variable                      | Purpose                                                                                     |
 | ----------------------------- | ------------------------------------------------------------------------------------------- |

@@ -83,7 +83,7 @@ export function GetFullSystem() {
             </li>
           ))}
         </ul>
-        <p className="text-sm text-ink-muted">Prices in US dollars. Prices may exclude VAT/GST.</p>
+        <p className="text-sm text-ink-muted">Prices in US dollars. Plus any VAT/GST calculated at checkout.</p>
 
         <div className="border-t border-rule/35 pt-3">
           <SituationMapDownload />
