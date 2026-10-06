@@ -1,7 +1,0 @@
-# local state
-.cache/
-logs/
-__pycache__/
-*.pyc
-.env
-!.env.example
