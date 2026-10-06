@@ -156,7 +156,8 @@ export function startPlanIcsText(time = "20:00", fromDate = new Date(), days = 7
     `DTSTART:${toFloatingDate(start)}`,
     `DTEND:${toFloatingDate(end)}`,
     `RRULE:FREQ=DAILY;COUNT=${days}`,
-    text("SUMMARY", "Alliance start plan (10 min)"),
+    // Neutral title: it shows on lock screens and in shared calendars.
+    text("SUMMARY", "Reminder (10 min)"),
     text(
       "DESCRIPTION",
       "Today’s step of the 7-day plan — open the Field App at /start. Day 7 is your first Weekly Reset (about 40 minutes). If either of you is flooded, Pause + Return first."
@@ -242,26 +243,28 @@ export function buildKeepGoingIcs(time = "19:00", fromDate = new Date()): { url:
   return toBlobUrl(keepGoingIcsText(time, fromDate), "alliance-keep-it-going.ics");
 }
 
+/** Title and alarm text for the return-time event. */
+export const PAUSE_REMINDER_TITLE = "Reminder";
+
 /**
  * The Pause + Return time as a one-off event with an alarm at the return
  * time — a backstop for phones that silence the in-app chime in the background.
+ * Everything in it is neutral (no tool names, no reason): the title shows on
+ * lock screens, and a shared calendar shows the whole event to others.
  */
 export function pauseReturnIcsText(returnAt: Date, now = new Date()): string {
   const end = new Date(returnAt.getTime() + 5 * 60 * 1000);
   return calendar([
     "BEGIN:VEVENT",
-    `UID:alliance-pause-return-${returnAt.getTime()}@allianceprotocols.com`,
+    `UID:reminder-${returnAt.getTime()}@allianceprotocols.com`,
     `DTSTAMP:${toIcsDate(now)}`,
     `DTSTART:${toIcsDate(returnAt)}`,
     `DTEND:${toIcsDate(end)}`,
-    text("SUMMARY", "Return time (Pause + Return)"),
-    text(
-      "DESCRIPTION",
-      "Time to come back, as promised. Warm up, then make it safe; don’t restart where you left off. If you’re afraid, not just flooded, don’t return — get outside help."
-    ),
+    text("SUMMARY", PAUSE_REMINDER_TITLE),
+    text("DESCRIPTION", "The time you set."),
     "BEGIN:VALARM",
     "ACTION:DISPLAY",
-    text("DESCRIPTION", "Return time (Pause + Return)"),
+    text("DESCRIPTION", PAUSE_REMINDER_TITLE),
     "TRIGGER:PT0M",
     "END:VALARM",
     "END:VEVENT",
@@ -269,5 +272,5 @@ export function pauseReturnIcsText(returnAt: Date, now = new Date()): string {
 }
 
 export function buildPauseReturnIcs(returnAt: Date, now = new Date()): { url: string; filename: string } {
-  return toBlobUrl(pauseReturnIcsText(returnAt, now), "alliance-return-time.ics");
+  return toBlobUrl(pauseReturnIcsText(returnAt, now), "reminder.ics");
 }

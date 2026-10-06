@@ -89,6 +89,7 @@ describe("buildStartPlanIcs", () => {
     expect(field(lines, "DTSTART")).toBe("20260303T194500");
     expect(field(lines, "DTEND")).toBe("20260303T195500");
     expect(field(lines, "DESCRIPTION")).toContain("Pause + Return");
+    expect(field(lines, "SUMMARY")).toBe("Reminder (10 min)");
   });
 
   it("refuses an empty or invalid time instead of silently using midnight (L9)", () => {
@@ -207,12 +208,20 @@ describe("pause return time", () => {
   it("is one event at the return time with an alarm", async () => {
     const at = new Date("2026-09-30T20:15:00Z");
     const result = buildPauseReturnIcs(at, new Date("2026-09-30T19:00:00Z"));
-    expect(result.filename).toBe("alliance-return-time.ics");
+    expect(result.filename).toBe("reminder.ics");
     const lines = unfold(await captured!.text()).split("\r\n");
     expect(field(lines, "DTSTART")).toBe("20260930T201500Z");
     expect(lines).toContain("BEGIN:VALARM");
     expect(lines).toContain("TRIGGER:PT0M");
-    expect(field(lines, "DESCRIPTION")).toContain("get outside help");
+  });
+
+  it("is neutral: titled “Reminder”, alarm too, with no tool names or reasons (lock screens, shared calendars)", async () => {
+    const text = unfold(pauseReturnIcsText(new Date("2026-09-30T20:15:00Z"), new Date("2026-09-30T19:00:00Z")));
+    const ls = text.split("\r\n");
+    expect(field(ls, "SUMMARY")).toBe("Reminder");
+    expect(ls.filter((l) => l.startsWith("DESCRIPTION:")).at(-1)).toBe("DESCRIPTION:Reminder");
+    const shown = ls.filter((l) => /^(SUMMARY|DESCRIPTION|LOCATION):/.test(l)).join("\n");
+    expect(shown).not.toMatch(/Pause|Return|Alliance|afraid|flooded|help|fight/i);
   });
 });
 

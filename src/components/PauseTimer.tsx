@@ -441,7 +441,7 @@ function PauseTimerClient() {
           Add your return time to your calendar
         </PrimaryButton>
         <p role="status" className="text-center text-sm font-medium text-accent empty:hidden">
-          {calendarAdded ? "Saved. Open the file to add the alarm to your calendar." : ""}
+          {calendarAdded ? "Saved. Open the file to add the alarm. It shows only as “Reminder”." : ""}
         </p>
         <p className="rounded-xl bg-surface-warn px-3.5 py-2.5 text-sm leading-snug text-ink">
           <strong className="font-medium">Keep this screen open</strong> —
