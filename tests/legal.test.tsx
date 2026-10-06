@@ -99,7 +99,7 @@ describe("The books, if you want more.", () => {
 
   it("gives each product only its own link: no shared fallback, so two products never open one page", async () => {
     const html = await renderWith(
-      { NEXT_PUBLIC_STORE_URL_MANUAL: "", NEXT_PUBLIC_STORE_URL_KIT: "", NEXT_PUBLIC_STORE_URL_BUNDLE: "", NEXT_PUBLIC_STORE_URL_VOLUME_A: "", NEXT_PUBLIC_STORE_URL_COMPLETE: "", NEXT_PUBLIC_FULL_SYSTEM_URL: "https://store.example/all", NEXT_PUBLIC_STORE_URL_MANUAL: "https://store.example/manual", NEXT_PUBLIC_STORE_URL_KIT: "http://insecure.example/kit" },
+      { NEXT_PUBLIC_STORE_URL_BUNDLE: "", NEXT_PUBLIC_STORE_URL_VOLUME_A: "", NEXT_PUBLIC_STORE_URL_COMPLETE: "", NEXT_PUBLIC_FULL_SYSTEM_URL: "https://store.example/all", NEXT_PUBLIC_STORE_URL_MANUAL: "https://store.example/manual", NEXT_PUBLIC_STORE_URL_KIT: "http://insecure.example/kit" },
       store,
     );
     expect(html).toContain('href="https://store.example/manual"');
@@ -110,7 +110,7 @@ describe("The books, if you want more.", () => {
   });
 
   it("with only a bundle link, shows only the bundle", async () => {
-    const html = await renderWith({ NEXT_PUBLIC_STORE_URL_MANUAL: "", NEXT_PUBLIC_STORE_URL_KIT: "", NEXT_PUBLIC_STORE_URL_BUNDLE: "", NEXT_PUBLIC_STORE_URL_VOLUME_A: "", NEXT_PUBLIC_STORE_URL_COMPLETE: "", NEXT_PUBLIC_STORE_URL_BUNDLE: "https://store.example/b" }, store);
+    const html = await renderWith({ NEXT_PUBLIC_STORE_URL_MANUAL: "", NEXT_PUBLIC_STORE_URL_KIT: "", NEXT_PUBLIC_STORE_URL_VOLUME_A: "", NEXT_PUBLIC_STORE_URL_COMPLETE: "", NEXT_PUBLIC_STORE_URL_BUNDLE: "https://store.example/b" }, store);
     expect(html.match(/>Buy/g)).toHaveLength(1);
     expect(html).toContain('href="https://store.example/b"');
   });
