@@ -37,10 +37,13 @@ describe("Together tab", () => {
     for (const label of ["Outside pressure", "Connection Cards", "Profile Calibration", "How this works", "Help & safety"]) {
       expect(src).toContain(`label: "${label}"`);
     }
-    // Order: Connection Cards, then Outside pressure, then Profile Calibration; About and Help sit in "More" at the bottom.
+    // Order: Connection Cards, then Profile Calibration, then Outside pressure; About and Help sit in "More" at the bottom.
     const at = (s: string) => src.indexOf(s);
-    expect(at('label: "Connection Cards"')).toBeLessThan(at('label: "Outside pressure"'));
-    expect(at('label: "Outside pressure"')).toBeLessThan(at('label: "Profile Calibration"'));
+    expect(at('label: "Connection Cards"')).toBeLessThan(at('label: "Profile Calibration"'));
+    expect(at('label: "Profile Calibration"')).toBeLessThan(at('label: "Outside pressure"'));
+    // Outside pressure appears once: one entry that opens in place, no separate “longer read”.
+    expect(src.match(/Outside pressure/g)).toHaveLength(1);
+    expect(src).not.toContain("the longer read");
     expect(at("const more")).toBeLessThan(at('label: "How this works"'));
     expect(at("const more")).toBeLessThan(at('label: "Help & safety"'));
     expect(at('id="outside-pressure"')).toBeLessThan(at('id="more-heading"'));

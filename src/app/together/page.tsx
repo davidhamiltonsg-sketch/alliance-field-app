@@ -27,18 +27,20 @@ export const metadata = {
 
 type HubLink = { href: string; label: string; sub: string; icon: IconId; tone: IconTone };
 
-/** The three things to do together, in this order. */
+/** The three things to do together, in this order: Connection Cards, Profile Calibration, then outside pressure. */
 const hub: HubLink[] = [
   { href: "/connect", label: "Connection Cards", sub: "Free in this app: questions to flip through together.", icon: "connection-cards", tone: "connection" },
-  {
-    href: "/protocols/team-agreement",
-    label: "Outside pressure",
-    sub: "Team Agreement: face disapproval, stares and comments from the same side.",
-    icon: "team-agreement",
-    tone: "accent",
-  },
   { href: "/calibrate", label: "Profile Calibration", sub: "Where you two differ most, and the tools to try first.", icon: "profile-calibration", tone: "accent" },
 ];
+
+/** The third entry opens in place (one entry, not a card and a second "longer read"). */
+const outsidePressure: HubLink = {
+  href: "/protocols/team-agreement",
+  label: "Outside pressure",
+  sub: "Team Agreement: face disapproval, stares and comments from the same side.",
+  icon: "team-agreement",
+  tone: "accent",
+};
 
 /** A small "More" list at the bottom of the page. */
 const more: { href: string; label: string; sub: string }[] = [
@@ -53,6 +55,7 @@ export default function TogetherPage() {
         Things to do as a couple, and where to turn when it isn’t safe.
       </PageHeader>
 
+      <div className="space-y-2.5">
       <ul className="space-y-2.5">
         {hub.map((h) => (
           <li key={h.href}>
@@ -73,17 +76,23 @@ export default function TogetherPage() {
         ))}
       </ul>
 
-      <details id="outside-pressure" className="group card scroll-mt-20 px-4 py-1">
-        <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between gap-3 py-2 text-base font-semibold text-accent [&::-webkit-details-marker]:hidden">
-          <span>
-            Outside pressure: the longer read
-            <span className="block text-sm font-normal text-ink-muted">
-              When the pressure comes from outside, face it from the same side.
-            </span>
+      <details id="outside-pressure" className="group v2-card scroll-mt-20">
+        <summary className="relative flex min-h-16 cursor-pointer list-none items-center gap-3 py-3.5 pl-4 pr-3 [&::-webkit-details-marker]:hidden">
+          <IconChip id={outsidePressure.icon} tone={outsidePressure.tone} size="md" />
+          <span className="min-w-0 flex-1">
+            <span className="block text-lg font-semibold leading-snug text-ink">{outsidePressure.label}</span>
+            <span className="mt-0.5 block text-sm leading-snug text-ink-muted">{outsidePressure.sub}</span>
           </span>
-          <ChevronRight size={18} className="shrink-0 transition-transform group-open:rotate-90" />
+          <ChevronRight size={20} className="shrink-0 text-ink-muted/60 transition-transform group-open:rotate-90" />
         </summary>
-        <div className="space-y-6 pb-4 pt-2">
+        <div className="space-y-6 border-t border-rule/40 px-4 pb-4 pt-4">
+        <Link
+          href={outsidePressure.href}
+          className="inline-flex min-h-11 items-center gap-1.5 text-base font-medium text-accent"
+        >
+          Open the Team Agreement card
+          <ChevronRight size={16} />
+        </Link>
         <p className="text-base leading-normal text-ink">
           For couples who deal with disapproval, stares, comments and &ldquo;just
           asking&rdquo; questions from outside the relationship, and who
@@ -266,6 +275,7 @@ export default function TogetherPage() {
 
         </div>
       </details>
+      </div>
 
       <section aria-labelledby="more-heading" className="space-y-2">
         <SectionLabel>
