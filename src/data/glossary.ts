@@ -64,6 +64,6 @@ export const glossary: GlossaryEntry[] = [
   { term: "System-talk", meaning: "Talk about the tools, the reviews or how you could do this better. Sun Memory pauses it.", chapter: "15" },
   { term: "System Overlay", meaning: "A five-step order for hard conversations, at three speeds: quick (about 90 seconds), standard and already a fight.", chapter: "2" },
   { term: "Team Agreement", meaning: "Five steps for pressure from outside, starting with “Believe first”, plus a restart line. Whether to be out is each person’s own decision.", chapter: "16" },
-  { term: "Trust Recovery", meaning: "A way to rebuild after a breach both of you agree happened: one specific change, a time window and a check back. Leaving is a valid outcome.", chapter: "11" },
+  { term: "Trust Recovery", meaning: "A way to rebuild after a breach (something the partner agrees they did): one specific change, a time window and a check back. Leaving is a valid outcome.", chapter: "11" },
   { term: "Weekly Reset", meaning: "About 40 minutes once a week (15 is fine to start): appreciation, the load, one friction point, requests and next steps. The monthly part adds 10 minutes; the yearly part is 1 to 2 hours.", chapter: "8" },
 ];

@@ -1,0 +1,242 @@
+{
+ "version": "1.2-r15",
+ "note": "The ONE canonical Situation Map. Manual (restructure/frags/pocket.html), Field Kit pages 5-6 and the Field App (src/data/situations.ts) all take their wording from this file. answer = full first move (App); kitRow = the same move without the leading tool name (Kit laminate and Manual map, after the tool names). tools[0] is the primary tool; tools[1] the second.",
+ "rule": "Read from the top and take the first row that matches. Several at once? Safety comes first.",
+ "footer": "Flooded part-way through any row? Back to Pause + Return. Afraid at any point? Back to the first row: Pause + Return is for flooding, never for fear.",
+ "floods": "At any point, if someone floods: take a Pause + Return, then restart warm. If threats, fear, coercion or violence appear, do not return at the set time: leave safely and use the Help Lines.",
+ "rows": [
+  {
+   "n": 1,
+   "id": "unsafe",
+   "question": "I’m afraid, being threatened, or not free to say no",
+   "description": "You’re afraid of your partner, or being threatened, pressured or controlled, and it’s more than a hard conversation.",
+   "mapNote": "This includes jealousy that leads to checking, restricting or accusing. Numbers are not on this map: keep them somewhere private.",
+   "answer": "Stop. These tools are not for this. Get outside help (see Help Lines). Immediate danger: your local emergency number.",
+   "kitRow": "Stop. These tools are not for this. Get outside help (see Help Lines). Immediate danger: your local emergency number.",
+   "tools": [
+    {
+     "name": "Help Lines",
+     "slug": "help"
+    }
+   ],
+   "chapters": "Help Lines",
+   "danger": true
+  },
+  {
+   "n": 2,
+   "id": "flooded",
+   "question": "I’m flooded or shut down (but safe)",
+   "description": "Racing heart, tunnel vision, can’t think straight, urge to flee or win.",
+   "mapNote": "Racing heart, urge to flee or win.",
+   "answer": "Pause + Return, with an exact return time. For flooding, never for fear. If you’re the one waiting: don’t follow or message.",
+   "kitRow": "Exact return time. For flooding, never for fear. If you’re the one waiting: don’t follow or message.",
+   "tools": [
+    {
+     "name": "Pause + Return",
+     "slug": "pause-and-return"
+    },
+    {
+     "name": "60-Second Reset",
+     "slug": "60-second-reset"
+    }
+   ],
+   "chapters": "Ch 3"
+  },
+  {
+   "n": 3,
+   "id": "conflict-starting",
+   "question": "A fight is starting",
+   "description": "Voices are rising and you’re both building a case.",
+   "mapNote": "Voices rising; you’re both building a case.",
+   "answer": "60-Second Reset. Say: “I want to connect, not fight. Can we talk at ___?” Too hot to stay in the room? Pause + Return. Next: the System Overlay, and start it with the Green Rule.",
+   "kitRow": "Say: “I want to connect, not fight. Can we talk at ___?” Too hot to stay in the room? Pause + Return. Next: the System Overlay, and start it with the Green Rule.",
+   "tools": [
+    {
+     "name": "60-Second Reset",
+     "slug": "60-second-reset"
+    },
+    {
+     "name": "Pause + Return",
+     "slug": "pause-and-return"
+    },
+    {
+     "name": "System Overlay",
+     "slug": "system-overlay"
+    },
+    {
+     "name": "Green Rule",
+     "slug": "green-rule"
+    }
+   ],
+   "chapters": "Ch 3 · 2"
+  },
+  {
+   "n": 4,
+   "id": "outside-pressure",
+   "question": "Outside pressure or disapproval from family, friends or strangers",
+   "description": "Family disapproval, discrimination or judgement from others is landing on the two of you.",
+   "mapNote": "",
+   "answer": "Team Agreement: decide together how the two of you respond. Never limit a partner’s contact with anyone. Pressure coming from your partner? If they check, restrict or punish your contact with others: row 1 (Help Lines). Otherwise: the Green Rule.",
+   "kitRow": "Decide together how the two of you respond. Never limit a partner’s contact with anyone. Pressure coming from your partner? If they check, restrict or punish your contact with others: row 1 (Help Lines). Otherwise: the Green Rule.",
+   "tools": [
+    {
+     "name": "Team Agreement",
+     "slug": "team-agreement"
+    },
+    {
+     "name": "Green Rule",
+     "slug": "green-rule"
+    }
+   ],
+   "chapters": "Ch 16 · 2"
+  },
+  {
+   "n": 5,
+   "id": "trust-breach",
+   "question": "Trust breach",
+   "description": "Lying, infidelity or a broken agreement: something the partner agrees they did.",
+   "mapNote": "",
+   "answer": "Safety first, then Trust Recovery. A breach is something the partner agrees they did. Seeing friends or family, privacy or a locked phone is never a breach. Skip Your First Week: start with Trust Recovery, then the Weekly Reset. Agree one change you’ll both see, and check it together at a set time.",
+   "kitRow": "Safety first. A breach is something the partner agrees they did. Seeing friends or family, privacy or a locked phone is never a breach. Skip Your First Week: start here, then the Weekly Reset. Agree one change you’ll both see, and check it together at a set time.",
+   "tools": [
+    {
+     "name": "Trust Recovery",
+     "slug": "trust-recovery"
+    }
+   ],
+   "chapters": "Ch 11"
+  },
+  {
+   "n": 6,
+   "id": "detachment",
+   "question": "Pulling away",
+   "description": "Warmth missing, repairs on autopilot: several signs of pulling away, not just needing space.",
+   "mapNote": "",
+   "answer": "Check-Up: each of you marks your own half of the sheet, privately. Contempt, fear or coercion: stop and get outside support first. A partner who has stopped sharing because they are afraid is not pulling away: use the Help Lines. Then, only if you both want one: Full Repair.",
+   "kitRow": "Each of you marks your own half of the sheet, privately. Contempt, fear or coercion: stop and get outside support first. Stopped sharing out of fear? Help Lines. Then, only if you both want one: Full Repair.",
+   "tools": [
+    {
+     "name": "Check-Up",
+     "slug": "check-up"
+    },
+    {
+     "name": "Full Repair",
+     "slug": "full-repair"
+    }
+   ],
+   "chapters": "Ch 12 · 10"
+  },
+  {
+   "n": 7,
+   "id": "after-fight",
+   "question": "After a fight, or something small stung",
+   "description": "Something sharp was said, or a small promise slipped, and it’s still sitting there.",
+   "mapNote": "",
+   "answer": "Micro-Repair: start within minutes if you can; finish within 24 hours. Bigger hurts go to Full Repair.",
+   "kitRow": "Start within minutes if you can; finish within 24 hours. Bigger hurts go to Full Repair.",
+   "tools": [
+    {
+     "name": "Micro-Repair",
+     "slug": "micro-repair"
+    },
+    {
+     "name": "Full Repair",
+     "slug": "full-repair"
+    }
+   ],
+   "chapters": "Ch 9 · 10"
+  },
+  {
+   "n": 8,
+   "id": "attachment-clash",
+   "question": "We keep clashing the same way",
+   "description": "Reach–Recoil (one reaches, the other pulls back), the same ask on repeat, or one of you always wanting to talk sooner than the other.",
+   "mapNote": "",
+   "answer": "Name it out loud: “I think we’re doing the thing again.” Later, when you’re calm, find the pattern in the Manual’s Appendix A and try Profile Calibration together. Also: Check-Up.",
+   "kitRow": "Name it: “I think we’re doing the thing again.” Later, when calm, find the pattern in the Manual’s Appendix A and try Profile Calibration together. Also: Check-Up.",
+   "tools": [
+    {
+     "name": "Profile Calibration",
+     "slug": "profile-calibration"
+    },
+    {
+     "name": "Check-Up",
+     "slug": "check-up"
+    }
+   ],
+   "chapters": "Ch 5 · 12 · Appendix A"
+  },
+  {
+   "n": 9,
+   "id": "intimacy-stall",
+   "question": "Intimacy feels stuck",
+   "description": "Asking or saying no feels tense; things have gone cold.",
+   "mapNote": "",
+   "answer": "Intimacy Pact. Pressure after a no: stop; don’t talk it through in the moment. The person pressured decides whether, when and with whom to talk. Force, threats, fear or a repeat: Help Lines.",
+   "kitRow": "Pressure after a no: stop; don’t talk it through in the moment. The person pressured decides whether, when and with whom to talk. Force, threats, fear or a repeat: Help Lines.",
+   "tools": [
+    {
+     "name": "Intimacy Pact",
+     "slug": "intimacy-pact"
+    }
+   ],
+   "chapters": "Ch 14"
+  },
+  {
+   "n": 10,
+   "id": "say-do-gap",
+   "question": "Saying one thing, doing another",
+   "description": "Your own follow-through: promises that don’t match what happens.",
+   "mapNote": "",
+   "answer": "Consistency Pact: a private weekly check. Broke a shared agreement? Tell your partner. After a breach (something the partner agrees they did)? A Proof item only if you both agree.",
+   "kitRow": "A private weekly check. Broke a shared agreement? Tell your partner. After a breach (something the partner agrees they did)? A Proof item only if you both agree.",
+   "tools": [
+    {
+     "name": "Consistency Pact",
+     "slug": "consistency-pact"
+    }
+   ],
+   "chapters": "Ch 13 · 11"
+  },
+  {
+   "n": 11,
+   "id": "daily-drift",
+   "question": "We feel like housemates",
+   "description": "Conversations are just logistics; the connection feels thin.",
+   "mapNote": "",
+   "answer": "Daily Rhythm: a morning hello and an evening catch-up. Still thin after two weeks? A Check-Up. Feels like a chore? Take a night off fixing: a Sun Memory.",
+   "kitRow": "A morning hello and an evening catch-up. Still thin after two weeks? A Check-Up. Feels like a chore? Take a night off fixing: a Sun Memory.",
+   "tools": [
+    {
+     "name": "Daily Rhythm",
+     "slug": "daily-rhythm"
+    },
+    {
+     "name": "Check-Up",
+     "slug": "check-up"
+    },
+    {
+     "name": "Sun Memory",
+     "slug": "sun-memory"
+    }
+   ],
+   "chapters": "Ch 7 · 12 · 15"
+  },
+  {
+   "n": 12,
+   "id": "weekly-maintenance",
+   "question": "Time for our weekly check-in",
+   "description": "A short catch-up at a set time, to keep small things small.",
+   "mapNote": "",
+   "answer": "Weekly Reset: about 40 minutes (15 is fine to start). The monthly part adds 10 minutes.",
+   "kitRow": "About 40 minutes (15 is fine to start). The monthly part adds 10 minutes.",
+   "tools": [
+    {
+     "name": "Weekly Reset",
+     "slug": "weekly-reset"
+    }
+   ],
+   "chapters": "Ch 8"
+  }
+ ]
+}

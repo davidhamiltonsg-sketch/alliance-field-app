@@ -290,7 +290,7 @@ describe("Situation Map", () => {
       const s = situations[i];
       expect(s.firstMove, row.id).toBe(row.answer);
       const tools = row.route.split(" · ");
-      const primary = row.id === "weekly-maintenance" ? "Weekly Reset" : nameOf(s.primaryHref);
+      const primary = nameOf(s.primaryHref);
       expect(primary, row.id).toBe(tools[0]);
       const second = (s.secondaryHrefs ?? []).map((l) => l.href).filter((h) => h.startsWith("/protocols/") && h !== "/protocols/weekly-reset").map(nameOf);
       expect(second, row.id).toEqual(tools.slice(1));
@@ -314,10 +314,11 @@ describe("Situation Map", () => {
     expect(row.secondaryHrefs!.map((l) => l.href)).toEqual(["/protocols/pause-and-return", "/protocols/system-overlay", "/protocols/green-rule"]);
   });
 
-  it("trust breach skips the 7-day plan; a breach is something both agree happened", () => {
+  it("trust breach skips the 7-day plan; a breach is something the partner agrees they did", () => {
     expect(byId["trust-breach"].primaryHref).toBe("/protocols/trust-recovery");
     expect(byId["trust-breach"].firstMove).toContain("Skip Your First Week: start with Trust Recovery, then the Weekly Reset.");
-    expect(byId["trust-breach"].firstMove).toContain("A breach is something you both agree happened.");
+    expect(byId["trust-breach"].firstMove).toContain("A breach is something the partner agrees they did.");
+    expect(byId["trust-breach"].description).toBe("Lying, infidelity or a broken agreement: something the partner agrees they did.");
     expect(byId["trust-breach"].firstMove).toContain("never a breach");
   });
 

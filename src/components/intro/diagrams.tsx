@@ -203,8 +203,8 @@ export function SituationMapDiagram() {
   const rows: { q: string[]; a: string[]; icon: IconId; kind: Kind }[] = [
     { q: ["Afraid, threatened,", "not free to say no?"], a: ["Stop. Get", "outside help"], icon: "help-safety", kind: "failure" },
     { q: ["Flooded or shut", "down (but safe)?"], a: ["Pause + Return"], icon: "pause-and-return", kind: "step" },
-    { q: ["A fight is", "starting?"], a: ["System Overlay"], icon: "system-overlay", kind: "step" },
-    { q: ["Outside pressure", "or disapproval?"], a: ["Team agreement"], icon: "team-agreement", kind: "step" },
+    { q: ["A fight is", "starting?"], a: ["60-Second Reset"], icon: "60-second-reset", kind: "step" },
+    { q: ["Outside pressure", "or disapproval?"], a: ["Team Agreement"], icon: "team-agreement", kind: "step" },
     { q: ["Trust breach?"], a: ["Trust Recovery"], icon: "trust-recovery", kind: "repair" },
     { q: ["Pulling away?"], a: ["Check-Up"], icon: "check-up", kind: "repair" },
   ];
@@ -221,7 +221,7 @@ export function SituationMapDiagram() {
   return (
     <Frame
       viewBox="0 0 340 394"
-      label="Situation Map: answer yes or no from the top. Afraid, threatened, or not free to say no: stop and get outside help. Flooded or shut down but safe: Pause + Return. A fight is starting: System Overlay. Outside pressure or disapproval from family, friends or strangers: Team Agreement. Trust breach: Trust Recovery. Pulling away: Check-Up."
+      label="Situation Map: answer yes or no from the top. Afraid, threatened, or not free to say no: stop and get outside help. Flooded or shut down but safe: Pause + Return. A fight is starting: 60-Second Reset. Outside pressure or disapproval from family, friends or strangers: Team Agreement. Trust breach: Trust Recovery. Pulling away: Check-Up."
     >
       <text x={2} y={13} fontSize={13.5} fill={V.muted} {...a("dg-fade", 0)}>
         Take the first row that fits, top to bottom.

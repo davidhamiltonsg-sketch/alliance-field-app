@@ -58,8 +58,8 @@ export const situations: Situation[] = [
   {
     id: "trust-breach",
     label: "Trust breach",
-    description: "Lying, infidelity or a broken agreement that you both agree happened.",
-    firstMove: "Safety first, then Trust Recovery. A breach is something you both agree happened. Seeing friends or family, privacy or a locked phone is never a breach. Skip Your First Week: start with Trust Recovery, then the Weekly Reset. Agree one change you’ll both see, and check it together at a set time.",
+    description: "Lying, infidelity or a broken agreement: something the partner agrees they did.",
+    firstMove: "Safety first, then Trust Recovery. A breach is something the partner agrees they did. Seeing friends or family, privacy or a locked phone is never a breach. Skip Your First Week: start with Trust Recovery, then the Weekly Reset. Agree one change you’ll both see, and check it together at a set time.",
     primaryHref: "/protocols/trust-recovery",
   },
   {
@@ -109,7 +109,7 @@ export const situations: Situation[] = [
     id: "say-do-gap",
     label: "Saying one thing, doing another",
     description: "Your own follow-through: promises that don’t match what happens.",
-    firstMove: "Consistency Pact: a private weekly check. Broke a shared agreement? Tell your partner. After a breach you both agree happened? A Proof item only if you both agree.",
+    firstMove: "Consistency Pact: a private weekly check. Broke a shared agreement? Tell your partner. After a breach (something the partner agrees they did)? A Proof item only if you both agree.",
     primaryHref: "/protocols/consistency-pact",
   },
   {
@@ -128,9 +128,9 @@ export const situations: Situation[] = [
     label: "Time for our weekly check-in",
     description: "A short catch-up at a set time, to keep small things small.",
     firstMove: "Weekly Reset: about 40 minutes (15 is fine to start). The monthly part adds 10 minutes.",
-    primaryHref: "/weekly-reset",
+    primaryHref: "/protocols/weekly-reset",
     secondaryHrefs: [
-      { label: "Weekly Reset card", href: "/protocols/weekly-reset" },
+      { label: "Start a Weekly Reset", href: "/weekly-reset" },
     ],
   },
 ];

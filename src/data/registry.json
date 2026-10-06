@@ -478,77 +478,101 @@
         {
           "id": "unsafe",
           "label": "I’m afraid, being threatened, or not free to say no",
+          "description": "You’re afraid of your partner, or being threatened, pressured or controlled, and it’s more than a hard conversation.",
           "route": "Help Lines",
           "answer": "Stop. These tools are not for this. Get outside help (see Help Lines). Immediate danger: your local emergency number.",
+          "kitRow": "Stop. These tools are not for this. Get outside help (see Help Lines). Immediate danger: your local emergency number.",
           "note": "This includes jealousy that leads to checking, restricting or accusing. Numbers are not on this map: keep them somewhere private."
         },
         {
           "id": "flooded",
           "label": "I’m flooded or shut down (but safe)",
+          "description": "Racing heart, tunnel vision, can’t think straight, urge to flee or win.",
           "route": "Pause + Return · 60-Second Reset",
           "answer": "Pause + Return, with an exact return time. For flooding, never for fear. If you’re the one waiting: don’t follow or message.",
+          "kitRow": "Exact return time. For flooding, never for fear. If you’re the one waiting: don’t follow or message.",
           "note": "Racing heart, urge to flee or win."
         },
         {
           "id": "conflict-starting",
           "label": "A fight is starting",
+          "description": "Voices are rising and you’re both building a case.",
           "route": "60-Second Reset · Pause + Return · System Overlay · Green Rule",
           "answer": "60-Second Reset. Say: “I want to connect, not fight. Can we talk at ___?” Too hot to stay in the room? Pause + Return. Next: the System Overlay, and start it with the Green Rule.",
+          "kitRow": "Say: “I want to connect, not fight. Can we talk at ___?” Too hot to stay in the room? Pause + Return. Next: the System Overlay, and start it with the Green Rule.",
           "note": "Voices rising; you’re both building a case."
         },
         {
           "id": "outside-pressure",
           "label": "Outside pressure or disapproval from family, friends or strangers",
+          "description": "Family disapproval, discrimination or judgement from others is landing on the two of you.",
           "route": "Team Agreement · Green Rule",
-          "answer": "Team Agreement: decide together how the two of you respond. Never limit a partner’s contact with anyone. Pressure coming from your partner? If they check, restrict or punish your contact with others: row 1 (Help Lines). Otherwise: the Green Rule."
+          "answer": "Team Agreement: decide together how the two of you respond. Never limit a partner’s contact with anyone. Pressure coming from your partner? If they check, restrict or punish your contact with others: row 1 (Help Lines). Otherwise: the Green Rule.",
+          "kitRow": "Decide together how the two of you respond. Never limit a partner’s contact with anyone. Pressure coming from your partner? If they check, restrict or punish your contact with others: row 1 (Help Lines). Otherwise: the Green Rule."
         },
         {
           "id": "trust-breach",
           "label": "Trust breach",
+          "description": "Lying, infidelity or a broken agreement: something the partner agrees they did.",
           "route": "Trust Recovery",
-          "answer": "Safety first, then Trust Recovery. A breach is something you both agree happened. Seeing friends or family, privacy or a locked phone is never a breach. Skip Your First Week: start with Trust Recovery, then the Weekly Reset. Agree one change you’ll both see, and check it together at a set time."
+          "answer": "Safety first, then Trust Recovery. A breach is something the partner agrees they did. Seeing friends or family, privacy or a locked phone is never a breach. Skip Your First Week: start with Trust Recovery, then the Weekly Reset. Agree one change you’ll both see, and check it together at a set time.",
+          "kitRow": "Safety first. A breach is something the partner agrees they did. Seeing friends or family, privacy or a locked phone is never a breach. Skip Your First Week: start here, then the Weekly Reset. Agree one change you’ll both see, and check it together at a set time."
         },
         {
           "id": "detachment",
           "label": "Pulling away",
+          "description": "Warmth missing, repairs on autopilot: several signs of pulling away, not just needing space.",
           "route": "Check-Up · Full Repair",
-          "answer": "Check-Up: each of you marks your own half of the sheet, privately. Contempt, fear or coercion: stop and get outside support first. A partner who has stopped sharing because they are afraid is not pulling away: use the Help Lines. Then, only if you both want one: Full Repair."
+          "answer": "Check-Up: each of you marks your own half of the sheet, privately. Contempt, fear or coercion: stop and get outside support first. A partner who has stopped sharing because they are afraid is not pulling away: use the Help Lines. Then, only if you both want one: Full Repair.",
+          "kitRow": "Each of you marks your own half of the sheet, privately. Contempt, fear or coercion: stop and get outside support first. Stopped sharing out of fear? Help Lines. Then, only if you both want one: Full Repair."
         },
         {
           "id": "after-fight",
           "label": "After a fight, or something small stung",
+          "description": "Something sharp was said, or a small promise slipped, and it’s still sitting there.",
           "route": "Micro-Repair · Full Repair",
-          "answer": "Micro-Repair: start within minutes if you can; finish within 24 hours. Bigger hurts go to Full Repair."
+          "answer": "Micro-Repair: start within minutes if you can; finish within 24 hours. Bigger hurts go to Full Repair.",
+          "kitRow": "Start within minutes if you can; finish within 24 hours. Bigger hurts go to Full Repair."
         },
         {
           "id": "attachment-clash",
           "label": "We keep clashing the same way",
+          "description": "Reach–Recoil (one reaches, the other pulls back), the same ask on repeat, or one of you always wanting to talk sooner than the other.",
           "route": "Profile Calibration · Check-Up",
-          "answer": "Name it out loud: “I think we’re doing the thing again.” Later, when you’re calm, find the pattern in the Manual’s Appendix A and try Profile Calibration together. Also: Check-Up."
+          "answer": "Name it out loud: “I think we’re doing the thing again.” Later, when you’re calm, find the pattern in the Manual’s Appendix A and try Profile Calibration together. Also: Check-Up.",
+          "kitRow": "Name it: “I think we’re doing the thing again.” Later, when calm, find the pattern in the Manual’s Appendix A and try Profile Calibration together. Also: Check-Up."
         },
         {
           "id": "intimacy-stall",
           "label": "Intimacy feels stuck",
+          "description": "Asking or saying no feels tense; things have gone cold.",
           "route": "Intimacy Pact",
-          "answer": "Intimacy Pact. Pressure after a no: stop; don’t talk it through in the moment. The person pressured decides whether, when and with whom to talk. Force, threats, fear or a repeat: Help Lines."
+          "answer": "Intimacy Pact. Pressure after a no: stop; don’t talk it through in the moment. The person pressured decides whether, when and with whom to talk. Force, threats, fear or a repeat: Help Lines.",
+          "kitRow": "Pressure after a no: stop; don’t talk it through in the moment. The person pressured decides whether, when and with whom to talk. Force, threats, fear or a repeat: Help Lines."
         },
         {
           "id": "say-do-gap",
           "label": "Saying one thing, doing another",
+          "description": "Your own follow-through: promises that don’t match what happens.",
           "route": "Consistency Pact",
-          "answer": "Consistency Pact: a private weekly check. Broke a shared agreement? Tell your partner. After a breach you both agree happened? A Proof item only if you both agree."
+          "answer": "Consistency Pact: a private weekly check. Broke a shared agreement? Tell your partner. After a breach (something the partner agrees they did)? A Proof item only if you both agree.",
+          "kitRow": "A private weekly check. Broke a shared agreement? Tell your partner. After a breach (something the partner agrees they did)? A Proof item only if you both agree."
         },
         {
           "id": "daily-drift",
           "label": "We feel like housemates",
+          "description": "Conversations are just logistics; the connection feels thin.",
           "route": "Daily Rhythm · Check-Up · Sun Memory",
-          "answer": "Daily Rhythm: a morning hello and an evening catch-up. Still thin after two weeks? A Check-Up. Feels like a chore? Take a night off fixing: a Sun Memory."
+          "answer": "Daily Rhythm: a morning hello and an evening catch-up. Still thin after two weeks? A Check-Up. Feels like a chore? Take a night off fixing: a Sun Memory.",
+          "kitRow": "A morning hello and an evening catch-up. Still thin after two weeks? A Check-Up. Feels like a chore? Take a night off fixing: a Sun Memory."
         },
         {
           "id": "weekly-maintenance",
           "label": "Time for our weekly check-in",
+          "description": "A short catch-up at a set time, to keep small things small.",
           "route": "Weekly Reset",
-          "answer": "Weekly Reset: about 40 minutes (15 is fine to start). The monthly part adds 10 minutes."
+          "answer": "Weekly Reset: about 40 minutes (15 is fine to start). The monthly part adds 10 minutes.",
+          "kitRow": "About 40 minutes (15 is fine to start). The monthly part adds 10 minutes."
         }
       ],
       "rule": "Safety row is always FIRST (step 0). Never route 'unsafe' to Pause + Return."
