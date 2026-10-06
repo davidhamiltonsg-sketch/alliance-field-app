@@ -32,7 +32,7 @@ export const TONIGHT = {
 } as const;
 
 export const START_NOTES = {
-  tightOnTime: "Tight on time? Do the Weekly Reset in two 20-minute halves.",
+  tightOnTime: "Tight on time? A 15-minute Weekly Reset still counts, or split it into two shorter sittings in the week.",
   trustBreach:
     "If there has been a breach of trust, skip the plan: start with Trust Recovery, then the Weekly Reset.",
   onlyOneReading: "Only one of you reading? Invite, don’t assign.",

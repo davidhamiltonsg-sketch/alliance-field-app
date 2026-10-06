@@ -121,7 +121,8 @@ describe("numbers and wording", () => {
     expect(card.concept).toContain("One sheet, three lenses");
     for (const lens of ["Lens 1, drifting apart", "Lens 2, pulling away", "Lens 3, say-and-do gaps"]) expect(card.activity).toContain(lens);
     expect(card.activity.match(/\(\d\)/g)).toHaveLength(8);
-    expect(card.steps[0]).toMatch(/^Safety first\. Contempt, fear or coercion: stop and get outside support\./);
+    expect(card.steps[0]).toMatch(/^Safety first\. Fear or coercion: stop and get outside support\./);
+    expect(card.steps[0]).toContain("Steady contempt (sneering, mocking, belittling) is also a serious sign: a Check-Up won’t fix it, so talk to a professional.");
     expect(card.steps[0]).toContain("Never use the signs to question where your partner goes, who they see or what they plan.");
     expect(card.steps[0]).toContain("A partner who has stopped sharing because they are afraid is not pulling away: use the Help Lines.");
     expect(card.steps[2]).toContain("Either of you may decline to compare counts.");
@@ -263,7 +264,8 @@ describe("tools: guardrails and safety wording (spec section 6)", () => {
   it("“afraid” only appears in safety content", () => {
     const green = getProtocol("green-rule")!;
     expect(green.working).not.toMatch(/afraid/i);
-    expect(green.notWorking).toContain("Misuse: saying “this doesn’t feel safe” to shut down every complaint");
+    expect(green.notWorking).toContain("The rule pauses a topic; it does not cancel it.");
+    expect(green.notWorking).not.toContain("Misuse:");
     for (const p of protocols) {
       for (const field of [p.concept, p.whenToUse, p.working, p.notWorking, p.activity, ...p.steps, ...p.phrases.map((x) => x.text)]) {
         if (/\bafraid\b/i.test(field)) expect(field, p.slug).toMatch(/Help Lines|outside help|outside support|Afraid of your partner|because they are afraid/);
@@ -496,7 +498,7 @@ describe("the six to learn first and Your First Week", () => {
   });
 
   it("carries the First Week notes: tight on time, trust breach skips the plan, invite don’t assign", () => {
-    expect(START_NOTES.tightOnTime).toBe("Tight on time? Do the Weekly Reset in two 20-minute halves.");
+    expect(START_NOTES.tightOnTime).toBe("Tight on time? A 15-minute Weekly Reset still counts, or split it into two shorter sittings in the week.");
     expect(START_NOTES.trustBreach).toContain("start with Trust Recovery, then the Weekly Reset");
     expect(START_NOTES.onlyOneReading).toBe("Only one of you reading? Invite, don’t assign.");
   });
@@ -639,12 +641,13 @@ describe("contact and store links", () => {
 describe("tests that cross the data and the app", () => {
   const allCopy = JSON.stringify([protocols, protocolDiagrams, situations, commonMoves, togetherTools, togetherFaq, whoFor]);
 
-  it("Sun Memory: Quick (a few minutes) and Full (2 to 24 hours); either of you can end it by naming a safety concern", () => {
+  it("Sun Memory: Quick (a few minutes) and Full (2 to 24 hours); either of you can end it early; a safety concern ends it at once", () => {
     const card = getProtocol("sun-memory")!;
     expect(card.concept).toContain("Quick is a few minutes; Full is 2 to 24 hours.");
     expect(card.steps.join(" ")).toContain("Quick: a few minutes inside one ritual. Full: 2 to 24 hours.");
     expect(card.warn).toContain("Safety, childcare, logistics and any repair you’ve already booked carry on.");
-    expect(card.warn).toContain("Either of you can end it by naming a safety concern.");
+    expect(card.warn).toContain("Either of you can end it early, for any reason. Naming a safety concern ends it at once.");
+    expect(card.steps[0]).toBe("Either of you can call it, and either of you can end it early. No reason is needed.");
   });
 
   it("Daily Rhythm: morning hello (5 minutes or less), evening catch-up (about 10), and the minimum", () => {

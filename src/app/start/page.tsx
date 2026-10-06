@@ -22,7 +22,8 @@ export default function StartPage() {
       <section aria-label="Before you start" className="card space-y-2 border-accent/30 px-4 py-3.5">
         <p className="text-base leading-normal text-ink">
           <span className="font-semibold text-accent">Tight on time? </span>
-          Do the Weekly Reset in two 20-minute halves.
+          A 15-minute Weekly Reset still counts, or split it into two shorter
+          sittings in the week.
         </p>
         <p className="text-base leading-normal text-ink">
           <span className="font-semibold text-accent">Trust breach? </span>

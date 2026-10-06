@@ -336,7 +336,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "steps": [
       {
         "title": "Safety first",
-        "detail": "Contempt, fear or coercion: stop and get outside support. Never use the signs to question where your partner goes, who they see or what they plan. A partner who has stopped sharing because they are afraid is not pulling away: use the Help Lines.",
+        "detail": "Fear or coercion: stop and get outside support. Steady contempt (sneering, mocking, belittling) is also a serious sign: a Check-Up won’t fix it, so talk to a professional. Never use the signs to question where your partner goes, who they see or what they plan. A partner who has stopped sharing because they are afraid is not pulling away: use the Help Lines.",
         "kind": "safety"
       },
       {
@@ -363,7 +363,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     ],
     "note": {
       "kind": "safety",
-      "text": "Contempt, fear or coercion: stop and use the Help Lines. The signs describe behaviour; they are not a verdict."
+      "text": "Fear or coercion: stop and use the Help Lines. Steady contempt: talk to a professional. The signs describe behaviour; they are not a verdict."
     },
     "outcome": "Space or pulling away: you name which, and pick the right next step."
   },
@@ -406,8 +406,8 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     "when": "When talk about the tools is crowding out the ease between you, a heavy stretch of repair has just ended, or the rituals have started to feel like a chore list. Try Quick first.",
     "steps": [
       {
-        "title": "Either of you calls it",
-        "detail": "No reason is needed, and once it’s called, you both keep it.",
+        "title": "Either of you can call it",
+        "detail": "And either of you can end it early. No reason is needed.",
         "kind": "step"
       },
       {
@@ -434,7 +434,7 @@ export const protocolDiagrams: Record<string, ProtocolDiagram> = {
     ],
     "note": {
       "kind": "note",
-      "text": "Either of you can end it by naming a safety concern."
+      "text": "Either of you can end it early, for any reason. Naming a safety concern ends it at once."
     },
     "outcome": "A rest from the system, not from each other."
   },
