@@ -34,8 +34,11 @@ export type Question = {
   effects: Record<ChoiceKey, Partial<Record<ScoreKey, number>>>;
 };
 
-/** One partner's answers, keyed by question id. Undefined = unanswered. */
-export type PersonAnswers = Record<string, ChoiceKey | undefined>;
+/** A chosen option, or "skip": either of you may skip any question. */
+export type AnswerValue = ChoiceKey | "skip";
+
+/** One partner's answers, keyed by question id. Undefined = not reached yet. */
+export type PersonAnswers = Record<string, AnswerValue | undefined>;
 
 export type PersonInput = {
   name: string;
@@ -83,7 +86,12 @@ export type CoupleReport = {
   executiveSummary: string;
   strengths: string[];
   coreMismatch: string[];
+  /** The clash story; empty when nothing differs, so the report writes none. */
   conflictPattern: string;
+  /** True when no area differs: every layer close and no diverging row. */
+  noDifference: boolean;
+  /** How many questions were skipped in all (both of you together). */
+  skippedCount: number;
   misreadRisks: string[];
   layerHealth: Record<LayerKey, number>;
   recommendedTools: RecommendedTool[];

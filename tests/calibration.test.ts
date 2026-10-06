@@ -14,6 +14,7 @@ import {
   isComplete,
   NO_DIFFERENCE_SUMMARY,
   readCalibration,
+  skippedCount,
   writeCalibration,
 } from "@/lib/calibration";
 
@@ -167,7 +168,7 @@ describe("generateCoupleReport", () => {
   it("lowers layer health and names divergences for opposite profiles", () => {
     const a = generateProfile("A", { name: "Sam", answers: all("a") });
     const b = generateProfile("B", { name: "Alex", answers: all("b") });
-    const report = generateCoupleReport(a, b);
+    const report = generateCoupleReport(a, b, { anonymous: false });
     expect(Math.min(...Object.values(report.layerHealth))).toBeLessThan(100);
     expect(report.coreMismatch.length).toBeGreaterThan(0);
     expect(report.coreMismatch.length).toBeLessThanOrEqual(4);
@@ -203,5 +204,94 @@ describe("generateCoupleReport", () => {
       expect(report.recommendedSequence.at(-1)).toBe("Check how last week’s Reset went");
       expect(new Set(report.recommendedSequence).size).toBe(report.recommendedSequence.length);
     }
+  });
+});
+
+describe("couple report privacy (either profile private)", () => {
+  const sam = (c: ChoiceKey) => generateProfile("A", { name: "Sam", answers: all(c) });
+  const alex = (c: ChoiceKey) => generateProfile("B", { name: "Alex", answers: all(c) });
+  const combos: [ChoiceKey, ChoiceKey][] = [["a", "a"], ["a", "b"], ["b", "a"], ["b", "b"]];
+
+  it("names nobody and attributes nothing to one person by default", () => {
+    for (const [ca, cb] of combos) {
+      const report = generateCoupleReport(sam(ca), alex(cb));
+      const copy = JSON.stringify([report.conflictPattern, report.misreadRisks, report.strengths, report.coreMismatch, report.executiveSummary, report.recommendedTools]);
+      expect(copy, `${ca}${cb}`).not.toMatch(/Sam|Alex/);
+    }
+  });
+
+  it("says “one of you… the other…” for push and back off when private", () => {
+    const report = generateCoupleReport(sam("a"), alex("b"), { anonymous: true });
+    expect(report.conflictPattern).toMatch(/^One of you tends to push for an answer while the other backs off\./);
+  });
+
+  it("names who pushes only when both profiles are shared", () => {
+    const report = generateCoupleReport(sam("a"), alex("b"), { anonymous: false });
+    expect(report.conflictPattern).toMatch(/^(Sam|Alex) tends to push for an answer while (Sam|Alex) backs off\./);
+  });
+});
+
+describe("couple report when nothing differs", () => {
+  it("writes no clash story and marks the report as no difference", () => {
+    const a = generateProfile("A", { name: "Sam", answers: all("a") });
+    const b = generateProfile("B", { name: "Alex", answers: all("a") });
+    const report = generateCoupleReport(a, b, { anonymous: false });
+    expect(report.noDifference).toBe(true);
+    expect(report.conflictPattern).toBe("");
+  });
+
+  it("writes a clash story when the answers differ", () => {
+    const report = generateCoupleReport(
+      generateProfile("A", { name: "Sam", answers: all("a") }),
+      generateProfile("B", { name: "Alex", answers: all("b") }),
+    );
+    expect(report.noDifference).toBe(false);
+    expect(report.conflictPattern).not.toBe("");
+  });
+});
+
+describe("Easy to misread: one line about both of you, never one per partner", () => {
+  it("gives one line per misread, each about both of you when you lean the same way", () => {
+    const report = generateCoupleReport(
+      generateProfile("A", { name: "Sam", answers: all("a") }),
+      generateProfile("B", { name: "Alex", answers: all("a") }),
+      { anonymous: false },
+    );
+    expect(report.misreadRisks).toHaveLength(3);
+    for (const line of report.misreadRisks) expect(line).toMatch(/^For both of you, /);
+  });
+
+  it("says “one of you… the other” when you lean differently and a profile is private", () => {
+    const report = generateCoupleReport(
+      generateProfile("A", { name: "Sam", answers: all("a") }),
+      generateProfile("B", { name: "Alex", answers: all("b") }),
+    );
+    expect(report.misreadRisks).toHaveLength(3);
+    expect(new Set(report.misreadRisks).size).toBe(3);
+    expect(report.misreadRisks.some((l) => /^For one of you, .*; for the other, /.test(l))).toBe(true);
+  });
+});
+
+describe("skipped questions", () => {
+  const skipAll = (): PersonAnswers => Object.fromEntries(questions.map((q) => [q.id, "skip"]));
+
+  it("counts a skip as done, so a partner can finish without answering everything", () => {
+    const answers = { ...all("a"), [questions[0].id]: "skip" } as PersonAnswers;
+    expect(answeredCount(answers)).toBe(questions.length);
+    expect(skippedCount(answers)).toBe(1);
+    expect(isComplete(answers)).toBe(true);
+    expect(isComplete(skipAll())).toBe(true);
+  });
+
+  it("scores a skipped question as nothing either way", () => {
+    const p = generateProfile("A", { name: "Sam", answers: skipAll() });
+    for (const key of scoreKeys) expect(p.scores[key]).toBe(50);
+  });
+
+  it("reports how many questions were skipped in all", () => {
+    const a = generateProfile("A", { name: "Sam", answers: skipAll() });
+    const b = generateProfile("B", { name: "Alex", answers: all("a") });
+    expect(generateCoupleReport(a, b, { skippedCount: questions.length }).skippedCount).toBe(questions.length);
+    expect(generateCoupleReport(a, b).skippedCount).toBe(0);
   });
 });

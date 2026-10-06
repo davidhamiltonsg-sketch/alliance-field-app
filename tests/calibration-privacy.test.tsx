@@ -17,6 +17,7 @@ vi.mock("next/link", () => ({
 }));
 
 import { CalibrationFlow } from "@/components/calibration/CalibrationFlow";
+import { CalibrationReport } from "@/components/calibration/CalibrationReport";
 
 (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
 
@@ -86,5 +87,55 @@ describe("Profile Calibration on one shared phone", () => {
     expect(readCalibration().bPrivate).toBe(false);
     act(() => button(/See the couple report/)!.click());
     expect(push).toHaveBeenCalledWith("/calibrate/report");
+  });
+});
+
+describe("Skip on every question", () => {
+  it("offers Skip, records it and moves on", () => {
+    writeCalibration({ ...emptyCalibration(), personA: { name: "Sam", answers: { [questions[0].id]: "a" } }, personB: { name: "Alex", answers: {} } });
+    act(() => root.render(<CalibrationFlow />));
+    expect(text()).toContain(`Question 2 of ${questions.length}`);
+    act(() => button(/Skip this question/)!.click());
+    expect(readCalibration().personA.answers[questions[1].id]).toBe("skip");
+    expect(text()).toContain(`Question 3 of ${questions.length}`);
+    expect(text()).toContain("1 skipped");
+  });
+
+  it("finishes a turn when the last question is skipped", () => {
+    writeCalibration({ ...emptyCalibration(), personA: { name: "Sam", answers: allButLast() }, personB: { name: "Alex", answers: {} } });
+    act(() => root.render(<CalibrationFlow />));
+    act(() => button(/Skip this question/)!.click());
+    expect(text()).toContain("Sam’s answers are in.");
+  });
+});
+
+describe("couple report on the page", () => {
+  const opposite = (): PersonAnswers => Object.fromEntries(questions.map((q) => [q.id, "b"]));
+
+  it("names nobody in the clash or misread lines when both profiles are private", () => {
+    writeCalibration({ personA: { name: "Alex", answers: all() }, personB: { name: "Sam", answers: opposite() }, aPrivate: true, bPrivate: true });
+    act(() => root.render(<CalibrationReport />));
+    expect(text()).toContain("One of you tends to push for an answer while the other backs off.");
+    expect(text()).not.toMatch(/Alex tends|Sam tends|Sam backs off|Alex backs off/);
+    const misreads = [...container.querySelectorAll("section")].find((s) => /Easy to misread/.test(s.textContent ?? ""))!;
+    expect(misreads.textContent).not.toMatch(/Alex|Sam/);
+  });
+
+  it("says plainly when nothing differs, with no clash story and one misread line each", () => {
+    writeCalibration({ personA: { name: "Alex", answers: all() }, personB: { name: "Sam", answers: all() }, aPrivate: true, bPrivate: true });
+    act(() => root.render(<CalibrationReport />));
+    expect(text()).toContain("your answers are close in all five areas");
+    expect(text()).not.toContain("Where you two see things most differently");
+    expect(text()).not.toContain("When you clash");
+    expect(text()).not.toMatch(/tends to push/);
+    const items = [...container.querySelectorAll("section")].find((s) => /Easy to misread/.test(s.textContent ?? ""))!.querySelectorAll("li");
+    expect(items).toHaveLength(3);
+  });
+
+  it("notes skipped questions", () => {
+    const someSkipped = { ...all(), [questions[0].id]: "skip", [questions[1].id]: "skip" } as PersonAnswers;
+    writeCalibration({ personA: { name: "Alex", answers: someSkipped }, personB: { name: "Sam", answers: all() }, aPrivate: true, bPrivate: true });
+    act(() => root.render(<CalibrationReport />));
+    expect(text()).toContain("2 questions were skipped");
   });
 });

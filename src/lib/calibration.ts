@@ -45,8 +45,14 @@ export function writeCalibration(state: CalibrationState) {
   writeJson(CALIBRATION_KEY, state);
 }
 
+/** Questions this partner has dealt with: answered or skipped. */
 export function answeredCount(answers: PersonAnswers): number {
   return questions.filter((q) => answers[q.id]).length;
+}
+
+/** Questions this partner chose to skip. */
+export function skippedCount(answers: PersonAnswers): number {
+  return questions.filter((q) => answers[q.id] === "skip").length;
 }
 
 export function isComplete(answers: PersonAnswers): boolean {
@@ -65,8 +71,10 @@ function createEmptyScores(): Scores {
 function scorePerson(answers: PersonAnswers): Scores {
   const raw = createEmptyScores();
   questions.forEach((q) => {
-    const choice = answers[q.id] as ChoiceKey | undefined;
-    if (!choice) return;
+    const answer = answers[q.id];
+    // A skipped question adds nothing: the score stays where the other answers put it.
+    if (answer !== "a" && answer !== "b") return;
+    const choice: ChoiceKey = answer;
     const effects = q.effects[choice] || {};
     Object.entries(effects).forEach(([key, delta]) => {
       const scoreKey = key as ScoreKey;
@@ -152,6 +160,9 @@ export function generateProfile(person: PersonKey, input: PersonInput): Profile 
   };
 }
 
+/** Layer health at or above this reads as “answers close”. */
+export const CLOSE_HEALTH = 85;
+
 const LAYER_KEYS: Record<LayerKey, ScoreKey[]> = {
   Atmosphere: ["warmthNeed", "careVisibility", "rhythmNeed"],
   Structure: ["structureNeed", "governanceNeed", "proofOrientation"],
@@ -170,13 +181,21 @@ function layerHealth(a: Scores, b: Scores): Record<LayerKey, number> {
   return result;
 }
 
-function buildConflictPattern(a: Profile, b: Profile): string {
+const REACH_RECOIL_TAIL =
+  "Left alone, that can become a Reach–Recoil loop (one reaches, the other pulls back). Pause + Return, with an exact return time, is designed to break it.";
+
+/**
+ * The clash story. `anonymous` (either profile private) never names or
+ * attributes a side to one person: it says “one of you… the other…”.
+ */
+function buildConflictPattern(a: Profile, b: Profile, anonymous: boolean): string {
   const aPursues = a.scores.conflictActivation > a.scores.withdrawalUnderStress;
   const bPursues = b.scores.conflictActivation > b.scores.withdrawalUnderStress;
-  if (aPursues && !bPursues)
-    return `${a.name} tends to push for an answer while ${b.name} backs off. Left alone, that can become a Reach–Recoil loop (one reaches, the other pulls back). Pause + Return, with an exact return time, is designed to break it.`;
-  if (!aPursues && bPursues)
-    return `${b.name} tends to push for an answer while ${a.name} backs off. Left alone, that can become a Reach–Recoil loop (one reaches, the other pulls back). Pause + Return, with an exact return time, is designed to break it.`;
+  if (aPursues !== bPursues) {
+    if (anonymous) return `One of you tends to push for an answer while the other backs off. ${REACH_RECOIL_TAIL}`;
+    const [pusher, backer] = aPursues ? [a, b] : [b, a];
+    return `${pusher.name} tends to push for an answer while ${backer.name} backs off. ${REACH_RECOIL_TAIL}`;
+  }
   if (aPursues && bPursues)
     return "You both push when you’re worried. Slow down before the asking turns into the fight.";
   return "You both tend to back off. That can mean fewer fights, and less contact. The Daily Rhythm and the Weekly Reset are designed to catch the distance early.";
@@ -254,10 +273,62 @@ function buildSequence(tools: RecommendedTool[]): string[] {
   return Array.from(new Set(sequence));
 }
 
+type MisreadPair = { test: (s: Scores) => boolean; yes: [string, string]; no: [string, string] };
+
+/** Each misread: [what may happen to whoever it fits, what to do about it]. */
+const MISREADS: MisreadPair[] = [
+  {
+    test: (s) => high(s.signalSensitivity),
+    yes: ["a slow reply can feel like distance", "Say when you’re just busy."],
+    no: ["small cues can slip past", "Say the ones that matter out loud."],
+  },
+  {
+    test: (s) => high(s.structureNeed),
+    yes: ["a vague plan can sound like a promise that won’t be kept", "Put a day or a time on it."],
+    no: ["a lot of planning can feel like pressure", "Keep the plan short and leave some room."],
+  },
+  {
+    test: (s) => high(s.privacyNeed),
+    yes: ["when things are already heated, questions can feel like prying", "Ask one, then leave some space."],
+    no: ["time apart can feel like rejection", "Whoever steps away, say when you’ll be back."],
+  },
+];
+
+const cap = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
+
+/**
+ * One line per misread about both of you, never one line per partner.
+ * When either profile is private, nobody is named.
+ */
+function buildCoupleMisreads(a: Profile, b: Profile, anonymous: boolean): string[] {
+  return MISREADS.map(({ test, yes, no }) => {
+    const aYes = test(a.scores);
+    const bYes = test(b.scores);
+    if (aYes === bYes) {
+      const [what, todo] = aYes ? yes : no;
+      return `For both of you, ${what}. ${todo}`;
+    }
+    if (anonymous) return `For one of you, ${yes[0]}; for the other, ${no[0]}. ${yes[1]} ${no[1]}`;
+    const [yesName, noName] = aYes ? [a.name, b.name] : [b.name, a.name];
+    return `For ${yesName}, ${yes[0]}; for ${noName}, ${no[0]}. ${yes[1]} ${no[1]}`;
+  }).map(cap);
+}
+
 /** Shown when no difference stands out, so there’s nothing for a “next step” to refer to. */
 export const NO_DIFFERENCE_SUMMARY = "You see things much the same way. Pick whatever you’d most like to talk about and start there.";
 
-export function generateCoupleReport(profileA: Profile, profileB: Profile): CoupleReport {
+export type CoupleReportOptions = {
+  /**
+   * True when either partner kept their individual profile private (the default).
+   * The report then names nobody and attributes nothing to one person.
+   */
+  anonymous?: boolean;
+  /** Questions skipped by both of you together. */
+  skippedCount?: number;
+};
+
+export function generateCoupleReport(profileA: Profile, profileB: Profile, options: CoupleReportOptions = {}): CoupleReport {
+  const anonymous = options.anonymous ?? true;
   const a = profileA.scores;
   const b = profileB.scores;
   const health = layerHealth(a, b);
@@ -309,6 +380,7 @@ export function generateCoupleReport(profileA: Profile, profileB: Profile): Coup
   ];
 
   const diverging = rows.filter((r) => r.diverges);
+  const noDifference = diverging.length === 0 && Object.values(health).every((h) => h >= CLOSE_HEALTH);
   const mismatch = diverging.map((r) => `${r.domain}: ${r.risk}`);
 
   const routes = routeTools(profileA, profileB, health);
@@ -333,8 +405,11 @@ export function generateCoupleReport(profileA: Profile, profileB: Profile): Coup
       : NO_DIFFERENCE_SUMMARY,
     strengths,
     coreMismatch: mismatch.length ? mismatch.slice(0, 4) : ["No one difference stands out yet. Keep using the tools and come back to this in a few weeks."],
-    conflictPattern: buildConflictPattern(profileA, profileB),
-    misreadRisks: Array.from(new Set([...profileA.likelyMisreads, ...profileB.likelyMisreads])).slice(0, 5),
+    // Nothing differs: no clash story, so the page never contradicts “answers close”.
+    conflictPattern: noDifference ? "" : buildConflictPattern(profileA, profileB, anonymous),
+    noDifference,
+    skippedCount: options.skippedCount ?? 0,
+    misreadRisks: buildCoupleMisreads(profileA, profileB, anonymous),
     layerHealth: health,
     recommendedTools,
     recommendedSequence: buildSequence(recommendedTools),

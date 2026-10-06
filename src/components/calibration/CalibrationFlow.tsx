@@ -3,8 +3,8 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { useRouter } from "next/navigation";
 import { questions } from "@/data/calibration/questions";
-import type { ChoiceKey, PersonKey } from "@/data/calibration/types";
-import { answeredCount, firstUnansweredIndex, isComplete, readCalibration, writeCalibration } from "@/lib/calibration";
+import type { AnswerValue, ChoiceKey, PersonKey } from "@/data/calibration/types";
+import { answeredCount, firstUnansweredIndex, isComplete, readCalibration, skippedCount, writeCalibration } from "@/lib/calibration";
 import { CALIBRATION_KEY } from "@/lib/calibration";
 import { clearKey } from "@/lib/storage";
 import { generateProfile } from "@/lib/calibration";
@@ -49,14 +49,15 @@ function CalibrationFlowClient() {
 
   const personInput = person === "A" ? state.personA : state.personB;
   const question = questions[index];
-  const answeredHere = answeredCount(personInput.answers);
+  const skippedHere = skippedCount(personInput.answers);
+  const answeredHere = answeredCount(personInput.answers) - skippedHere;
 
   const commit = (next: typeof state) => {
     setState(next);
     writeCalibration(next);
   };
 
-  const choose = (choice: ChoiceKey) => {
+  const choose = (choice: AnswerValue) => {
     const key = person === "A" ? "personA" : "personB";
     const next = { ...state, [key]: { ...personInput, answers: { ...personInput.answers, [question.id]: choice } } };
     commit(next);
@@ -124,7 +125,7 @@ function CalibrationFlowClient() {
         <p className="text-sm leading-normal text-ink-muted">
           This is one shared phone, and you take turns: {state.personA.name} answers all 44 questions
           first, then hands the phone to {state.personB.name}. One question at a time; answer for
-          yourself. Answers stay on this phone.
+          yourself, and skip any question you’d rather not answer. Answers stay on this phone.
         </p>
         <PrimaryButton onClick={() => setPhase("quiz")}>Begin — {state.personA.name}’s turn</PrimaryButton>
       </div>
@@ -299,8 +300,18 @@ function CalibrationFlowClient() {
           <ArrowLeft size={16} />
           Back
         </button>
-        <p className="tabular text-sm text-ink-muted">{answeredHere}/{questions.length} answered</p>
+        <button
+          type="button"
+          onClick={() => choose("skip")}
+          aria-pressed={personInput.answers[question.id] === "skip"}
+          className="inline-flex min-h-11 items-center px-2 text-base font-medium text-accent"
+        >
+          Skip this question
+        </button>
       </div>
+      <p className="tabular text-center text-sm text-ink-muted">
+        {answeredHere}/{questions.length} answered{skippedHere > 0 ? ` · ${skippedHere} skipped` : ""}
+      </p>
 
       <button type="button" onClick={startOver} className="w-full min-h-11 rounded-xl text-sm font-medium text-ink-muted hover:bg-ink/[0.04]">
         Start over
