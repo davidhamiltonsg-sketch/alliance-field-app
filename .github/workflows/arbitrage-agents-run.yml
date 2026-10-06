@@ -105,7 +105,10 @@ jobs:
           for agent in ${{ steps.plan.outputs.agents }}; do
             echo "::group::$agent ${{ steps.plan.outputs.flags }}"
             if [ "$agent" = "saas-scout" ] && [ ! -f listings.json ] && [[ "${{ steps.plan.outputs.flags }}" != *--dry-run* ]]; then
-              echo "No listings.json: set the SAAS_LISTINGS_URL secret. Falling back to --dry-run."
+              echo "::warning::No listings.json: set the SAAS_LISTINGS_URL secret. Falling back to --dry-run."
+              python3 cli.py "$agent" --dry-run
+            elif [ "$agent" = "domain-flipper" ] && [ -z "$WHOISFREAKS_API_KEY" ] && [[ "${{ steps.plan.outputs.flags }}" != *--dry-run* ]]; then
+              echo "::warning::WHOISFREAKS_API_KEY secret is not set. Falling back to --dry-run."
               python3 cli.py "$agent" --dry-run
             else
               python3 cli.py "$agent" ${{ steps.plan.outputs.flags }}
