@@ -90,6 +90,7 @@ function ConnectionDeck({ shuffled }: { shuffled: boolean }) {
       key={value}
       type="button"
       onClick={() => changeFilter(value)}
+      aria-pressed={filter === value}
       className={`min-h-11 shrink-0 rounded-full px-3.5 text-sm font-medium transition-colors ${
         filter === value
           ? "bg-accent text-paper"
@@ -102,7 +103,7 @@ function ConnectionDeck({ shuffled }: { shuffled: boolean }) {
 
   return (
     <div className="space-y-4">
-      <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1">
+      <div className="flex flex-wrap gap-2" role="group" aria-label="Card category">
         {chip("All five", "all")}
         {STAGE_ORDER.map((s) => chip(STAGE_META[s].label, s))}
       </div>

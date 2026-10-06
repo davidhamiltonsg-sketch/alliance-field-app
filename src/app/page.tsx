@@ -45,7 +45,8 @@ const routes: {
     label: "Something else",
     sub: "Use the Situation Map below: take the first row that fits.",
     icon: "situation-map",
-    className: "bg-accent text-paper",
+    // Dark mode: a deep forest fill with an outline (globals.css), not pale mint.
+    className: "now-route-map bg-accent text-paper",
   },
 ];
 
@@ -72,7 +73,7 @@ export default function HomePage() {
             <li key={r.href}>
               <Link
                 href={r.href}
-                className={`flex min-h-20 items-center gap-4 rounded-2xl px-4 py-4 shadow-[var(--shadow-card)] transition active:scale-[0.99] ${r.className}`}
+                className={`now-route flex min-h-20 items-center gap-4 rounded-2xl px-4 py-4 shadow-[var(--shadow-card)] transition active:scale-[0.99] ${r.className}`}
               >
                 <ApIcon id={r.icon} size={32} mono />
                 <span className="min-w-0 flex-1">

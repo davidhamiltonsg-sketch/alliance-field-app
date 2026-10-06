@@ -28,7 +28,7 @@ export default function StartPage() {
         <p className="text-base leading-normal text-ink">
           <span className="font-semibold text-accent">Trust breach? </span>
           Skip the plan: start with{" "}
-          <Link href="/protocols/trust-recovery" className="font-medium text-accent underline underline-offset-4">
+          <Link href="/protocols/trust-recovery" className="inline-flex min-h-11 items-center font-medium text-accent underline underline-offset-4">
             Trust Recovery
           </Link>
           , then the Weekly Reset.

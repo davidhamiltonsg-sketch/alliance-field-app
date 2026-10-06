@@ -52,7 +52,7 @@ export default function TermsPage() {
             advice, and it is not an emergency service. If you are afraid of
             your partner, being threatened, or not free to say no, these tools
             are not for this:{" "}
-            <Link href="/help" className="font-medium text-failure underline underline-offset-4">
+            <Link href="/help" className="inline-flex min-h-11 items-center font-medium text-failure underline underline-offset-4">
               use the Help Lines
             </Link>
             .

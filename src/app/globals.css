@@ -778,6 +778,14 @@ html[data-calm] body {
   .accent-wash {
     background: linear-gradient(180deg, #1D2520 0%, #141815 100%);
   }
+  /* Now: the three route cards are saturated fills with the same thin outline;
+     "Something else" is deep forest with light ink, never pale mint. */
+  .now-route { border: 1px solid rgb(255 255 255 / 0.14); }
+  .now-route.now-route-map {
+    background-color: #2C3E2D;
+    color: var(--color-ink);
+    border-color: rgb(169 203 175 / 0.45);
+  }
 }
 
 /* Safety and Help content is never below 14px (the type scale has no 12px for it). */

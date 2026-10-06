@@ -6,9 +6,10 @@ import { Marker } from "./Marker";
 type Tab = "working" | "notWorking" | "activity";
 
 const TABS: { key: Tab; label: string; tone: string }[] = [
-  { key: "working", label: "Working", tone: "border-accent/30 bg-accent/10 text-accent" },
-  { key: "notWorking", label: "Not working", tone: "border-failure/25 bg-failure/[0.08] text-failure" },
-  { key: "activity", label: "Practise", tone: "border-accent/25 bg-accent/10 text-accent" },
+  // The selected tab is a solid fill, so it reads as selected in light and dark.
+  { key: "working", label: "Working", tone: "border-accent bg-accent text-paper font-semibold" },
+  { key: "notWorking", label: "Not working", tone: "border-failure bg-failure text-white font-semibold" },
+  { key: "activity", label: "Practise", tone: "border-accent bg-accent text-paper font-semibold" },
 ];
 
 const cardTone: Record<Tab, string> = {

@@ -731,7 +731,7 @@ function CalmPause({
           </PrimaryButton>
           <p className="text-center text-sm text-ink-muted">
             Afraid, not just flooded? Don’t return at the set time —{" "}
-            <Link href="/help" className="font-medium text-failure underline underline-offset-4">
+            <Link href="/help" className="inline-flex min-h-11 items-center font-medium text-failure underline underline-offset-4">
               get help
             </Link>
             .

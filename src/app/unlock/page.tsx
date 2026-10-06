@@ -57,7 +57,7 @@ export default async function UnlockPage({
       </form>
 
       <p className="text-sm leading-normal text-ink-muted">
-        Need help now? The <Link href="/help" className="underline underline-offset-4">Help Lines</Link> and{" "}
+        Need help now? The <Link href="/help" className="inline-flex min-h-11 items-center underline underline-offset-4">Help Lines</Link> and{" "}
         <Link href="/privacy" className="underline underline-offset-4">privacy notice</Link> are always open.
       </p>
     </div>

@@ -227,7 +227,7 @@ export function IntroFlow() {
                     <Link
                       href="/help"
                       tabIndex={i === index ? undefined : -1}
-                      className="font-medium text-failure underline underline-offset-4"
+                      className="inline-flex min-h-11 items-center font-medium text-failure underline underline-offset-4"
                     >
                       Get outside help
                     </Link>
