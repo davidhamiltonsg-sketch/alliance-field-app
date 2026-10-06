@@ -10,7 +10,12 @@ describe("tool search (/protocols)", () => {
     for (const q of ["money", "stonewalling", "he yells", "sex", "jealous", "hit", "threat", "controls my phone"]) {
       expect(top(q).length, q).toBeGreaterThan(0);
     }
-    expect(top("money").slice(0, 3)).toContain("weekly-reset");
+    // Money talk starts in the System Overlay or a Full Repair; the Weekly Reset ranks lower.
+    for (const q of ["money", "budget", "debt", "spending"]) {
+      expect(top(q).slice(0, 2), q).toEqual(["system-overlay", "full-repair"]);
+      expect(top(q), q).toContain("weekly-reset");
+      expect(top(q).indexOf("weekly-reset"), q).toBeGreaterThan(1);
+    }
     expect(top("stonewalling").slice(0, 3)).toContain("pause-and-return");
     expect(top("he yells").slice(0, 3)).toEqual(expect.arrayContaining(["pause-and-return"]));
     // Jealousy alone is not a breach: it goes to Check-Up, then Team Agreement.
