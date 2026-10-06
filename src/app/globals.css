@@ -104,13 +104,18 @@ b {
   outline-offset: 2px;
   border-radius: 12px;
 }
-/* Programmatic focus targets (a step heading, a status after an action):
-   always show where focus went, even after a tap, when browsers would
-   otherwise skip :focus-visible for script-moved focus. */
+/* Programmatic focus targets (a status after an action): always show where
+   focus went, even after a tap, when browsers would otherwise skip
+   :focus-visible for script-moved focus. */
 .focus-target:focus {
   outline: 2px solid var(--color-accent);
   outline-offset: 4px;
   border-radius: 8px;
+}
+/* Step and question headings take focus after every answer: a ring there
+   is for keyboard users only, never after a tap. */
+:is(h1, h2, h3).focus-target:focus:not(:focus-visible) {
+  outline: none;
 }
 :where(input, textarea):focus-visible {
   outline-offset: 0;
