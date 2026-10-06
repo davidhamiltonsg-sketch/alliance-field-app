@@ -244,7 +244,7 @@ describe("registry: worksheets", () => {
     expect(registry.counts.worksheets).toBe(6);
     expect(KIT.worksheets).toBe(6);
     expect(worksheets).toHaveLength(6);
-    expect(worksheets.map((w) => w.name)).toEqual(["Pause times", "Weekly Reset agenda", "Profile Calibration", "Consistency Pact: private check", "Pacts sheet", "Check-Up sheet"]);
+    expect(worksheets.map((w) => w.name)).toEqual(["Pause times", "Weekly Reset agenda", "Profile Calibration", "Consistency Pact: my private check", "Pacts sheet", "Check-Up sheet"]);
     expect(worksheets.map((w) => w.name)).toEqual(registry.worksheets.map((w) => w.name));
     expect(worksheets.map((w) => w.id)).toEqual(registry.worksheets.map((w) => w.id));
   });

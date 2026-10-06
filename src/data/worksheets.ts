@@ -19,7 +19,7 @@ export const worksheets: Worksheet[] = [
   { id: "profile-calibration", name: "Profile Calibration", protocols: ["profile-calibration"] },
   {
     id: "consistency-pact-private",
-    name: "Consistency Pact: private check",
+    name: "Consistency Pact: my private check",
     protocols: ["consistency-pact"],
     detail: "your own check, kept to yourself",
   },

@@ -647,7 +647,7 @@
     },
     {
       "id": "consistency-pact-private",
-      "name": "Consistency Pact: private check",
+      "name": "Consistency Pact: my private check",
       "protocols": [
         "consistency-pact"
       ]
