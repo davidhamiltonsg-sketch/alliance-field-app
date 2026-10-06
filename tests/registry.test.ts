@@ -239,12 +239,12 @@ describe("registry: plain-English subtitles", () => {
 });
 
 describe("registry: worksheets", () => {
-  it("counts 5 worksheets, with the registry names", () => {
-    expect(registry.worksheetCount).toBe(5);
-    expect(registry.counts.worksheets).toBe(5);
-    expect(KIT.worksheets).toBe(5);
-    expect(worksheets).toHaveLength(5);
-    expect(worksheets.map((w) => w.name)).toEqual(["Pause times", "Weekly Reset agenda", "Profile Calibration", "Pacts sheet", "Check-Up sheet"]);
+  it("counts 6 worksheets, with the registry names", () => {
+    expect(registry.worksheetCount).toBe(6);
+    expect(registry.counts.worksheets).toBe(6);
+    expect(KIT.worksheets).toBe(6);
+    expect(worksheets).toHaveLength(6);
+    expect(worksheets.map((w) => w.name)).toEqual(["Pause times", "Weekly Reset agenda", "Profile Calibration", "Consistency Pact: private check", "Pacts sheet", "Check-Up sheet"]);
     expect(worksheets.map((w) => w.name)).toEqual(registry.worksheets.map((w) => w.name));
     expect(worksheets.map((w) => w.id)).toEqual(registry.worksheets.map((w) => w.id));
   });

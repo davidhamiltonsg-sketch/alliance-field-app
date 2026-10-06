@@ -6,7 +6,7 @@ export const KIT = {
   /** Field Kit: the 15 tools, each with one card. */
   protocolCards: 15,
   /** Field Kit worksheets (see src/data/worksheets.ts). */
-  worksheets: 5,
+  worksheets: 6,
   manualChapters: 16,
   calibrationQuestions: 44,
   /** Pause + Return window, in minutes. */

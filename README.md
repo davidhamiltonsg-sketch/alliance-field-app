@@ -271,7 +271,7 @@ Elsewhere: your local emergency number or national helpline.
 - Tool cards: `src/data/cards/*.json` (15 cards, each with a `synonyms` list used
   by search; the Kit adds Read This First). The master text is the Kit's; the
   Manual and this app mirror it word for word. Counts shared with the printed
-  products (15 cards, 5 worksheets, 16 Manual chapters) are in `src/data/kit.ts`;
+  products (15 cards, 6 worksheets, 16 Manual chapters) are in `src/data/kit.ts`;
   `tests/data-consistency.test.ts` and `tests/spec-v2.test.ts` check them.
 - Groups and labels: `src/data/tiers.ts` (internal keys `core`, `situational`,
   `build`; people see "Learn first", "When it comes up", "Build over time").

@@ -1,5 +1,5 @@
 /**
- * The 5 Field Kit worksheets (SPEC section 4). Checked against registry.json
+ * The 6 Field Kit worksheets (SPEC section 4). Checked against registry.json
  * and KIT.worksheets by tests/registry.test.ts.
  */
 export interface Worksheet {
@@ -18,11 +18,17 @@ export const worksheets: Worksheet[] = [
   { id: "weekly-reset-agenda", name: "Weekly Reset agenda", protocols: ["weekly-reset"] },
   { id: "profile-calibration", name: "Profile Calibration", protocols: ["profile-calibration"] },
   {
+    id: "consistency-pact-private",
+    name: "Consistency Pact: private check",
+    protocols: ["consistency-pact"],
+    detail: "your own check, kept to yourself",
+  },
+  {
     id: "pacts-sheet",
     name: "Pacts sheet",
-    protocols: ["intimacy-pact", "consistency-pact"],
-    parts: ["Intimacy Pact", "Consistency Pact"],
-    detail: "one section for each pact",
+    protocols: ["intimacy-pact"],
+    parts: ["Intimacy Pact"],
+    detail: "the shared Intimacy Pact",
   },
   {
     id: "check-up-sheet",

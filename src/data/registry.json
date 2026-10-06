@@ -646,15 +646,20 @@
       ]
     },
     {
+      "id": "consistency-pact-private",
+      "name": "Consistency Pact: private check",
+      "protocols": [
+        "consistency-pact"
+      ]
+    },
+    {
       "id": "pacts-sheet",
       "name": "Pacts sheet",
       "protocols": [
-        "intimacy-pact",
-        "consistency-pact"
+        "intimacy-pact"
       ],
       "sections": [
-        "Intimacy Pact",
-        "Consistency Pact"
+        "Intimacy Pact"
       ]
     },
     {
@@ -665,10 +670,10 @@
       ]
     }
   ],
-  "worksheetCount": 5,
+  "worksheetCount": 6,
   "counts": {
     "protocols": 15,
-    "worksheets": 5,
+    "worksheets": 6,
     "chapters": 16,
     "fieldKitCards": "15 tool cards (plus Read This First)",
     "situationMapSides": 2
