@@ -1,5 +1,5 @@
 import type { Protocol } from "@/data/types";
-import { SAFETY_SEARCH_WORDS, SEARCH_HINTS, TOOL_ORDER } from "@/components/tierLabels";
+import { SAFETY_SEARCH_WORDS, SEARCH_HINTS, SEARCH_HINTS_LOW, TOOL_ORDER } from "@/components/tierLabels";
 
 /** Small words people type around the word that matters ("he yells", "controls my phone"). */
 const STOP_WORDS = new Set([
@@ -52,15 +52,16 @@ function order(slug: string): number {
   return i === -1 ? TOOL_ORDER.length : i;
 }
 
-/** Score one tool: title hits rank above synonym hits, which rank above body text. 0 = no match. */
+/** Score one tool: title hits rank above synonym hits, then weaker hints, then body text. 0 = no match. */
 function score(p: Protocol, words: string[], requireAll: boolean): number {
   const title = normalise(p.title);
   const syn = normalise(synonymsOf(p));
+  const low = normalise(SEARCH_HINTS_LOW[p.slug] ?? "");
   const body = normalise([p.concept, p.whenToUse, ...p.steps, ...p.phrases.map((ph) => ph.text)].join(" "));
   let total = 0;
   let matched = 0;
   for (const w of words) {
-    const s = hits(title, w) ? 100 : hits(syn, w) ? 40 : hits(body, w) ? 5 : 0;
+    const s = hits(title, w) ? 100 : hits(syn, w) ? 40 : hits(low, w) ? 10 : hits(body, w) ? 5 : 0;
     if (s > 0) matched += 1;
     total += s;
   }

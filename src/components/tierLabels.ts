@@ -47,9 +47,9 @@ export const SEARCH_HINTS: Record<string, string> = {
   "pause-and-return": "break timeout time out space cool down walk away flooded angry shut down stonewall stonewalling silent treatment yell yelling shouting overwhelmed",
   "60-second-reset": "argument fight starting heated calm quick connect snapping yell yelling shouting raised voice bickering",
   "micro-repair": "sorry apologise apologize snapped sharp tone small hurt make up rude",
-  "weekly-reset": "weekly meeting catch up check in routine schedule talk money finances budget bills spending chores housework load",
-  "system-overlay": "system-talk we versus us problem blame who is right money finances budget spending decision hard talk",
-  "full-repair": "big fight aftermath make up after a fight apology same fight again recurring stonewalling",
+  "weekly-reset": "weekly meeting catch up check in routine schedule talk chores housework load",
+  "system-overlay": "system-talk we versus us problem blame who is right money finances finance budget budgeting debt debts spending spend overspending decision hard talk",
+  "full-repair": "big fight aftermath make up after a fight apology same fight again recurring stonewalling money finances finance budget debt debts spending overspending",
   "trust-recovery": "lied lie cheated affair betrayal betrayed broke trust secret honest proof money hidden debt",
   "check-up": "housemates roommates drifting drift apart distant pulling away lonely cold gap stonewalling silent ignoring jealous jealousy insecure insecurity envy",
   "team-agreement": "family in-laws parents friends outside pressure disapproval racist comments stares jealous jealousy ex",
@@ -58,6 +58,15 @@ export const SEARCH_HINTS: Record<string, string> = {
   "intimacy-pact": "sex sexual intimacy touch desire mismatch no pressure closeness libido",
   "consistency-pact": "promises follow through broken agreement keep word chores",
   "profile-calibration": "differences personality types questions report misunderstood",
+};
+
+/**
+ * Weaker hints: a tool that helps with these words, but is not where to start.
+ * They rank below synonyms and above body text (money talk belongs in the
+ * System Overlay or a Full Repair; the Weekly Reset only keeps it on the agenda).
+ */
+export const SEARCH_HINTS_LOW: Record<string, string> = {
+  "weekly-reset": "money finances finance budget budgeting bills spending debt",
 };
 
 /**
