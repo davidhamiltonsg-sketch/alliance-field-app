@@ -20,14 +20,18 @@ export interface StartDay {
 
 export const START_TITLE = "Your First Week";
 
-/** "Tonight (20 minutes)": three jobs, and day 1 is exactly these. */
+/**
+ * "Tonight (20 minutes)", as in the Manual: first a private step each of you
+ * does on your own, then two steps together. Day 1 is exactly these.
+ */
 export const TONIGHT = {
   title: "Tonight (20 minutes)",
   minutes: 20,
+  first:
+    "First, each of you on your own: read the red row of the Situation Map (row 1) privately. If it fits, stop here and use the Help Lines; you do not have to explain why.",
   steps: [
-    "Read the red row of the Situation Map.",
-    "Agree one pause phrase and a return time. Write them where you will both see them.",
-    "Try the 60-Second Reset once, while you’re calm.",
+    "Agree one pause phrase and a return time. Write both where you will both see them.",
+    "Try the 60-Second Reset once, while you are calm. Nothing needs fixing tonight.",
   ],
 } as const;
 
@@ -46,7 +50,7 @@ export const startDays: StartDay[] = [
   {
     day: 1,
     title: "Tonight’s job",
-    task: "Do the Tonight list (20 minutes): read the red row of the Situation Map, agree one pause phrase and a return time and write them where you’ll both see them, then try the 60-Second Reset once, while you’re calm.",
+    task: "Do the Tonight list (20 minutes): first, each of you on your own reads the red row of the Situation Map (row 1) privately; if it fits, stop and use the Help Lines. Then together, agree one pause phrase and a return time, write both where you will both see them, and try the 60-Second Reset once, while you are calm.",
     proof: "you’ve agreed your pause phrase and return time and written them down.",
     minutes: 20,
     slug: "60-second-reset",

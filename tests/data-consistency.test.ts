@@ -459,15 +459,19 @@ describe("the six to learn first and Your First Week", () => {
     }
   });
 
-  it("“Tonight (20 minutes)” has the three jobs, and day 1 is the tonight job only", () => {
+  it("“Tonight (20 minutes)”: a private first step each, then two together steps, as in the Manual", () => {
     expect(TONIGHT.title).toBe("Tonight (20 minutes)");
     expect(TONIGHT.minutes).toBe(20);
-    expect(TONIGHT.steps).toHaveLength(3);
-    expect(TONIGHT.steps[0]).toBe("Read the red row of the Situation Map.");
-    expect(TONIGHT.steps[2]).toBe("Try the 60-Second Reset once, while you’re calm.");
+    expect(TONIGHT.first).toBe(
+      "First, each of you on your own: read the red row of the Situation Map (row 1) privately. If it fits, stop here and use the Help Lines; you do not have to explain why.",
+    );
+    expect(TONIGHT.steps).toEqual([
+      "Agree one pause phrase and a return time. Write both where you will both see them.",
+      "Try the 60-Second Reset once, while you are calm. Nothing needs fixing tonight.",
+    ]);
     expect(startDays[0].minutes).toBe(20);
-    expect(startDays[0].task).toContain("read the red row of the Situation Map");
-    expect(startDays[0].task).toContain("try the 60-Second Reset once, while you’re calm");
+    expect(startDays[0].task).toContain("each of you on your own reads the red row of the Situation Map (row 1) privately");
+    expect(startDays[0].task).toContain("try the 60-Second Reset once, while you are calm");
   });
 
   it("ends with the first Weekly Reset on day 7 and covers the six to learn first", () => {
@@ -494,6 +498,7 @@ describe("the six to learn first and Your First Week", () => {
     expect(startDays.map((d) => d.slug)).toEqual(["60-second-reset", "green-rule", "micro-repair", "pause-and-return", "daily-rhythm", "system-overlay", "weekly-reset"]);
     expect(registry.firstWeek.title).toBe("Your First Week");
     expect(registry.firstWeek.tonight).toEqual([...TONIGHT.steps]);
+    expect(registry.firstWeek.tonightFirst).toBe(TONIGHT.first);
     for (const d of startDays) expect(d.proof, `day ${d.day}`).toMatch(/\S/);
   });
 

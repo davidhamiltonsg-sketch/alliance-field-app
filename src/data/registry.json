@@ -922,10 +922,10 @@
   },
   "firstWeek": {
     "title": "Your First Week",
+    "tonightFirst": "First, each of you on your own: read the red row of the Situation Map (row 1) privately. If it fits, stop here and use the Help Lines; you do not have to explain why.",
     "tonight": [
-      "Read the red row of the Situation Map.",
-      "Agree one pause phrase and a return time. Write them where you will both see them.",
-      "Try the 60-Second Reset once, while you’re calm."
+      "Agree one pause phrase and a return time. Write both where you will both see them.",
+      "Try the 60-Second Reset once, while you are calm. Nothing needs fixing tonight."
     ],
     "days": [
       "Tonight’s job only",

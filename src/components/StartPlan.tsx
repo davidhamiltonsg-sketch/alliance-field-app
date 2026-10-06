@@ -90,12 +90,16 @@ export function StartPlan() {
               </h2>
               <div id={`start-day-${d.day}`} hidden={!isOpen} className="pb-2">
               {d.day === 1 ? (
-                // Day 1 is tonight: the three jobs, as a list (one card, not two).
-                <ol className="mt-1 list-decimal space-y-1 pl-[3.75rem] text-base leading-normal text-ink">
-                  {TONIGHT.steps.map((s) => (
-                    <li key={s}>{s}</li>
-                  ))}
-                </ol>
+                // Day 1 is tonight: a private first step each, then the together steps (one card, not two).
+                <div className="mt-1 space-y-1.5 pl-11 text-base leading-normal text-ink">
+                  <p>{TONIGHT.first}</p>
+                  <p className="font-medium text-accent">Then, together:</p>
+                  <ol className="list-decimal space-y-1 pl-[1.25rem]">
+                    {TONIGHT.steps.map((s) => (
+                      <li key={s}>{s}</li>
+                    ))}
+                  </ol>
+                </div>
               ) : (
                 <p className="mt-1 pl-11 text-base leading-normal text-ink-muted">{d.task}</p>
               )}
