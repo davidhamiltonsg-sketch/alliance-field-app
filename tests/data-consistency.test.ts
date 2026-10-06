@@ -13,7 +13,8 @@ import { TOGETHER_CITATION, commonMoves, togetherFaq, teamAgreement, togetherToo
 import { protocolDiagrams } from "@/data/visuals/protocol-diagrams";
 import { precacheUrls } from "../scripts/generate-sw.mjs";
 import { ACCESS_COOKIE } from "@/lib/launch-lock";
-import { CONTACT_EMAIL, FULL_SYSTEM_URL, httpsUrlOrNull } from "@/lib/links";
+import { CONTACT_EMAIL, httpsUrlOrNull } from "@/lib/links";
+import * as links from "@/lib/links";
 
 const appDir = join(__dirname, "../src/app");
 const pageSource = (route: string) => readFileSync(join(appDir, route, "page.tsx"), "utf8");
@@ -633,7 +634,8 @@ describe("banned claims", () => {
 describe("contact and store links", () => {
   it("never shows a made-up contact address or links to a placeholder store", () => {
     if (!process.env.NEXT_PUBLIC_CONTACT_EMAIL) expect(CONTACT_EMAIL).toBeNull();
-    if (!process.env.NEXT_PUBLIC_FULL_SYSTEM_URL) expect(FULL_SYSTEM_URL).toBeNull();
+    // No shared store fallback: each product has only its own URL.
+    expect(links).not.toHaveProperty("FULL_SYSTEM_URL");
     expect(httpsUrlOrNull("http://example.com")).toBeNull();
     expect(httpsUrlOrNull("javascript:alert(1)")).toBeNull();
     expect(httpsUrlOrNull("https://store.example/p")).toBe("https://store.example/p");
