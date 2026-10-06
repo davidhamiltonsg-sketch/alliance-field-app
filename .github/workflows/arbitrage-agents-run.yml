@@ -2,6 +2,9 @@ name: Run arbitrage agents
 
 # Runs the agents on GitHub's servers so nothing needs to be installed locally.
 # Schedules are UTC. Trigger a one-off run from the Actions tab ("Run workflow").
+# Every run writes its digest to the run's Summary page; live runs (and runs
+# with "Open issue" ticked) also open a GitHub issue so the shortlist reaches
+# your phone through the GitHub app. Slack is optional on top of that.
 on:
   schedule:
     - cron: "0 6 * * *"   # Domain Flipper, daily 06:00 UTC
@@ -14,9 +17,13 @@ on:
         default: domain-flipper
         options: [domain-flipper, saas-scout, both]
       dry_run:
-        description: Dry run (fixtures only, no keys, prints the digest in the log)
+        description: Dry run (fixtures only, no keys)
         type: boolean
         default: true
+      open_issue:
+        description: Open a GitHub issue with the digest (always on for live runs)
+        type: boolean
+        default: false
       top:
         description: Shortlist size (blank = agent default)
         type: string
@@ -24,6 +31,7 @@ on:
 
 permissions:
   contents: read
+  issues: write
 
 concurrency:
   group: arbitrage-agents-run
@@ -85,6 +93,7 @@ jobs:
               *)           echo "agents=domain-flipper" >> "$GITHUB_OUTPUT" ;;
             esac
             echo "flags=" >> "$GITHUB_OUTPUT"
+            echo "open_issue=true" >> "$GITHUB_OUTPUT"
           else
             agent="${{ inputs.agent }}"
             [ "$agent" = "both" ] && agent="domain-flipper saas-scout"
@@ -93,6 +102,11 @@ jobs:
             [ "${{ inputs.dry_run }}" = "true" ] && flags="--dry-run"
             [ -n "${{ inputs.top }}" ] && flags="$flags --top ${{ inputs.top }}"
             echo "flags=$flags" >> "$GITHUB_OUTPUT"
+            if [ "${{ inputs.dry_run }}" != "true" ] || [ "${{ inputs.open_issue }}" = "true" ]; then
+              echo "open_issue=true" >> "$GITHUB_OUTPUT"
+            else
+              echo "open_issue=false" >> "$GITHUB_OUTPUT"
+            fi
           fi
 
       - name: Fetch SaaS listings export
@@ -102,18 +116,43 @@ jobs:
       - name: Run
         shell: bash
         run: |
+          mkdir -p digests
           for agent in ${{ steps.plan.outputs.agents }}; do
             echo "::group::$agent ${{ steps.plan.outputs.flags }}"
-            if [ "$agent" = "saas-scout" ] && [ ! -f listings.json ] && [[ "${{ steps.plan.outputs.flags }}" != *--dry-run* ]]; then
+            flags="${{ steps.plan.outputs.flags }}"
+            if [ "$agent" = "saas-scout" ] && [ ! -f listings.json ] && [[ "$flags" != *--dry-run* ]]; then
               echo "::warning::No listings.json: set the SAAS_LISTINGS_URL secret. Falling back to --dry-run."
-              python3 cli.py "$agent" --dry-run
-            elif [ "$agent" = "domain-flipper" ] && [ -z "$WHOISFREAKS_API_KEY" ] && [[ "${{ steps.plan.outputs.flags }}" != *--dry-run* ]]; then
+              flags="--dry-run"
+            elif [ "$agent" = "domain-flipper" ] && [ -z "$WHOISFREAKS_API_KEY" ] && [[ "$flags" != *--dry-run* ]]; then
               echo "::warning::WHOISFREAKS_API_KEY secret is not set. Falling back to --dry-run."
-              python3 cli.py "$agent" --dry-run
-            else
-              python3 cli.py "$agent" ${{ steps.plan.outputs.flags }}
+              flags="--dry-run"
             fi
+            [[ "$flags" == *--dry-run* ]] && echo "mode=sample data (dry run)" > "digests/$agent.mode" || echo "mode=live" > "digests/$agent.mode"
+            python3 cli.py "$agent" $flags --markdown-out "digests/$agent.md"
             echo "::endgroup::"
+          done
+
+      - name: Publish digests to the run summary
+        shell: bash
+        run: |
+          for f in digests/*.md; do
+            agent=$(basename "$f" .md)
+            { cat "$f"; echo; echo "_$(cat "digests/$agent.mode") · run [#${{ github.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})_"; echo; } >> "$GITHUB_STEP_SUMMARY"
+          done
+
+      - name: Open a GitHub issue with each digest
+        if: steps.plan.outputs.open_issue == 'true'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for f in digests/*.md; do
+            agent=$(basename "$f" .md)
+            mode=$(cut -d= -f2 "digests/$agent.mode")
+            title="$(head -n1 "$f" | sed 's/^## //') [$mode]"
+            { cat "$f"; echo; echo "_${mode} · run [#${{ github.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})_"; } > "digests/$agent.issue.md"
+            gh label create "arbitrage-digest" --color 1D76DB --description "Agent shortlists" --force >/dev/null 2>&1 || true
+            gh issue create --repo "${{ github.repository }}" --title "$title" --body-file "digests/$agent.issue.md" --label "arbitrage-digest"
           done
 
       - name: Upload audit logs
