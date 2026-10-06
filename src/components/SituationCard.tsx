@@ -145,7 +145,7 @@ export function SituationCard({
         )}
         {situation.goDeeper && (
           <p className="relative z-[1] mx-3 border-t border-rule/60 py-2.5 pl-1 text-sm leading-snug text-ink-muted">
-            <span className="font-medium text-ink">Go deeper: </span>
+            <span className="font-medium text-ink">In the books: </span>
             {situation.goDeeper}
           </p>
         )}

@@ -87,7 +87,7 @@ export const situations: Situation[] = [
     label: "We keep clashing the same way",
     description: "Reach–Recoil (one reaches, the other pulls back), the same ask on repeat, or one of you always wanting to talk sooner than the other.",
     firstMove: "Name it out loud: “I think we’re doing the thing again.” Later, when you’re calm, find the pattern in the Manual’s Appendix A and try Profile Calibration together. Also: Check-Up.",
-    goDeeper: "Appendix A: common patterns is in the Manual; for timing clashes, see Chapter 5, Hearing Each Other.",
+    goDeeper: "Volume B, Appendix A: common patterns. For timing clashes, Volume B, Chapter 5: Hearing Each Other.",
     primaryHref: "/protocols/profile-calibration",
     icon: "profile-calibration",
     secondaryHrefs: [

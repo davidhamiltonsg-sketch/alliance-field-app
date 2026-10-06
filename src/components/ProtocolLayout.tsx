@@ -9,7 +9,7 @@ import { StepDiagram, WhenStrip } from "./visuals/StepDiagram";
 import { ApIcon, IconChip, isIconId } from "./ApIcon";
 import { protocolSubtitle } from "@/data/glossary";
 import { worksheetsFor } from "@/data/worksheets";
-import { chapterLabel, goDeeper } from "@/data/go-deeper";
+import { companionLine, goDeeper, manualLine } from "@/data/go-deeper";
 import { protocolDiagrams } from "@/data/visuals/protocol-diagrams";
 import { WarnBanner, isSafetyWording } from "./WarnBanner";
 import { RecentTracker } from "./RecentTracker";
@@ -137,40 +137,30 @@ export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
         </section>
       )}
 
-      <section className="space-y-2" aria-labelledby="go-deeper">
+      <section className="space-y-2" aria-labelledby="in-the-books">
         <SectionLabel>
-          <span id="go-deeper">Go deeper</span>
+          <span id="in-the-books">In the books</span>
         </SectionLabel>
-        <ul className="space-y-1.5 text-sm leading-snug text-ink-muted">
+        <ul className="space-y-1.5 text-sm leading-snug text-ink">
           {deeper && (
             <li className="flex items-center gap-2">
-              <ApIcon id="manual" size={20} className="text-accent" />
-              <span>
-                Operating Manual: <span className="text-ink">{chapterLabel(deeper.chapter)}</span>, for the reasoning and the harder cases.
-              </span>
+              <ApIcon id="manual" size={20} className="shrink-0 text-accent" />
+              <span>{manualLine(deeper.chapter)}</span>
+            </li>
+          )}
+          {deeper?.companion && (
+            <li className="flex items-center gap-2">
+              <ApIcon id="companion" size={20} className="shrink-0 text-accent" />
+              <span>{companionLine(deeper.companion)}</span>
             </li>
           )}
           <li className="flex items-center gap-2">
-            <ApIcon id="field-kit" size={20} className="text-accent" />
+            <ApIcon id="field-kit" size={20} className="shrink-0 text-accent" />
             <span>
-              Field Kit: the <span className="text-ink">{protocol.title}</span> card
-              {sheets.length > 0 ? (
-                <>
-                  {" "}and the <span className="text-ink">{sheets.map((w) => w.name).join(" and ")}</span>
-                  {sheets.length === 1 && sheets[0].detail ? ` (${sheets[0].detail})` : ""}
-                </>
-              ) : null}
-              , to keep in the folder.
+              Field Kit: the {protocol.title} card
+              {sheets.length > 0 ? ` and the ${sheets.map((w) => w.name).join(" and ")}` : ""}
             </span>
           </li>
-          {deeper?.companion && (
-            <li className="flex items-center gap-2">
-              <ApIcon id="companion" size={20} className="text-accent" />
-              <span>
-                <span className="text-ink">{deeper.companion}</span>, for the why behind it.
-              </span>
-            </li>
-          )}
         </ul>
       </section>
 

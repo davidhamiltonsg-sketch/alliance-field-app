@@ -280,6 +280,18 @@ describe("Go deeper pointers", () => {
     }
   });
 
+  it("“In the books” gives one plain line per book, with the chapter’s title", async () => {
+    const { goDeeper, manualLine, companionLine } = await import("@/data/go-deeper");
+    expect(manualLine("3")).toBe("Volume B, Chapter 3: When Your Body Takes Over");
+    expect(companionLine("Volume A, Ch II")).toBe("Volume A, Chapter II: Two Nervous Systems, One Kitchen");
+    for (const g of Object.values(goDeeper)) {
+      if (g.companion) expect(companionLine(g.companion)).toMatch(/^Volume A(, Chapter [IVX]+)?: \S/);
+    }
+    const layout = readFileSync(join(process.cwd(), "src/components/ProtocolLayout.tsx"), "utf8");
+    expect(layout).toContain("In the books");
+    expect(layout).not.toMatch(/Go deeper|Operating Manual:/);
+  });
+
   it("each tool points at the new chapter that covers it", async () => {
     const { goDeeper } = await import("@/data/go-deeper");
     const expected: Record<string, string> = {

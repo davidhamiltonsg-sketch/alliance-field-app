@@ -61,8 +61,8 @@ export default function StartPage() {
       </WarnBanner>
 
       <p className="text-sm leading-normal text-ink-muted">
-        Go deeper: the same plan, day for day, is “Your First Week” in the Field
-        Kit and the Operating Manual.
+        In the books: the same plan, day for day, is “Your First Week” in the
+        Field Kit and in Volume B, Chapter 4: Getting Started.
       </p>
 
       <Link href="/" className="inline-flex min-h-12 items-center gap-1.5 text-base font-medium text-accent">

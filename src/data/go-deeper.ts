@@ -60,3 +60,32 @@ export function chapterLabel(key: ChapterKey): string {
   const c = manualChapters[key];
   return `Chapter ${c.num}, ${c.title}`;
 }
+
+/** Volume A (The Architecture of Staying) chapter titles, as headed in the book. */
+export const volumeAChapters: Record<string, string> = {
+  I: "The Myth of “If We Just Love Each Other Enough”",
+  II: "Two Nervous Systems, One Kitchen",
+  III: "The Names We Give Each Other",
+  IV: "When Someone Won’t Own It",
+  V: "The Slow Kind of Leaving",
+  VI: "Rebuilding After the Break",
+  VII: "Why Structure Isn’t Cold",
+  VIII: "What We Built",
+  IX: "When the World Has an Opinion",
+  X: "Asking, and Hearing No",
+  XI: "The Gap Between Say and Do",
+};
+
+/** One plain line for the Manual: "Volume B, Chapter 3: When Your Body Takes Over". */
+export function manualLine(key: ChapterKey): string {
+  const c = manualChapters[key];
+  return `Volume B, Chapter ${c.num}: ${c.title}`;
+}
+
+/** One plain line for the Companion: "Volume A, Chapter II: Two Nervous Systems, One Kitchen". */
+export function companionLine(companion: string): string {
+  const m = /^Volume A, Ch ([IVX]+)$/.exec(companion);
+  if (m && volumeAChapters[m[1]]) return `Volume A, Chapter ${m[1]}: ${volumeAChapters[m[1]]}`;
+  if (companion === "Volume A: The Third Voice") return "Volume A: The Third Voice (a note from the authors)";
+  return companion;
+}
