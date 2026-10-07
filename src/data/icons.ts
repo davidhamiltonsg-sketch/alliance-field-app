@@ -34,7 +34,7 @@ export const icons = {
       "M18.4 7.4l1.3-1.3",
       "M12 13.75V9.5a4.25 4.25 0 0 1 4.25 4.25Z",
     ],
-    label: "60-Second Alliance Reset",
+    label: "60-Second Reset",
     group: "protocol",
   },
   "green-rule": {
@@ -42,7 +42,7 @@ export const icons = {
       "M12 3l7.5 2.75v5.5c0 4.6-3.1 8-7.5 9.75-4.4-1.75-7.5-5.15-7.5-9.75v-5.5Z",
       "M8.75 12.25l2.25 2.25 4.25-4.5",
     ],
-    label: "Green Rule (Honesty Gate)",
+    label: "Green Rule",
     group: "protocol",
   },
   "system-overlay": {
@@ -74,13 +74,13 @@ export const icons = {
     label: "Micro-Repair",
     group: "protocol",
   },
-  "morning-evening-rhythm": {
+  "daily-rhythm": {
     paths: [
       "M4.75 7a2.25 2.25 0 1 0 4.5 0a2.25 2.25 0 1 0 -4.5 0Z",
       "M10.75 7L11.9 7M7 10.75L7 11.9M4.35 9.65L3.54 10.46M3.25 7L2.1 7M4.35 4.35L3.54 3.54M7 3.25L7 2.1M9.65 4.35L10.46 3.54",
       "M20.5 16.4a4.6 4.6 0 1 1-5-5.9 3.6 3.6 0 0 0 5 5.9Z",
     ],
-    label: "Morning + Evening Rhythm",
+    label: "Daily Rhythm",
     group: "protocol",
   },
   "intimacy-pact": {
@@ -108,26 +108,26 @@ export const icons = {
     label: "Consistency Pact",
     group: "protocol",
   },
-  "full-recovery": {
+  "full-repair": {
     paths: [
       "M18.01 5.99A8.5 8.5 0 1 1 9.8 3.79",
       "M8.49 5.8L9.8 3.79L7.66 2.7",
       "M7.75 15.75h2.85v-2.85h2.85v-2.85h2.8",
     ],
-    label: "Full Recovery",
+    label: "Full Repair",
     group: "protocol",
   },
-  "uninvestment-check": {
+  "check-up": {
     paths: [
       "M4.5 20.5V4.5",
       "M9.5 20.5V9",
       "M14.5 20.5v-7",
       "M19.5 20.5v-2.5",
     ],
-    label: "Pulling-Away Check",
+    label: "Check-Up",
     group: "protocol",
   },
-  "unity-anchor": {
+  "team-agreement": {
     paths: [
       "M10 6.5a2 2 0 1 0 4 0a2 2 0 1 0 -4 0Z",
       "M12 8.5V21",
@@ -136,7 +136,7 @@ export const icons = {
       "M3.4 16.6 5 15l1.7 1.4M20.6 16.6 19 15l-1.7 1.4",
     ],
     accent: "M3.5 3c3 .1 5.3 .9 6.9 2.3M20.5 3c-3 .1-5.3 .9-6.9 2.3",
-    label: "Team agreement",
+    label: "Team Agreement",
     group: "concept",
   },
   "sun-memory": {
@@ -183,7 +183,7 @@ export const icons = {
       "M12 20.25C6.6 17.1 3.25 13.7 3.25 9.9A4.4 4.4 0 0 1 12 7.4a4.4 4.4 0 0 1 8.75 2.5c0 3.8-3.35 7.2-8.75 10.35Z",
       "M8.9 12.4l2.1 2.1 4.1-4.2",
     ],
-    label: "Monthly look-back",
+    label: "Monthly part of the Weekly Reset",
     group: "concept",
   },
   "help-safety": {
@@ -227,7 +227,7 @@ export const icons = {
       "M12 6.75C10 5.25 7 4.6 3 4.75v13.5c4-.15 7 .5 9 2 2-1.5 5-2.15 9-2v-13.5c-4-.15-7 .5-9 2Z",
       "M12 6.75v13.5",
     ],
-    label: "Companion Book",
+    label: "Volume A",
     group: "concept",
   },
   "section-when": {

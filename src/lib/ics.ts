@@ -156,7 +156,8 @@ export function startPlanIcsText(time = "20:00", fromDate = new Date(), days = 7
     `DTSTART:${toFloatingDate(start)}`,
     `DTEND:${toFloatingDate(end)}`,
     `RRULE:FREQ=DAILY;COUNT=${days}`,
-    text("SUMMARY", "Alliance start plan (10 min)"),
+    // Neutral title: it shows on lock screens and in shared calendars.
+    text("SUMMARY", "Reminder (10 min)"),
     text(
       "DESCRIPTION",
       "Today’s step of the 7-day plan — open the Field App at /start. Day 7 is your first Weekly Reset (about 40 minutes). If either of you is flooded, Pause + Return first."
@@ -198,20 +199,20 @@ export const WEEKLY_RESET_RRULE = "FREQ=WEEKLY;BYDAY=SU";
 /**
  * The "Keep it going" calendar as text: two recurring events at a floating
  * local time (default Sunday 7pm) — the Weekly Reset every Sunday, and a
- * monthly reminder to run a monthly look-back inside the first Weekly Reset of
- * the month (not a separate meeting).
+ * monthly reminder to add the monthly part to the first Weekly Reset of the
+ * month (10 more minutes, not a separate meeting).
  */
 export function keepGoingIcsText(time = "19:00", fromDate = new Date()): string {
   const weekly = nextSundayAt(fromDate, time);
   const monthly = nextFirstSundayAt(fromDate, time);
   const stamp = toIcsDate(new Date());
 
-  const event = (uid: string, start: Date, rrule: string, summary: string, description: string) => [
+  const event = (uid: string, start: Date, rrule: string, summary: string, description: string, minutes: number = WEEKLY_RESET_MINUTES) => [
     "BEGIN:VEVENT",
     `UID:${uid}-${start.getTime()}@allianceprotocols.com`,
     `DTSTAMP:${stamp}`,
     `DTSTART:${toFloatingDate(start)}`,
-    `DTEND:${toFloatingDate(addLocalMinutes(start, WEEKLY_RESET_MINUTES))}`,
+    `DTEND:${toFloatingDate(addLocalMinutes(start, minutes))}`,
     `RRULE:${rrule}`,
     text("SUMMARY", summary),
     text("DESCRIPTION", description),
@@ -230,37 +231,40 @@ export function keepGoingIcsText(time = "19:00", fromDate = new Date()): string 
       "alliance-keep-going-care-checkin",
       monthly,
       CARE_CHECKIN_RRULE,
-      "Monthly look-back (inside the Weekly Reset)",
-      "First Weekly Reset of the month: during Check the load, use a monthly look-back (inside the Weekly Reset) — look back over the whole month, area by area, and ask if the load felt fair. Same 40 minutes, not an extra meeting. Open the Field App at /weekly-reset."
+      "Monthly part of your Weekly Reset",
+      "First Weekly Reset of the month: the monthly part of your Weekly Reset adds 10 minutes. Look back over the whole month, area by area, and ask if the load felt fair. It is part of the same meeting, not an extra meeting. Open the Field App at /weekly-reset.",
+      WEEKLY_RESET_MINUTES + 10
     ),
   ]);
 }
 
-/** Returns an object URL for the "Keep it going" calendar (weekly Reset + monthly look-back). */
+/** Returns an object URL for the "Keep it going" calendar (Weekly Reset + the monthly part). */
 export function buildKeepGoingIcs(time = "19:00", fromDate = new Date()): { url: string; filename: string } {
   return toBlobUrl(keepGoingIcsText(time, fromDate), "alliance-keep-it-going.ics");
 }
 
+/** Title and alarm text for the return-time event. */
+export const PAUSE_REMINDER_TITLE = "Reminder";
+
 /**
  * The Pause + Return time as a one-off event with an alarm at the return
  * time — a backstop for phones that silence the in-app chime in the background.
+ * Everything in it is neutral (no tool names, no reason): the title shows on
+ * lock screens, and a shared calendar shows the whole event to others.
  */
 export function pauseReturnIcsText(returnAt: Date, now = new Date()): string {
   const end = new Date(returnAt.getTime() + 5 * 60 * 1000);
   return calendar([
     "BEGIN:VEVENT",
-    `UID:alliance-pause-return-${returnAt.getTime()}@allianceprotocols.com`,
+    `UID:reminder-${returnAt.getTime()}@allianceprotocols.com`,
     `DTSTAMP:${toIcsDate(now)}`,
     `DTSTART:${toIcsDate(returnAt)}`,
     `DTEND:${toIcsDate(end)}`,
-    text("SUMMARY", "Return time (Pause + Return)"),
-    text(
-      "DESCRIPTION",
-      "Time to come back, as promised. Warm up, then make it safe; don’t restart where you left off. If you’re afraid, not just flooded, don’t return — get outside help."
-    ),
+    text("SUMMARY", PAUSE_REMINDER_TITLE),
+    text("DESCRIPTION", "The time you set."),
     "BEGIN:VALARM",
     "ACTION:DISPLAY",
-    text("DESCRIPTION", "Return time (Pause + Return)"),
+    text("DESCRIPTION", PAUSE_REMINDER_TITLE),
     "TRIGGER:PT0M",
     "END:VALARM",
     "END:VEVENT",
@@ -268,5 +272,5 @@ export function pauseReturnIcsText(returnAt: Date, now = new Date()): string {
 }
 
 export function buildPauseReturnIcs(returnAt: Date, now = new Date()): { url: string; filename: string } {
-  return toBlobUrl(pauseReturnIcsText(returnAt, now), "alliance-return-time.ics");
+  return toBlobUrl(pauseReturnIcsText(returnAt, now), "reminder.ics");
 }

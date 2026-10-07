@@ -3,8 +3,8 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { useRouter } from "next/navigation";
 import { questions } from "@/data/calibration/questions";
-import type { ChoiceKey, PersonKey } from "@/data/calibration/types";
-import { answeredCount, firstUnansweredIndex, isComplete, readCalibration, writeCalibration } from "@/lib/calibration";
+import type { AnswerValue, ChoiceKey, PersonKey } from "@/data/calibration/types";
+import { answeredCount, firstUnansweredIndex, isComplete, readCalibration, skippedCount, writeCalibration } from "@/lib/calibration";
 import { CALIBRATION_KEY } from "@/lib/calibration";
 import { clearKey } from "@/lib/storage";
 import { generateProfile } from "@/lib/calibration";
@@ -23,7 +23,7 @@ export function CalibrationFlow() {
   return <CalibrationFlowClient />;
 }
 
-type Phase = "names" | "quiz" | "handoff";
+type Phase = "names" | "quiz" | "handoff" | "bdone";
 
 function CalibrationFlowClient() {
   const router = useRouter();
@@ -49,14 +49,15 @@ function CalibrationFlowClient() {
 
   const personInput = person === "A" ? state.personA : state.personB;
   const question = questions[index];
-  const answeredHere = answeredCount(personInput.answers);
+  const skippedHere = skippedCount(personInput.answers);
+  const answeredHere = answeredCount(personInput.answers) - skippedHere;
 
   const commit = (next: typeof state) => {
     setState(next);
     writeCalibration(next);
   };
 
-  const choose = (choice: ChoiceKey) => {
+  const choose = (choice: AnswerValue) => {
     const key = person === "A" ? "personA" : "personB";
     const next = { ...state, [key]: { ...personInput, answers: { ...personInput.answers, [question.id]: choice } } };
     commit(next);
@@ -71,7 +72,9 @@ function CalibrationFlowClient() {
       commit({ ...next, aPrivate: true });
       setPhase("handoff");
     } else {
-      router.push("/calibrate/report");
+      // B gets the same privacy choice, private by default.
+      commit({ ...next, bPrivate: true });
+      setPhase("bdone");
     }
   };
 
@@ -120,7 +123,9 @@ function CalibrationFlowClient() {
           </div>
         </div>
         <p className="text-sm leading-normal text-ink-muted">
-          One question at a time. Answer for yourself, then pass the phone to your partner.
+          This is one shared phone, and you take turns: {state.personA.name} answers all 44 questions
+          first, then hands the phone to {state.personB.name}. One question at a time; answer for
+          yourself, and skip any question you’d rather not answer. Answers stay on this phone.
         </p>
         <PrimaryButton onClick={() => setPhase("quiz")}>Begin — {state.personA.name}’s turn</PrimaryButton>
       </div>
@@ -133,7 +138,8 @@ function CalibrationFlowClient() {
         <div className="card space-y-2 px-4 py-6">
           <p className="display text-lg leading-tight">{state.personA.name}’s answers are in.</p>
           <p className="text-base leading-normal text-ink-muted">
-            Pass the phone to {state.personB.name}. Same 44 questions, answered for themselves.
+            Next, pass this phone to {state.personB.name}: it’s their turn on the same 44 questions.
+            First, while you’re still holding it, choose what {state.personB.name} can see.
           </p>
         </div>
         <fieldset className="card space-y-2.5 px-4 py-4 text-left">
@@ -142,7 +148,7 @@ function CalibrationFlowClient() {
             Before you hand over
           </p>
           <p className="text-sm leading-normal text-ink-muted">
-            Your answers are saved on this shared device. Choose what {state.personB.name} can see.
+            Your answers are saved on this one shared phone. Choose what {state.personB.name} can see.
           </p>
           {([
             [true, `Keep my individual profile private — ${state.personB.name} sees only the couple report`],
@@ -151,7 +157,7 @@ function CalibrationFlowClient() {
             <label
               key={String(value)}
               className={`flex min-h-12 cursor-pointer items-start gap-3 rounded-xl border px-3.5 py-3 text-base leading-snug ${
-                state.aPrivate === value ? "border-accent bg-accent/[0.06] text-ink" : "border-rule/60 bg-white text-ink"
+                state.aPrivate === value ? "border-accent bg-accent/[0.06] text-ink" : "border-rule/60 bg-surface-raised text-ink"
               }`}
             >
               <input
@@ -175,19 +181,66 @@ function CalibrationFlowClient() {
         >
           Begin — {state.personB.name}’s turn
         </PrimaryButton>
-        <button
-          type="button"
-          onClick={() => setPreviewA((v) => !v)}
-          aria-expanded={previewA}
-          className="inline-flex min-h-11 items-center justify-center text-sm font-medium text-accent hover:underline"
-        >
-          {previewA ? "Hide my profile" : `View ${state.personA.name}’s profile first`}
-        </button>
-        {previewA && (
+        {/* Only offered when A chose to share: once private, the phone is about to change hands. */}
+        {!state.aPrivate && (
+          <button
+            type="button"
+            onClick={() => setPreviewA((v) => !v)}
+            aria-expanded={previewA}
+            className="inline-flex min-h-11 items-center justify-center text-sm font-medium text-accent hover:underline"
+          >
+            {previewA ? "Hide my profile" : `View ${state.personA.name}’s profile first`}
+          </button>
+        )}
+        {previewA && !state.aPrivate && (
           <div className="text-left">
             <SoloProfile profile={generateProfile("A", state.personA)} otherName={state.personB.name} preview />
           </div>
         )}
+      </div>
+    );
+  }
+
+  if (phase === "bdone") {
+    return (
+      <div className="space-y-4 text-center">
+        <div className="card space-y-2 px-4 py-6">
+          <p className="display text-lg leading-tight">{state.personB.name}’s answers are in.</p>
+          <p className="text-base leading-normal text-ink-muted">
+            You’ve both had your turn on this phone. Before you look at the report together,{" "}
+            {state.personB.name}, choose what {state.personA.name} can see.
+          </p>
+        </div>
+        <fieldset className="card space-y-2.5 px-4 py-4 text-left">
+          <legend className="sr-only">Before you show the report</legend>
+          <p className="text-base font-medium leading-normal text-ink" aria-hidden>
+            Before you show the report
+          </p>
+          <p className="text-sm leading-normal text-ink-muted">
+            Your answers are saved on this one shared phone. Choose what {state.personA.name} can see.
+          </p>
+          {([
+            [true, `Keep my individual profile private — ${state.personA.name} sees only the couple report`],
+            [false, `Share my individual profile with ${state.personA.name}`],
+          ] as const).map(([value, text]) => (
+            <label
+              key={String(value)}
+              className={`flex min-h-12 cursor-pointer items-start gap-3 rounded-xl border px-3.5 py-3 text-base leading-snug ${
+                state.bPrivate === value ? "border-accent bg-accent/[0.06] text-ink" : "border-rule/60 bg-surface-raised text-ink"
+              }`}
+            >
+              <input
+                type="radio"
+                name="b-privacy"
+                className="mt-1 accent-[var(--color-accent)]"
+                checked={state.bPrivate === value}
+                onChange={() => commit({ ...state, bPrivate: value })}
+              />
+              {text}
+            </label>
+          ))}
+        </fieldset>
+        <PrimaryButton onClick={() => router.push("/calibrate/report")}>See the couple report</PrimaryButton>
       </div>
     );
   }
@@ -227,7 +280,7 @@ function CalibrationFlowClient() {
                 onClick={() => choose(key)}
                 aria-pressed={selected}
                 className={`w-full rounded-xl border px-4 py-3.5 text-left text-base leading-snug transition-colors ${
-                  selected ? "border-accent bg-accent/10 font-medium text-accent" : "border-rule/60 bg-white text-ink hover:border-accent/30"
+                  selected ? "border-accent bg-accent/10 font-medium text-accent" : "border-rule/60 bg-surface-raised text-ink hover:border-accent/30"
                 }`}
               >
                 {text}
@@ -247,8 +300,18 @@ function CalibrationFlowClient() {
           <ArrowLeft size={16} />
           Back
         </button>
-        <p className="tabular text-sm text-ink-muted">{answeredHere}/{questions.length} answered</p>
+        <button
+          type="button"
+          onClick={() => choose("skip")}
+          aria-pressed={personInput.answers[question.id] === "skip"}
+          className="inline-flex min-h-11 items-center px-2 text-base font-medium text-accent"
+        >
+          Skip this question
+        </button>
       </div>
+      <p className="tabular text-center text-sm text-ink-muted">
+        {answeredHere}/{questions.length} answered{skippedHere > 0 ? ` · ${skippedHere} skipped` : ""}
+      </p>
 
       <button type="button" onClick={startOver} className="w-full min-h-11 rounded-xl text-sm font-medium text-ink-muted hover:bg-ink/[0.04]">
         Start over

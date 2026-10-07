@@ -83,9 +83,10 @@ function playChime() {
   }
 }
 
-const NOTIFY_TITLE = "Time to come back";
+// Neutral on purpose: a lock screen must not reveal what the timer is for.
+export const NOTIFY_TITLE = "Reminder";
 const NOTIFY_OPTIONS: NotificationOptions = {
-  body: "It’s time. Before you pick the topic back up: warm up and check it’s safe.",
+  body: "Your set time has arrived.",
   tag: "alliance-pause-return",
   icon: "/icon-192.png",
 };
@@ -162,7 +163,9 @@ function PauseTimerClient() {
   const [returnAt, setReturnAt] = useState<string | null>(saved.returnAt);
   const [startedAt, setStartedAt] = useState<string | null>(saved.startedAt);
   const [now, setNow] = useState(() => Date.now());
-  const [customMinutes, setCustomMinutes] = useState("45");
+  const [customMinutes, setCustomMinutes] = useState("");
+  // A preset chip only selects a length; the one Start button starts the pause.
+  const [selectedMs, setSelectedMs] = useState<number | null>(null);
   const [clockTime, setClockTime] = useState("");
   const [backMode, setBackMode] = useState(false);
   const [shareCopied, setShareCopied] = useState(false);
@@ -200,6 +203,27 @@ function PauseTimerClient() {
     const id = window.setInterval(() => setNow(Date.now()), 250);
     return () => window.clearInterval(id);
   }, [returnAt, backMode]);
+
+  // Before starting: what the dial previews (the chosen length and its clock time).
+  const chosenMs = useMemo(() => {
+    if (customMinutes.trim() !== "") {
+      const checked = parseCustomMinutes(customMinutes);
+      return checked.ok ? checked.minutes * 60 * 1000 : null;
+    }
+    if (selectedMs !== null) return selectedMs;
+    if (clockTime) {
+      const checked = clockReturnTarget(clockTime, new Date(now));
+      return checked.ok ? checked.target.getTime() - now : null;
+    }
+    return null;
+  }, [customMinutes, selectedMs, clockTime, now]);
+
+  // Keep the previewed "ready at" time current while a length is chosen.
+  useEffect(() => {
+    if (returnAt || chosenMs === null) return;
+    const id = window.setInterval(() => setNow(Date.now()), 15000);
+    return () => window.clearInterval(id);
+  }, [returnAt, chosenMs]);
 
   const remainingMs = useMemo(() => {
     if (!returnAt) return 0;
@@ -321,7 +345,9 @@ function PauseTimerClient() {
   );
 
   const chip =
-    "min-h-12 rounded-xl border border-rule/50 bg-white text-base font-medium text-ink shadow-[0_1px_2px_rgb(26_26_26/0.04)] transition hover:border-pause/40 hover:bg-surface-warn active:scale-[0.98]";
+    "min-h-12 rounded-xl border border-rule/50 bg-surface-raised text-base font-medium text-ink shadow-[0_1px_2px_rgb(26_26_26/0.04)] transition hover:border-pause/40 hover:bg-surface-warn active:scale-[0.98]";
+  const chipOn =
+    "min-h-12 rounded-xl border-2 border-pause bg-surface-warn text-base font-semibold text-pause-text transition active:scale-[0.98]";
 
   if (backMode) {
     return (
@@ -415,7 +441,7 @@ function PauseTimerClient() {
           Add your return time to your calendar
         </PrimaryButton>
         <p role="status" className="text-center text-sm font-medium text-accent empty:hidden">
-          {calendarAdded ? "Saved. Open the file to add the alarm to your calendar." : ""}
+          {calendarAdded ? "Saved. Open the file to add the alarm. It shows only as “Reminder”." : ""}
         </p>
         <p className="rounded-xl bg-surface-warn px-3.5 py-2.5 text-sm leading-snug text-ink">
           <strong className="font-medium">Keep this screen open</strong> —
@@ -439,71 +465,66 @@ function PauseTimerClient() {
         <TimerDisplay
           remainingMs={0}
           expired={false}
-          idleLabel="00:00"
-          caption="Choose a return time"
+          idleLabel={chosenMs !== null ? formatRemaining(chosenMs) : "00:00"}
+          caption={chosenMs !== null ? `Ready at ${formatClock(new Date(now + chosenMs))}` : "Choose a return time"}
+          chosen={chosenMs !== null}
         />
         <p className="mt-3 text-center text-base leading-normal text-ink-muted">
           Exact phrase:{" "}
-          <span className="phrase text-base text-ink">“I’ll be ready at ___.”</span>
+          <span className="phrase text-base text-ink">
+            “I’ll be ready at {chosenMs !== null ? formatClock(new Date(now + chosenMs)) : "___"}.”
+          </span>
         </p>
       </div>
 
       <section className="space-y-2">
         <p id="pause-duration" tabIndex={-1} className="focus-target text-sm font-medium text-ink">
-          Duration
+          1. Pick how long
         </p>
-        <div className="grid grid-cols-12 gap-2">
-          {DURATIONS.map((d, i) => (
-            <button
-              key={d.label}
-              type="button"
-              onClick={() => startWithMs(d.ms)}
-              className={`${chip} tabular ${i < 4 ? "col-span-3" : "col-span-4"}`}
-            >
-              {d.label}
-            </button>
-          ))}
+        <div role="group" aria-labelledby="pause-duration" className="grid grid-cols-12 gap-2">
+          {DURATIONS.map((d, i) => {
+            const on = selectedMs === d.ms && customMinutes.trim() === "";
+            return (
+              <button
+                key={d.label}
+                type="button"
+                aria-pressed={on}
+                onClick={() => {
+                  setNow(Date.now());
+                  setSelectedMs(d.ms);
+                  setCustomMinutes("");
+                  setCustomError(null);
+                }}
+                className={`${on ? chipOn : chip} tabular ${i < 4 ? "col-span-3" : "col-span-4"}`}
+              >
+                {d.label}
+              </button>
+            );
+          })}
         </div>
-      </section>
-
-      <section className="grid grid-cols-1 gap-3">
-        <div className="space-y-2">
+        <div className="space-y-2 pt-1">
           <label htmlFor="custom-minutes" className="block text-sm font-medium text-ink">
-            Custom minutes
+            Or type minutes
           </label>
-          <div className="flex gap-2">
-            <input
-              id="custom-minutes"
-              type="number"
-              inputMode="numeric"
-              step={1}
-              min={20}
-              max={1440}
-              value={customMinutes}
-              onChange={(e) => {
-                setCustomMinutes(e.target.value);
-                setCustomError(null);
-              }}
-              aria-invalid={customError ? true : undefined}
-              aria-describedby="custom-minutes-hint"
-              className="field-input tabular"
-            />
-            <PrimaryButton
-              fullWidth={false}
-              className="shrink-0 px-5"
-              onClick={() => {
-                const checked = parseCustomMinutes(customMinutes);
-                if (!checked.ok) {
-                  setCustomError(checked.error);
-                  return;
-                }
-                setCustomError(null);
-                startWithMs(checked.minutes * 60 * 1000);
-              }}
-            >
-              Start
-            </PrimaryButton>
-          </div>
+          <input
+            id="custom-minutes"
+            type="number"
+            inputMode="numeric"
+            step={1}
+            min={20}
+            max={1440}
+            placeholder="e.g. 45"
+            value={customMinutes}
+            onChange={(e) => {
+              setNow(Date.now());
+              setCustomMinutes(e.target.value);
+              setSelectedMs(null);
+              setCustomError(null);
+            }}
+            aria-invalid={customError ? true : undefined}
+            aria-describedby="custom-minutes-hint"
+            className="field-input tabular"
+          />
           {customError ? (
             <p id="custom-minutes-hint" role="alert" className="text-sm text-failure">
               {customError}
@@ -514,6 +535,35 @@ function PauseTimerClient() {
             </p>
           )}
         </div>
+        <p className="pt-1 text-sm font-medium text-ink">2. Start</p>
+        {/* Pinned just above the tab bar (and the home indicator) so it is never hidden. */}
+        <div className="sticky bottom-[calc(4rem+1px+env(safe-area-inset-bottom)+0.75rem)] z-30 -mx-1 rounded-2xl bg-paper/90 p-1 backdrop-blur-sm">
+        <PrimaryButton
+          variant="warn"
+          onClick={() => {
+            if (customMinutes.trim() !== "") {
+              const checked = parseCustomMinutes(customMinutes);
+              if (!checked.ok) {
+                setCustomError(checked.error);
+                return;
+              }
+              setCustomError(null);
+              startWithMs(checked.minutes * 60 * 1000);
+              return;
+            }
+            if (selectedMs === null) {
+              setCustomError("Pick a length above, or type minutes, first.");
+              return;
+            }
+            startWithMs(selectedMs);
+          }}
+        >
+          Start the pause
+        </PrimaryButton>
+        </div>
+      </section>
+
+      <section className="grid grid-cols-1 gap-3 border-t border-rule/35 pt-4">
 
         <div className="space-y-2">
           <label htmlFor="clock-time" className="block text-sm font-medium text-ink">
@@ -525,6 +575,7 @@ function PauseTimerClient() {
               type="time"
               value={clockTime}
               onChange={(e) => {
+                setNow(Date.now());
                 setClockTime(e.target.value);
                 setClockTimeError(null);
               }}
@@ -680,7 +731,7 @@ function CalmPause({
           </PrimaryButton>
           <p className="text-center text-sm text-ink-muted">
             Afraid, not just flooded? Don’t return at the set time —{" "}
-            <Link href="/help" className="font-medium text-failure underline underline-offset-4">
+            <Link href="/help" className="inline-flex min-h-11 items-center font-medium text-failure underline underline-offset-4">
               get help
             </Link>
             .

@@ -3,7 +3,7 @@
 import { useSyncExternalStore } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { isComplete, generateProfile, generateCoupleReport, readCalibration } from "@/lib/calibration";
+import { CLOSE_HEALTH, isComplete, generateProfile, generateCoupleReport, readCalibration, skippedCount } from "@/lib/calibration";
 import type { LayerKey, PersonInput, PersonKey, Profile } from "@/data/calibration/types";
 import { PageHeader } from "../PageHeader";
 import { PrimaryButton } from "../PrimaryButton";
@@ -27,7 +27,7 @@ const LAYER_ORDER: LayerKey[] = ["Atmosphere", "Structure", "Repair", "Protectio
 
 /** Word band for how far apart you are in a layer (no numbers on screen). */
 function apartWords(health: number): string {
-  if (health >= 85) return "answers close";
+  if (health >= CLOSE_HEALTH) return "answers close";
   if (health >= 62) return "answers some distance apart";
   return "answers far apart";
 }
@@ -69,44 +69,67 @@ function CalibrationReportClient() {
 
   const profileA = generateProfile("A", state.personA);
   const profileB = generateProfile("B", state.personB);
-  const report = generateCoupleReport(profileA, profileB);
+  // Either profile private: the report names nobody and attributes nothing to one person.
+  const report = generateCoupleReport(profileA, profileB, {
+    anonymous: state.aPrivate || state.bPrivate,
+    skippedCount: skippedCount(state.personA.answers) + skippedCount(state.personB.answers),
+  });
 
   return (
     <div className="space-y-6">
-      <PageHeader eyebrow={<Marker kind="TOOL" label="Layer Scan" icon="profile-calibration" />} title="Where you two stand">
+      <PageHeader eyebrow={<Marker kind="TOOL" label="Profile Calibration report" icon="profile-calibration" />} title="Where you two stand">
         You’ve both finished. Here’s where your answers line up, and where they don’t. {report.executiveSummary}
       </PageHeader>
 
-      {state.aPrivate && (
+      {(state.aPrivate || state.bPrivate) && (
         <p className="rounded-2xl border border-accent/20 bg-surface-tool px-4 py-3 text-sm leading-normal text-ink-muted">
-          {state.personA.name} kept their individual profile private, so this shows only the couple report.
+          {state.aPrivate && state.bPrivate
+            ? "You both kept your individual profiles private, so this shows only the couple report."
+            : `${state.aPrivate ? state.personA.name : state.personB.name} kept their individual profile private.`}
+        </p>
+      )}
+
+      {report.skippedCount > 0 && (
+        <p className="rounded-2xl border border-accent/20 bg-surface-tool px-4 py-3 text-sm leading-normal text-ink-muted">
+          {report.skippedCount === 1 ? "One question was" : `${report.skippedCount} questions were`} skipped, which is fine.
+          Skipped questions count for nothing either way, so parts of this report rest on fewer answers.
         </p>
       )}
 
       <section className="space-y-3">
-        <SectionLabel>Layer Scan</SectionLabel>
-        <div className="card px-4 py-1">
-          <h3 className="pt-3 text-sm font-semibold text-ink">Where you two see things most differently</h3>
-          <ul className="divide-y divide-rule/30">
-            {LAYER_ORDER.map((layer) => (
-              <li key={layer} className="flex items-baseline justify-between gap-3 py-3">
-                <span className="text-sm font-medium text-ink">{layer}</span>
-                <span className="text-sm text-ink-muted">{apartWords(report.layerHealth[layer])}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <p className="px-1 text-sm leading-normal text-ink-muted">
-          Start with the layer where you’re furthest apart. It isn’t a score for the relationship.
-        </p>
+        <SectionLabel>Where you differ, area by area</SectionLabel>
+        {report.noDifference ? (
+          <p className="card px-4 py-3.5 text-base leading-normal text-ink">
+            Nowhere much: your answers are close in all five areas (Atmosphere, Structure, Repair, Protection and Insight).
+          </p>
+        ) : (
+          <>
+            <div className="card px-4 py-1">
+              <h3 className="pt-3 text-sm font-semibold text-ink">Where you two see things most differently</h3>
+              <ul className="divide-y divide-rule/30">
+                {LAYER_ORDER.map((layer) => (
+                  <li key={layer} className="flex items-baseline justify-between gap-3 py-3">
+                    <span className="text-sm font-medium text-ink">{layer}</span>
+                    <span className="text-sm text-ink-muted">{apartWords(report.layerHealth[layer])}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <p className="px-1 text-sm leading-normal text-ink-muted">
+              Start with the layer where you’re furthest apart. It isn’t a score for the relationship.
+            </p>
+          </>
+        )}
       </section>
 
-      <section className="space-y-2.5">
-        <SectionLabel>When you clash</SectionLabel>
-        <p className="card px-4 py-3.5 text-base leading-normal text-ink">{report.conflictPattern}</p>
-      </section>
+      {report.conflictPattern && (
+        <section className="space-y-2.5">
+          <SectionLabel>When you clash</SectionLabel>
+          <p className="card px-4 py-3.5 text-base leading-normal text-ink">{report.conflictPattern}</p>
+        </section>
+      )}
 
-      {report.coreMismatch.length > 0 && (
+      {!report.noDifference && report.coreMismatch.length > 0 && (
         <section className="space-y-2.5">
           <SectionLabel>Where you differ</SectionLabel>
           <ul className="card divide-y divide-rule/30 px-4">
@@ -175,6 +198,22 @@ function CalibrationReportClient() {
           </p>
         ))}
       </section>
+
+      {([
+        [profileA, state.aPrivate, state.personB.name],
+        [profileB, state.bPrivate, state.personA.name],
+      ] as const).map(([profile, isPrivate, otherName]) =>
+        isPrivate ? null : (
+          <details key={profile.person} className="card px-4 py-1">
+            <summary className="flex min-h-12 cursor-pointer items-center text-base font-medium text-accent">
+              {profile.name} shared their own profile
+            </summary>
+            <div className="pb-4 pt-2">
+              <SoloProfile profile={profile} otherName={otherName} preview />
+            </div>
+          </details>
+        ),
+      )}
 
       <button
         type="button"
@@ -247,7 +286,7 @@ export function SoloProfile({ profile, otherName, preview = false }: { profile: 
       {!preview && (
         <>
           <div className="rounded-2xl border border-accent/20 bg-surface-tool px-4 py-3.5 text-sm leading-normal text-ink-muted">
-            You’ll see the couple report (Layer Scan, how you clash and the tools to try first) once {otherName} has answered too.
+            You’ll see the couple report (where you differ, area by area; how you clash and the tools to try first) once {otherName} has answered too.
           </div>
 
           <PrimaryButton onClick={() => router.push("/calibrate")}>Carry on</PrimaryButton>

@@ -17,7 +17,7 @@ export function QuickExit() {
         e.preventDefault();
         window.location.replace(QUICK_EXIT_URL);
       }}
-      className="flex min-h-12 w-full items-center justify-center rounded-xl border-2 border-ink/80 bg-white px-4 text-base font-semibold text-ink hover:bg-ink/[0.04]"
+      className="flex min-h-12 w-full items-center justify-center rounded-xl border-2 border-ink/80 bg-surface-raised px-4 text-base font-semibold text-ink hover:bg-ink/[0.04]"
     >
       Leave this page quickly
     </a>

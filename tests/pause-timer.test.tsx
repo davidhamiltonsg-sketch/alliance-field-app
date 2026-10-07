@@ -75,15 +75,35 @@ describe("custom minutes (L7)", () => {
   it("in the timer: a decimal is refused with a message, a whole number starts the pause", () => {
     render(<PauseTimer />);
     const input = container.querySelector<HTMLInputElement>("#custom-minutes")!;
+    expect(input.value).toBe("");
     type(input, "20.5");
-    act(() => button("Start").click());
+    act(() => button("Start the pause").click());
     expect(text()).toContain("Enter a whole number of minutes, 20 to 1440.");
     expect(localStorage.getItem(PAUSE_KEY)).toBeNull();
     type(input, "25");
-    act(() => button("Start").click());
+    act(() => button("Start the pause").click());
     const saved = JSON.parse(localStorage.getItem(PAUSE_KEY)!);
     expect(Date.parse(saved.returnAt) - Date.parse(saved.startedAt)).toBe(25 * MIN);
     expect(container.querySelector('[role="dialog"]')).not.toBeNull();
+  });
+});
+
+describe("preset lengths", () => {
+  it("a chip only selects; the one Start button starts the pause", () => {
+    render(<PauseTimer />);
+    act(() => button("30m").click());
+    expect(button("30m").getAttribute("aria-pressed")).toBe("true");
+    expect(localStorage.getItem(PAUSE_KEY)).toBeNull();
+    act(() => button("Start the pause").click());
+    const saved = JSON.parse(localStorage.getItem(PAUSE_KEY)!);
+    expect(Date.parse(saved.returnAt) - Date.parse(saved.startedAt)).toBe(30 * MIN);
+  });
+
+  it("Start with nothing chosen asks for a length instead of starting", () => {
+    render(<PauseTimer />);
+    act(() => button("Start the pause").click());
+    expect(text()).toContain("Pick a length above, or type minutes, first.");
+    expect(localStorage.getItem(PAUSE_KEY)).toBeNull();
   });
 });
 
@@ -148,6 +168,23 @@ describe("a pause read back from storage (L5, L6)", () => {
     expect(localStorage.getItem(PAUSE_KEY)).toBeNull();
   });
 
+  it("shows the chosen length and its ready-at time in the dial as soon as a time is picked", () => {
+    render(<PauseTimer />);
+    expect(text()).toContain("Choose a return time");
+    act(() => button("20m").click());
+    expect(text()).not.toContain("Choose a return time");
+    expect(text()).toContain("20:00");
+    expect(text()).toMatch(/Ready at \d{1,2}[:.]\d{2}/);
+  });
+
+  it("uses a neutral notification that does not reveal the purpose on a lock screen", async () => {
+    const { NOTIFY_TITLE } = await import("@/components/PauseTimer");
+    expect(NOTIFY_TITLE).toBe("Reminder");
+    const src = (await import("node:fs")).readFileSync("src/components/PauseTimer.tsx", "utf8");
+    expect(src).toContain('body: "Your set time has arrived."');
+    expect(src).not.toMatch(/Time to come back/);
+  });
+
   it("resumes a running pause in the calm view", () => {
     localStorage.setItem(PAUSE_KEY, JSON.stringify({ returnAt: iso(Date.now() + 15 * MIN), startedAt: iso(Date.now() - 5 * MIN) }));
     render(<PauseTimer />);
@@ -176,10 +213,10 @@ describe("restart cue uses plain step names (M7)", () => {
     expect(cue).not.toMatch(/Warmth|Expression|Alignment|Alliance not threatened/);
   });
 
-  it("the 7-day plan's day 3 is plain, like the Kit's First Week", () => {
+  it("day 3 of your first week is plain, like the Kit's", () => {
     const day3 = startDays.find((d) => d.day === 3)!;
     expect(day3.task).not.toMatch(/2%|softness/);
-    expect(day3.task).toContain("Start within minutes if you can; complete within 24 hours.");
+    expect(day3.task).toContain("Start within minutes if you can; finish within 24 hours.");
   });
 });
 

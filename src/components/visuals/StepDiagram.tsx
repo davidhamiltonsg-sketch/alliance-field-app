@@ -159,7 +159,7 @@ export function OutcomeBand({ text }: { text: string }) {
         </g>
       </svg>
       <div className="min-w-0">
-        <p className="text-xs font-medium uppercase tracking-[0.1em] text-white/75">Outcome</p>
+        <p className="text-xs font-medium uppercase tracking-[0.1em] text-white">Outcome</p>
         <p className="font-display mt-1 text-lg leading-snug text-white">{text}</p>
       </div>
     </div>

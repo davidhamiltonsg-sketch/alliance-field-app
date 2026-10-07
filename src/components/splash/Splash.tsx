@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
-import { BOT_UA_SOURCE, isNoSplashPath } from "./boot";
+import { INTRO_SEEN_KEY, isNoSplashPath } from "./boot";
 
 /**
  * Opening splash. Server-rendered so there is no flash of the page before it,
@@ -10,7 +10,7 @@ import { BOT_UA_SOURCE, isNoSplashPath } from "./boot";
  * An inline script in <head> sets html[data-splash] to "full" on a first
  * visit or "short" once the intro has been seen, before first paint.
  * When JS is running this component takes over: tap to skip, first-visit
- * hand-off to /intro, and unmounting once done.
+ * and unmounting once done.
  *
  * Never shown on /help, /pause or /unlock (not even server-rendered, so not
  * without JS either): those are opened in a hurry. Everywhere else it carries
@@ -24,11 +24,10 @@ const LEG_LEFT = "M60 14L26 106";
 const LEG_RIGHT = "M60 14L94 106";
 const WAVE = "M40 74Q50 63 60 74Q70 63 80 74";
 
-const FULL_MS = 1950; // fade starts; gone by ~2.37 s
+const FULL_MS = 700; // fade starts; gone by ~1.0 s (never more than 1.2 s)
 const SHORT_MS = 260;
-const REDUCED_MS = 700;
-const FADE_MS = 420;
-const BOT = new RegExp(BOT_UA_SOURCE, "i");
+const REDUCED_MS = 600;
+const FADE_MS = 300;
 
 // First-time visitors get the serious tagline. Returning visitors (mode
 // "short") get one of these instead — picked once per load, not a cycle.
@@ -115,8 +114,16 @@ export function Splash() {
     const mode = html.dataset.splash ?? "full";
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const first = mode === "full";
-    const toIntro =
-      first && window.location.pathname === "/" && !BOT.test(navigator.userAgent);
+    // The full opening plays once: later visits get the short one.
+    if (first) {
+      try {
+        window.localStorage.setItem(INTRO_SEEN_KEY, "1");
+      } catch {
+        /* storage unavailable: the full splash simply plays again */
+      }
+    }
+    // First visits are no longer sent to /intro; the home page offers the tour.
+    const toIntro = false;
     const leaveAt = mode === "off" ? 0 : first ? (reduced ? REDUCED_MS : FULL_MS) : SHORT_MS;
     plan.current = { toIntro, leaveAt };
     const list = timers.current;

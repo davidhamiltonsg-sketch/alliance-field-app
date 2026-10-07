@@ -1,11 +1,11 @@
 /**
- * The 7 Field Kit worksheets (CANON round 4). Checked against registry.json
+ * The 6 Field Kit worksheets (SPEC section 4). Checked against registry.json
  * and KIT.worksheets by tests/registry.test.ts.
  */
 export interface Worksheet {
   id: string;
   name: string;
-  /** Protocol cards this worksheet supports. */
+  /** Tool cards this worksheet supports. */
   protocols: string[];
   /** Named parts inside the worksheet, if it has more than one. */
   parts?: string[];
@@ -14,25 +14,28 @@ export interface Worksheet {
 }
 
 export const worksheets: Worksheet[] = [
-  { id: "pause-and-return-defaults", name: "Pause + Return Defaults", protocols: ["pause-and-return"] },
-  { id: "weekly-reset-agenda", name: "Weekly Reset Agenda", protocols: ["weekly-reset"] },
-  { id: "profile-calibration", name: "Profile Calibration", protocols: [] },
-  { id: "sensory-baseline-inventory", name: "Sensory Comfort Inventory", protocols: [] },
+  { id: "pause-times", name: "Pause times", protocols: ["pause-and-return"] },
+  { id: "weekly-reset-agenda", name: "Weekly Reset agenda", protocols: ["weekly-reset"] },
+  { id: "profile-calibration", name: "Profile Calibration", protocols: ["profile-calibration"] },
   {
-    id: "pacts-worksheet",
-    name: "Pacts Worksheet",
-    protocols: ["intimacy-pact", "consistency-pact"],
-    parts: ["Intimacy Pact", "Consistency Pact"],
-    detail: "one section for each pact",
+    id: "consistency-pact-private",
+    name: "Consistency Pact: my private check",
+    protocols: ["consistency-pact"],
+    detail: "your own check, kept to yourself",
   },
   {
-    id: "failure-mode-diagnostic",
-    name: "Drift Check",
-    protocols: ["system-overlay"],
-    parts: ["Drift Check", "Loop Spotter"],
-    detail: "with the Loop Spotter: a loop is a pattern that repeats between you",
+    id: "pacts-sheet",
+    name: "Pacts sheet",
+    protocols: ["intimacy-pact"],
+    parts: ["Intimacy Pact"],
+    detail: "the shared Intimacy Pact",
   },
-  { id: "uninvestment-check-worksheet", name: "Pulling-Away Check Worksheet", protocols: ["uninvestment-check"] },
+  {
+    id: "check-up-sheet",
+    name: "Check-Up sheet",
+    protocols: ["check-up"],
+    detail: "one sheet, three lenses: drifting apart, pulling away, and gaps between what you say and do",
+  },
 ];
 
 export function worksheetsFor(slug: string): Worksheet[] {

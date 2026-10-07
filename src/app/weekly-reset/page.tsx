@@ -15,13 +15,13 @@ export default function WeeklyResetPage() {
       </PageHeader>
       <WeeklyResetWizard />
       <p className="px-1 text-sm leading-normal text-ink-muted">
-        Anything bigger waits: planning something fun for the Monthly Review, a 40-minute
-        once-a-month look at how things are going, and where you’re heading for the Yearly Review.
+        Anything bigger waits: the monthly part of your Weekly Reset adds 10 minutes
+        for planning something fun, and the yearly part (1 to 2 hours) looks at where you’re heading.
       </p>
       <KeepItGoing />
       <Link
         href="/protocols/weekly-reset"
-        className="flex min-h-12 items-center justify-between rounded-xl border border-rule/40 bg-white px-4 text-base font-medium text-accent"
+        className="flex min-h-12 items-center justify-between rounded-xl border border-rule/40 bg-surface-raised px-4 text-base font-medium text-accent"
       >
         Read the whole card
         <ArrowRight size={16} />

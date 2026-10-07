@@ -26,7 +26,7 @@ export default function PausePage() {
       <Link
         data-calm-hide
         href="/protocols/pause-and-return"
-        className="flex min-h-12 items-center justify-between rounded-xl border border-rule/40 bg-white px-4 text-base font-medium text-accent"
+        className="flex min-h-12 items-center justify-between rounded-xl border border-rule/40 bg-surface-raised px-4 text-base font-medium text-accent"
       >
         Read the whole card
         <ArrowRight size={16} />

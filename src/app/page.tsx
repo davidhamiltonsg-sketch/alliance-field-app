@@ -3,16 +3,25 @@ import { AllianceMark } from "@/components/AllianceMark";
 import { ApIcon, IconChip, type IconId, type IconTone } from "@/components/ApIcon";
 import { SectionLabel } from "@/components/SectionLabel";
 import { SituationCard } from "@/components/SituationCard";
+import { FirstRunBanner } from "@/components/FirstRunBanner";
 import { QuickAccess } from "@/components/QuickAccess";
 import { ChevronRight } from "@/components/icons";
-import { situations } from "@/data/situations";
+import { SITUATION_MAP_FOOTER, SITUATION_MAP_RULE, situations } from "@/data/situations";
 import { WarnBanner } from "@/components/WarnBanner";
+import { GetFullSystem } from "@/components/GetFullSystem";
+import { SituationMapDownload } from "@/components/SituationMapDownload";
+import { CompanionSampleDownload } from "@/components/CompanionSampleDownload";
+import { STORE_URLS } from "@/lib/links";
+
+/** The buy cards show on Now only once a store link is live: no "not on sale yet" here. */
+const ON_SALE = Object.values(STORE_URLS).some(Boolean);
 
 /** The three in-the-moment routes. Safety is always first, never routed to Pause. */
 const routes: {
   href: string;
   label: string;
   sub: string;
+  sayNow?: string;
   icon: IconId;
   className: string;
 }[] = [
@@ -27,6 +36,7 @@ const routes: {
     href: "/pause",
     label: "I’m flooded, or one of us is",
     sub: "Pause + Return: set an exact return time first.",
+    sayNow: "I need a pause. I’ll be back at ___.",
     icon: "pause-and-return",
     className: "bg-pause text-ink",
   },
@@ -35,14 +45,15 @@ const routes: {
     label: "Something else",
     sub: "Use the Situation Map below: take the first row that fits.",
     icon: "situation-map",
-    className: "bg-accent text-paper",
+    // Dark mode: a deep forest fill with an outline (globals.css), not pale mint.
+    className: "now-route-map bg-accent text-paper",
   },
 ];
 
 const practise: { href: string; label: string; sub: string; icon: IconId; tone: IconTone }[] = [
-  { href: "/connect", label: "Connection Cards", sub: "Questions to flip through together", icon: "connection-cards", tone: "connection" },
+  { href: "/connect", label: "Connection Cards", sub: "Free in this app: questions to ask each other", icon: "connection-cards", tone: "connection" },
   { href: "/weekly-reset", label: "Weekly Reset", sub: "Five parts, about 40 minutes", icon: "weekly-reset", tone: "accent" },
-  { href: "/start", label: "7-day plan", sub: "10–20 minutes a day", icon: "section-steps", tone: "accent" },
+  { href: "/start", label: "Your first week", sub: "Tonight is 20 minutes", icon: "section-steps", tone: "accent" },
   { href: "/calibrate", label: "Profile Calibration", sub: "Where you two differ most", icon: "profile-calibration", tone: "accent" },
 ];
 
@@ -53,16 +64,26 @@ export default function HomePage() {
         <h1 id="now-heading" className="display text-xl">
           What’s happening right now?
         </h1>
+        <p className="text-base leading-normal text-ink-muted">
+          Free. No account. For couples who are safe with each other.
+        </p>
+        <FirstRunBanner />
         <ul className="space-y-3">
           {routes.map((r) => (
             <li key={r.href}>
               <Link
                 href={r.href}
-                className={`flex min-h-20 items-center gap-4 rounded-2xl px-4 py-4 shadow-[var(--shadow-card)] transition active:scale-[0.99] ${r.className}`}
+                className={`now-route flex min-h-20 items-center gap-4 rounded-2xl px-4 py-4 shadow-[var(--shadow-card)] transition active:scale-[0.99] ${r.className}`}
               >
                 <ApIcon id={r.icon} size={32} mono />
                 <span className="min-w-0 flex-1">
                   <span className="block text-lg font-semibold leading-tight">{r.label}</span>
+                  {r.sayNow && (
+                    <span className="mt-1 block text-base leading-snug">
+                      <span className="font-semibold">Say this now: </span>
+                      <span className="phrase">“{r.sayNow}”</span>
+                    </span>
+                  )}
                   <span className="mt-1 block text-sm leading-snug">{r.sub}</span>
                 </span>
                 <ChevronRight size={22} className="shrink-0 opacity-80" />
@@ -98,20 +119,43 @@ export default function HomePage() {
           <span id="map-heading">Situation Map</span>
         </SectionLabel>
         <p className="px-1 text-base leading-normal text-ink-muted">
-          Read from the top and take the first row that fits. Safety always
-          comes first.
+          {SITUATION_MAP_RULE} Tap a row to open it.
         </p>
         <ul className="space-y-3">
           {situations.map((s, i) => (
             <SituationCard key={s.id} situation={s} index={i} />
           ))}
         </ul>
+        <p className="px-1 text-sm leading-normal text-ink">{SITUATION_MAP_FOOTER}</p>
         <WarnBanner pauseLink={false} safetyLink>
           Pause + Return is for flooding, never for fear. If threats, fear,
           coercion or violence appear, don’t return at the set time —
           leave safely and use the Help Lines.
         </WarnBanner>
+        <p className="px-1 pt-1 text-sm leading-normal text-ink-muted">
+          Want the whole system?{" "}
+          <Link href="/about#product-line" className="font-medium text-accent underline underline-offset-4">
+            Volume A, Volume B and the Field Kit.
+          </Link>
+        </p>
       </section>
+
+      {ON_SALE ? (
+        <GetFullSystem />
+      ) : (
+        // Free downloads show even before the books are on sale.
+        <section aria-labelledby="free-heading" className="space-y-3">
+          <SectionLabel>
+            <span id="free-heading">Free to download</span>
+          </SectionLabel>
+          <div className="card space-y-3 px-4 py-4">
+            <SituationMapDownload />
+            <div className="border-t border-rule/35 pt-3">
+              <CompanionSampleDownload />
+            </div>
+          </div>
+        </section>
+      )}
 
       <footer className="flex flex-col items-center gap-2 pt-2 text-center">
         <AllianceMark size={22} className="text-accent/70" waveColor="#A8895A" />
@@ -119,11 +163,11 @@ export default function HomePage() {
           ALLIANCE PROTOCOLS · We are an alliance.
           <br />
           New here?{" "}
-          <Link href="/intro" className="font-medium text-accent underline underline-offset-4">
-            See how it works
+          <Link href="/intro" className="inline-flex min-h-11 items-center font-medium text-accent underline underline-offset-4">
+            Take the 60-second tour
           </Link>
           <br />
-          by David Hamilton and Zhongming Shi
+          by David and Dami
         </p>
         <p className="text-sm text-ink-muted">
           <Link href="/privacy" className="inline-flex min-h-11 items-center px-2 font-medium text-accent underline underline-offset-4">

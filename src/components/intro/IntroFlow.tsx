@@ -35,7 +35,7 @@ const panels: Panel[] = [
     id: "reset",
     eyebrow: "Use it tonight",
     icon: "60-second-reset",
-    title: "If it’s getting heated: the 60-Second Alliance Reset.",
+    title: "If it’s getting heated: the 60-Second Reset.",
     body: "Stop, say it, a touch only if it’s welcome, three breaths, then an exact time to keep talking. About a minute.",
     safety: true,
     diagram: <ResetStepsDiagram />,
@@ -50,10 +50,10 @@ const panels: Panel[] = [
   },
   {
     id: "core-5",
-    eyebrow: "The Core 6",
+    eyebrow: "Learn first",
     icon: "tier-core",
     title: "Start with six tools.",
-    body: "Learn these six first; the rest can wait. The 7-day plan sets them up in 10–20 minutes a day.",
+    body: "Learn these six first; the rest can wait. Your first week sets them up in 10–20 minutes a day.",
     diagram: <CoreFiveDiagram />,
   },
   {
@@ -77,7 +77,7 @@ const panels: Panel[] = [
     eyebrow: "Optional",
     icon: "manual",
     title: "The app, and the books.",
-    body: "We made this app for when it’s actually happening and there’s no time to look anything up. Free, and complete on its own. The books go further if you want them.",
+    body: "We made this app for when it’s actually happening and there’s no time to look anything up. Free, and complete on its own. Open each tool once on wifi or Add to Home Screen, then it works offline. The books go further if you want them.",
     diagram: <SystemDiagram />,
   },
 ];
@@ -227,7 +227,7 @@ export function IntroFlow() {
                     <Link
                       href="/help"
                       tabIndex={i === index ? undefined : -1}
-                      className="font-medium text-failure underline underline-offset-4"
+                      className="inline-flex min-h-11 items-center font-medium text-failure underline underline-offset-4"
                     >
                       Get outside help
                     </Link>
@@ -236,7 +236,7 @@ export function IntroFlow() {
                 {/* The stage takes the height that's left (equal across panels, so
                     headlines line up) and shrinks on short screens so the text
                     stays in view. */}
-                <div className="flex min-h-[200px] max-h-[436px] max-w-full flex-1 basis-0 [@media(max-height:600px)]:min-h-[112px] items-center justify-center self-center rounded-[26px_26px_6px_6px] border border-rule/60 bg-white/90 p-2 shadow-[var(--shadow-card)]">
+                <div className="flex min-h-[200px] max-h-[436px] max-w-full flex-1 basis-0 [@media(max-height:600px)]:min-h-[112px] items-center justify-center self-center rounded-[26px_26px_6px_6px] border border-rule/60 bg-surface-raised/90 p-2 shadow-[var(--shadow-card)]">
                   <div className="flex aspect-[340/336] h-full max-w-full items-center">{i <= reached ? p.diagram : null}</div>
                 </div>
                 <div className="mt-5 shrink-0">
@@ -257,7 +257,7 @@ export function IntroFlow() {
                     </Link>
                   )}
                   {p.aside && (
-                    <p className="mt-1.5 text-sm italic leading-snug text-ink-muted/75">
+                    <p className="mt-1.5 text-sm italic leading-snug text-ink-muted">
                       {p.aside}
                     </p>
                   )}
@@ -300,7 +300,7 @@ export function IntroFlow() {
               <button
                 type="button"
                 onClick={() => goTo(Math.max(0, index - 1))}
-                className={`inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-rule/60 bg-white text-accent transition-opacity ${
+                className={`inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-rule/60 bg-surface-raised text-accent transition-opacity ${
                   index === 0 ? "pointer-events-none opacity-0" : ""
                 }`}
                 aria-label="Back"
@@ -323,13 +323,13 @@ export function IntroFlow() {
                 href="/start"
                 className="flex h-12 items-center justify-center gap-2 rounded-2xl bg-accent text-base font-semibold text-paper shadow-[0_8px_20px_-10px_rgb(44_62_45/0.7)] transition active:scale-[0.99]"
               >
-                Start the 7-day plan
+                Start your first week
                 <ArrowRight size={18} />
               </Link>
               <div className="grid grid-cols-2 gap-2">
                 <Link
                   href="/"
-                  className="flex h-12 items-center justify-center gap-1.5 rounded-2xl border border-accent/30 bg-white text-sm font-semibold text-accent transition active:scale-[0.99]"
+                  className="flex h-12 items-center justify-center gap-1.5 rounded-2xl border border-accent/30 bg-surface-raised text-sm font-semibold text-accent transition active:scale-[0.99]"
                 >
                   Situation Map
                 </Link>

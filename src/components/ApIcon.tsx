@@ -3,13 +3,18 @@ import { ICON_ACCENT, ICON_STROKE, icons, type IconId } from "@/data/icons";
 
 export type { IconId };
 
+function resolve(id: string): IconId | null {
+  if (Object.prototype.hasOwnProperty.call(icons, id)) return id as IconId;
+  return null;
+}
+
 /** True when `id` names an icon in the shared set. */
 export function isIconId(id: string): id is IconId {
-  return Object.prototype.hasOwnProperty.call(icons, id);
+  return resolve(id) !== null;
 }
 
 function Paths({ id, mono }: { id: IconId; mono: boolean }) {
-  const i = icons[id];
+  const i = icons[resolve(id) ?? id];
   const accent = "accent" in i ? i.accent : undefined;
   return (
     <>

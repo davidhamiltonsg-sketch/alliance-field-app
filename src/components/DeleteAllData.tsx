@@ -37,7 +37,7 @@ export function DeleteAllData() {
     <div className="card space-y-3 px-4 py-4">
       <p className="text-base leading-normal text-ink">
         Everything you enter — the times you set to come back, your Weekly Reset answers and
-        history, calibration answers, favourites, 7-day plan ticks — stays on
+        history, calibration answers, recent tools, first-week ticks — stays on
         your phone. The
         app has no account. The only time any data leaves your phone is if
         you choose to give us your email for updates. (While early access is
@@ -78,7 +78,7 @@ export function DeleteAllData() {
             <button
               type="button"
               onClick={() => go("idle")}
-              className="min-h-12 flex-1 rounded-xl border border-rule/60 bg-white text-base font-medium text-ink"
+              className="min-h-12 flex-1 rounded-xl border border-rule/60 bg-surface-raised text-base font-medium text-ink"
             >
               Cancel
             </button>

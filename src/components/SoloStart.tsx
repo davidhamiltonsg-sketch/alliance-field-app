@@ -28,8 +28,8 @@ export function SoloStart() {
           time.
         </li>
         <li className="list-disc">
-          <strong className="font-medium text-ink">Use the 2% Rule on yourself</strong>{" "}
-          — own your small piece, without waiting for theirs.
+          <strong className="font-medium text-ink">Soften your tone a little first</strong>{" "}
+          — and own your small piece, without waiting for theirs.
         </li>
         <li className="list-disc">
           <strong className="font-medium text-ink">Invite, don’t assign</strong>{" "}
@@ -44,7 +44,7 @@ export function SoloStart() {
         href="/protocols/micro-repair"
         className="-mb-1.5 mt-1 inline-flex min-h-11 items-center gap-1.5 text-base font-medium text-repair"
       >
-        See the 2% move in Micro-Repair
+        See the small first move in Micro-Repair
         <ArrowRight size={16} />
       </Link>
     </section>

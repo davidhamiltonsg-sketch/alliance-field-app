@@ -14,8 +14,8 @@ const onDevice = [
   "Pause + Return: your return time while a pause is running",
   "Weekly Reset: your current draft and past resets",
   "Profile Calibration: your answers and couple report",
-  "Favourites and recently opened protocols",
-  "7-day plan: which days you have ticked as done",
+  "Recently opened tools",
+  "first-week plan: which days you have ticked as done",
   "Whether you have already seen the intro",
   "The offline copy of the app itself",
 ];

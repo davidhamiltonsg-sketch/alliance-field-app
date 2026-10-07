@@ -17,7 +17,7 @@ export type Tier = "core" | "situational" | "build";
 export interface Protocol {
   slug: string;
   title: string;
-  /** CANON round 4: Core (learn first), Situational (pulled by the Situation Map), Build (ongoing). */
+  /** Internal keys: core = "Learn first", situational = "When it comes up", build = "Build over time". */
   tier: Tier;
   concept: string;
   whenToUse: string;
@@ -33,12 +33,16 @@ export interface Protocol {
   /** Show the "Afraid, not just flooded? Get help" link under the warning. */
   safetyLink?: boolean;
   accentHint?: "safety" | "pause" | "repair" | "accent";
+  /** Plain words people type when they search for this tool. */
+  synonyms: string[];
 }
 
 export interface Situation {
   id: string;
   label: string;
   description: string;
+  /** Extra line under the description (the safety row's jealousy note). */
+  note?: string;
   firstMove: string;
   primaryHref: string;
   secondaryHrefs?: { label: string; href: string }[];

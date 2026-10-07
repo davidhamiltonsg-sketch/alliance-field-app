@@ -1,7 +1,10 @@
 /**
- * Canonical Help Lines — identical wording and numbers to the printed
+ * Canonical Help Lines: identical wording and numbers to the printed
  * Operating Manual and Field Kit. Change them there first, then here.
+ * Numbers checked October 2026.
  */
+
+export const HELP_LINES_CHECKED = "checked October 2026";
 
 export interface HelpNumber {
   label: string;
@@ -22,9 +25,11 @@ export const SAFETY_FIRST_ROW =
   "Afraid of your partner, being threatened, or not free to say no? → Stop. These tools are not for this. Get outside help (see Help Lines).";
 
 export const emergencyNumbers: HelpNumber[] = [
-  { label: "UK / SG", display: "999", href: "tel:999" },
+  // Same order as the Help Lines list below: US, UK, Australia, Singapore, EU.
   { label: "US", display: "911", href: "tel:911" },
-  { label: "AU", display: "000", href: "tel:000" },
+  { label: "UK / SG police", display: "999", href: "tel:999" },
+  { label: "Australia", display: "000", href: "tel:000" },
+  { label: "SG ambulance", display: "995", href: "tel:995" },
   { label: "EU", display: "112", href: "tel:112" },
 ];
 
@@ -36,6 +41,8 @@ export const helpRegions: HelpRegion[] = [
       { label: "National Domestic Violence Hotline", display: "1-800-799-7233", href: "tel:18007997233" },
       { label: "National Domestic Violence Hotline (text START)", display: "88788", href: "sms:88788?body=START" },
       { label: "988 Suicide & Crisis Lifeline (call/text)", display: "988", href: "tel:988" },
+      { label: "RAINN: sexual violence, including from a partner", display: "800-656-4673", href: "tel:8006564673" },
+      { label: "RAINN (text HOPE)", display: "64673", href: "sms:64673?body=HOPE" },
     ],
   },
   {
@@ -45,6 +52,7 @@ export const helpRegions: HelpRegion[] = [
       { label: "National Domestic Abuse Helpline (Refuge)", display: "0808 2000 247", href: "tel:08082000247" },
       { label: "Samaritans", display: "116 123", href: "tel:116123" },
       { label: "Men’s Advice Line (men experiencing abuse)", display: "0808 8010327", href: "tel:08088010327" },
+      { label: "Rape Crisis England & Wales: sexual violence, including from a partner", display: "0808 500 2222", href: "tel:08085002222" },
     ],
   },
   {
@@ -63,6 +71,7 @@ export const helpRegions: HelpRegion[] = [
       { label: "SOS", display: "1767", href: "tel:1767" },
       { label: "AWARE Women’s Helpline", display: "1800 777 5555", href: "tel:18007775555" },
       { label: "Police by SMS, if you can’t speak", display: "70999", href: "sms:70999" },
+      { label: "AWARE Sexual Assault Care Centre (weekdays 10am to 6pm)", display: "6779 0282", href: "tel:67790282" },
     ],
   },
   {
@@ -75,9 +84,8 @@ export const helpRegions: HelpRegion[] = [
 ];
 
 /**
- * CANON round 6: for anyone worried about their own behaviour. Numbers
- * checked against each service's own site (1 October 2026); PAVE
- * answers in office hours only.
+ * For anyone worried about their own behaviour. Numbers checked against each
+ * service's own site (October 2026); PAVE answers in office hours only.
  */
 export const ownBehaviourLines: (HelpNumber & { region: string })[] = [
   { region: "UK", label: "Respect Phoneline", display: "0808 8024040", href: "tel:08088024040" },
@@ -108,7 +116,7 @@ export const CHILD_LINE =
 export const SELF_CHECK_TITLE = "Not sure whether this is you?";
 
 export const SELF_CHECK_QUESTIONS: string[] = [
-  "Do you hold back what you think because you are afraid of how your partner would react?",
+  "Are you afraid of what your partner might do if you disagree: hurt you, threaten you, or cut you off? (Ordinary nerves about upsetting them are not what this means.)",
   "Are you ever afraid of what they will do?",
   "Do they check, restrict or punish your contact with others, or control your money?",
   "Does an argument ever end with you giving in out of fear?",
@@ -138,3 +146,27 @@ function proseList(items: string[]): string {
 export const HELP_LINES_POINTER = `The Help page has Help Lines for ${proseList(
   helpRegions.map((r) => r.inProse),
 )}. Anywhere else, call your local emergency number or national helpline. ${CHILD_LINE}`;
+
+/** The line for sexual violence, including from a partner (printed after Singapore). */
+export const SEXUAL_VIOLENCE_LINE =
+  "Sexual violence, including from a partner: US RAINN 800-656-4673 (text HOPE to 64673) · UK Rape Crisis England & Wales 0808 500 2222 · Australia 1800RESPECT (1800 737 732) · Singapore AWARE Sexual Assault Care Centre 6779 0282 (weekdays 10am to 6pm)";
+
+export const EMERGENCY_LINE =
+  "Immediate danger: your local emergency number (999 UK/SG police · 995 SG ambulance · 911 US · 000 AU · 112 EU)";
+
+/**
+ * The printed Help Lines list, line by line. registry.json
+ * concepts.help-safety.helpLines must equal this verbatim (tests/registry.test.ts),
+ * as must the Help Lines in README.md.
+ */
+export const HELP_LINES_PRINTED: string[] = [
+  EMERGENCY_LINE,
+  "US: National Domestic Violence Hotline 1-800-799-7233 (text START to 88788) · 988 Suicide & Crisis Lifeline (call/text 988)",
+  "UK: National Domestic Abuse Helpline (Refuge) 0808 2000 247 · Samaritans 116 123",
+  "Australia: 1800RESPECT 1800 737 732 · Lifeline 13 11 14",
+  "Singapore: National Anti-Violence & Sexual Harassment Helpline 1800 777 0000 · SOS 1767",
+  SEXUAL_VIOLENCE_LINE,
+  "EU: Helpline for women experiencing violence 116 016, where available",
+  CHILD_LINE,
+  ELSEWHERE_LINE,
+];

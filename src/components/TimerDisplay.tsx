@@ -22,6 +22,7 @@ export function TimerDisplay({
   expired,
   idleLabel,
   caption,
+  chosen = false,
 }: {
   remainingMs: number;
   totalMs?: number;
@@ -29,6 +30,8 @@ export function TimerDisplay({
   /** When set, shows an idle ring with this text instead of a countdown. */
   idleLabel?: string;
   caption?: string;
+  /** Idle, but a length is chosen: show the preview at full strength. */
+  chosen?: boolean;
 }) {
   const idle = idleLabel !== undefined;
   const progress = idle
@@ -71,7 +74,7 @@ export function TimerDisplay({
             strokeDasharray={C}
             strokeDashoffset={C * (1 - progress)}
             className={`transition-[stroke-dashoffset] duration-300 ease-linear ${
-              expired ? "text-failure" : idle ? "text-pause/35" : "text-pause"
+              expired ? "text-failure" : idle && !chosen ? "text-pause/35" : "text-pause"
             }`}
           />
         </svg>
@@ -79,7 +82,7 @@ export function TimerDisplay({
           <p
             className={`tabular font-medium leading-none tracking-[-0.03em] ${
               long ? "text-2xl" : "text-2xl"
-            } ${expired ? "text-failure" : idle ? "text-ink/80" : "text-ink"}`}
+            } ${expired ? "text-failure" : idle && !chosen ? "text-ink/80" : "text-ink"}`}
           >
             {label}
           </p>

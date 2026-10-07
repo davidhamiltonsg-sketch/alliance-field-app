@@ -90,10 +90,11 @@ function ConnectionDeck({ shuffled }: { shuffled: boolean }) {
       key={value}
       type="button"
       onClick={() => changeFilter(value)}
+      aria-pressed={filter === value}
       className={`min-h-11 shrink-0 rounded-full px-3.5 text-sm font-medium transition-colors ${
         filter === value
           ? "bg-accent text-paper"
-          : "border border-rule/60 bg-white text-ink-muted"
+          : "border border-rule/60 bg-surface-raised text-ink-muted"
       }`}
     >
       {label}
@@ -102,7 +103,7 @@ function ConnectionDeck({ shuffled }: { shuffled: boolean }) {
 
   return (
     <div className="space-y-4">
-      <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1">
+      <div className="flex flex-wrap gap-2" role="group" aria-label="Card category">
         {chip("All five", "all")}
         {STAGE_ORDER.map((s) => chip(STAGE_META[s].label, s))}
       </div>
@@ -130,7 +131,7 @@ function ConnectionDeck({ shuffled }: { shuffled: boolean }) {
               <div
                 className={`absolute inset-0 flex flex-col items-center justify-center gap-3 rounded-3xl px-6 text-center shadow-[var(--shadow-lift)] ring-2 ring-inset ring-brass/70 [backface-visibility:hidden] bg-accent text-paper`}
               >
-                <span className="text-xs font-medium uppercase tracking-[0.14em] text-paper/70">
+                <span className="text-xs font-medium uppercase tracking-[0.14em] text-paper/90">
                   Connection Cards
                 </span>
                 <span className="display text-xl leading-tight !text-paper">{meta.label}</span>
@@ -138,14 +139,14 @@ function ConnectionDeck({ shuffled }: { shuffled: boolean }) {
                 <span className="max-w-[220px] text-sm leading-snug text-paper/85">
                   {meta.caption}
                 </span>
-                <span className="mt-2 text-sm font-medium text-paper/70">
+                <span className="mt-2 text-sm font-medium text-paper/90">
                   Tap to flip
                 </span>
               </div>
 
               {/* Back — question */}
               <div
-                className="absolute inset-0 flex flex-col items-center justify-center gap-4 rounded-3xl border-t-4 border-brass bg-white px-6 text-center shadow-[var(--shadow-lift)] [backface-visibility:hidden]"
+                className="absolute inset-0 flex flex-col items-center justify-center gap-4 rounded-3xl border-t-4 border-brass bg-surface-raised px-6 text-center shadow-[var(--shadow-lift)] [backface-visibility:hidden]"
                 style={{ transform: "rotateY(180deg)" }}
               >
                 <span className="text-xs font-medium uppercase tracking-[0.14em] text-ink-muted">

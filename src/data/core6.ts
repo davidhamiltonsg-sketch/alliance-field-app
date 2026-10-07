@@ -1,16 +1,16 @@
 /**
- * The Core 6: the smallest set of Field Kit tools worth learning first.
- * Order follows the registry (Green Rule first). The Core tier is exactly
+ * The six to learn first: the smallest set of Field Kit tools worth learning first.
+ * Order follows the registry (Green Rule first). The "Learn first" tier is exactly
  * these six, including the System Overlay; everything else on /protocols is
- * grouped by tier: Situational, then Build.
+ * grouped as "When it comes up", then "Build over time".
  */
 export interface CoreTool {
   slug: string;
-  /** One line on why this is in the Core 6. */
+  /** One line on why this is in the six to learn first. */
   why: string;
 }
 
-export const coreFive: CoreTool[] = [
+export const coreSix: CoreTool[] = [
   {
     slug: "green-rule",
     why: "Either of you can say the honest thing without paying for it. If it’s fear, not flooding, stop and get help.",
@@ -29,7 +29,7 @@ export const coreFive: CoreTool[] = [
   },
   {
     slug: "weekly-reset",
-    why: "Forty minutes once a week, appreciation first: designed so small things get said before they pile up.",
+    why: "Forty minutes once a week (15 is fine to start), appreciation first, so small things get said before they pile up.",
   },
   {
     slug: "system-overlay",
@@ -37,4 +37,4 @@ export const coreFive: CoreTool[] = [
   },
 ];
 
-export const coreFiveSlugs = coreFive.map((c) => c.slug);
+export const coreSixSlugs = coreSix.map((c) => c.slug);

@@ -4,6 +4,7 @@ import { Marker } from "@/components/Marker";
 import { SectionLabel } from "@/components/SectionLabel";
 import { GetFullSystem } from "@/components/GetFullSystem";
 import { Testimonials } from "@/components/Testimonials";
+import { SHOW_TESTIMONIALS } from "@/data/testimonials";
 import { WarnBanner } from "@/components/WarnBanner";
 import { ArrowRight, ChevronRight } from "@/components/icons";
 import { aboutAuthors, authorNames } from "@/data/authors";
@@ -47,7 +48,7 @@ export default function AboutPage() {
           <h1 className="mt-4 text-lg font-medium tracking-[0.14em] pl-[0.14em]">
             ALLIANCE PROTOCOLS™
           </h1>
-          <p className="mt-2 text-xs font-medium uppercase tracking-[0.08em] pl-[0.08em] text-paper/75">
+          <p className="mt-2 text-xs font-medium uppercase tracking-[0.08em] pl-[0.08em] text-paper/90">
             Field App
           </p>
           <div className="my-4 h-px w-40 bg-paper/25" aria-hidden />
@@ -56,7 +57,7 @@ export default function AboutPage() {
             Built for precision. Designed for connection.
           </p>
           <p className="mt-3 text-sm text-paper/80">
-            by David Hamilton and Zhongming Shi
+            by David and Dami
           </p>
         </div>
       </section>
@@ -88,8 +89,8 @@ export default function AboutPage() {
         <p className="text-base leading-normal text-ink">
           The tools grew out of it over the years, in our own relationship:
           how we come back to each other, what we say when things go
-          sideways, what we promise not to do. This app, the Manual, the Field Kit and the Companion
-          Book are that same system, written down so other couples can use it.
+          sideways, what we promise not to do. This app, Volume A, Volume B and the Field Kit
+          are that same system, written down so other couples can use it.
         </p>
       </section>
 
@@ -137,7 +138,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <Testimonials />
+      {SHOW_TESTIMONIALS && <Testimonials />}
 
       <section id="product-line" className="scroll-mt-20 space-y-3">
         <SectionLabel>What the app is for</SectionLabel>
@@ -152,9 +153,11 @@ export default function AboutPage() {
           </div>
         </div>
         <p className="text-base leading-normal text-ink">
-          The Manual, the Field Kit and the Companion Book go further, if you want them.
+          Volume A, Volume B and the Field Kit go further, if you want them.
         </p>
       </section>
+
+      <GetFullSystem />
 
       <section
         id="detachment"
@@ -164,13 +167,13 @@ export default function AboutPage() {
         <Marker kind="NOTE" label="Feeling far apart?" />
         <p className="mt-2 text-base leading-normal">
           <strong>Not sure if it’s needing space or pulling away?</strong> That’s
-          what the Pulling-Away Check is for.
+          what the Check-Up is for.
         </p>
         <Link
-          href="/protocols/uninvestment-check"
+          href="/protocols/check-up"
           className="-mb-1.5 mt-1 inline-flex min-h-11 items-center gap-1.5 text-base font-medium text-repair"
         >
-          Open Pulling-Away Check
+          Open Check-Up
           <ArrowRight size={16} />
         </Link>
       </section>
@@ -187,7 +190,6 @@ export default function AboutPage() {
         </WarnBanner>
       </section>
 
-      <GetFullSystem />
 
       <section className="space-y-3">
         <SectionLabel>More</SectionLabel>
@@ -226,9 +228,9 @@ export default function AboutPage() {
               className="flex min-h-12 items-center justify-between gap-3 px-4 text-base font-medium text-ink hover:bg-surface-tool"
             >
               <span className="flex flex-col py-2.5">
-                7-day plan
+                Your first week
                 <span className="text-sm font-normal text-ink-muted">
-                  The Core 6, 10–20 minutes a day
+                  The six tools to learn first, 10–20 minutes a day
                 </span>
               </span>
               <ChevronRight size={18} className="shrink-0 text-ink-muted/50" />
@@ -240,7 +242,7 @@ export default function AboutPage() {
               className="flex min-h-12 items-center justify-between gap-3 px-4 text-base font-medium text-ink hover:bg-surface-tool"
             >
               <span className="flex flex-col py-2.5">
-                Together against outside pressure
+                Together: outside pressure and more
                 <span className="text-sm font-normal text-ink-muted">
                   For interracial, intercultural and other couples facing outside pressure
                 </span>
@@ -270,7 +272,7 @@ export default function AboutPage() {
               <span className="flex flex-col py-2.5">
                 Connection Cards
                 <span className="text-sm font-normal text-ink-muted">
-                  A deck of question cards for coming back to each other
+                  Free in this app: question cards for coming back to each other
                 </span>
               </span>
               <ChevronRight size={18} className="shrink-0 text-ink-muted/50" />

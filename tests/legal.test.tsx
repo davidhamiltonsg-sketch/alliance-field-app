@@ -83,28 +83,34 @@ describe("/privacy", () => {
 
 describe("The books, if you want more.", () => {
   it("hides buy links when no store URL is set", async () => {
-    const html = await renderWith({ NEXT_PUBLIC_FULL_SYSTEM_URL: "", NEXT_PUBLIC_STORE_URL_MANUAL: "", NEXT_PUBLIC_STORE_URL_KIT: "", NEXT_PUBLIC_STORE_URL_BUNDLE: "" }, store);
+    const html = await renderWith({ NEXT_PUBLIC_STORE_URL_MANUAL: "", NEXT_PUBLIC_STORE_URL_KIT: "", NEXT_PUBLIC_STORE_URL_BUNDLE: "", NEXT_PUBLIC_STORE_URL_VOLUME_A: "", NEXT_PUBLIC_STORE_URL_COMPLETE: "" }, store);
     expect(html).not.toMatch(/>Buy/);
     expect(text(html)).toContain("The books aren’t on sale yet.");
-    expect(text(html)).toContain("Digital PDF + HTML");
+    // Each product states its own format, and tax is added at checkout.
+    expect(text(html)).toMatch(/Field Kit.*PDF \+ print-ready files.*Volume A.*PDF \+ HTML.*Volume B.*PDF \+ HTML.*Complete Edition.*PDF.*Complete Bundle.*PDF \+ HTML \+ print-ready files/);
+    expect(text(html)).toContain("Plus any VAT/GST calculated at checkout.");
+    expect(text(html)).not.toContain("Prices may exclude");
+    expect(text(html)).toContain("Download the Situation Map (PDF)");
+    expect(text(html)).toContain("Download the sample (PDF)");
     // Sign-up isn't live, so the card doesn't promise it.
     expect(text(html)).not.toContain("sign up below");
     expect(text(html)).toContain("Email sign-up isn’t open yet");
   });
 
-  it("gives each product its own link, falling back to the single store URL", async () => {
+  it("gives each product only its own link: no shared fallback, so two products never open one page", async () => {
     const html = await renderWith(
-      { NEXT_PUBLIC_FULL_SYSTEM_URL: "https://store.example/all", NEXT_PUBLIC_STORE_URL_MANUAL: "https://store.example/manual", NEXT_PUBLIC_STORE_URL_KIT: "http://insecure.example/kit", NEXT_PUBLIC_STORE_URL_BUNDLE: "" },
+      { NEXT_PUBLIC_STORE_URL_BUNDLE: "", NEXT_PUBLIC_STORE_URL_VOLUME_A: "", NEXT_PUBLIC_STORE_URL_COMPLETE: "", NEXT_PUBLIC_FULL_SYSTEM_URL: "https://store.example/all", NEXT_PUBLIC_STORE_URL_MANUAL: "https://store.example/manual", NEXT_PUBLIC_STORE_URL_KIT: "http://insecure.example/kit" },
       store,
     );
     expect(html).toContain('href="https://store.example/manual"');
-    expect(html.match(/href="https:\/\/store\.example\/all"/g)).toHaveLength(2); // kit (http refused) and bundle
+    expect(html).not.toContain("store.example/all");
+    expect(html.match(/>Buy/g)).toHaveLength(1); // kit (http refused), bundle and the rest unset
     expect(html).not.toContain("insecure.example");
-    expect(text(html)).toMatch(/Operating Manual.*Field Kit.*Complete Bundle/);
+    expect(text(html)).toMatch(/Field Kit.*Volume A.*Volume B.*Complete Edition.*Complete Bundle/);
   });
 
   it("with only a bundle link, shows only the bundle", async () => {
-    const html = await renderWith({ NEXT_PUBLIC_FULL_SYSTEM_URL: "", NEXT_PUBLIC_STORE_URL_MANUAL: "", NEXT_PUBLIC_STORE_URL_KIT: "", NEXT_PUBLIC_STORE_URL_BUNDLE: "https://store.example/b" }, store);
+    const html = await renderWith({ NEXT_PUBLIC_STORE_URL_MANUAL: "", NEXT_PUBLIC_STORE_URL_KIT: "", NEXT_PUBLIC_STORE_URL_VOLUME_A: "", NEXT_PUBLIC_STORE_URL_COMPLETE: "", NEXT_PUBLIC_STORE_URL_BUNDLE: "https://store.example/b" }, store);
     expect(html.match(/>Buy/g)).toHaveLength(1);
     expect(html).toContain('href="https://store.example/b"');
   });
@@ -128,5 +134,21 @@ describe("About", () => {
     expect(src).not.toMatch(/relationship operating system/i);
     expect(src.match(/™/g)).toHaveLength(1);
     expect(src).toContain("ALLIANCE PROTOCOLS™");
+  });
+});
+
+describe("store links: one variable per product", () => {
+  it("renders each product's buy button only from its own variable", async () => {
+    const store = () => import("@/components/GetFullSystem").then((m) => m.GetFullSystem);
+    const vars = {
+      NEXT_PUBLIC_STORE_URL_KIT: "https://store.example/kit",
+      NEXT_PUBLIC_STORE_URL_MANUAL: "https://store.example/manual",
+      NEXT_PUBLIC_STORE_URL_VOLUME_A: "https://store.example/volume-a",
+      NEXT_PUBLIC_STORE_URL_COMPLETE: "https://store.example/complete",
+      NEXT_PUBLIC_STORE_URL_BUNDLE: "https://store.example/bundle",
+    };
+    const html = await renderWith(vars, store);
+    for (const url of Object.values(vars)) expect(html.match(new RegExp(`href="${url}"`, "g"))).toHaveLength(1);
+    expect(html.match(/>Buy/g)).toHaveLength(5);
   });
 });

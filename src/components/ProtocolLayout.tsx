@@ -7,14 +7,14 @@ import { SectionLabel } from "./SectionLabel";
 import { StepList } from "./StepList";
 import { StepDiagram, WhenStrip } from "./visuals/StepDiagram";
 import { ApIcon, IconChip, isIconId } from "./ApIcon";
-import { TierBadge } from "./TierBadge";
 import { protocolSubtitle } from "@/data/glossary";
 import { worksheetsFor } from "@/data/worksheets";
-import { chapterLabel, goDeeper } from "@/data/go-deeper";
+import { companionLine, goDeeper, manualLine } from "@/data/go-deeper";
 import { protocolDiagrams } from "@/data/visuals/protocol-diagrams";
 import { WarnBanner, isSafetyWording } from "./WarnBanner";
-import { FavoriteButton } from "./FavoriteButton";
-import { ArrowLeft, ChevronRight } from "./icons";
+import { RecentTracker } from "./RecentTracker";
+import { StickyTimerButton } from "./StickyTimerButton";
+import { ArrowLeft, ArrowRight, ChevronRight } from "./icons";
 
 const headerWash: Record<string, string> = {
   safety: "border-safety/15 bg-safety/[0.05]",
@@ -46,13 +46,12 @@ export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
           className="-ml-1 inline-flex min-h-11 items-center gap-1.5 rounded-full px-1 text-sm font-medium text-ink-muted hover:text-accent"
         >
           <ArrowLeft size={16} />
-          All protocols
+          All tools
         </Link>
         <div className="flex items-center gap-3">
           {isIconId(protocol.slug) && <IconChip id={protocol.slug} tone={tone} size="lg" />}
-          <TierBadge tier={protocol.tier} />
           <span className="flex-1" />
-          <FavoriteButton slug={protocol.slug} recordVisit />
+          <RecentTracker slug={protocol.slug} />
         </div>
         <div>
           <h1 className="display text-xl">{protocol.title}</h1>
@@ -60,6 +59,21 @@ export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
         </div>
         <p className="text-base leading-normal text-ink">{protocol.concept}</p>
       </header>
+
+      {protocol.slug === "pause-and-return" && (
+        // Someone opening this card mid-argument needs the timer, not 3,000px of reading first.
+        <Link
+          id="pause-top-cta"
+          href="/pause"
+          className="flex min-h-14 items-center justify-between gap-3 rounded-2xl bg-pause px-4 py-3 text-lg font-semibold text-ink shadow-[var(--shadow-card)] transition active:scale-[0.99]"
+        >
+          <span className="flex items-center gap-3">
+            <ApIcon id="pause-and-return" size={26} mono />
+            Set a pause timer
+          </span>
+          <ArrowRight size={20} />
+        </Link>
+      )}
 
       {protocol.warn && (
         // A warning that mentions fear, threats or coercion always routes to
@@ -123,60 +137,41 @@ export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
         </section>
       )}
 
-      <section className="space-y-2" aria-labelledby="go-deeper">
+      <section className="space-y-2" aria-labelledby="in-the-books">
         <SectionLabel>
-          <span id="go-deeper">Go deeper</span>
+          <span id="in-the-books">In the books</span>
         </SectionLabel>
-        <ul className="space-y-1.5 text-sm leading-snug text-ink-muted">
+        <ul className="space-y-1.5 text-sm leading-snug text-ink">
           {deeper && (
-            <li className="flex items-center gap-2">
-              <ApIcon id="manual" size={20} className="text-accent" />
-              <span>
-                Operating Manual: <span className="text-ink">{chapterLabel(deeper.chapter)}</span>, for the reasoning and the harder cases.
-              </span>
+            <li className="flex items-start gap-2">
+              <ApIcon id="manual" size={20} className="-mt-px shrink-0 text-accent" />
+              <span>{manualLine(deeper.chapter)}</span>
             </li>
           )}
-          <li className="flex items-center gap-2">
-            <ApIcon id="field-kit" size={20} className="text-accent" />
+          {deeper?.companion && (
+            <li className="flex items-start gap-2">
+              <ApIcon id="companion" size={20} className="-mt-px shrink-0 text-accent" />
+              <span>{companionLine(deeper.companion)}</span>
+            </li>
+          )}
+          <li className="flex items-start gap-2">
+            <ApIcon id="field-kit" size={20} className="-mt-px shrink-0 text-accent" />
             <span>
-              Field Kit: the <span className="text-ink">{protocol.title}</span> card
-              {sheets.length > 0 ? (
-                <>
-                  {" "}and the <span className="text-ink">{sheets.map((w) => w.name).join(" and ")}</span>
-                  {sheets.length === 1 && sheets[0].detail ? ` (${sheets[0].detail})` : ""}
-                </>
-              ) : null}
-              , to keep in the folder.
+              Field Kit: the {protocol.title} card
+              {sheets.length > 0 ? ` and the ${sheets.map((w) => w.name).join(" and ")}` : ""}
             </span>
           </li>
-          {deeper?.companion && (
-            <li className="flex items-center gap-2">
-              <ApIcon id="companion" size={20} className="text-accent" />
-              <span>
-                <span className="text-ink">{deeper.companion}</span>, for the why behind it.
-              </span>
-            </li>
-          )}
         </ul>
       </section>
 
       <nav className="flex flex-wrap items-center gap-2 border-t border-rule/35 pt-4">
         <Link
           href="/"
-          className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-rule/60 bg-white px-4 text-sm font-medium text-accent"
+          className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-rule/60 bg-surface-raised px-4 text-sm font-medium text-accent"
         >
           <ApIcon id="situation-map" size={18} />
           Situation Map
         </Link>
-        {protocol.slug === "pause-and-return" && (
-          <Link
-            href="/pause"
-            className="inline-flex min-h-11 items-center gap-1.5 rounded-full bg-pause px-4 text-sm font-medium text-ink"
-          >
-            <ApIcon id="pause-and-return" size={18} />
-            Start timer
-          </Link>
-        )}
         {protocol.slug === "weekly-reset" && (
           <Link
             href="/weekly-reset"
@@ -187,6 +182,11 @@ export function ProtocolLayout({ protocol }: { protocol: Protocol }) {
           </Link>
         )}
       </nav>
+
+      {protocol.slug === "pause-and-return" && (
+        // Pinned above the tab bar once the top button scrolls away.
+        <StickyTimerButton watchId="pause-top-cta" />
+      )}
     </article>
   );
 }

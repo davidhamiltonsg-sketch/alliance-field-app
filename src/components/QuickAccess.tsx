@@ -3,11 +3,11 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { getProtocol } from "@/data/protocols";
-import { readFavorites, readRecent } from "@/lib/storage";
+import { readRecent } from "@/lib/storage";
 import { IconChip, isIconId } from "./ApIcon";
 import { TierBadge } from "./TierBadge";
 import { SectionLabel } from "./SectionLabel";
-import { StarIcon, ClockIcon } from "./icons";
+import { ClockIcon } from "./icons";
 
 function Strip({
   label,
@@ -52,31 +52,24 @@ function Strip({
 }
 
 /**
- * Home-screen quick access: favourite protocols and recently viewed ones.
+ * Home-screen quick access: recently used tools.
  * Renders nothing until there's something to show (fresh installs, or SSR).
  */
 export function QuickAccess() {
   // Starts empty to match SSR, synced from localStorage after mount — so
   // this renders nothing until hydration confirms there's something to show.
-  const [favorites, setFavorites] = useState<string[]>([]);
   const [recent, setRecent] = useState<string[]>([]);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- syncing from localStorage, not mirroring props/state
-    setFavorites(readFavorites());
     setRecent(readRecent());
   }, []);
 
-  if (favorites.length === 0 && recent.length === 0) return null;
+  if (recent.length === 0) return null;
 
   return (
     <section className="space-y-4">
-      <Strip label="Favourites" icon={<StarIcon size={16} filled />} slugs={favorites} />
-      <Strip
-        label="Recently used"
-        icon={<ClockIcon size={16} />}
-        slugs={recent.filter((s) => !favorites.includes(s))}
-      />
+      <Strip label="Recently used" icon={<ClockIcon size={16} />} slugs={recent} />
     </section>
   );
 }

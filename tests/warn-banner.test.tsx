@@ -51,7 +51,7 @@ describe("WarnBanner: help comes first", () => {
   });
 
   it("…even when a card forgets its safetyLink flag", () => {
-    const base = protocols.find((p) => p.slug === "full-recovery")!;
+    const base = protocols.find((p) => p.slug === "full-repair")!;
     for (const warn of ["If fear or coercion appear, stop.", "Threats mean this tool is not for you.", "Afraid? Get help."]) {
       const banner = bannerOf({ ...base, warn, safetyLink: false })!;
       expect(banner.querySelector('a[href="/help"]'), warn).not.toBeNull();
